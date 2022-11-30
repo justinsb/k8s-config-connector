@@ -231,7 +231,7 @@ func TestAll(t *testing.T) {
 
 			ctx := context.TODO()
 
-			h := NewHarness(t, ctx, mgr)
+			h := NewHarnessWithManager(t, ctx, mgr)
 			SetupNamespacesAndApplyDefaults(h, []Sample{s})
 
 			networkCount := int64(networksInSampleCount(s))
@@ -249,9 +249,10 @@ func TestAll(t *testing.T) {
 }
 
 func setup() {
+	ctx := context.TODO()
 	flag.Parse()
 	var err error
-	mgr, err = kccmanager.New(unusedManager.GetConfig(), kccmanager.Config{})
+	mgr, err = kccmanager.New(ctx, unusedManager.GetConfig(), kccmanager.Config{})
 	if err != nil {
 		logging.Fatal(err, "error creating new manager")
 	}
