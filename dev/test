@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# CI script to run all the test commands
+
+set -o errexit
+set -o nounset
+set -o pipefail
+
+# cd to the repo root
+REPO_ROOT=$(git rev-parse --show-toplevel)
+cd "${REPO_ROOT}"
+
+go test -v ./...
+
+RUN_E2E=1 E2E_GCP_TARGET=mock E2E_KUBE_TARGET=envtest go test -v ./tests/e2e
