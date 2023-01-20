@@ -205,6 +205,8 @@ var testDisabledList = map[string]bool{
 }
 
 func TestAll(t *testing.T) {
+	project := testgcp.GetDefaultProject(t)
+
 	setup()
 	samples := loadSamplesOntoUnstructs(t, regexp.MustCompile(runTestsRegex))
 	// Sort the samples in descending order by number of resources. This is an attempt to start the samples that use
@@ -232,7 +234,7 @@ func TestAll(t *testing.T) {
 			ctx := context.TODO()
 
 			h := NewHarnessWithManager(t, ctx, mgr)
-			SetupNamespacesAndApplyDefaults(h, []Sample{s})
+			SetupNamespacesAndApplyDefaults(h, []Sample{s}, project)
 
 			networkCount := int64(networksInSampleCount(s))
 			if networkCount > 0 {

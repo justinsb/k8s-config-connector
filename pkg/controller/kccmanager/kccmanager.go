@@ -54,6 +54,10 @@ type Config struct {
 	// HTTPClient is the http client to use for DCL.
 	// Currently only used in tests.
 	HTTPClient *http.Client
+
+	// AccessToken allows configuration of a static access token.
+	// Currently only used in tests.
+	AccessToken string
 }
 
 // Creates a new controller-runtime manager.Manager and starts all of the KCC controllers pointed at the
@@ -84,6 +88,7 @@ func New(ctx context.Context, restConfig *rest.Config, config Config) (manager.M
 	tfCfg := tfprovider.NewConfig()
 	tfCfg.UserProjectOverride = config.UserProjectOverride
 	tfCfg.BillingProject = config.BillingProject
+	tfCfg.AccessToken = config.AccessToken
 
 	provider, err := tfprovider.New(ctx, tfCfg)
 	if err != nil {

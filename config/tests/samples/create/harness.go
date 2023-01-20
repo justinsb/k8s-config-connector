@@ -148,6 +148,8 @@ func NewHarness(t *testing.T, ctx context.Context) *Harness {
 				h.Fatalf("error creating crd %v: %v", crd.GroupVersionKind(), err)
 			}
 		}
+		t.Logf("HACK: waiting 20 seconds to allow CRDs to be ready")
+		time.Sleep(20 * time.Second)
 	}
 
 	if targetGCP := os.Getenv("E2E_GCP_TARGET"); targetGCP == "mock" {
@@ -160,6 +162,8 @@ func NewHarness(t *testing.T, ctx context.Context) *Harness {
 		h.Ctx = context.WithValue(h.Ctx, httpRoundTripperKey, roundTripper)
 
 		kccConfig.HTTPClient = &http.Client{Transport: roundTripper}
+
+		kccConfig.AccessToken = "dummytoken"
 	} else {
 		t.Fatalf("E2E_GCP_TARGET=%q not supported", targetGCP)
 	}

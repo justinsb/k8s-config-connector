@@ -56,7 +56,7 @@ func TestAllInSeries(t *testing.T) {
 	})
 
 	t.Run("samples", func(t *testing.T) {
-		samples := create.LoadSamples(t)
+		samples := create.LoadSamples(t, project)
 
 		for _, s := range samples {
 			s := s
@@ -69,7 +69,7 @@ func TestAllInSeries(t *testing.T) {
 
 				cleanupResources := true
 
-				create.SetupNamespacesAndApplyDefaults(h, []create.Sample{s})
+				create.SetupNamespacesAndApplyDefaults(h, []create.Sample{s}, project)
 
 				// Hack: set project-id because mockkubeapiserver does not support webhooks
 				for _, u := range s.Resources {
@@ -116,7 +116,7 @@ func TestAllInSeries(t *testing.T) {
 
 				cleanupResources := true
 
-				create.SetupNamespacesAndApplyDefaults(h, []create.Sample{s})
+				create.SetupNamespacesAndApplyDefaults(h, []create.Sample{s}, project)
 				create.RunCreateDeleteTest(h, s.Resources, cleanupResources)
 			})
 		}
