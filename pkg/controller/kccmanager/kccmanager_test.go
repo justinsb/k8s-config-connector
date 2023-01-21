@@ -51,6 +51,8 @@ var (
 // The scheme is not thread-safe due to its use and modification of its internal maps. Different managers should not
 // share a scheme.
 func TestSchemeIsUniqueAcrossManagers(t *testing.T) {
+	ctx := context.TODO()
+
 	controllersCfg := kccmanager.Config{
 		ManagerOptions: manager.Options{
 			// disable prometheus metrics as by default, the metrics server binds to the same port in all instances
@@ -60,7 +62,7 @@ func TestSchemeIsUniqueAcrossManagers(t *testing.T) {
 	schemePtrMap := make(map[*runtime.Scheme]string)
 	schemePtrMap[clusterModeManager.GetScheme()] = "clusterModeMgr"
 	for i := 0; i < 5; i++ {
-		mgr, err := kccmanager.New(clusterModeManager.GetConfig(), controllersCfg)
+		mgr, err := kccmanager.New(ctx, clusterModeManager.GetConfig(), controllersCfg)
 		if err != nil {
 			t.Fatalf("error creating manager: %v", err)
 		}
@@ -73,16 +75,17 @@ func TestSchemeIsUniqueAcrossManagers(t *testing.T) {
 }
 
 func TestClusterModeManager(t *testing.T) {
-	mgr, err := kccmanager.New(clusterModeManager.GetConfig(), kccmanager.Config{})
+	ctx := context.TODO()
+	mgr, err := kccmanager.New(ctx, clusterModeManager.GetConfig(), kccmanager.Config{})
 	if err != nil {
 		t.Fatalf("error creating manager: %v", err)
 	}
 	stop := testcontroller.StartMgr(t, mgr)
 	defer stop()
 	basicPubSubFixture := getBasicPubSubSchemaFixture(t)
-	projectId := testgcp.GetDefaultProjectID(t)
+	project := testgcp.GetDefaultProject(t)
 	for i := 0; i < 2; i++ {
-		tstContext := testrunner.NewTestContext(t, basicPubSubFixture, projectId)
+		tstContext := testrunner.NewTestContext(t, basicPubSubFixture, project)
 		testcontroller.EnsureNamespaceExistsT(t, mgr.GetClient(), tstContext.CreateUnstruct.GetNamespace())
 		if err := mgr.GetClient().Create(context.TODO(), tstContext.CreateUnstruct); err != nil {
 			t.Fatalf("error creating '%v': %v", tstContext.CreateUnstruct.GetKind(), err)
@@ -95,10 +98,11 @@ func TestClusterModeManager(t *testing.T) {
 // not started controllers. Verify that only the first is reconciled, then start a second set of controllers and verify
 // the second is reconciled.
 func TestNamespacedModeManager(t *testing.T) {
+	ctx := context.TODO()
 	basicPubSubFixture := getBasicPubSubSchemaFixture(t)
-	projectId := testgcp.GetDefaultProjectID(t)
-	tstContext1 := testrunner.NewTestContext(t, basicPubSubFixture, projectId)
-	tstContext2 := testrunner.NewTestContext(t, basicPubSubFixture, projectId)
+	project := testgcp.GetDefaultProject(t)
+	tstContext1 := testrunner.NewTestContext(t, basicPubSubFixture, project)
+	tstContext2 := testrunner.NewTestContext(t, basicPubSubFixture, project)
 	controllersCfg1 := kccmanager.Config{
 		ManagerOptions: manager.Options{
 			// disable prometheus metrics as by default, the metrics server binds to the same port in all instances
@@ -106,7 +110,7 @@ func TestNamespacedModeManager(t *testing.T) {
 			Namespace:          tstContext1.CreateUnstruct.GetNamespace(),
 		},
 	}
-	mgr1, err := kccmanager.New(namespacedModeManager.GetConfig(), controllersCfg1)
+	mgr1, err := kccmanager.New(ctx, namespacedModeManager.GetConfig(), controllersCfg1)
 	if err != nil {
 		t.Fatalf("error creating manager: %v", err)
 	}
@@ -144,7 +148,7 @@ func TestNamespacedModeManager(t *testing.T) {
 		},
 	}
 	// start controllers for the second namespace and verify that the second resource does reconcile
-	mgr2, err := kccmanager.New(namespacedModeManager.GetConfig(), controllersCfg2)
+	mgr2, err := kccmanager.New(ctx, namespacedModeManager.GetConfig(), controllersCfg2)
 	if err != nil {
 		t.Fatalf("error creating manager: %v", err)
 	}

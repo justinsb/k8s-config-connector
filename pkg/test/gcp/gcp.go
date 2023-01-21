@@ -79,32 +79,61 @@ func GetDefaultProjectID(t *testing.T) string {
 	return projectID
 }
 
-// GetDefaultProjectNumber returns the project number of user's configured default GCP project.
-func GetDefaultProjectNumber(t *testing.T) string {
-	t.Helper()
-	projectNumber, err := gcp.GetDefaultProjectNumber()
-	if err != nil {
-		t.Fatalf("error retrieving gcloud sdk credentials: %v", err)
-	}
-	return projectNumber
+type GCPProject struct {
+	ProjectID     string
+	ProjectNumber int64
 }
 
-// GetDefaultServiceAccount returns the service account used to access the user's configured default GCP project.
-func GetDefaultServiceAccount(t *testing.T) string {
+// GetDefaultProject returns the ID of user's configured default GCP project.
+func GetDefaultProject(t *testing.T) GCPProject {
+	t.Helper()
+	ctx := context.TODO()
+
+	projectID, err := gcp.GetDefaultProjectID()
+	if err != nil {
+		t.Fatalf("error getting default project: %v", err)
+	}
+	projectNumber, err := GetProjectNumber(ctx, projectID)
+	if err != nil {
+		t.Fatalf("error getting project number for %q: %v", projectID, err)
+	}
+	return GCPProject{ProjectID: projectID, ProjectNumber: projectNumber}
+}
+
+func GetProjectNumber(ctx context.Context, projectID string) (int64, error) {
+	client, err := gcp.NewCloudResourceManagerClient(ctx)
+	if err != nil {
+		return 0, fmt.Errorf("error creating resource manager client: %w", err)
+	}
+	project, err := client.Projects.Get(projectID).Do()
+	if err != nil {
+		return 0, fmt.Errorf("error getting project with id %q: %w", projectID, err)
+	}
+
+	return project.ProjectNumber, nil
+}
+
+// FindDefaultServiceAccount returns the service account used to access the user's configured default GCP project.
+// If the credentials cannot be found, returns ("", nil)
+func FindDefaultServiceAccount() (string, error) {
 	creds, err := google.FindDefaultCredentials(context.TODO(), cloudresourcemanager.CloudPlatformScope)
 	if err != nil {
-		t.Fatalf("error getting credentials: %v", err)
+		msg := err.Error()
+		if strings.Contains(msg, "could not find default credentials") {
+			return "", nil
+		}
+		return "", fmt.Errorf("error getting credentials: %w", err)
 	}
 	if creds == nil {
-		t.Fatalf("test running in environment without default credentials, can't continue")
+		return "", nil
 	}
 
 	var rawCreds map[string]string
 	if err := json.Unmarshal(creds.JSON, &rawCreds); err != nil {
-		t.Fatalf("creds file malformed: %v", err)
+		return "", fmt.Errorf("creds file malformed: %w", err)
 	}
 
-	return rawCreds["client_email"]
+	return rawCreds["client_email"], nil
 }
 
 func GetFolderID(t *testing.T) string {
@@ -178,7 +207,9 @@ func GetIAMPolicyBindingMember(t *testing.T) string {
 	if err != nil {
 		t.Fatalf("unable to get hostname: %v", err)
 	}
-	if serviceAccountEmail := GetDefaultServiceAccount(t); serviceAccountEmail != "" {
+	if serviceAccountEmail, err := FindDefaultServiceAccount(); err != nil {
+		t.Fatalf("error from FindDefaultServiceAccount: %v", err)
+	} else if serviceAccountEmail != "" {
 		return fmt.Sprintf("serviceAccount:%v", serviceAccountEmail)
 	}
 	if strings.HasSuffix(hostname, ".corp.google.com") {

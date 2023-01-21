@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# CI script to run all the test commands
+
+set -o errexit
+set -o nounset
+set -o pipefail
+
+# cd to the repo root
+REPO_ROOT=$(git rev-parse --show-toplevel)
+cd "${REPO_ROOT}"
+
+# Don't use vendor
+export GOFLAGS="-mod=mod"
+
+# Ensure envtest is available, populate into the KUBEBUILDER_ASSETS env var
+export KUBEBUILDER_ASSETS=$(go run sigs.k8s.io/controller-runtime/tools/setup-envtest@latest --print path use 1.23.x)
+
+echo "TODO: Re-enable go test once it doesn't need project-id etc"
+#go test -v ./...
+
+RUN_E2E=1 E2E_GCP_TARGET=mock E2E_KUBE_TARGET=envtest go test -v ./tests/e2e
