@@ -26,6 +26,15 @@ import (
 	"net/http"
 	"testing"
 
+	"cnrm.googlesource.com/cnrm/mockgcp/common"
+	"cnrm.googlesource.com/cnrm/mockgcp/mockiam"
+	"cnrm.googlesource.com/cnrm/mockgcp/mockapikeys"
+	"cnrm.googlesource.com/cnrm/mockgcp/mocknetworkservices"
+	"cnrm.googlesource.com/cnrm/mockgcp/mockprivateca"
+	"cnrm.googlesource.com/cnrm/mockgcp/mocksecretmanager"
+	"cnrm.googlesource.com/cnrm/mockgcp/mockserviceusage"
+	"cnrm.googlesource.com/cnrm/mockgcp/pkg/storage"
+
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -81,6 +90,7 @@ func NewMockRoundTripper(t *testing.T, k8sClient client.Client, storage storage.
 	services = append(services, mockprivateca.New(env, storage))
 	services = append(services, mocknetworkservices.New(env, storage))
 	services = append(services, mockserviceusage.New(env, storage))
+	services = append(services, mockapikeys.New(env, storage))
 
 	for _, service := range services {
 		service.Register(server)

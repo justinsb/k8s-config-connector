@@ -27,3 +27,13 @@ gen-proto:
 		./third_party/googleapis/google/cloud/secretmanager/v1/service.proto \
 		./third_party/googleapis/google/api/serviceusage/v1/*.proto \
 		./third_party/googleapis/google/api/serviceusage/v1beta1/*.proto
+	PATH=bin/:${PATH} protoc \
+		-I ./third_party/googleapis \
+		--go_out=./generated --go_opt=paths=source_relative \
+		--go-grpc_out=./generated --go-grpc_opt=paths=source_relative \
+		--grpc-gateway_out ./generated \
+		--grpc-gateway_opt logtostderr=true \
+		--grpc-gateway_opt paths=source_relative \
+		--grpc-gateway_opt standalone=false \
+		--experimental_allow_proto3_optional \
+		./third_party/googleapis/google/api/apikeys/v2/*.proto
