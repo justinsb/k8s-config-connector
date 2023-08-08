@@ -31,6 +31,7 @@ var (
 	RepresentativeCRUDTestsForAllServices = map[string][]string{
 		"accesscontextmanager": {"accesscontextmanagerserviceperimeter"},
 		"apigee":               {"apigeeenvironment"},
+		"apikeys":              {"apikeyskeybasic"},
 		"artifactregistry":     {"artifactregistryrepository"},
 		"bigquery":             {"bigqueryjob"},
 		"bigtable":             {"bigtablegcpolicy"},

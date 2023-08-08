@@ -25,6 +25,7 @@ import (
 	"fmt"
 	"net/http"
 
+<<<<<<< HEAD
 	accesscontextmanagerv1alpha1 "github.com/GoogleCloudPlatform/k8s-config-connector/pkg/clients/generated/client/clientset/versioned/typed/accesscontextmanager/v1alpha1"
 	accesscontextmanagerv1beta1 "github.com/GoogleCloudPlatform/k8s-config-connector/pkg/clients/generated/client/clientset/versioned/typed/accesscontextmanager/v1beta1"
 	alloydbv1alpha1 "github.com/GoogleCloudPlatform/k8s-config-connector/pkg/clients/generated/client/clientset/versioned/typed/alloydb/v1alpha1"
@@ -135,6 +136,119 @@ import (
 	vpcaccessv1beta1 "github.com/GoogleCloudPlatform/k8s-config-connector/pkg/clients/generated/client/clientset/versioned/typed/vpcaccess/v1beta1"
 	workflowsv1alpha1 "github.com/GoogleCloudPlatform/k8s-config-connector/pkg/clients/generated/client/clientset/versioned/typed/workflows/v1alpha1"
 	workstationsv1alpha1 "github.com/GoogleCloudPlatform/k8s-config-connector/pkg/clients/generated/client/clientset/versioned/typed/workstations/v1alpha1"
+=======
+	accesscontextmanagerv1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/accesscontextmanager/v1alpha1"
+	accesscontextmanagerv1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/accesscontextmanager/v1beta1"
+	alloydbv1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/alloydb/v1alpha1"
+	apigatewayv1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/apigateway/v1alpha1"
+	apigeev1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/apigee/v1alpha1"
+	apigeev1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/apigee/v1beta1"
+	apikeysv1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/apikeys/v1alpha1"
+	appenginev1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/appengine/v1alpha1"
+	artifactregistryv1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/artifactregistry/v1beta1"
+	beyondcorpv1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/beyondcorp/v1alpha1"
+	bigqueryv1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/bigquery/v1alpha1"
+	bigqueryv1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/bigquery/v1beta1"
+	bigqueryanalyticshubv1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/bigqueryanalyticshub/v1alpha1"
+	bigqueryconnectionv1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/bigqueryconnection/v1alpha1"
+	bigquerydatapolicyv1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/bigquerydatapolicy/v1alpha1"
+	bigquerydatatransferv1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/bigquerydatatransfer/v1alpha1"
+	bigqueryreservationv1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/bigqueryreservation/v1alpha1"
+	bigtablev1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/bigtable/v1beta1"
+	billingbudgetsv1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/billingbudgets/v1beta1"
+	binaryauthorizationv1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/binaryauthorization/v1beta1"
+	certificatemanagerv1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/certificatemanager/v1beta1"
+	cloudassetv1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/cloudasset/v1alpha1"
+	cloudbuildv1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/cloudbuild/v1beta1"
+	cloudfunctionsv1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/cloudfunctions/v1beta1"
+	cloudfunctions2v1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/cloudfunctions2/v1alpha1"
+	cloudidentityv1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/cloudidentity/v1beta1"
+	cloudidsv1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/cloudids/v1alpha1"
+	cloudiotv1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/cloudiot/v1alpha1"
+	cloudschedulerv1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/cloudscheduler/v1beta1"
+	cloudtasksv1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/cloudtasks/v1alpha1"
+	computev1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/compute/v1alpha1"
+	computev1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/compute/v1beta1"
+	configcontrollerv1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/configcontroller/v1beta1"
+	containerv1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/container/v1beta1"
+	containeranalysisv1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/containeranalysis/v1alpha1"
+	containeranalysisv1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/containeranalysis/v1beta1"
+	datacatalogv1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/datacatalog/v1alpha1"
+	datacatalogv1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/datacatalog/v1beta1"
+	dataflowv1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/dataflow/v1beta1"
+	dataformv1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/dataform/v1alpha1"
+	datafusionv1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/datafusion/v1beta1"
+	dataprocv1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/dataproc/v1beta1"
+	datastorev1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/datastore/v1alpha1"
+	datastreamv1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/datastream/v1alpha1"
+	deploymentmanagerv1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/deploymentmanager/v1alpha1"
+	dialogflowv1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/dialogflow/v1alpha1"
+	dialogflowcxv1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/dialogflowcx/v1alpha1"
+	dlpv1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/dlp/v1beta1"
+	dnsv1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/dns/v1alpha1"
+	dnsv1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/dns/v1beta1"
+	documentaiv1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/documentai/v1alpha1"
+	essentialcontactsv1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/essentialcontacts/v1alpha1"
+	eventarcv1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/eventarc/v1beta1"
+	filestorev1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/filestore/v1alpha1"
+	filestorev1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/filestore/v1beta1"
+	firebasev1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/firebase/v1alpha1"
+	firebasedatabasev1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/firebasedatabase/v1alpha1"
+	firebasehostingv1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/firebasehosting/v1alpha1"
+	firebasestoragev1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/firebasestorage/v1alpha1"
+	firestorev1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/firestore/v1beta1"
+	gkebackupv1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/gkebackup/v1alpha1"
+	gkehubv1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/gkehub/v1beta1"
+	healthcarev1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/healthcare/v1alpha1"
+	iamv1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/iam/v1beta1"
+	iapv1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/iap/v1beta1"
+	identityplatformv1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/identityplatform/v1alpha1"
+	identityplatformv1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/identityplatform/v1beta1"
+	k8sv1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/k8s/v1alpha1"
+	kmsv1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/kms/v1alpha1"
+	kmsv1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/kms/v1beta1"
+	loggingv1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/logging/v1beta1"
+	memcachev1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/memcache/v1beta1"
+	mlenginev1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/mlengine/v1alpha1"
+	monitoringv1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/monitoring/v1beta1"
+	networkconnectivityv1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/networkconnectivity/v1beta1"
+	networkmanagementv1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/networkmanagement/v1alpha1"
+	networksecurityv1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/networksecurity/v1beta1"
+	networkservicesv1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/networkservices/v1alpha1"
+	networkservicesv1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/networkservices/v1beta1"
+	notebooksv1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/notebooks/v1alpha1"
+	orgpolicyv1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/orgpolicy/v1alpha1"
+	osconfigv1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/osconfig/v1alpha1"
+	osconfigv1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/osconfig/v1beta1"
+	osloginv1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/oslogin/v1alpha1"
+	privatecav1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/privateca/v1beta1"
+	pubsubv1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/pubsub/v1beta1"
+	pubsublitev1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/pubsublite/v1alpha1"
+	pubsublitev1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/pubsublite/v1beta1"
+	recaptchaenterprisev1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/recaptchaenterprise/v1beta1"
+	redisv1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/redis/v1beta1"
+	resourcemanagerv1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/resourcemanager/v1beta1"
+	runv1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/run/v1beta1"
+	secretmanagerv1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/secretmanager/v1beta1"
+	securitycenterv1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/securitycenter/v1alpha1"
+	servicedirectoryv1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/servicedirectory/v1beta1"
+	servicenetworkingv1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/servicenetworking/v1beta1"
+	serviceusagev1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/serviceusage/v1alpha1"
+	serviceusagev1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/serviceusage/v1beta1"
+	sourcerepov1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/sourcerepo/v1beta1"
+	spannerv1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/spanner/v1beta1"
+	sqlv1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/sql/v1beta1"
+	storagev1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/storage/v1alpha1"
+	storagev1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/storage/v1beta1"
+	storagetransferv1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/storagetransfer/v1alpha1"
+	storagetransferv1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/storagetransfer/v1beta1"
+	tagsv1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/tags/v1beta1"
+	tpuv1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/tpu/v1alpha1"
+	vertexaiv1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/vertexai/v1alpha1"
+	vpcaccessv1beta1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/vpcaccess/v1beta1"
+	workflowsv1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/workflows/v1alpha1"
+	workstationsv1alpha1 "cnrm.googlesource.com/cnrm/pkg/clients/generated/client/clientset/versioned/typed/workstations/v1alpha1"
+>>>>>>> 0e01b15bc (Scaffold API keys)
 	discovery "k8s.io/client-go/discovery"
 	rest "k8s.io/client-go/rest"
 	flowcontrol "k8s.io/client-go/util/flowcontrol"
@@ -148,6 +262,7 @@ type Interface interface {
 	ApigatewayV1alpha1() apigatewayv1alpha1.ApigatewayV1alpha1Interface
 	ApigeeV1alpha1() apigeev1alpha1.ApigeeV1alpha1Interface
 	ApigeeV1beta1() apigeev1beta1.ApigeeV1beta1Interface
+	ApikeysV1alpha1() apikeysv1alpha1.ApikeysV1alpha1Interface
 	AppengineV1alpha1() appenginev1alpha1.AppengineV1alpha1Interface
 	ArtifactregistryV1beta1() artifactregistryv1beta1.ArtifactregistryV1beta1Interface
 	BeyondcorpV1alpha1() beyondcorpv1alpha1.BeyondcorpV1alpha1Interface
@@ -264,6 +379,7 @@ type Clientset struct {
 	apigatewayV1alpha1           *apigatewayv1alpha1.ApigatewayV1alpha1Client
 	apigeeV1alpha1               *apigeev1alpha1.ApigeeV1alpha1Client
 	apigeeV1beta1                *apigeev1beta1.ApigeeV1beta1Client
+	apikeysV1alpha1              *apikeysv1alpha1.ApikeysV1alpha1Client
 	appengineV1alpha1            *appenginev1alpha1.AppengineV1alpha1Client
 	artifactregistryV1beta1      *artifactregistryv1beta1.ArtifactregistryV1beta1Client
 	beyondcorpV1alpha1           *beyondcorpv1alpha1.BeyondcorpV1alpha1Client
@@ -398,6 +514,11 @@ func (c *Clientset) ApigeeV1alpha1() apigeev1alpha1.ApigeeV1alpha1Interface {
 // ApigeeV1beta1 retrieves the ApigeeV1beta1Client
 func (c *Clientset) ApigeeV1beta1() apigeev1beta1.ApigeeV1beta1Interface {
 	return c.apigeeV1beta1
+}
+
+// ApikeysV1alpha1 retrieves the ApikeysV1alpha1Client
+func (c *Clientset) ApikeysV1alpha1() apikeysv1alpha1.ApikeysV1alpha1Interface {
+	return c.apikeysV1alpha1
 }
 
 // AppengineV1alpha1 retrieves the AppengineV1alpha1Client
@@ -988,6 +1109,10 @@ func NewForConfigAndClient(c *rest.Config, httpClient *http.Client) (*Clientset,
 	if err != nil {
 		return nil, err
 	}
+	cs.apikeysV1alpha1, err = apikeysv1alpha1.NewForConfigAndClient(&configShallowCopy, httpClient)
+	if err != nil {
+		return nil, err
+	}
 	cs.appengineV1alpha1, err = appenginev1alpha1.NewForConfigAndClient(&configShallowCopy, httpClient)
 	if err != nil {
 		return nil, err
@@ -1431,6 +1556,7 @@ func New(c rest.Interface) *Clientset {
 	cs.apigatewayV1alpha1 = apigatewayv1alpha1.New(c)
 	cs.apigeeV1alpha1 = apigeev1alpha1.New(c)
 	cs.apigeeV1beta1 = apigeev1beta1.New(c)
+	cs.apikeysV1alpha1 = apikeysv1alpha1.New(c)
 	cs.appengineV1alpha1 = appenginev1alpha1.New(c)
 	cs.artifactregistryV1beta1 = artifactregistryv1beta1.New(c)
 	cs.beyondcorpV1alpha1 = beyondcorpv1alpha1.New(c)

@@ -19,6 +19,9 @@
 # not supported by asset inventory
 - resourceConfigId: AccessContextManagerServicePerimeter
 # not supported by asset inventory
+# TODO: Check this is correct
+- resourceConfigId: APIKeysKey
+# not supported by asset inventory
 - resourceConfigId: ArtifactRegistryRepository
 - asset:
     ancestors:
