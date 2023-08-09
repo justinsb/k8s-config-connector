@@ -30,6 +30,7 @@ import (
 	testyaml "github.com/GoogleCloudPlatform/k8s-config-connector/pkg/test/yaml"
 
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
+	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/manager/signals"
 )
 
@@ -109,6 +110,12 @@ func TestAllInSeries(t *testing.T) {
 				}
 			}
 
+			var updateUnstructs []*unstructured.Unstructured
+			if fixture.Update != nil {
+				u := bytesToUnstructured(t, fixture.Update, testID, project)
+				updateUnstructs = append(updateUnstructs, u)
+			}
+
 			t.Run(s.Name, func(t *testing.T) {
 				create.MaybeSkip(t, s.Name, s.Resources)
 
@@ -117,7 +124,33 @@ func TestAllInSeries(t *testing.T) {
 				cleanupResources := true
 
 				create.SetupNamespacesAndApplyDefaults(h, []create.Sample{s}, project)
-				create.RunCreateDeleteTest(h, s.Resources, cleanupResources)
+
+				// Create and reconcile all resources & dependencies
+				for _, u := range s.Resources {
+					if err := h.GetClient().Patch(ctx, u, client.Apply, client.FieldOwner("kcc-tests")); err != nil {
+						t.Fatalf("error creating resource: %v", err)
+					}
+				}
+
+				create.WaitForReady(h, s.Resources)
+
+				if len(updateUnstructs) != 0 {
+					// treat as a patch
+					for _, updateUnstruct := range updateUnstructs {
+						if err := h.GetClient().Patch(ctx, updateUnstruct, client.Apply, client.FieldOwner("kcc-tests")); err != nil {
+							t.Fatalf("error updating resource: %v", err)
+						}
+					}
+					time.Sleep(5 * time.Second)
+
+					create.WaitForReady(h, updateUnstructs)
+				}
+
+				// Clean up resources on success or if cleanupResources flag is true
+				if cleanupResources {
+					create.Cleanup(h, s.Resources)
+				}
+
 			})
 		}
 	})

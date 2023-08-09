@@ -97,14 +97,14 @@ func RunCreateDeleteTest(t *Harness, unstructs []*unstructured.Unstructured, cle
 			t.Fatalf("error creating resource: %v", err)
 		}
 	}
-	waitForReady(t, unstructs)
+	WaitForReady(t, unstructs)
 	// Clean up resources on success or if cleanupResources flag is true
 	if cleanupResources {
-		cleanup(t, unstructs)
+		Cleanup(t, unstructs)
 	}
 }
 
-func waitForReady(t *Harness, unstructs []*unstructured.Unstructured) {
+func WaitForReady(t *Harness, unstructs []*unstructured.Unstructured) {
 	var wg sync.WaitGroup
 	for _, u := range unstructs {
 		wg.Add(1)
@@ -166,7 +166,7 @@ func waitForReadySingleResource(t *Harness, wg *sync.WaitGroup, u *unstructured.
 	t.Errorf("%v, final status.conditions: %v", baseMsg, conditions)
 }
 
-func cleanup(t *Harness, unstructs []*unstructured.Unstructured) {
+func Cleanup(t *Harness, unstructs []*unstructured.Unstructured) {
 	logger := log.FromContext(t.Ctx)
 
 	for _, u := range unstructs {
