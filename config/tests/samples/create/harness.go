@@ -82,7 +82,7 @@ func NewHarness(t *testing.T, ctx context.Context) *Harness {
 		cancel()
 	})
 
-	log := log.FromContext(ctx)
+	logger := log.FromContext(ctx)
 
 	h := &Harness{
 		T:   t,
@@ -155,10 +155,11 @@ func NewHarness(t *testing.T, ctx context.Context) *Harness {
 		}
 		{
 			var wg sync.WaitGroup
+			logger.Info("loading crds", "len", len(crds))
 			for i := range crds {
 				crd := &crds[i]
 				wg.Add(1)
-				t.Logf("loading crd %v", crd.GetName())
+				logger.V(2).Info("loading crd", "name", crd.GetName())
 				go func() {
 					defer wg.Done()
 					if err := h.client.Create(ctx, crd.DeepCopy()); err != nil {
@@ -210,7 +211,7 @@ func NewHarness(t *testing.T, ctx context.Context) *Harness {
 			ret = &http.Client{Transport: t.(http.RoundTripper)}
 		}
 		if artifacts := os.Getenv("ARTIFACTS"); artifacts == "" {
-			log.Info("env var ARTIFACTS is not set; will not record http log")
+			logger.Info("env var ARTIFACTS is not set; will not record http log")
 		} else {
 			outputDir := filepath.Join(artifacts, "http-logs")
 			t := test.NewHTTPRecorder(ret.Transport, outputDir)
@@ -226,7 +227,7 @@ func NewHarness(t *testing.T, ctx context.Context) *Harness {
 			ret = &http.Client{Transport: t.(http.RoundTripper)}
 		}
 		if artifacts := os.Getenv("ARTIFACTS"); artifacts == "" {
-			log.Info("env var ARTIFACTS is not set; will not record http log")
+			logger.Info("env var ARTIFACTS is not set; will not record http log")
 		} else {
 			outputDir := filepath.Join(artifacts, "http-logs")
 			t := test.NewHTTPRecorder(ret.Transport, outputDir)
@@ -321,12 +322,14 @@ func (t *Harness) waitForCRDReady(obj client.Object) {
 	name := obj.GetName()
 	namespace := obj.GetNamespace()
 
+	attempt := 0
 	id := types.NamespacedName{Name: name, Namespace: namespace}
 	if err := wait.PollImmediate(2*time.Second, 1*time.Minute, func() (bool, error) {
+		attempt++
 		u := &unstructured.Unstructured{}
 		u.SetAPIVersion(apiVersion)
 		u.SetKind(kind)
-		logger.Info("Testing to see if resource is ready", "kind", kind, "id", id)
+		logger.V(2).Info("Testing to see if resource is ready", "kind", kind, "id", id)
 		if err := t.GetClient().Get(t.Ctx, id, u); err != nil {
 			logger.Info("Error getting resource", "kind", kind, "id", id, "error", err)
 			return false, err
@@ -334,12 +337,16 @@ func (t *Harness) waitForCRDReady(obj client.Object) {
 		conditions := dynamic.GetConditions(t.T, u)
 		for _, condition := range conditions {
 			if condition.Type == "Established" && condition.Status == "True" {
-				logger.Info("crd is ready", "kind", kind, "id", id)
+				logger.V(2).Info("crd is ready", "kind", kind, "id", id)
 				return true, nil
 			}
 		}
 		// This resource is not completely ready. Let's keep polling.
-		logger.Info("CRD is not ready", "kind", kind, "id", id, "conditions", conditions)
+		verbosity := 0
+		if attempt < 3 {
+			verbosity = 2 // avoid logspam on initial attempts
+		}
+		logger.V(verbosity).Info("CRD is not yet ready", "kind", kind, "id", id, "conditions", conditions)
 		return false, nil
 	}); err != nil {
 		t.Errorf("error while polling for ready on %v %v: %v", kind, id, err)

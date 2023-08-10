@@ -120,7 +120,7 @@ func waitForReadySingleResource(t *Harness, wg *sync.WaitGroup, u *unstructured.
 	defer wg.Done()
 	err := wait.PollImmediate(15*time.Second, 35*time.Minute, func() (done bool, err error) {
 		done = true
-		logger.Info("Testing to see if resource is ready", "kind", u.GetKind(), "name", u.GetName())
+		logger.V(2).Info("Testing to see if resource is ready", "kind", u.GetKind(), "name", u.GetName())
 		err = t.GetClient().Get(t.Ctx, name, u)
 		if err != nil {
 			logger.Info("Error getting resource", "kind", u.GetKind(), "name", u.GetName(), "error", err)
@@ -137,12 +137,12 @@ func waitForReadySingleResource(t *Harness, wg *sync.WaitGroup, u *unstructured.
 		conditions := dynamic.GetConditions(t.T, u)
 		for _, c := range conditions {
 			if c.Type == "Ready" && c.Status == "True" {
-				logger.Info("resource is ready", "kind", u.GetKind(), "name", u.GetName())
+				logger.V(2).Info("resource is ready", "kind", u.GetKind(), "name", u.GetName())
 				return true, nil
 			}
 		}
 		// This resource is not completely ready. Let's keep polling.
-		logger.Info("resource is not ready", "kind", u.GetKind(), "name", u.GetName(),
+		logger.Info("resource is not yet ready", "kind", u.GetKind(), "name", u.GetName(),
 			"conditions", conditions)
 		return false, nil
 	})
