@@ -27,27 +27,19 @@ import (
 	"testing"
 
 	"cnrm.googlesource.com/cnrm/mockgcp/common"
-	"cnrm.googlesource.com/cnrm/mockgcp/mockiam"
 	"cnrm.googlesource.com/cnrm/mockgcp/mockapikeys"
+	"cnrm.googlesource.com/cnrm/mockgcp/mockiam"
 	"cnrm.googlesource.com/cnrm/mockgcp/mocknetworkservices"
 	"cnrm.googlesource.com/cnrm/mockgcp/mockprivateca"
 	"cnrm.googlesource.com/cnrm/mockgcp/mocksecretmanager"
 	"cnrm.googlesource.com/cnrm/mockgcp/mockserviceusage"
 	"cnrm.googlesource.com/cnrm/mockgcp/pkg/storage"
 
+	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/mockcertificatemanager"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"sigs.k8s.io/controller-runtime/pkg/client"
-
-	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/common"
-	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/mockcertificatemanager"
-	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/mockiam"
-	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/mocknetworkservices"
-	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/mockprivateca"
-	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/mocksecretmanager"
-	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/mockserviceusage"
-	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/pkg/storage"
 )
 
 type mockRoundTripper struct {
