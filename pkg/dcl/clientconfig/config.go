@@ -96,6 +96,8 @@ func New(ctx context.Context, opt Options) (*dcl.Config, error) {
 // Deprecated: Prefer using a harness.
 func NewForIntegrationTest() *dcl.Config {
 	ctx := context.TODO()
+	eventSinks := test.EventSinksFromContext(ctx)
+
 	opt := Options{
 		UserAgent: "kcc/dev",
 	}
@@ -110,7 +112,7 @@ func NewForIntegrationTest() *dcl.Config {
 			}
 			opt.HTTPClient = httpClient
 		}
-		t := test.NewHTTPRecorder(opt.HTTPClient.Transport, outputDir)
+		t := test.NewHTTPRecorder(opt.HTTPClient.Transport, outputDir, eventSinks)
 		opt.HTTPClient = &http.Client{Transport: t}
 	}
 

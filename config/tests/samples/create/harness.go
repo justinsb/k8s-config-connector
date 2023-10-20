@@ -103,6 +103,7 @@ func NewHarness(t *testing.T, ctx context.Context) *Harness {
 	})
 
 	log := log.FromContext(ctx)
+	eventSinks := test.EventSinksFromContext(ctx)
 
 	h := &Harness{
 		T:   t,
@@ -223,7 +224,7 @@ func NewHarness(t *testing.T, ctx context.Context) *Harness {
 			}
 			kccConfig.HTTPClient = httpClient
 		}
-		t := test.NewHTTPRecorder(kccConfig.HTTPClient.Transport, outputDir)
+		t := test.NewHTTPRecorder(kccConfig.HTTPClient.Transport, outputDir, eventSinks)
 		kccConfig.HTTPClient = &http.Client{Transport: t}
 	}
 
@@ -237,7 +238,7 @@ func NewHarness(t *testing.T, ctx context.Context) *Harness {
 			log.Info("env var ARTIFACTS is not set; will not record http log")
 		} else {
 			outputDir := filepath.Join(artifacts, "http-logs")
-			t := test.NewHTTPRecorder(ret.Transport, outputDir)
+			t := test.NewHTTPRecorder(ret.Transport, outputDir, eventSinks)
 			ret = &http.Client{Transport: t}
 		}
 		return ret
@@ -253,7 +254,7 @@ func NewHarness(t *testing.T, ctx context.Context) *Harness {
 			log.Info("env var ARTIFACTS is not set; will not record http log")
 		} else {
 			outputDir := filepath.Join(artifacts, "http-logs")
-			t := test.NewHTTPRecorder(ret.Transport, outputDir)
+			t := test.NewHTTPRecorder(ret.Transport, outputDir, eventSinks)
 			ret = &http.Client{Transport: t}
 		}
 		return ret

@@ -33,10 +33,11 @@ import (
 
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime/schema"
-	"sigs.k8s.io/controller-runtime/pkg/manager/signals"
 )
 
 func TestAllInSeries(t *testing.T) {
+	ctx := test.WithContext(context.Background(), t)
+
 	if os.Getenv("RUN_E2E") == "" {
 		t.Skip("RUN_E2E not set; skipping")
 	}
@@ -58,11 +59,13 @@ func TestAllInSeries(t *testing.T) {
 		project = testgcp.GetDefaultProject(t)
 	}
 
-	ctx := signals.SetupSignalHandler()
 	ctx, cancel := context.WithCancel(ctx)
 	t.Cleanup(func() {
 		cancel()
 	})
+
+	eventSinkMux := test.NewEventSinkMux()
+	ctx = test.AddSinkToContext(ctx, eventSinkMux)
 
 	testHarness := create.NewHarness(t, ctx)
 
@@ -101,13 +104,13 @@ func TestAllInSeries(t *testing.T) {
 			fixture := fixture
 			// TODO(b/259496928): Randomize the resource names for parallel execution when/if needed.
 
-			testID := testvariable.NewUniqueId()
+			uniqueID := testvariable.NewUniqueId()
 
 			s := create.Sample{
 				Name: fixture.Name,
 			}
 
-			createResource := bytesToUnstructured(t, fixture.Create, testID, project)
+			createResource := bytesToUnstructured(t, fixture.Create, uniqueID, project)
 			s.Resources = append(s.Resources, createResource)
 
 			exportResources := []*unstructured.Unstructured{createResource}
@@ -115,7 +118,7 @@ func TestAllInSeries(t *testing.T) {
 			if fixture.Dependencies != nil {
 				dependencyYamls := testyaml.SplitYAML(t, fixture.Dependencies)
 				for _, dependBytes := range dependencyYamls {
-					depUnstruct := bytesToUnstructured(t, dependBytes, testID, project)
+					depUnstruct := bytesToUnstructured(t, dependBytes, uniqueID, project)
 					s.Resources = append(s.Resources, depUnstruct)
 				}
 			}
@@ -130,6 +133,9 @@ func TestAllInSeries(t *testing.T) {
 				create.MaybeSkip(t, s.Name, s.Resources)
 
 				h := testHarness.ForSubtest(t)
+
+				eventSink := test.NewMemoryEventSink()
+				eventSinkMux.SetEventSink(eventSink)
 
 				create.SetupNamespacesAndApplyDefaults(h, []create.Sample{s}, project)
 
@@ -169,6 +175,41 @@ func TestAllInSeries(t *testing.T) {
 				}
 
 				create.DeleteResources(h, s.Resources)
+
+				// Verify events against golden file
+				if os.Getenv("GOLDEN_REQUEST_CHECKS") != "" {
+					jsonMutators := []test.JSONMutator{}
+
+					jsonMutators = append(jsonMutators, func(obj map[string]any) {
+						_, found, _ := unstructured.NestedString(obj, "uniqueId")
+						if found {
+							unstructured.SetNestedField(obj, "111111111111111111111", "uniqueId")
+						}
+					})
+					jsonMutators = append(jsonMutators, func(obj map[string]any) {
+						_, found, _ := unstructured.NestedString(obj, "oauth2ClientId")
+						if found {
+							unstructured.SetNestedField(obj, "888888888888888888888", "oauth2ClientId")
+						}
+					})
+					jsonMutators = append(jsonMutators, func(obj map[string]any) {
+						_, found, _ := unstructured.NestedString(obj, "etag")
+						if found {
+							unstructured.SetNestedField(obj, "abcdef0123A=", "etag")
+						}
+					})
+					eventSink.PrettifyJSON(jsonMutators...)
+
+					eventSink.RemoveHTTPResponseHeader("Date")
+					eventSink.RemoveHTTPResponseHeader("Alt-Svc")
+					got := eventSink.FormatHTTP()
+					expectedPath := filepath.Join(fixture.SourceDir, "_http.log")
+					normalizers := []func(string) string{}
+					normalizers = append(normalizers, h.IgnoreComments)
+					normalizers = append(normalizers, h.ReplaceString(uniqueID, "${uniqueId}"))
+					normalizers = append(normalizers, h.ReplaceString(project.ProjectID, "${projectId}"))
+					h.CompareGoldenFile(expectedPath, got, normalizers...)
+				}
 			})
 		}
 	})

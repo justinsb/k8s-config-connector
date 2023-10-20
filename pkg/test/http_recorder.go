@@ -16,11 +16,13 @@ package test
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
 	"os"
 	"path/filepath"
+	"sort"
 	"strings"
 	"sync"
 	"time"
@@ -57,10 +59,12 @@ type HTTPRecorder struct {
 
 	// mutex to avoid concurrent writes to the same file
 	mutex sync.Mutex
+
+	eventSinks []EventSink
 }
 
-func NewHTTPRecorder(inner http.RoundTripper, outputDir string) *HTTPRecorder {
-	rt := &HTTPRecorder{outputDir: outputDir, inner: inner}
+func NewHTTPRecorder(inner http.RoundTripper, outputDir string, eventSinks []EventSink) *HTTPRecorder {
+	rt := &HTTPRecorder{outputDir: outputDir, inner: inner, eventSinks: eventSinks}
 	return rt
 }
 
@@ -128,38 +132,50 @@ func (r *HTTPRecorder) record(entry *LogEntry, req *http.Request, resp *http.Res
 	}
 
 	ctx := req.Context()
-	t := TestFromContext(ctx)
-	testName := "unknown"
-	if t != nil {
-		testName = t.Name()
-	}
-	dirName := sanitizePath(testName)
-	p := filepath.Join(r.outputDir, dirName, "requests.log")
 
-	b, err := yaml.Marshal(entry)
-	if err != nil {
-		return fmt.Errorf("failed to marshal data: %w", err)
+	// If we have event sink(s), write to that sink also
+	{
+		for _, eventSink := range r.eventSinks {
+			eventSink.AddHTTPEvent(entry)
+		}
 	}
 
-	// Just in case we are writing to the same file concurrently
-	r.mutex.Lock()
-	defer r.mutex.Unlock()
+	// Write to a log file
+	// (We could consider moving this to a log sink also)
+	{
+		t := TestFromContext(ctx)
+		testName := "unknown"
+		if t != nil {
+			testName = t.Name()
+		}
+		dirName := sanitizePath(testName)
+		p := filepath.Join(r.outputDir, dirName, "requests.log")
 
-	if err := os.MkdirAll(filepath.Dir(p), 0755); err != nil {
-		return fmt.Errorf("failed to create directory %q: %w", filepath.Dir(p), err)
-	}
-	f, err := os.OpenFile(p, os.O_CREATE|os.O_APPEND|os.O_RDWR, 0644)
-	if err != nil {
-		return fmt.Errorf("failed to open file %q: %w", p, err)
-	}
-	defer f.Close()
+		b, err := yaml.Marshal(entry)
+		if err != nil {
+			return fmt.Errorf("failed to marshal data: %w", err)
+		}
 
-	if _, err := f.Write(b); err != nil {
-		return fmt.Errorf("failed to write to file %q: %w", p, err)
-	}
-	delimeter := "\n\n---\n\n"
-	if _, err := f.Write([]byte(delimeter)); err != nil {
-		return fmt.Errorf("failed to write to file %q: %w", p, err)
+		// Just in case we are writing to the same file concurrently
+		r.mutex.Lock()
+		defer r.mutex.Unlock()
+
+		if err := os.MkdirAll(filepath.Dir(p), 0755); err != nil {
+			return fmt.Errorf("failed to create directory %q: %w", filepath.Dir(p), err)
+		}
+		f, err := os.OpenFile(p, os.O_CREATE|os.O_APPEND|os.O_RDWR, 0644)
+		if err != nil {
+			return fmt.Errorf("failed to open file %q: %w", p, err)
+		}
+		defer f.Close()
+
+		if _, err := f.Write(b); err != nil {
+			return fmt.Errorf("failed to write to file %q: %w", p, err)
+		}
+		delimeter := "\n\n---\n\n"
+		if _, err := f.Write([]byte(delimeter)); err != nil {
+			return fmt.Errorf("failed to write to file %q: %w", p, err)
+		}
 	}
 
 	return nil
@@ -175,4 +191,99 @@ func sanitizePath(s string) string {
 		}
 	}
 	return out.String()
+}
+
+func (e *LogEntry) FormatHTTP() string {
+	var b strings.Builder
+	b.WriteString(e.Request.FormatHTTP())
+	b.WriteString(e.Response.FormatHTTP())
+	return b.String()
+}
+
+func (r *Request) FormatHTTP() string {
+	var b strings.Builder
+	b.WriteString(fmt.Sprintf("%s %s\n", r.Method, r.URL))
+	var keys []string
+	for k := range r.Header {
+		keys = append(keys, k)
+	}
+	sort.Strings(keys)
+	for _, k := range keys {
+		for _, v := range r.Header[k] {
+			b.WriteString(fmt.Sprintf("%s: %s\n", k, v))
+		}
+	}
+	b.WriteString("\n")
+	if r.Body != "" {
+		b.WriteString(r.Body)
+		b.WriteString("\n\n")
+	}
+	return b.String()
+}
+
+func (r *Response) FormatHTTP() string {
+	var b strings.Builder
+	b.WriteString(fmt.Sprintf("%s\n", r.Status))
+	var keys []string
+	for k := range r.Header {
+		keys = append(keys, k)
+	}
+	sort.Strings(keys)
+	for _, k := range keys {
+		for _, v := range r.Header[k] {
+			b.WriteString(fmt.Sprintf("%s: %s\n", k, v))
+		}
+	}
+	b.WriteString("\n")
+	if r.Body != "" {
+		b.WriteString(r.Body)
+		b.WriteString("\n")
+	}
+	return b.String()
+}
+
+type JSONMutator func(obj map[string]any)
+
+func (r *LogEntry) PrettifyJSON(mutators ...JSONMutator) {
+	r.Request.PrettifyJSON(mutators...)
+	r.Response.PrettifyJSON(mutators...)
+}
+
+func (r *Response) PrettifyJSON(mutators ...JSONMutator) {
+	r.Body = prettifyJSON(r.Body, mutators...)
+}
+
+func (r *Request) PrettifyJSON(mutators ...JSONMutator) {
+	r.Body = prettifyJSON(r.Body, mutators...)
+}
+
+func prettifyJSON(s string, mutators ...JSONMutator) string {
+	if s == "" {
+		return s
+	}
+
+	obj := make(map[string]any)
+	if err := json.Unmarshal([]byte(s), &obj); err != nil {
+		klog.Fatalf("error from json.Unmarshal(%q): %v", s, err)
+		return s
+	}
+
+	for _, mutator := range mutators {
+		mutator(obj)
+	}
+
+	b, err := json.MarshalIndent(obj, "", "  ")
+	if err != nil {
+		klog.Fatalf("error from json.MarshalIndent: %v", err)
+		return s
+	}
+	return string(b)
+}
+
+func (r *Response) RemoveHeader(key string) {
+	r.Header.Del(key)
+}
+
+func (r *Request) RemoveHeader(key string) {
+	r.Header.Del(key)
 }
