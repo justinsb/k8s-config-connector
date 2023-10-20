@@ -178,6 +178,14 @@ func TestAllInSeries(t *testing.T) {
 
 				// Verify events against golden file
 				if os.Getenv("GOLDEN_REQUEST_CHECKS") != "" {
+					// TODO: Fix how we poll / wait for objects being ready.
+					eventSink.RemoveRequests(func(e *test.LogEntry) bool {
+						if e.Response.StatusCode == 404 && e.Request.Method == "GET" {
+							return true
+						}
+						return false
+					})
+
 					jsonMutators := []test.JSONMutator{}
 
 					jsonMutators = append(jsonMutators, func(obj map[string]any) {

@@ -83,6 +83,19 @@ func (s *MemoryEventSink) RemoveHTTPResponseHeader(key string) {
 	}
 }
 
+func (s *MemoryEventSink) RemoveRequests(pred func(e *LogEntry) bool) {
+	s.mutex.Lock()
+	defer s.mutex.Unlock()
+
+	var keep []*LogEntry
+	for _, entry := range s.HTTPEvents {
+		if !pred(entry) {
+			keep = append(keep, entry)
+		}
+	}
+	s.HTTPEvents = keep
+}
+
 func NewEventSinkMux() *EventSinkMux {
 	return &EventSinkMux{}
 }
