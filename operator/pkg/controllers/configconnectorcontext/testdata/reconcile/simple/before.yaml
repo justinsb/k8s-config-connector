@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ns1
+---
+apiVersion: core.cnrm.cloud.google.com/v1beta1
+kind: ConfigConnectorContext
+metadata:
+  name: configconnectorcontext.core.cnrm.cloud.google.com
+  namespace: ns1
+spec:
+  googleServiceAccount: foo@bar.iam.gserviceaccount.com

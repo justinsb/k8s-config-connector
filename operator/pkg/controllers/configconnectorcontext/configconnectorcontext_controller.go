@@ -75,16 +75,19 @@ func Add(mgr ctrl.Manager, repoPath string) error {
 		return err
 	}
 
+	return r.SetupWithManager(mgr)
+}
+
+func (r *ConfigConnectorContextReconciler) SetupWithManager(mgr ctrl.Manager) error {
 	// Create a new ConfigConnectorContext controller.
 	obj := &corev1beta1.ConfigConnectorContext{}
-	_, err = builder.
+	if _, err := builder.
 		ControllerManagedBy(mgr).
 		Named(controllerName).
 		WithOptions(controller.Options{MaxConcurrentReconciles: 20}).
 		Watches(&source.Channel{Source: r.customizationWatcher.Events()}, &handler.EnqueueRequestForObject{}).
 		For(obj, builder.OnlyMetadata).
-		Build(r)
-	if err != nil {
+		Build(r); err != nil {
 		return err
 	}
 

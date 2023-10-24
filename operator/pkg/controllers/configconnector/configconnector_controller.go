@@ -79,9 +79,13 @@ func Add(mgr ctrl.Manager, repoPath string) error {
 		return err
 	}
 
+	return r.SetupWithManager(mgr)
+}
+
+func (r *ConfigConnectorReconciler) SetupWithManager(mgr ctrl.Manager) error {
 	// Create a new ConfigConnector controller.
 	obj := &corev1beta1.ConfigConnector{}
-	_, err = builder.
+	_, err := builder.
 		ControllerManagedBy(mgr).
 		Named(controllerName).
 		WithOptions(controller.Options{MaxConcurrentReconciles: 1}).
