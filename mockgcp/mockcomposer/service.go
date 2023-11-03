@@ -24,7 +24,6 @@ import (
 	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/common/operations"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/common/projects"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/pkg/storage"
-	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"google.golang.org/grpc"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
@@ -63,19 +62,19 @@ func (s *MockService) Register(grpcServer *grpc.Server) {
 	pb.RegisterEnvironmentsServer(grpcServer, s.v1)
 }
 
-func (s *MockService) NewHTTPMux(ctx context.Context, conn *grpc.ClientConn) (*runtime.ServeMux, error) {
+func (s *MockService) NewHTTPMux(ctx context.Context, conn *grpc.ClientConn) (http.RoundTripper, error) {
 	mux, err := httpmux.NewServeMux(ctx, conn, pb.RegisterEnvironmentsHandler)
 	if err != nil {
 		return nil, err
 	}
 
 	// TODO: Is all of v1beta1 a direct mapping to v1?
-	rewriteV1Beta1ToV1 := func(w http.ResponseWriter, r *http.Request, pathParams map[string]string) {
+	rewriteV1Beta1ToV1 := func(w http.ResponseWriter, r *http.Request, pathParams map[string]string, inner func(w http.ResponseWriter, r *http.Request)) {
 		u := r.URL
 		u.Path = "/v1/" + strings.TrimPrefix(u.Path, "/v1beta1/")
 		r.URL = u
 
-		mux.ServeHTTP(w, r)
+		inner(w, r)
 	}
 
 	if err := mux.HandlePath("GET", "/v1beta1/{path=**}", rewriteV1Beta1ToV1); err != nil {
@@ -93,6 +92,8 @@ func (s *MockService) NewHTTPMux(ctx context.Context, conn *grpc.ClientConn) (*r
 	if err := mux.HandlePath("PUT", "/v1beta1/{path=**}", rewriteV1Beta1ToV1); err != nil {
 		return nil, err
 	}
+
+	mux = mux.WithOperations(s.operations)
 
 	return mux, nil
 }

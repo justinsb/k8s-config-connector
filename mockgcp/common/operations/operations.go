@@ -63,14 +63,10 @@ func (s *Operations) NewLRO(ctx context.Context) (*pb.Operation, error) {
 	return op, nil
 }
 
-func (s *Operations) StartLRO(ctx context.Context, callback func() (proto.Message, error)) (*pb.Operation, error) {
-	now := time.Now()
-	millis := now.UnixMilli()
-	id := uuid.NewUUID()
-
+func (s *Operations) StartLRO(ctx context.Context, name string, callback func() (proto.Message, error)) (*pb.Operation, error) {
 	op := &pb.Operation{}
 
-	op.Name = fmt.Sprintf("operations/operation-%d-%s", millis, id)
+	op.Name = name
 	op.Done = false
 
 	fqn := op.Name

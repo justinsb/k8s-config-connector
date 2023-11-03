@@ -16,12 +16,13 @@ package mockserviceusage
 
 import (
 	"context"
+	"net/http"
 
-	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"google.golang.org/grpc"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
 	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/common"
+	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/common/httpmux"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/common/operations"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/common/projects"
 	pb_v1 "github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/generated/mockgcp/api/serviceusage/v1"
@@ -63,16 +64,13 @@ func (s *MockService) Register(grpcServer *grpc.Server) {
 	pb_v1beta1.RegisterServiceUsageServer(grpcServer, s.serviceusagev1beta1)
 }
 
-func (s *MockService) NewHTTPMux(ctx context.Context, conn *grpc.ClientConn) (*runtime.ServeMux, error) {
-	mux := runtime.NewServeMux()
-
-	if err := pb_v1.RegisterServiceUsageHandler(ctx, mux, conn); err != nil {
+func (s *MockService) NewHTTPMux(ctx context.Context, conn *grpc.ClientConn) (http.RoundTripper, error) {
+	mux, err := httpmux.NewServeMux(ctx, conn, pb_v1.RegisterServiceUsageHandler, pb_v1beta1.RegisterServiceUsageHandler)
+	if err != nil {
 		return nil, err
 	}
 
-	if err := pb_v1beta1.RegisterServiceUsageHandler(ctx, mux, conn); err != nil {
-		return nil, err
-	}
+	mux = mux.WithOperations(s.operations)
 
 	return mux, nil
 }

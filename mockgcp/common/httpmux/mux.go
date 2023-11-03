@@ -12,7 +12,7 @@ import (
 )
 
 // NewServeMux constructs an http server with our error handling etc
-func NewServeMux(ctx context.Context, conn *grpc.ClientConn, handlers ...func(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error) (*runtime.ServeMux, error) {
+func NewServeMux(ctx context.Context, conn *grpc.ClientConn, handlers ...func(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error) (*Mux, error) {
 	marshaler := &runtime.HTTPBodyMarshaler{
 		Marshaler: &runtime.JSONPb{
 			MarshalOptions: protojson.MarshalOptions{
@@ -47,9 +47,8 @@ func NewServeMux(ctx context.Context, conn *grpc.ClientConn, handlers ...func(ct
 		}
 	}
 
-	return mux, nil
+	return &Mux{mux: mux}, nil
 }
-
 func addGCPHeaders(ctx context.Context, w http.ResponseWriter, resp proto.Message) error {
 	if w.Header().Get("Content-Type") == "application/json" {
 		w.Header().Set("Content-Type", "application/json; charset=UTF-8")

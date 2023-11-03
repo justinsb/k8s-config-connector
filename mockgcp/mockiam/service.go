@@ -16,8 +16,8 @@ package mockiam
 
 import (
 	"context"
+	"net/http"
 
-	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"google.golang.org/grpc"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
@@ -62,6 +62,6 @@ func (s *MockService) Register(grpcServer *grpc.Server) {
 	pb.RegisterIAMServer(grpcServer, s.serverV1)
 }
 
-func (s *MockService) NewHTTPMux(ctx context.Context, conn *grpc.ClientConn) (*runtime.ServeMux, error) {
+func (s *MockService) NewHTTPMux(ctx context.Context, conn *grpc.ClientConn) (http.RoundTripper, error) {
 	return httpmux.NewServeMux(ctx, conn, pb.RegisterIAMHandler)
 }

@@ -27,7 +27,6 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"sigs.k8s.io/controller-runtime/pkg/client"
@@ -52,7 +51,7 @@ type mockRoundTripper struct {
 	grpcConnection *grpc.ClientConn
 	grpcListener   net.Listener
 
-	hosts map[string]*runtime.ServeMux
+	hosts map[string]http.RoundTripper
 }
 
 // MockService is the interface implemented by all services
@@ -61,7 +60,7 @@ type MockService interface {
 	Register(grpcServer *grpc.Server)
 
 	// NewHTTPMux creates an HTTP mux for serving http traffic
-	NewHTTPMux(ctx context.Context, conn *grpc.ClientConn) (*runtime.ServeMux, error)
+	NewHTTPMux(ctx context.Context, conn *grpc.ClientConn) (http.RoundTripper, error)
 
 	// ExpectedHost is the hostname we serve on e.g. foo.googleapis.com
 	ExpectedHost() string
@@ -76,7 +75,7 @@ func NewMockRoundTripper(t *testing.T, k8sClient client.Client, storage storage.
 	server := grpc.NewServer(serverOpts...)
 
 	rt := &mockRoundTripper{}
-	rt.hosts = make(map[string]*runtime.ServeMux)
+	rt.hosts = make(map[string]http.RoundTripper)
 
 	var services []MockService
 
@@ -250,18 +249,7 @@ func (m *mockRoundTripper) RoundTrip(req *http.Request) (*http.Response, error) 
 			return nil, err
 		}
 
-		var body bytes.Buffer
-		w := &bufferedResponseWriter{body: &body, header: make(http.Header)}
-		mux.ServeHTTP(w, req)
-		response := &http.Response{}
-		response.Body = ioutil.NopCloser(&body)
-		response.Header = w.header
-		if w.statusCode == 0 {
-			w.statusCode = 200
-		}
-		response.Status = fmt.Sprintf("%d %s", w.statusCode, http.StatusText(w.statusCode))
-		response.StatusCode = w.statusCode
-		return response, nil
+		return mux.RoundTrip(req)
 	}
 
 	request := fmt.Sprintf("%s %s", req.Method, req.URL)
@@ -294,31 +282,4 @@ func (m *mockRoundTripper) RoundTrip(req *http.Request) (*http.Response, error) 
 	}
 
 	return response, nil
-}
-
-// bufferedResponseWriter implements http.ResponseWriter and stores the response.
-type bufferedResponseWriter struct {
-	statusCode int
-	body       io.Writer
-	header     http.Header
-}
-
-var _ http.ResponseWriter = &bufferedResponseWriter{}
-
-// Header implements http.ResponseWriter
-func (w *bufferedResponseWriter) Header() http.Header {
-	return w.header
-}
-
-// Write implements http.ResponseWriter
-func (w *bufferedResponseWriter) Write(b []byte) (int, error) {
-	if w.statusCode == 0 {
-		w.statusCode = 200
-	}
-	return w.body.Write(b)
-}
-
-// WriteHeader implements http.ResponseWriter
-func (w *bufferedResponseWriter) WriteHeader(statusCode int) {
-	w.statusCode = statusCode
 }

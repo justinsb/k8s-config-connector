@@ -63,7 +63,7 @@ func TestSecretManagerSecretVersion(t *testing.T) {
 	} else {
 		outputDir := filepath.Join(artifacts, "http-logs")
 
-		roundTripper = test.NewHTTPRecorder(mockCloud, outputDir)
+		roundTripper = test.NewHTTPRecorder(mockCloud, outputDir, nil)
 	}
 
 	h.Ctx = context.WithValue(h.Ctx, httpRoundTripperKey, roundTripper)

@@ -24,7 +24,6 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/proto"
-	"google.golang.org/protobuf/types/known/anypb"
 	"google.golang.org/protobuf/types/known/timestamppb"
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/util/uuid"
@@ -183,25 +182,7 @@ func (s *ComposerV1) CreateEnvironment(ctx context.Context, req *pb.CreateEnviro
 		return nil, status.Errorf(codes.Internal, "error creating environment: %v", err)
 	}
 
-	lro, err := s.operations.NewLRO(ctx)
-	if err != nil {
-		return nil, err
-	}
-	lro.Name = "projects/" + name.Project.ID + "/locations/" + name.Location + "/" + lro.Name
-
-	metadata := &pb.OperationMetadata{
-		CreateTime:    now,
-		OperationType: pb.OperationMetadata_CREATE,
-		Resource:      fqn,
-		ResourceUuid:  obj.Uuid,
-		State:         pb.OperationMetadata_PENDING, // TODO: Match with done
-	}
-	any, err := anypb.New(metadata)
-	if err != nil {
-		return nil, err
-	}
-	lro.Metadata = any
-	return lro, nil
+	return s.startLRO(ctx, obj, pb.OperationMetadata_CREATE)
 }
 
 func (s *ComposerV1) UpdateEnvironment(ctx context.Context, req *pb.UpdateEnvironmentRequest) (*longrunning.Operation, error) {
@@ -252,10 +233,8 @@ func (s *ComposerV1) DeleteEnvironment(ctx context.Context, req *pb.DeleteEnviro
 
 	fqn := name.String()
 
-	now := timestamppb.Now()
-
-	kind := (&pb.Environment{}).ProtoReflect().Descriptor()
-	if err := s.storage.Delete(ctx, kind, fqn); err != nil {
+	deletedObj := &pb.Environment{}
+	if err := s.storage.Delete(ctx, fqn, deletedObj); err != nil {
 		if apierrors.IsNotFound(err) {
 			return nil, status.Errorf(codes.NotFound, "environment %q not found", name)
 		} else {
@@ -263,23 +242,5 @@ func (s *ComposerV1) DeleteEnvironment(ctx context.Context, req *pb.DeleteEnviro
 		}
 	}
 
-	lro, err := s.operations.NewLRO(ctx)
-	if err != nil {
-		return nil, err
-	}
-	lro.Name = "projects/" + name.Project.ID + "/locations/" + name.Location + "/" + lro.Name
-
-	metadata := &pb.OperationMetadata{
-		CreateTime:    now,
-		OperationType: pb.OperationMetadata_DELETE,
-		Resource:      fqn,
-		//ResourceUuid:  deleted.Uuid,
-		State: pb.OperationMetadata_PENDING, // TODO: Match with done
-	}
-	any, err := anypb.New(metadata)
-	if err != nil {
-		return nil, err
-	}
-	lro.Metadata = any
-	return lro, nil
+	return s.startLRO(ctx, deletedObj, pb.OperationMetadata_DELETE)
 }

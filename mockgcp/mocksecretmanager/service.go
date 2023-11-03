@@ -16,12 +16,13 @@ package mocksecretmanager
 
 import (
 	"context"
+	"net/http"
 
-	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"google.golang.org/grpc"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
 	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/common"
+	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/common/httpmux"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/common/projects"
 	pb "github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/generated/mockgcp/cloud/secretmanager/v1"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/pkg/storage"
@@ -57,11 +58,13 @@ func (s *MockService) Register(grpcServer *grpc.Server) {
 	// longrunning.RegisterOperationsServer(grpcServer, s)
 }
 
-func (s *MockService) NewHTTPMux(ctx context.Context, conn *grpc.ClientConn) (*runtime.ServeMux, error) {
-	mux := runtime.NewServeMux()
-	if err := pb.RegisterSecretManagerServiceHandler(ctx, mux, conn); err != nil {
+func (s *MockService) NewHTTPMux(ctx context.Context, conn *grpc.ClientConn) (http.RoundTripper, error) {
+	mux, err := httpmux.NewServeMux(ctx, conn, pb.RegisterSecretManagerServiceHandler)
+	if err != nil {
 		return nil, err
 	}
+
+	// mux = mux.WithOperations(s.operations)
 
 	return mux, nil
 }
