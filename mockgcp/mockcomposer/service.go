@@ -20,6 +20,7 @@ import (
 	"strings"
 
 	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/common"
+	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/common/httpmux"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/common/operations"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/common/projects"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/pkg/storage"
@@ -63,7 +64,10 @@ func (s *MockService) Register(grpcServer *grpc.Server) {
 }
 
 func (s *MockService) NewHTTPMux(ctx context.Context, conn *grpc.ClientConn) (*runtime.ServeMux, error) {
-	mux := runtime.NewServeMux()
+	mux, err := httpmux.NewServeMux(ctx, conn, pb.RegisterEnvironmentsHandler)
+	if err != nil {
+		return nil, err
+	}
 
 	// TODO: Is all of v1beta1 a direct mapping to v1?
 	rewriteV1Beta1ToV1 := func(w http.ResponseWriter, r *http.Request, pathParams map[string]string) {
@@ -87,10 +91,6 @@ func (s *MockService) NewHTTPMux(ctx context.Context, conn *grpc.ClientConn) (*r
 		return nil, err
 	}
 	if err := mux.HandlePath("PUT", "/v1beta1/{path=**}", rewriteV1Beta1ToV1); err != nil {
-		return nil, err
-	}
-
-	if err := pb.RegisterEnvironmentsHandler(ctx, mux, conn); err != nil {
 		return nil, err
 	}
 

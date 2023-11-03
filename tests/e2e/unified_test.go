@@ -16,9 +16,12 @@ package e2e
 
 import (
 	"context"
+	"fmt"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strconv"
+	"strings"
 	"testing"
 	"time"
 
@@ -181,6 +184,20 @@ func TestAllInSeries(t *testing.T) {
 						return false
 					})
 
+					eventSink.RemoveRequests(func(e *test.LogEntry) bool {
+						if strings.Contains(e.Request.URL, "/operations/") {
+							return true
+						}
+						return false
+					})
+
+					eventSink.RemoveRequests(func(e *test.LogEntry) bool {
+						if !strings.Contains(e.Request.URL, "https://composer.googleapis.com/") {
+							return true
+						}
+						return false
+					})
+
 					jsonMutators := []test.JSONMutator{}
 
 					jsonMutators = append(jsonMutators, func(obj map[string]any) {
@@ -201,6 +218,25 @@ func TestAllInSeries(t *testing.T) {
 							unstructured.SetNestedField(obj, "abcdef0123A=", "etag")
 						}
 					})
+
+					for _, timeField := range []string{"createTime", "updateTime", "metadata.createTime"} {
+						path := strings.Split(timeField, ".")
+						jsonMutators = append(jsonMutators, func(obj map[string]any) {
+							s, found, _ := unstructured.NestedString(obj, path...)
+							if found {
+								s = regexp.MustCompile(`\d`).ReplaceAllString(s, "0")
+								unstructured.SetNestedField(obj, s, path...)
+							}
+						})
+					}
+
+					uuids := make(map[string]bool)
+					jsonMutators = append(jsonMutators, func(obj map[string]any) {
+						v, _, _ := unstructured.NestedString(obj, "uuid")
+						if v != "" {
+							uuids[v] = true
+						}
+					})
 					eventSink.PrettifyJSON(jsonMutators...)
 
 					eventSink.RemoveHTTPResponseHeader("Date")
@@ -211,6 +247,20 @@ func TestAllInSeries(t *testing.T) {
 					normalizers = append(normalizers, h.IgnoreComments)
 					normalizers = append(normalizers, h.ReplaceString(uniqueID, "${uniqueId}"))
 					normalizers = append(normalizers, h.ReplaceString(project.ProjectID, "${projectId}"))
+
+					for uuid := range uuids {
+						normalizers = append(normalizers, h.ReplaceString(uuid, "${uuid}"))
+						normalizers = append(normalizers, h.ReplaceString(strings.ReplaceAll(uuid, "-", ""), "${uuid-no-hyphens}"))
+					}
+
+					// Magic composer.googleapis.com "short code"
+					{
+						for uuid := range uuids {
+							envName := fmt.Sprintf("%s-%.15s-%.8s", "us-central1", "minimal"+uniqueID, uuid)
+							normalizers = append(normalizers, h.ReplaceString(envName, "${composer-system-name}"))
+						}
+					}
+
 					h.CompareGoldenFile(expectedPath, got, normalizers...)
 				}
 			})
