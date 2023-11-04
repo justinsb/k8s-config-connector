@@ -203,8 +203,18 @@ func NewHarness(t *testing.T, ctx context.Context) *Harness {
 
 		kccConfig.HTTPClient = &http.Client{Transport: roundTripper}
 
+		oauth2HTTPClient := &http.Client{Transport: roundTripper}
+
+		// Log DCL requests
+		if artifacts := os.Getenv("ARTIFACTS"); artifacts != "" {
+			outputDir := filepath.Join(artifacts, "http-logs")
+
+			t := test.NewHTTPRecorder(oauth2HTTPClient.Transport, outputDir, eventSinks)
+			oauth2HTTPClient = &http.Client{Transport: t}
+		}
+
 		// Also hook the oauth2 library
-		h.Ctx = context.WithValue(h.Ctx, oauth2.HTTPClient, kccConfig.HTTPClient)
+		h.Ctx = context.WithValue(h.Ctx, oauth2.HTTPClient, oauth2HTTPClient)
 
 		h.gcpAccessToken = "dummytoken"
 		kccConfig.GCPAccessToken = h.gcpAccessToken
@@ -212,6 +222,10 @@ func NewHarness(t *testing.T, ctx context.Context) *Harness {
 		t.Logf("targeting real GCP")
 	} else {
 		t.Fatalf("E2E_GCP_TARGET=%q not supported", targetGCP)
+	}
+
+	kccConfig.ManagerOptions.BaseContext = func() context.Context {
+		return h.Ctx
 	}
 
 	// Log DCL requests
