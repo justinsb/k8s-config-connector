@@ -22,6 +22,7 @@ import (
 
 	dclcontroller "github.com/GoogleCloudPlatform/k8s-config-connector/pkg/controller/dcl"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/pkg/controller/deletiondefender"
+	"github.com/GoogleCloudPlatform/k8s-config-connector/pkg/controller/direct/composer/composerenvironment"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/pkg/controller/gsakeysecretgenerator"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/pkg/controller/iam/auditconfig"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/pkg/controller/iam/partialpolicy"
@@ -179,6 +180,11 @@ func RegisterDefaultController(r *ReconcileRegistration, crd *apiextensions.Cust
 		if err := auditconfig.Add(r.mgr, r.provider, r.smLoader, r.dclConverter, r.dclConfig); err != nil {
 			return nil, err
 		}
+	case "ComposerEnvironment":
+		if err := composerenvironment.Add(r.mgr, r.provider, r.smLoader, r.dclConverter, r.dclConfig); err != nil {
+			return nil, err
+		}
+
 	default:
 		// register controllers for dcl-based CRDs
 		if val, ok := crd.Labels[k8s.DCL2CRDLabel]; ok && val == "true" {
