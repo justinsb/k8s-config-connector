@@ -48,6 +48,7 @@ func GetMockClient(t *testing.T) client.Client {
 	if err := v1beta1.AddToScheme(scheme); err != nil {
 		t.Fatalf("failed to add to scheme: %v", err)
 	}
+	// TODO: Create an envtest style CRD loader ... that's pretty nice!
 	k8s.RegisterType(v1beta1.ConfigConnectorContextGroupVersionKind, "configconnectorcontexts", meta.RESTScopeNamespace)
 	k8s.RegisterType(v1beta1.ConfigConnectorGroupVersionKind, "configconnectors", meta.RESTScopeRoot)
 
@@ -74,6 +75,10 @@ func GetMockClient(t *testing.T) client.Client {
 	t.Cleanup(func() {
 		cancel()
 	})
+
+	if !mgr.GetCache().WaitForCacheSync(ctx) {
+		t.Fatalf("cache did not sync")
+	}
 
 	return mgr.GetClient()
 }

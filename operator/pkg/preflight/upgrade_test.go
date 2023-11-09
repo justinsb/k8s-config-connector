@@ -21,7 +21,7 @@ import (
 	"testing"
 
 	"github.com/GoogleCloudPlatform/k8s-config-connector/operator/pkg/manifest"
-	testmain "github.com/GoogleCloudPlatform/k8s-config-connector/operator/pkg/test/main"
+	"github.com/GoogleCloudPlatform/k8s-config-connector/operator/pkg/test/mocks"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/operator/pkg/test/util/asserts"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -210,9 +210,11 @@ func TestUpgradeChecker_Preflight(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 			t.Parallel()
 			ctx := context.Background()
-			mgr, stop := testmain.StartTestManagerFromNewTestEnv()
-			defer stop()
-			k8s := mgr.GetClient()
+			// mgr, stop := testmain.StartTestManagerFromNewTestEnv()
+			// defer stop()
+			// k8s := mgr.GetClient()
+
+			k8s := mocks.GetMockClient(t)
 
 			// if err := k8s.Create(ctx, tc.cc); err != nil {
 			// 	t.Fatalf("error creating %v %v: %v", tc.cc.Kind, tc.cc.Name, err)
@@ -232,9 +234,9 @@ func TestUpgradeChecker_Preflight(t *testing.T) {
 			// if err := k8s.Get(ctx, client.ObjectKey{Namespace: tc.cc.Namespace, Name: tc.cc.Name}, latestCC); err != nil {
 			// 	t.Fatalf("error getting %v %v: %v", tc.cc.Kind, tc.cc.Name, err)
 			// }
-			if !mgr.GetCache().WaitForCacheSync(ctx) {
-				t.Fatalf("cache did not sync")
-			}
+			// if !mgr.GetCache().WaitForCacheSync(ctx) {
+			// 	t.Fatalf("cache did not sync")
+			// }
 
 			repo := FakeRepo{
 				channel: tc.channel,

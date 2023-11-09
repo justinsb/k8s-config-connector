@@ -21,7 +21,7 @@ import (
 
 	corev1beta1 "github.com/GoogleCloudPlatform/k8s-config-connector/operator/pkg/apis/core/v1beta1"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/operator/pkg/k8s"
-	testmain "github.com/GoogleCloudPlatform/k8s-config-connector/operator/pkg/test/main"
+	"github.com/GoogleCloudPlatform/k8s-config-connector/operator/pkg/test/mocks"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/operator/pkg/test/util/asserts"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
@@ -53,9 +53,10 @@ func TestNameChecker_ConfigConnector(t *testing.T) {
 		},
 	}
 
-	mgr, stop := testmain.StartTestManagerFromNewTestEnv()
-	defer stop()
-	client := mgr.GetClient()
+	// mgr, stop := testmain.StartTestManagerFromNewTestEnv()
+	// defer stop()
+	// client := mgr.GetClient()
+	client := mocks.GetMockClient(t)
 
 	checker := NewNameChecker(client, k8s.ConfigConnectorAllowedName)
 	for _, tc := range tests {
@@ -95,9 +96,10 @@ func TestNameChecker_ConfigConnectorContext(t *testing.T) {
 		},
 	}
 
-	mgr, stop := testmain.StartTestManagerFromNewTestEnv()
-	defer stop()
-	client := mgr.GetClient()
+	// mgr, stop := testmain.StartTestManagerFromNewTestEnv()
+	// defer stop()
+	// client := mgr.GetClient()
+	client := mocks.GetMockClient(t)
 
 	checker := NewNameChecker(client, k8s.ConfigConnectorContextAllowedName)
 	for _, tc := range tests {
