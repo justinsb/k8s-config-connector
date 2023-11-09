@@ -21,7 +21,7 @@ import (
 	"testing"
 
 	"github.com/GoogleCloudPlatform/k8s-config-connector/operator/pkg/manifest"
-	"github.com/GoogleCloudPlatform/k8s-config-connector/operator/pkg/test/mocks"
+	testmain "github.com/GoogleCloudPlatform/k8s-config-connector/operator/pkg/test/main"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/operator/pkg/test/util/asserts"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -75,12 +75,12 @@ func TestUpgradeChecker_Preflight(t *testing.T) {
 		},
 	}
 	tests := []struct {
-		name    string
-		cc      *corev1beta1.ConfigConnector
-		ns      *corev1.Namespace
-		channel *loaders.Channel
-		err     error
-		delete  bool
+		name     string
+		cc       *corev1beta1.ConfigConnector
+		ns       *corev1.Namespace
+		channel  *loaders.Channel
+		err      error
+		deleteCC bool
 	}{
 		{
 			name:    "no existing instance, can upgrade/deploy the new version",
@@ -200,7 +200,8 @@ func TestUpgradeChecker_Preflight(t *testing.T) {
 					},
 				},
 			},
-			err: nil,
+			deleteCC: true,
+			err:      nil,
 		},
 	}
 
@@ -209,19 +210,36 @@ func TestUpgradeChecker_Preflight(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 			t.Parallel()
 			ctx := context.Background()
-			client := mocks.GetMockClient(t)
-			if err := client.Create(ctx, tc.cc); err != nil {
-				t.Fatalf("error creating %v %v: %v", tc.cc.Kind, tc.cc.Name, err)
-			}
+			mgr, stop := testmain.StartTestManagerFromNewTestEnv()
+			defer stop()
+			k8s := mgr.GetClient()
+
+			// if err := k8s.Create(ctx, tc.cc); err != nil {
+			// 	t.Fatalf("error creating %v %v: %v", tc.cc.Kind, tc.cc.Name, err)
+			// }
 			if tc.ns != nil {
-				if err := client.Create(ctx, tc.ns); err != nil {
+				if err := k8s.Create(ctx, tc.ns); err != nil {
 					t.Fatalf("error creating %v %v: %v", tc.ns.Kind, tc.cc.Name, err)
 				}
 			}
+			// if tc.deleteCC {
+			// 	if err := k8s.Delete(ctx, tc.cc); err != nil {
+			// 		t.Fatalf("error deleting %v %v: %v", tc.cc.Kind, tc.cc.Name, err)
+			// 	}
+			// }
+
+			// latestCC := &corev1beta1.ConfigConnector{}
+			// if err := k8s.Get(ctx, client.ObjectKey{Namespace: tc.cc.Namespace, Name: tc.cc.Name}, latestCC); err != nil {
+			// 	t.Fatalf("error getting %v %v: %v", tc.cc.Kind, tc.cc.Name, err)
+			// }
+			if !mgr.GetCache().WaitForCacheSync(ctx) {
+				t.Fatalf("cache did not sync")
+			}
+
 			repo := FakeRepo{
 				channel: tc.channel,
 			}
-			u := NewUpgradeChecker(client, &repo)
+			u := NewUpgradeChecker(k8s, &repo)
 			err := u.Preflight(ctx, tc.cc)
 			asserts.AssertErrorIsExpected(t, err, tc.err)
 		})

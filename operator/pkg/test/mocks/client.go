@@ -1,8 +1,12 @@
 package mocks
 
 import (
+	"context"
 	"testing"
 
+	"github.com/GoogleCloudPlatform/k8s-config-connector/operator/pkg/apis/core/v1beta1"
+	corev1 "k8s.io/api/core/v1"
+	"k8s.io/apimachinery/pkg/api/meta"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/client-go/rest"
 	"sigs.k8s.io/controller-runtime/pkg/client"
@@ -11,7 +15,9 @@ import (
 )
 
 func GetMockClient(t *testing.T) client.Client {
-	k8s, err := mockkubeapiserver.NewMockKubeAPIServer(":http")
+	ctx := context.TODO()
+
+	k8s, err := mockkubeapiserver.NewMockKubeAPIServer(":0")
 	if err != nil {
 		t.Fatalf("error building mock kube-apiserver: %v", err)
 	}
@@ -33,13 +39,41 @@ func GetMockClient(t *testing.T) client.Client {
 
 	restConfig := &rest.Config{
 		Host: addr.String(),
+		ContentConfig: rest.ContentConfig{
+			ContentType: "application/json",
+		},
+	}
+
+	scheme := runtime.NewScheme()
+	if err := v1beta1.AddToScheme(scheme); err != nil {
+		t.Fatalf("failed to add to scheme: %v", err)
+	}
+	k8s.RegisterType(v1beta1.ConfigConnectorContextGroupVersionKind, "configconnectorcontexts", meta.RESTScopeNamespace)
+	k8s.RegisterType(v1beta1.ConfigConnectorGroupVersionKind, "configconnectors", meta.RESTScopeRoot)
+
+	if err := corev1.AddToScheme(scheme); err != nil {
+		t.Fatalf("failed to add to scheme: %v", err)
 	}
 
 	mgr, err := manager.New(restConfig, manager.Options{
-		Scheme: runtime.NewScheme(),
+		Scheme:                 scheme,
+		HealthProbeBindAddress: "0",
+		MetricsBindAddress:     "0",
 	})
 	if err != nil {
 		t.Fatalf("error building manager: %v", err)
 	}
+
+	ctx, cancel := context.WithCancel(ctx)
+	go func() {
+		if err := mgr.Start(ctx); err != nil {
+			t.Logf("failed to start manager: %v", err)
+		}
+	}()
+
+	t.Cleanup(func() {
+		cancel()
+	})
+
 	return mgr.GetClient()
 }

@@ -19,6 +19,7 @@ import (
 	"fmt"
 
 	"k8s.io/apimachinery/pkg/api/meta"
+	"k8s.io/apimachinery/pkg/runtime/schema"
 
 	"k8s.io/apimachinery/pkg/runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
@@ -70,6 +71,18 @@ func (e *errorClient) RESTMapper() meta.RESTMapper {
 	panic("unexpected call to client.RESTMapper(...)")
 }
 
-func (e *errorClient) Status() client.StatusWriter {
-	return e
+func (e *errorClient) GroupVersionKindFor(obj runtime.Object) (schema.GroupVersionKind, error) {
+	panic("unexpected call to client.GroupVersionKindFor(...)")
+}
+
+func (e *errorClient) IsObjectNamespaced(obj runtime.Object) (bool, error) {
+	panic("unexpected call to client.IsObjectNamespaced(...)")
+}
+
+func (e *errorClient) Status() client.SubResourceWriter {
+	panic("unexpected call to client.Status(...)")
+}
+
+func (e *errorClient) SubResource(subResource string) client.SubResourceClient {
+	panic("unexpected call to client.SubResource(...)")
 }
