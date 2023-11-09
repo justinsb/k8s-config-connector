@@ -577,7 +577,7 @@ func TestHandleReconcileFailed(t *testing.T) {
 	mockEventRecorder.AssertEventRecorded(kind, nn, v1.EventTypeWarning, k8s.UpdateFailed, expectedErrMsg)
 
 	newCCC := &corev1beta1.ConfigConnectorContext{}
-	if err := c.Get(ctx, nn, newCCC); err != nil {
+	if err := mgr.GetAPIReader().Get(ctx, nn, newCCC); err != nil {
 		t.Errorf("failed to get ConfigConnectorContext after attempt to handle failed reconciliation: %v", err)
 	}
 	status := newCCC.GetCommonStatus()
@@ -626,7 +626,7 @@ func TestHandleReconcileSucceeded(t *testing.T) {
 	mockEventRecorder.AssertEventRecorded(kind, nn, v1.EventTypeNormal, k8s.UpToDate, k8s.UpToDateMessage)
 
 	newCCC := &corev1beta1.ConfigConnectorContext{}
-	if err := c.Get(ctx, nn, newCCC); err != nil {
+	if err := mgr.GetAPIReader().Get(ctx, nn, newCCC); err != nil {
 		t.Errorf("failed to get ConfigConnectorContext after attempt to handle failed reconciliation: %v", err)
 	}
 	status := newCCC.GetCommonStatus()
