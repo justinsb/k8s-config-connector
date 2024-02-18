@@ -47,7 +47,7 @@ func request_AnywhereCachesServer_DisableAnywhereCache_0(ctx context.Context, ma
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -57,7 +57,7 @@ func request_AnywhereCachesServer_DisableAnywhereCache_0(ctx context.Context, ma
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "anywhere_cache_id")
 	}
 
-	protoReq.AnywhereCacheId, err = runtime.String(val)
+	protoReq.AnywhereCacheId, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "anywhere_cache_id", err)
 	}
@@ -83,7 +83,7 @@ func local_request_AnywhereCachesServer_DisableAnywhereCache_0(ctx context.Conte
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -93,7 +93,7 @@ func local_request_AnywhereCachesServer_DisableAnywhereCache_0(ctx context.Conte
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "anywhere_cache_id")
 	}
 
-	protoReq.AnywhereCacheId, err = runtime.String(val)
+	protoReq.AnywhereCacheId, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "anywhere_cache_id", err)
 	}
@@ -119,7 +119,7 @@ func request_AnywhereCachesServer_GetAnywhereCache_0(ctx context.Context, marsha
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -129,7 +129,7 @@ func request_AnywhereCachesServer_GetAnywhereCache_0(ctx context.Context, marsha
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "anywhere_cache_id")
 	}
 
-	protoReq.AnywhereCacheId, err = runtime.String(val)
+	protoReq.AnywhereCacheId, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "anywhere_cache_id", err)
 	}
@@ -155,7 +155,7 @@ func local_request_AnywhereCachesServer_GetAnywhereCache_0(ctx context.Context, 
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -165,7 +165,7 @@ func local_request_AnywhereCachesServer_GetAnywhereCache_0(ctx context.Context, 
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "anywhere_cache_id")
 	}
 
-	protoReq.AnywhereCacheId, err = runtime.String(val)
+	protoReq.AnywhereCacheId, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "anywhere_cache_id", err)
 	}
@@ -199,7 +199,7 @@ func request_AnywhereCachesServer_InsertAnywhereCache_0(ctx context.Context, mar
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -233,7 +233,7 @@ func local_request_AnywhereCachesServer_InsertAnywhereCache_0(ctx context.Contex
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -259,7 +259,7 @@ func request_AnywhereCachesServer_ListAnywhereCaches_0(ctx context.Context, mars
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -285,7 +285,7 @@ func local_request_AnywhereCachesServer_ListAnywhereCaches_0(ctx context.Context
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -311,7 +311,7 @@ func request_AnywhereCachesServer_PauseAnywhereCache_0(ctx context.Context, mars
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -321,7 +321,7 @@ func request_AnywhereCachesServer_PauseAnywhereCache_0(ctx context.Context, mars
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "anywhere_cache_id")
 	}
 
-	protoReq.AnywhereCacheId, err = runtime.String(val)
+	protoReq.AnywhereCacheId, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "anywhere_cache_id", err)
 	}
@@ -347,7 +347,7 @@ func local_request_AnywhereCachesServer_PauseAnywhereCache_0(ctx context.Context
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -357,7 +357,7 @@ func local_request_AnywhereCachesServer_PauseAnywhereCache_0(ctx context.Context
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "anywhere_cache_id")
 	}
 
-	protoReq.AnywhereCacheId, err = runtime.String(val)
+	protoReq.AnywhereCacheId, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "anywhere_cache_id", err)
 	}
@@ -383,7 +383,7 @@ func request_AnywhereCachesServer_ResumeAnywhereCache_0(ctx context.Context, mar
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -393,7 +393,7 @@ func request_AnywhereCachesServer_ResumeAnywhereCache_0(ctx context.Context, mar
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "anywhere_cache_id")
 	}
 
-	protoReq.AnywhereCacheId, err = runtime.String(val)
+	protoReq.AnywhereCacheId, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "anywhere_cache_id", err)
 	}
@@ -419,7 +419,7 @@ func local_request_AnywhereCachesServer_ResumeAnywhereCache_0(ctx context.Contex
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -429,7 +429,7 @@ func local_request_AnywhereCachesServer_ResumeAnywhereCache_0(ctx context.Contex
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "anywhere_cache_id")
 	}
 
-	protoReq.AnywhereCacheId, err = runtime.String(val)
+	protoReq.AnywhereCacheId, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "anywhere_cache_id", err)
 	}
@@ -463,7 +463,7 @@ func request_AnywhereCachesServer_UpdateAnywhereCache_0(ctx context.Context, mar
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -473,7 +473,7 @@ func request_AnywhereCachesServer_UpdateAnywhereCache_0(ctx context.Context, mar
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "anywhere_cache_id")
 	}
 
-	protoReq.AnywhereCacheId, err = runtime.String(val)
+	protoReq.AnywhereCacheId, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "anywhere_cache_id", err)
 	}
@@ -507,7 +507,7 @@ func local_request_AnywhereCachesServer_UpdateAnywhereCache_0(ctx context.Contex
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -517,7 +517,7 @@ func local_request_AnywhereCachesServer_UpdateAnywhereCache_0(ctx context.Contex
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "anywhere_cache_id")
 	}
 
-	protoReq.AnywhereCacheId, err = runtime.String(val)
+	protoReq.AnywhereCacheId, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "anywhere_cache_id", err)
 	}
@@ -543,7 +543,7 @@ func request_BucketAccessControlsServer_DeleteBucketAccessControl_0(ctx context.
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -553,7 +553,7 @@ func request_BucketAccessControlsServer_DeleteBucketAccessControl_0(ctx context.
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "entity")
 	}
 
-	protoReq.Entity, err = runtime.String(val)
+	protoReq.Entity, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "entity", err)
 	}
@@ -579,7 +579,7 @@ func local_request_BucketAccessControlsServer_DeleteBucketAccessControl_0(ctx co
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -589,7 +589,7 @@ func local_request_BucketAccessControlsServer_DeleteBucketAccessControl_0(ctx co
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "entity")
 	}
 
-	protoReq.Entity, err = runtime.String(val)
+	protoReq.Entity, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "entity", err)
 	}
@@ -615,7 +615,7 @@ func request_BucketAccessControlsServer_GetBucketAccessControl_0(ctx context.Con
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -625,7 +625,7 @@ func request_BucketAccessControlsServer_GetBucketAccessControl_0(ctx context.Con
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "entity")
 	}
 
-	protoReq.Entity, err = runtime.String(val)
+	protoReq.Entity, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "entity", err)
 	}
@@ -651,7 +651,7 @@ func local_request_BucketAccessControlsServer_GetBucketAccessControl_0(ctx conte
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -661,7 +661,7 @@ func local_request_BucketAccessControlsServer_GetBucketAccessControl_0(ctx conte
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "entity")
 	}
 
-	protoReq.Entity, err = runtime.String(val)
+	protoReq.Entity, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "entity", err)
 	}
@@ -695,7 +695,7 @@ func request_BucketAccessControlsServer_InsertBucketAccessControl_0(ctx context.
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -729,7 +729,7 @@ func local_request_BucketAccessControlsServer_InsertBucketAccessControl_0(ctx co
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -755,7 +755,7 @@ func request_BucketAccessControlsServer_ListBucketAccessControls_0(ctx context.C
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -781,7 +781,7 @@ func local_request_BucketAccessControlsServer_ListBucketAccessControls_0(ctx con
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -815,7 +815,7 @@ func request_BucketAccessControlsServer_PatchBucketAccessControl_0(ctx context.C
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -825,7 +825,7 @@ func request_BucketAccessControlsServer_PatchBucketAccessControl_0(ctx context.C
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "entity")
 	}
 
-	protoReq.Entity, err = runtime.String(val)
+	protoReq.Entity, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "entity", err)
 	}
@@ -859,7 +859,7 @@ func local_request_BucketAccessControlsServer_PatchBucketAccessControl_0(ctx con
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -869,7 +869,7 @@ func local_request_BucketAccessControlsServer_PatchBucketAccessControl_0(ctx con
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "entity")
 	}
 
-	protoReq.Entity, err = runtime.String(val)
+	protoReq.Entity, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "entity", err)
 	}
@@ -903,7 +903,7 @@ func request_BucketAccessControlsServer_UpdateBucketAccessControl_0(ctx context.
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -913,7 +913,7 @@ func request_BucketAccessControlsServer_UpdateBucketAccessControl_0(ctx context.
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "entity")
 	}
 
-	protoReq.Entity, err = runtime.String(val)
+	protoReq.Entity, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "entity", err)
 	}
@@ -947,7 +947,7 @@ func local_request_BucketAccessControlsServer_UpdateBucketAccessControl_0(ctx co
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -957,7 +957,7 @@ func local_request_BucketAccessControlsServer_UpdateBucketAccessControl_0(ctx co
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "entity")
 	}
 
-	protoReq.Entity, err = runtime.String(val)
+	protoReq.Entity, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "entity", err)
 	}
@@ -983,7 +983,7 @@ func request_BucketsServer_DeleteBucket_0(ctx context.Context, marshaler runtime
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "name")
 	}
 
-	protoReq.Name, err = runtime.String(val)
+	protoReq.Name, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "name", err)
 	}
@@ -1009,7 +1009,7 @@ func local_request_BucketsServer_DeleteBucket_0(ctx context.Context, marshaler r
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "name")
 	}
 
-	protoReq.Name, err = runtime.String(val)
+	protoReq.Name, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "name", err)
 	}
@@ -1035,7 +1035,7 @@ func request_BucketsServer_GetBucket_0(ctx context.Context, marshaler runtime.Ma
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "name")
 	}
 
-	protoReq.Name, err = runtime.String(val)
+	protoReq.Name, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "name", err)
 	}
@@ -1061,7 +1061,7 @@ func local_request_BucketsServer_GetBucket_0(ctx context.Context, marshaler runt
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "name")
 	}
 
-	protoReq.Name, err = runtime.String(val)
+	protoReq.Name, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "name", err)
 	}
@@ -1139,7 +1139,7 @@ func request_BucketsServer_LockRetentionPolicyBucket_0(ctx context.Context, mars
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "name")
 	}
 
-	protoReq.Name, err = runtime.String(val)
+	protoReq.Name, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "name", err)
 	}
@@ -1165,7 +1165,7 @@ func local_request_BucketsServer_LockRetentionPolicyBucket_0(ctx context.Context
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "name")
 	}
 
-	protoReq.Name, err = runtime.String(val)
+	protoReq.Name, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "name", err)
 	}
@@ -1199,7 +1199,7 @@ func request_BucketsServer_PatchBucket_0(ctx context.Context, marshaler runtime.
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "name")
 	}
 
-	protoReq.Name, err = runtime.String(val)
+	protoReq.Name, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "name", err)
 	}
@@ -1233,7 +1233,7 @@ func local_request_BucketsServer_PatchBucket_0(ctx context.Context, marshaler ru
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "name")
 	}
 
-	protoReq.Name, err = runtime.String(val)
+	protoReq.Name, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "name", err)
 	}
@@ -1267,7 +1267,7 @@ func request_BucketsServer_UpdateBucket_0(ctx context.Context, marshaler runtime
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "name")
 	}
 
-	protoReq.Name, err = runtime.String(val)
+	protoReq.Name, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "name", err)
 	}
@@ -1301,7 +1301,7 @@ func local_request_BucketsServer_UpdateBucket_0(ctx context.Context, marshaler r
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "name")
 	}
 
-	protoReq.Name, err = runtime.String(val)
+	protoReq.Name, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "name", err)
 	}
@@ -1361,7 +1361,7 @@ func request_DefaultObjectAccessControlsServer_DeleteDefaultObjectAccessControl_
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -1371,7 +1371,7 @@ func request_DefaultObjectAccessControlsServer_DeleteDefaultObjectAccessControl_
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "entity")
 	}
 
-	protoReq.Entity, err = runtime.String(val)
+	protoReq.Entity, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "entity", err)
 	}
@@ -1397,7 +1397,7 @@ func local_request_DefaultObjectAccessControlsServer_DeleteDefaultObjectAccessCo
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -1407,7 +1407,7 @@ func local_request_DefaultObjectAccessControlsServer_DeleteDefaultObjectAccessCo
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "entity")
 	}
 
-	protoReq.Entity, err = runtime.String(val)
+	protoReq.Entity, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "entity", err)
 	}
@@ -1433,7 +1433,7 @@ func request_DefaultObjectAccessControlsServer_GetDefaultObjectAccessControl_0(c
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -1443,7 +1443,7 @@ func request_DefaultObjectAccessControlsServer_GetDefaultObjectAccessControl_0(c
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "entity")
 	}
 
-	protoReq.Entity, err = runtime.String(val)
+	protoReq.Entity, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "entity", err)
 	}
@@ -1469,7 +1469,7 @@ func local_request_DefaultObjectAccessControlsServer_GetDefaultObjectAccessContr
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -1479,7 +1479,7 @@ func local_request_DefaultObjectAccessControlsServer_GetDefaultObjectAccessContr
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "entity")
 	}
 
-	protoReq.Entity, err = runtime.String(val)
+	protoReq.Entity, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "entity", err)
 	}
@@ -1513,7 +1513,7 @@ func request_DefaultObjectAccessControlsServer_InsertDefaultObjectAccessControl_
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -1547,7 +1547,7 @@ func local_request_DefaultObjectAccessControlsServer_InsertDefaultObjectAccessCo
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -1573,7 +1573,7 @@ func request_DefaultObjectAccessControlsServer_ListDefaultObjectAccessControls_0
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -1599,7 +1599,7 @@ func local_request_DefaultObjectAccessControlsServer_ListDefaultObjectAccessCont
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -1633,7 +1633,7 @@ func request_DefaultObjectAccessControlsServer_PatchDefaultObjectAccessControl_0
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -1643,7 +1643,7 @@ func request_DefaultObjectAccessControlsServer_PatchDefaultObjectAccessControl_0
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "entity")
 	}
 
-	protoReq.Entity, err = runtime.String(val)
+	protoReq.Entity, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "entity", err)
 	}
@@ -1677,7 +1677,7 @@ func local_request_DefaultObjectAccessControlsServer_PatchDefaultObjectAccessCon
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -1687,7 +1687,7 @@ func local_request_DefaultObjectAccessControlsServer_PatchDefaultObjectAccessCon
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "entity")
 	}
 
-	protoReq.Entity, err = runtime.String(val)
+	protoReq.Entity, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "entity", err)
 	}
@@ -1721,7 +1721,7 @@ func request_DefaultObjectAccessControlsServer_UpdateDefaultObjectAccessControl_
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -1731,7 +1731,7 @@ func request_DefaultObjectAccessControlsServer_UpdateDefaultObjectAccessControl_
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "entity")
 	}
 
-	protoReq.Entity, err = runtime.String(val)
+	protoReq.Entity, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "entity", err)
 	}
@@ -1765,7 +1765,7 @@ func local_request_DefaultObjectAccessControlsServer_UpdateDefaultObjectAccessCo
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -1775,7 +1775,7 @@ func local_request_DefaultObjectAccessControlsServer_UpdateDefaultObjectAccessCo
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "entity")
 	}
 
-	protoReq.Entity, err = runtime.String(val)
+	protoReq.Entity, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "entity", err)
 	}
@@ -1801,7 +1801,7 @@ func request_FoldersServer_DeleteFolder_0(ctx context.Context, marshaler runtime
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -1811,7 +1811,7 @@ func request_FoldersServer_DeleteFolder_0(ctx context.Context, marshaler runtime
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "name")
 	}
 
-	protoReq.Name, err = runtime.String(val)
+	protoReq.Name, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "name", err)
 	}
@@ -1837,7 +1837,7 @@ func local_request_FoldersServer_DeleteFolder_0(ctx context.Context, marshaler r
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -1847,7 +1847,7 @@ func local_request_FoldersServer_DeleteFolder_0(ctx context.Context, marshaler r
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "name")
 	}
 
-	protoReq.Name, err = runtime.String(val)
+	protoReq.Name, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "name", err)
 	}
@@ -1873,7 +1873,7 @@ func request_FoldersServer_GetFolder_0(ctx context.Context, marshaler runtime.Ma
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -1883,7 +1883,7 @@ func request_FoldersServer_GetFolder_0(ctx context.Context, marshaler runtime.Ma
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "name")
 	}
 
-	protoReq.Name, err = runtime.String(val)
+	protoReq.Name, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "name", err)
 	}
@@ -1909,7 +1909,7 @@ func local_request_FoldersServer_GetFolder_0(ctx context.Context, marshaler runt
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -1919,7 +1919,7 @@ func local_request_FoldersServer_GetFolder_0(ctx context.Context, marshaler runt
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "name")
 	}
 
-	protoReq.Name, err = runtime.String(val)
+	protoReq.Name, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "name", err)
 	}
@@ -1953,7 +1953,7 @@ func request_FoldersServer_InsertFolder_0(ctx context.Context, marshaler runtime
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -1987,7 +1987,7 @@ func local_request_FoldersServer_InsertFolder_0(ctx context.Context, marshaler r
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -2013,7 +2013,7 @@ func request_FoldersServer_ListFolders_0(ctx context.Context, marshaler runtime.
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -2039,7 +2039,7 @@ func local_request_FoldersServer_ListFolders_0(ctx context.Context, marshaler ru
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -2065,7 +2065,7 @@ func request_FoldersServer_RenameFolder_0(ctx context.Context, marshaler runtime
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -2075,7 +2075,7 @@ func request_FoldersServer_RenameFolder_0(ctx context.Context, marshaler runtime
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "source_folder")
 	}
 
-	protoReq.SourceFolder, err = runtime.String(val)
+	protoReq.SourceFolder, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "source_folder", err)
 	}
@@ -2085,7 +2085,7 @@ func request_FoldersServer_RenameFolder_0(ctx context.Context, marshaler runtime
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "destination_folder")
 	}
 
-	protoReq.DestinationFolder, err = runtime.String(val)
+	protoReq.DestinationFolder, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "destination_folder", err)
 	}
@@ -2111,7 +2111,7 @@ func local_request_FoldersServer_RenameFolder_0(ctx context.Context, marshaler r
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -2121,7 +2121,7 @@ func local_request_FoldersServer_RenameFolder_0(ctx context.Context, marshaler r
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "source_folder")
 	}
 
-	protoReq.SourceFolder, err = runtime.String(val)
+	protoReq.SourceFolder, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "source_folder", err)
 	}
@@ -2131,7 +2131,7 @@ func local_request_FoldersServer_RenameFolder_0(ctx context.Context, marshaler r
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "destination_folder")
 	}
 
-	protoReq.DestinationFolder, err = runtime.String(val)
+	protoReq.DestinationFolder, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "destination_folder", err)
 	}
@@ -2157,7 +2157,7 @@ func request_ManagedFoldersServer_DeleteManagedFolder_0(ctx context.Context, mar
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -2167,7 +2167,7 @@ func request_ManagedFoldersServer_DeleteManagedFolder_0(ctx context.Context, mar
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "name")
 	}
 
-	protoReq.Name, err = runtime.String(val)
+	protoReq.Name, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "name", err)
 	}
@@ -2193,7 +2193,7 @@ func local_request_ManagedFoldersServer_DeleteManagedFolder_0(ctx context.Contex
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -2203,7 +2203,7 @@ func local_request_ManagedFoldersServer_DeleteManagedFolder_0(ctx context.Contex
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "name")
 	}
 
-	protoReq.Name, err = runtime.String(val)
+	protoReq.Name, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "name", err)
 	}
@@ -2229,7 +2229,7 @@ func request_ManagedFoldersServer_GetManagedFolder_0(ctx context.Context, marsha
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -2239,7 +2239,7 @@ func request_ManagedFoldersServer_GetManagedFolder_0(ctx context.Context, marsha
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "name")
 	}
 
-	protoReq.Name, err = runtime.String(val)
+	protoReq.Name, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "name", err)
 	}
@@ -2265,7 +2265,7 @@ func local_request_ManagedFoldersServer_GetManagedFolder_0(ctx context.Context, 
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -2275,7 +2275,7 @@ func local_request_ManagedFoldersServer_GetManagedFolder_0(ctx context.Context, 
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "name")
 	}
 
-	protoReq.Name, err = runtime.String(val)
+	protoReq.Name, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "name", err)
 	}
@@ -2309,7 +2309,7 @@ func request_ManagedFoldersServer_InsertManagedFolder_0(ctx context.Context, mar
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -2343,7 +2343,7 @@ func local_request_ManagedFoldersServer_InsertManagedFolder_0(ctx context.Contex
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -2369,7 +2369,7 @@ func request_ManagedFoldersServer_ListManagedFolders_0(ctx context.Context, mars
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -2395,7 +2395,7 @@ func local_request_ManagedFoldersServer_ListManagedFolders_0(ctx context.Context
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -2421,7 +2421,7 @@ func request_NotificationsServer_DeleteNotification_0(ctx context.Context, marsh
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -2431,7 +2431,7 @@ func request_NotificationsServer_DeleteNotification_0(ctx context.Context, marsh
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "name")
 	}
 
-	protoReq.Name, err = runtime.String(val)
+	protoReq.Name, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "name", err)
 	}
@@ -2457,7 +2457,7 @@ func local_request_NotificationsServer_DeleteNotification_0(ctx context.Context,
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -2467,7 +2467,7 @@ func local_request_NotificationsServer_DeleteNotification_0(ctx context.Context,
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "name")
 	}
 
-	protoReq.Name, err = runtime.String(val)
+	protoReq.Name, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "name", err)
 	}
@@ -2493,7 +2493,7 @@ func request_NotificationsServer_GetNotification_0(ctx context.Context, marshale
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -2503,7 +2503,7 @@ func request_NotificationsServer_GetNotification_0(ctx context.Context, marshale
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "name")
 	}
 
-	protoReq.Name, err = runtime.String(val)
+	protoReq.Name, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "name", err)
 	}
@@ -2529,7 +2529,7 @@ func local_request_NotificationsServer_GetNotification_0(ctx context.Context, ma
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -2539,7 +2539,7 @@ func local_request_NotificationsServer_GetNotification_0(ctx context.Context, ma
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "name")
 	}
 
-	protoReq.Name, err = runtime.String(val)
+	protoReq.Name, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "name", err)
 	}
@@ -2573,7 +2573,7 @@ func request_NotificationsServer_InsertNotification_0(ctx context.Context, marsh
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -2607,7 +2607,7 @@ func local_request_NotificationsServer_InsertNotification_0(ctx context.Context,
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -2633,7 +2633,7 @@ func request_NotificationsServer_ListNotifications_0(ctx context.Context, marsha
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -2659,7 +2659,7 @@ func local_request_NotificationsServer_ListNotifications_0(ctx context.Context, 
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -2685,7 +2685,7 @@ func request_ObjectAccessControlsServer_DeleteObjectAccessControl_0(ctx context.
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -2695,7 +2695,7 @@ func request_ObjectAccessControlsServer_DeleteObjectAccessControl_0(ctx context.
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "object")
 	}
 
-	protoReq.Object, err = runtime.String(val)
+	protoReq.Object, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "object", err)
 	}
@@ -2705,7 +2705,7 @@ func request_ObjectAccessControlsServer_DeleteObjectAccessControl_0(ctx context.
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "entity")
 	}
 
-	protoReq.Entity, err = runtime.String(val)
+	protoReq.Entity, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "entity", err)
 	}
@@ -2731,7 +2731,7 @@ func local_request_ObjectAccessControlsServer_DeleteObjectAccessControl_0(ctx co
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -2741,7 +2741,7 @@ func local_request_ObjectAccessControlsServer_DeleteObjectAccessControl_0(ctx co
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "object")
 	}
 
-	protoReq.Object, err = runtime.String(val)
+	protoReq.Object, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "object", err)
 	}
@@ -2751,7 +2751,7 @@ func local_request_ObjectAccessControlsServer_DeleteObjectAccessControl_0(ctx co
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "entity")
 	}
 
-	protoReq.Entity, err = runtime.String(val)
+	protoReq.Entity, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "entity", err)
 	}
@@ -2777,7 +2777,7 @@ func request_ObjectAccessControlsServer_GetObjectAccessControl_0(ctx context.Con
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -2787,7 +2787,7 @@ func request_ObjectAccessControlsServer_GetObjectAccessControl_0(ctx context.Con
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "object")
 	}
 
-	protoReq.Object, err = runtime.String(val)
+	protoReq.Object, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "object", err)
 	}
@@ -2797,7 +2797,7 @@ func request_ObjectAccessControlsServer_GetObjectAccessControl_0(ctx context.Con
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "entity")
 	}
 
-	protoReq.Entity, err = runtime.String(val)
+	protoReq.Entity, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "entity", err)
 	}
@@ -2823,7 +2823,7 @@ func local_request_ObjectAccessControlsServer_GetObjectAccessControl_0(ctx conte
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -2833,7 +2833,7 @@ func local_request_ObjectAccessControlsServer_GetObjectAccessControl_0(ctx conte
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "object")
 	}
 
-	protoReq.Object, err = runtime.String(val)
+	protoReq.Object, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "object", err)
 	}
@@ -2843,7 +2843,7 @@ func local_request_ObjectAccessControlsServer_GetObjectAccessControl_0(ctx conte
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "entity")
 	}
 
-	protoReq.Entity, err = runtime.String(val)
+	protoReq.Entity, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "entity", err)
 	}
@@ -2877,7 +2877,7 @@ func request_ObjectAccessControlsServer_InsertObjectAccessControl_0(ctx context.
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -2887,7 +2887,7 @@ func request_ObjectAccessControlsServer_InsertObjectAccessControl_0(ctx context.
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "object")
 	}
 
-	protoReq.Object, err = runtime.String(val)
+	protoReq.Object, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "object", err)
 	}
@@ -2921,7 +2921,7 @@ func local_request_ObjectAccessControlsServer_InsertObjectAccessControl_0(ctx co
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -2931,7 +2931,7 @@ func local_request_ObjectAccessControlsServer_InsertObjectAccessControl_0(ctx co
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "object")
 	}
 
-	protoReq.Object, err = runtime.String(val)
+	protoReq.Object, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "object", err)
 	}
@@ -2957,7 +2957,7 @@ func request_ObjectAccessControlsServer_ListObjectAccessControls_0(ctx context.C
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -2967,7 +2967,7 @@ func request_ObjectAccessControlsServer_ListObjectAccessControls_0(ctx context.C
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "object")
 	}
 
-	protoReq.Object, err = runtime.String(val)
+	protoReq.Object, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "object", err)
 	}
@@ -2993,7 +2993,7 @@ func local_request_ObjectAccessControlsServer_ListObjectAccessControls_0(ctx con
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -3003,7 +3003,7 @@ func local_request_ObjectAccessControlsServer_ListObjectAccessControls_0(ctx con
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "object")
 	}
 
-	protoReq.Object, err = runtime.String(val)
+	protoReq.Object, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "object", err)
 	}
@@ -3037,7 +3037,7 @@ func request_ObjectAccessControlsServer_PatchObjectAccessControl_0(ctx context.C
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -3047,7 +3047,7 @@ func request_ObjectAccessControlsServer_PatchObjectAccessControl_0(ctx context.C
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "object")
 	}
 
-	protoReq.Object, err = runtime.String(val)
+	protoReq.Object, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "object", err)
 	}
@@ -3057,7 +3057,7 @@ func request_ObjectAccessControlsServer_PatchObjectAccessControl_0(ctx context.C
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "entity")
 	}
 
-	protoReq.Entity, err = runtime.String(val)
+	protoReq.Entity, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "entity", err)
 	}
@@ -3091,7 +3091,7 @@ func local_request_ObjectAccessControlsServer_PatchObjectAccessControl_0(ctx con
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -3101,7 +3101,7 @@ func local_request_ObjectAccessControlsServer_PatchObjectAccessControl_0(ctx con
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "object")
 	}
 
-	protoReq.Object, err = runtime.String(val)
+	protoReq.Object, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "object", err)
 	}
@@ -3111,7 +3111,7 @@ func local_request_ObjectAccessControlsServer_PatchObjectAccessControl_0(ctx con
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "entity")
 	}
 
-	protoReq.Entity, err = runtime.String(val)
+	protoReq.Entity, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "entity", err)
 	}
@@ -3145,7 +3145,7 @@ func request_ObjectAccessControlsServer_UpdateObjectAccessControl_0(ctx context.
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -3155,7 +3155,7 @@ func request_ObjectAccessControlsServer_UpdateObjectAccessControl_0(ctx context.
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "object")
 	}
 
-	protoReq.Object, err = runtime.String(val)
+	protoReq.Object, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "object", err)
 	}
@@ -3165,7 +3165,7 @@ func request_ObjectAccessControlsServer_UpdateObjectAccessControl_0(ctx context.
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "entity")
 	}
 
-	protoReq.Entity, err = runtime.String(val)
+	protoReq.Entity, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "entity", err)
 	}
@@ -3199,7 +3199,7 @@ func local_request_ObjectAccessControlsServer_UpdateObjectAccessControl_0(ctx co
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -3209,7 +3209,7 @@ func local_request_ObjectAccessControlsServer_UpdateObjectAccessControl_0(ctx co
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "object")
 	}
 
-	protoReq.Object, err = runtime.String(val)
+	protoReq.Object, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "object", err)
 	}
@@ -3219,7 +3219,7 @@ func local_request_ObjectAccessControlsServer_UpdateObjectAccessControl_0(ctx co
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "entity")
 	}
 
-	protoReq.Entity, err = runtime.String(val)
+	protoReq.Entity, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "entity", err)
 	}
@@ -3253,7 +3253,7 @@ func request_ObjectsServer_BulkRestoreObject_0(ctx context.Context, marshaler ru
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -3287,7 +3287,7 @@ func local_request_ObjectsServer_BulkRestoreObject_0(ctx context.Context, marsha
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -3321,7 +3321,7 @@ func request_ObjectsServer_ComposeObject_0(ctx context.Context, marshaler runtim
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "destination_bucket")
 	}
 
-	protoReq.DestinationBucket, err = runtime.String(val)
+	protoReq.DestinationBucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "destination_bucket", err)
 	}
@@ -3331,7 +3331,7 @@ func request_ObjectsServer_ComposeObject_0(ctx context.Context, marshaler runtim
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "destination_object")
 	}
 
-	protoReq.DestinationObject, err = runtime.String(val)
+	protoReq.DestinationObject, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "destination_object", err)
 	}
@@ -3365,7 +3365,7 @@ func local_request_ObjectsServer_ComposeObject_0(ctx context.Context, marshaler 
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "destination_bucket")
 	}
 
-	protoReq.DestinationBucket, err = runtime.String(val)
+	protoReq.DestinationBucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "destination_bucket", err)
 	}
@@ -3375,7 +3375,7 @@ func local_request_ObjectsServer_ComposeObject_0(ctx context.Context, marshaler 
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "destination_object")
 	}
 
-	protoReq.DestinationObject, err = runtime.String(val)
+	protoReq.DestinationObject, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "destination_object", err)
 	}
@@ -3409,7 +3409,7 @@ func request_ObjectsServer_CopyObject_0(ctx context.Context, marshaler runtime.M
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "source_bucket")
 	}
 
-	protoReq.SourceBucket, err = runtime.String(val)
+	protoReq.SourceBucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "source_bucket", err)
 	}
@@ -3419,7 +3419,7 @@ func request_ObjectsServer_CopyObject_0(ctx context.Context, marshaler runtime.M
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "source_object")
 	}
 
-	protoReq.SourceObject, err = runtime.String(val)
+	protoReq.SourceObject, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "source_object", err)
 	}
@@ -3429,7 +3429,7 @@ func request_ObjectsServer_CopyObject_0(ctx context.Context, marshaler runtime.M
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "destination_bucket")
 	}
 
-	protoReq.DestinationBucket, err = runtime.String(val)
+	protoReq.DestinationBucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "destination_bucket", err)
 	}
@@ -3439,7 +3439,7 @@ func request_ObjectsServer_CopyObject_0(ctx context.Context, marshaler runtime.M
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "destination_object")
 	}
 
-	protoReq.DestinationObject, err = runtime.String(val)
+	protoReq.DestinationObject, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "destination_object", err)
 	}
@@ -3473,7 +3473,7 @@ func local_request_ObjectsServer_CopyObject_0(ctx context.Context, marshaler run
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "source_bucket")
 	}
 
-	protoReq.SourceBucket, err = runtime.String(val)
+	protoReq.SourceBucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "source_bucket", err)
 	}
@@ -3483,7 +3483,7 @@ func local_request_ObjectsServer_CopyObject_0(ctx context.Context, marshaler run
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "source_object")
 	}
 
-	protoReq.SourceObject, err = runtime.String(val)
+	protoReq.SourceObject, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "source_object", err)
 	}
@@ -3493,7 +3493,7 @@ func local_request_ObjectsServer_CopyObject_0(ctx context.Context, marshaler run
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "destination_bucket")
 	}
 
-	protoReq.DestinationBucket, err = runtime.String(val)
+	protoReq.DestinationBucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "destination_bucket", err)
 	}
@@ -3503,7 +3503,7 @@ func local_request_ObjectsServer_CopyObject_0(ctx context.Context, marshaler run
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "destination_object")
 	}
 
-	protoReq.DestinationObject, err = runtime.String(val)
+	protoReq.DestinationObject, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "destination_object", err)
 	}
@@ -3529,7 +3529,7 @@ func request_ObjectsServer_DeleteObject_0(ctx context.Context, marshaler runtime
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -3539,7 +3539,7 @@ func request_ObjectsServer_DeleteObject_0(ctx context.Context, marshaler runtime
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "name")
 	}
 
-	protoReq.Name, err = runtime.String(val)
+	protoReq.Name, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "name", err)
 	}
@@ -3565,7 +3565,7 @@ func local_request_ObjectsServer_DeleteObject_0(ctx context.Context, marshaler r
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -3575,7 +3575,7 @@ func local_request_ObjectsServer_DeleteObject_0(ctx context.Context, marshaler r
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "name")
 	}
 
-	protoReq.Name, err = runtime.String(val)
+	protoReq.Name, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "name", err)
 	}
@@ -3601,7 +3601,7 @@ func request_ObjectsServer_GetObject_0(ctx context.Context, marshaler runtime.Ma
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -3611,7 +3611,7 @@ func request_ObjectsServer_GetObject_0(ctx context.Context, marshaler runtime.Ma
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "name")
 	}
 
-	protoReq.Name, err = runtime.String(val)
+	protoReq.Name, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "name", err)
 	}
@@ -3637,7 +3637,7 @@ func local_request_ObjectsServer_GetObject_0(ctx context.Context, marshaler runt
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -3647,7 +3647,7 @@ func local_request_ObjectsServer_GetObject_0(ctx context.Context, marshaler runt
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "name")
 	}
 
-	protoReq.Name, err = runtime.String(val)
+	protoReq.Name, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "name", err)
 	}
@@ -3681,7 +3681,7 @@ func request_ObjectsServer_InsertObject_0(ctx context.Context, marshaler runtime
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -3715,7 +3715,7 @@ func local_request_ObjectsServer_InsertObject_0(ctx context.Context, marshaler r
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -3741,7 +3741,7 @@ func request_ObjectsServer_ListObjects_0(ctx context.Context, marshaler runtime.
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -3767,7 +3767,7 @@ func local_request_ObjectsServer_ListObjects_0(ctx context.Context, marshaler ru
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -3801,7 +3801,7 @@ func request_ObjectsServer_PatchObject_0(ctx context.Context, marshaler runtime.
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -3811,7 +3811,7 @@ func request_ObjectsServer_PatchObject_0(ctx context.Context, marshaler runtime.
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "name")
 	}
 
-	protoReq.Name, err = runtime.String(val)
+	protoReq.Name, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "name", err)
 	}
@@ -3845,7 +3845,7 @@ func local_request_ObjectsServer_PatchObject_0(ctx context.Context, marshaler ru
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -3855,7 +3855,7 @@ func local_request_ObjectsServer_PatchObject_0(ctx context.Context, marshaler ru
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "name")
 	}
 
-	protoReq.Name, err = runtime.String(val)
+	protoReq.Name, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "name", err)
 	}
@@ -3889,7 +3889,7 @@ func request_ObjectsServer_RestoreObject_0(ctx context.Context, marshaler runtim
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -3899,7 +3899,7 @@ func request_ObjectsServer_RestoreObject_0(ctx context.Context, marshaler runtim
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "name")
 	}
 
-	protoReq.Name, err = runtime.String(val)
+	protoReq.Name, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "name", err)
 	}
@@ -3933,7 +3933,7 @@ func local_request_ObjectsServer_RestoreObject_0(ctx context.Context, marshaler 
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -3943,7 +3943,7 @@ func local_request_ObjectsServer_RestoreObject_0(ctx context.Context, marshaler 
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "name")
 	}
 
-	protoReq.Name, err = runtime.String(val)
+	protoReq.Name, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "name", err)
 	}
@@ -3977,7 +3977,7 @@ func request_ObjectsServer_RewriteObject_0(ctx context.Context, marshaler runtim
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "source_bucket")
 	}
 
-	protoReq.SourceBucket, err = runtime.String(val)
+	protoReq.SourceBucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "source_bucket", err)
 	}
@@ -3987,7 +3987,7 @@ func request_ObjectsServer_RewriteObject_0(ctx context.Context, marshaler runtim
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "source_object")
 	}
 
-	protoReq.SourceObject, err = runtime.String(val)
+	protoReq.SourceObject, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "source_object", err)
 	}
@@ -3997,7 +3997,7 @@ func request_ObjectsServer_RewriteObject_0(ctx context.Context, marshaler runtim
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "destination_bucket")
 	}
 
-	protoReq.DestinationBucket, err = runtime.String(val)
+	protoReq.DestinationBucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "destination_bucket", err)
 	}
@@ -4007,7 +4007,7 @@ func request_ObjectsServer_RewriteObject_0(ctx context.Context, marshaler runtim
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "destination_object")
 	}
 
-	protoReq.DestinationObject, err = runtime.String(val)
+	protoReq.DestinationObject, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "destination_object", err)
 	}
@@ -4041,7 +4041,7 @@ func local_request_ObjectsServer_RewriteObject_0(ctx context.Context, marshaler 
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "source_bucket")
 	}
 
-	protoReq.SourceBucket, err = runtime.String(val)
+	protoReq.SourceBucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "source_bucket", err)
 	}
@@ -4051,7 +4051,7 @@ func local_request_ObjectsServer_RewriteObject_0(ctx context.Context, marshaler 
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "source_object")
 	}
 
-	protoReq.SourceObject, err = runtime.String(val)
+	protoReq.SourceObject, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "source_object", err)
 	}
@@ -4061,7 +4061,7 @@ func local_request_ObjectsServer_RewriteObject_0(ctx context.Context, marshaler 
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "destination_bucket")
 	}
 
-	protoReq.DestinationBucket, err = runtime.String(val)
+	protoReq.DestinationBucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "destination_bucket", err)
 	}
@@ -4071,7 +4071,7 @@ func local_request_ObjectsServer_RewriteObject_0(ctx context.Context, marshaler 
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "destination_object")
 	}
 
-	protoReq.DestinationObject, err = runtime.String(val)
+	protoReq.DestinationObject, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "destination_object", err)
 	}
@@ -4105,7 +4105,7 @@ func request_ObjectsServer_UpdateObject_0(ctx context.Context, marshaler runtime
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -4115,7 +4115,7 @@ func request_ObjectsServer_UpdateObject_0(ctx context.Context, marshaler runtime
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "name")
 	}
 
-	protoReq.Name, err = runtime.String(val)
+	protoReq.Name, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "name", err)
 	}
@@ -4149,7 +4149,7 @@ func local_request_ObjectsServer_UpdateObject_0(ctx context.Context, marshaler r
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -4159,7 +4159,7 @@ func local_request_ObjectsServer_UpdateObject_0(ctx context.Context, marshaler r
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "name")
 	}
 
-	protoReq.Name, err = runtime.String(val)
+	protoReq.Name, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "name", err)
 	}
@@ -4193,7 +4193,7 @@ func request_ObjectsServer_WatchAllObject_0(ctx context.Context, marshaler runti
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -4227,7 +4227,7 @@ func local_request_ObjectsServer_WatchAllObject_0(ctx context.Context, marshaler
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "bucket")
 	}
 
-	protoReq.Bucket, err = runtime.String(val)
+	protoReq.Bucket, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "bucket", err)
 	}
@@ -4253,7 +4253,7 @@ func request_ProjectsHmacKeysServer_CreateProjectsHmacKey_0(ctx context.Context,
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "project_id")
 	}
 
-	protoReq.ProjectId, err = runtime.String(val)
+	protoReq.ProjectId, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project_id", err)
 	}
@@ -4279,7 +4279,7 @@ func local_request_ProjectsHmacKeysServer_CreateProjectsHmacKey_0(ctx context.Co
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "project_id")
 	}
 
-	protoReq.ProjectId, err = runtime.String(val)
+	protoReq.ProjectId, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project_id", err)
 	}
@@ -4305,7 +4305,7 @@ func request_ProjectsHmacKeysServer_DeleteProjectsHmacKey_0(ctx context.Context,
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "project_id")
 	}
 
-	protoReq.ProjectId, err = runtime.String(val)
+	protoReq.ProjectId, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project_id", err)
 	}
@@ -4315,7 +4315,7 @@ func request_ProjectsHmacKeysServer_DeleteProjectsHmacKey_0(ctx context.Context,
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "access_id")
 	}
 
-	protoReq.AccessId, err = runtime.String(val)
+	protoReq.AccessId, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "access_id", err)
 	}
@@ -4341,7 +4341,7 @@ func local_request_ProjectsHmacKeysServer_DeleteProjectsHmacKey_0(ctx context.Co
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "project_id")
 	}
 
-	protoReq.ProjectId, err = runtime.String(val)
+	protoReq.ProjectId, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project_id", err)
 	}
@@ -4351,7 +4351,7 @@ func local_request_ProjectsHmacKeysServer_DeleteProjectsHmacKey_0(ctx context.Co
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "access_id")
 	}
 
-	protoReq.AccessId, err = runtime.String(val)
+	protoReq.AccessId, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "access_id", err)
 	}
@@ -4377,7 +4377,7 @@ func request_ProjectsHmacKeysServer_GetProjectsHmacKey_0(ctx context.Context, ma
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "project_id")
 	}
 
-	protoReq.ProjectId, err = runtime.String(val)
+	protoReq.ProjectId, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project_id", err)
 	}
@@ -4387,7 +4387,7 @@ func request_ProjectsHmacKeysServer_GetProjectsHmacKey_0(ctx context.Context, ma
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "access_id")
 	}
 
-	protoReq.AccessId, err = runtime.String(val)
+	protoReq.AccessId, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "access_id", err)
 	}
@@ -4413,7 +4413,7 @@ func local_request_ProjectsHmacKeysServer_GetProjectsHmacKey_0(ctx context.Conte
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "project_id")
 	}
 
-	protoReq.ProjectId, err = runtime.String(val)
+	protoReq.ProjectId, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project_id", err)
 	}
@@ -4423,7 +4423,7 @@ func local_request_ProjectsHmacKeysServer_GetProjectsHmacKey_0(ctx context.Conte
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "access_id")
 	}
 
-	protoReq.AccessId, err = runtime.String(val)
+	protoReq.AccessId, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "access_id", err)
 	}
@@ -4449,7 +4449,7 @@ func request_ProjectsHmacKeysServer_ListProjectsHmacKeys_0(ctx context.Context, 
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "project_id")
 	}
 
-	protoReq.ProjectId, err = runtime.String(val)
+	protoReq.ProjectId, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project_id", err)
 	}
@@ -4475,7 +4475,7 @@ func local_request_ProjectsHmacKeysServer_ListProjectsHmacKeys_0(ctx context.Con
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "project_id")
 	}
 
-	protoReq.ProjectId, err = runtime.String(val)
+	protoReq.ProjectId, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project_id", err)
 	}
@@ -4509,7 +4509,7 @@ func request_ProjectsHmacKeysServer_UpdateProjectsHmacKey_0(ctx context.Context,
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "project_id")
 	}
 
-	protoReq.ProjectId, err = runtime.String(val)
+	protoReq.ProjectId, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project_id", err)
 	}
@@ -4519,7 +4519,7 @@ func request_ProjectsHmacKeysServer_UpdateProjectsHmacKey_0(ctx context.Context,
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "access_id")
 	}
 
-	protoReq.AccessId, err = runtime.String(val)
+	protoReq.AccessId, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "access_id", err)
 	}
@@ -4553,7 +4553,7 @@ func local_request_ProjectsHmacKeysServer_UpdateProjectsHmacKey_0(ctx context.Co
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "project_id")
 	}
 
-	protoReq.ProjectId, err = runtime.String(val)
+	protoReq.ProjectId, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project_id", err)
 	}
@@ -4563,7 +4563,7 @@ func local_request_ProjectsHmacKeysServer_UpdateProjectsHmacKey_0(ctx context.Co
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "access_id")
 	}
 
-	protoReq.AccessId, err = runtime.String(val)
+	protoReq.AccessId, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "access_id", err)
 	}
@@ -4589,7 +4589,7 @@ func request_ProjectsServiceAccountServer_GetProjectsServiceAccount_0(ctx contex
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "project_id")
 	}
 
-	protoReq.ProjectId, err = runtime.String(val)
+	protoReq.ProjectId, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project_id", err)
 	}
@@ -4615,7 +4615,7 @@ func local_request_ProjectsServiceAccountServer_GetProjectsServiceAccount_0(ctx 
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "project_id")
 	}
 
-	protoReq.ProjectId, err = runtime.String(val)
+	protoReq.ProjectId, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project_id", err)
 	}

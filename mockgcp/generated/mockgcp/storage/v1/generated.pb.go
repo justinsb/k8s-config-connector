@@ -30,18 +30,18 @@ type AnywhereCache struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	AdmissionPolicy string               `protobuf:"bytes,1,opt,name=admission_policy,json=admissionPolicy,proto3" json:"admission_policy,omitempty"`
-	AnywhereCacheId string               `protobuf:"bytes,2,opt,name=anywhere_cache_id,json=anywhereCacheId,proto3" json:"anywhere_cache_id,omitempty"`
-	Bucket          string               `protobuf:"bytes,3,opt,name=bucket,proto3" json:"bucket,omitempty"`
-	CreateTime      *timestamp.Timestamp `protobuf:"bytes,4,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
-	Id              string               `protobuf:"bytes,5,opt,name=id,proto3" json:"id,omitempty"`
-	Kind            string               `protobuf:"bytes,6,opt,name=kind,proto3" json:"kind,omitempty"`
-	PendingUpdate   bool                 `protobuf:"varint,7,opt,name=pending_update,json=pendingUpdate,proto3" json:"pending_update,omitempty"`
-	SelfLink        string               `protobuf:"bytes,8,opt,name=self_link,json=selfLink,proto3" json:"self_link,omitempty"`
-	State           string               `protobuf:"bytes,9,opt,name=state,proto3" json:"state,omitempty"`
-	Ttl             *duration.Duration   `protobuf:"bytes,10,opt,name=ttl,proto3" json:"ttl,omitempty"`
-	UpdateTime      *timestamp.Timestamp `protobuf:"bytes,11,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
-	Zone            string               `protobuf:"bytes,12,opt,name=zone,proto3" json:"zone,omitempty"`
+	AdmissionPolicy *string              `protobuf:"bytes,1,opt,name=admission_policy,json=admissionPolicy" json:"admission_policy,omitempty"`
+	AnywhereCacheId *string              `protobuf:"bytes,2,opt,name=anywhere_cache_id,json=anywhereCacheId" json:"anywhere_cache_id,omitempty"`
+	Bucket          *string              `protobuf:"bytes,3,opt,name=bucket" json:"bucket,omitempty"`
+	CreateTime      *timestamp.Timestamp `protobuf:"bytes,4,opt,name=create_time,json=createTime" json:"create_time,omitempty"`
+	Id              *string              `protobuf:"bytes,5,opt,name=id" json:"id,omitempty"`
+	Kind            *string              `protobuf:"bytes,6,opt,name=kind" json:"kind,omitempty"`
+	PendingUpdate   *bool                `protobuf:"varint,7,opt,name=pending_update,json=pendingUpdate" json:"pending_update,omitempty"`
+	SelfLink        *string              `protobuf:"bytes,8,opt,name=self_link,json=selfLink" json:"self_link,omitempty"`
+	State           *string              `protobuf:"bytes,9,opt,name=state" json:"state,omitempty"`
+	Ttl             *duration.Duration   `protobuf:"bytes,10,opt,name=ttl" json:"ttl,omitempty"`
+	UpdateTime      *timestamp.Timestamp `protobuf:"bytes,11,opt,name=update_time,json=updateTime" json:"update_time,omitempty"`
+	Zone            *string              `protobuf:"bytes,12,opt,name=zone" json:"zone,omitempty"`
 }
 
 func (x *AnywhereCache) Reset() {
@@ -77,22 +77,22 @@ func (*AnywhereCache) Descriptor() ([]byte, []int) {
 }
 
 func (x *AnywhereCache) GetAdmissionPolicy() string {
-	if x != nil {
-		return x.AdmissionPolicy
+	if x != nil && x.AdmissionPolicy != nil {
+		return *x.AdmissionPolicy
 	}
 	return ""
 }
 
 func (x *AnywhereCache) GetAnywhereCacheId() string {
-	if x != nil {
-		return x.AnywhereCacheId
+	if x != nil && x.AnywhereCacheId != nil {
+		return *x.AnywhereCacheId
 	}
 	return ""
 }
 
 func (x *AnywhereCache) GetBucket() string {
-	if x != nil {
-		return x.Bucket
+	if x != nil && x.Bucket != nil {
+		return *x.Bucket
 	}
 	return ""
 }
@@ -105,36 +105,36 @@ func (x *AnywhereCache) GetCreateTime() *timestamp.Timestamp {
 }
 
 func (x *AnywhereCache) GetId() string {
-	if x != nil {
-		return x.Id
+	if x != nil && x.Id != nil {
+		return *x.Id
 	}
 	return ""
 }
 
 func (x *AnywhereCache) GetKind() string {
-	if x != nil {
-		return x.Kind
+	if x != nil && x.Kind != nil {
+		return *x.Kind
 	}
 	return ""
 }
 
 func (x *AnywhereCache) GetPendingUpdate() bool {
-	if x != nil {
-		return x.PendingUpdate
+	if x != nil && x.PendingUpdate != nil {
+		return *x.PendingUpdate
 	}
 	return false
 }
 
 func (x *AnywhereCache) GetSelfLink() string {
-	if x != nil {
-		return x.SelfLink
+	if x != nil && x.SelfLink != nil {
+		return *x.SelfLink
 	}
 	return ""
 }
 
 func (x *AnywhereCache) GetState() string {
-	if x != nil {
-		return x.State
+	if x != nil && x.State != nil {
+		return *x.State
 	}
 	return ""
 }
@@ -154,8 +154,8 @@ func (x *AnywhereCache) GetUpdateTime() *timestamp.Timestamp {
 }
 
 func (x *AnywhereCache) GetZone() string {
-	if x != nil {
-		return x.Zone
+	if x != nil && x.Zone != nil {
+		return *x.Zone
 	}
 	return ""
 }
@@ -165,9 +165,9 @@ type AnywhereCaches struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Items         []*AnywhereCache `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
-	Kind          string           `protobuf:"bytes,2,opt,name=kind,proto3" json:"kind,omitempty"`
-	NextPageToken string           `protobuf:"bytes,3,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
+	Items         []*AnywhereCache `protobuf:"bytes,1,rep,name=items" json:"items,omitempty"`
+	Kind          *string          `protobuf:"bytes,2,opt,name=kind" json:"kind,omitempty"`
+	NextPageToken *string          `protobuf:"bytes,3,opt,name=next_page_token,json=nextPageToken" json:"next_page_token,omitempty"`
 }
 
 func (x *AnywhereCaches) Reset() {
@@ -210,15 +210,15 @@ func (x *AnywhereCaches) GetItems() []*AnywhereCache {
 }
 
 func (x *AnywhereCaches) GetKind() string {
-	if x != nil {
-		return x.Kind
+	if x != nil && x.Kind != nil {
+		return *x.Kind
 	}
 	return ""
 }
 
 func (x *AnywhereCaches) GetNextPageToken() string {
-	if x != nil {
-		return x.NextPageToken
+	if x != nil && x.NextPageToken != nil {
+		return *x.NextPageToken
 	}
 	return ""
 }
@@ -228,10 +228,10 @@ type BucketAutoclass struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Enabled                        bool                 `protobuf:"varint,1,opt,name=enabled,proto3" json:"enabled,omitempty"`
-	TerminalStorageClass           string               `protobuf:"bytes,2,opt,name=terminal_storage_class,json=terminalStorageClass,proto3" json:"terminal_storage_class,omitempty"`
-	TerminalStorageClassUpdateTime *timestamp.Timestamp `protobuf:"bytes,3,opt,name=terminal_storage_class_update_time,json=terminalStorageClassUpdateTime,proto3" json:"terminal_storage_class_update_time,omitempty"`
-	ToggleTime                     *timestamp.Timestamp `protobuf:"bytes,4,opt,name=toggle_time,json=toggleTime,proto3" json:"toggle_time,omitempty"`
+	Enabled                        *bool                `protobuf:"varint,1,opt,name=enabled" json:"enabled,omitempty"`
+	TerminalStorageClass           *string              `protobuf:"bytes,2,opt,name=terminal_storage_class,json=terminalStorageClass" json:"terminal_storage_class,omitempty"`
+	TerminalStorageClassUpdateTime *timestamp.Timestamp `protobuf:"bytes,3,opt,name=terminal_storage_class_update_time,json=terminalStorageClassUpdateTime" json:"terminal_storage_class_update_time,omitempty"`
+	ToggleTime                     *timestamp.Timestamp `protobuf:"bytes,4,opt,name=toggle_time,json=toggleTime" json:"toggle_time,omitempty"`
 }
 
 func (x *BucketAutoclass) Reset() {
@@ -267,15 +267,15 @@ func (*BucketAutoclass) Descriptor() ([]byte, []int) {
 }
 
 func (x *BucketAutoclass) GetEnabled() bool {
-	if x != nil {
-		return x.Enabled
+	if x != nil && x.Enabled != nil {
+		return *x.Enabled
 	}
 	return false
 }
 
 func (x *BucketAutoclass) GetTerminalStorageClass() string {
-	if x != nil {
-		return x.TerminalStorageClass
+	if x != nil && x.TerminalStorageClass != nil {
+		return *x.TerminalStorageClass
 	}
 	return ""
 }
@@ -299,7 +299,7 @@ type BucketBilling struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	RequesterPays bool `protobuf:"varint,1,opt,name=requester_pays,json=requesterPays,proto3" json:"requester_pays,omitempty"`
+	RequesterPays *bool `protobuf:"varint,1,opt,name=requester_pays,json=requesterPays" json:"requester_pays,omitempty"`
 }
 
 func (x *BucketBilling) Reset() {
@@ -335,8 +335,8 @@ func (*BucketBilling) Descriptor() ([]byte, []int) {
 }
 
 func (x *BucketBilling) GetRequesterPays() bool {
-	if x != nil {
-		return x.RequesterPays
+	if x != nil && x.RequesterPays != nil {
+		return *x.RequesterPays
 	}
 	return false
 }
@@ -346,10 +346,10 @@ type BucketCors struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	MaxAgeSeconds  int32    `protobuf:"varint,1,opt,name=max_age_seconds,json=maxAgeSeconds,proto3" json:"max_age_seconds,omitempty"`
-	Method         []string `protobuf:"bytes,2,rep,name=method,proto3" json:"method,omitempty"`
-	Origin         []string `protobuf:"bytes,3,rep,name=origin,proto3" json:"origin,omitempty"`
-	ResponseHeader []string `protobuf:"bytes,4,rep,name=response_header,json=responseHeader,proto3" json:"response_header,omitempty"`
+	MaxAgeSeconds  *int32   `protobuf:"varint,1,opt,name=max_age_seconds,json=maxAgeSeconds" json:"max_age_seconds,omitempty"`
+	Method         []string `protobuf:"bytes,2,rep,name=method" json:"method,omitempty"`
+	Origin         []string `protobuf:"bytes,3,rep,name=origin" json:"origin,omitempty"`
+	ResponseHeader []string `protobuf:"bytes,4,rep,name=response_header,json=responseHeader" json:"response_header,omitempty"`
 }
 
 func (x *BucketCors) Reset() {
@@ -385,8 +385,8 @@ func (*BucketCors) Descriptor() ([]byte, []int) {
 }
 
 func (x *BucketCors) GetMaxAgeSeconds() int32 {
-	if x != nil {
-		return x.MaxAgeSeconds
+	if x != nil && x.MaxAgeSeconds != nil {
+		return *x.MaxAgeSeconds
 	}
 	return 0
 }
@@ -417,7 +417,7 @@ type BucketCustomPlacementConfig struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	DataLocations []string `protobuf:"bytes,1,rep,name=data_locations,json=dataLocations,proto3" json:"data_locations,omitempty"`
+	DataLocations []string `protobuf:"bytes,1,rep,name=data_locations,json=dataLocations" json:"data_locations,omitempty"`
 }
 
 func (x *BucketCustomPlacementConfig) Reset() {
@@ -464,7 +464,7 @@ type BucketEncryption struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	DefaultKmsKeyName string `protobuf:"bytes,1,opt,name=default_kms_key_name,json=defaultKmsKeyName,proto3" json:"default_kms_key_name,omitempty"`
+	DefaultKmsKeyName *string `protobuf:"bytes,1,opt,name=default_kms_key_name,json=defaultKmsKeyName" json:"default_kms_key_name,omitempty"`
 }
 
 func (x *BucketEncryption) Reset() {
@@ -500,8 +500,8 @@ func (*BucketEncryption) Descriptor() ([]byte, []int) {
 }
 
 func (x *BucketEncryption) GetDefaultKmsKeyName() string {
-	if x != nil {
-		return x.DefaultKmsKeyName
+	if x != nil && x.DefaultKmsKeyName != nil {
+		return *x.DefaultKmsKeyName
 	}
 	return ""
 }
@@ -511,7 +511,7 @@ type BucketHierarchicalNamespace struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Enabled bool `protobuf:"varint,1,opt,name=enabled,proto3" json:"enabled,omitempty"`
+	Enabled *bool `protobuf:"varint,1,opt,name=enabled" json:"enabled,omitempty"`
 }
 
 func (x *BucketHierarchicalNamespace) Reset() {
@@ -547,8 +547,8 @@ func (*BucketHierarchicalNamespace) Descriptor() ([]byte, []int) {
 }
 
 func (x *BucketHierarchicalNamespace) GetEnabled() bool {
-	if x != nil {
-		return x.Enabled
+	if x != nil && x.Enabled != nil {
+		return *x.Enabled
 	}
 	return false
 }
@@ -558,8 +558,8 @@ type BucketPolicyOnly struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Enabled    bool                 `protobuf:"varint,1,opt,name=enabled,proto3" json:"enabled,omitempty"`
-	LockedTime *timestamp.Timestamp `protobuf:"bytes,2,opt,name=locked_time,json=lockedTime,proto3" json:"locked_time,omitempty"`
+	Enabled    *bool                `protobuf:"varint,1,opt,name=enabled" json:"enabled,omitempty"`
+	LockedTime *timestamp.Timestamp `protobuf:"bytes,2,opt,name=locked_time,json=lockedTime" json:"locked_time,omitempty"`
 }
 
 func (x *BucketPolicyOnly) Reset() {
@@ -595,8 +595,8 @@ func (*BucketPolicyOnly) Descriptor() ([]byte, []int) {
 }
 
 func (x *BucketPolicyOnly) GetEnabled() bool {
-	if x != nil {
-		return x.Enabled
+	if x != nil && x.Enabled != nil {
+		return *x.Enabled
 	}
 	return false
 }
@@ -613,8 +613,8 @@ type UniformBucketLevelAccess struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Enabled    bool                 `protobuf:"varint,1,opt,name=enabled,proto3" json:"enabled,omitempty"`
-	LockedTime *timestamp.Timestamp `protobuf:"bytes,2,opt,name=locked_time,json=lockedTime,proto3" json:"locked_time,omitempty"`
+	Enabled    *bool                `protobuf:"varint,1,opt,name=enabled" json:"enabled,omitempty"`
+	LockedTime *timestamp.Timestamp `protobuf:"bytes,2,opt,name=locked_time,json=lockedTime" json:"locked_time,omitempty"`
 }
 
 func (x *UniformBucketLevelAccess) Reset() {
@@ -650,8 +650,8 @@ func (*UniformBucketLevelAccess) Descriptor() ([]byte, []int) {
 }
 
 func (x *UniformBucketLevelAccess) GetEnabled() bool {
-	if x != nil {
-		return x.Enabled
+	if x != nil && x.Enabled != nil {
+		return *x.Enabled
 	}
 	return false
 }
@@ -668,9 +668,9 @@ type BucketIamConfiguration struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	BucketPolicyOnly         *BucketPolicyOnly         `protobuf:"bytes,1,opt,name=bucket_policy_only,json=bucketPolicyOnly,proto3" json:"bucket_policy_only,omitempty"`
-	PublicAccessPrevention   string                    `protobuf:"bytes,2,opt,name=public_access_prevention,json=publicAccessPrevention,proto3" json:"public_access_prevention,omitempty"`
-	UniformBucketLevelAccess *UniformBucketLevelAccess `protobuf:"bytes,3,opt,name=uniform_bucket_level_access,json=uniformBucketLevelAccess,proto3" json:"uniform_bucket_level_access,omitempty"`
+	BucketPolicyOnly         *BucketPolicyOnly         `protobuf:"bytes,1,opt,name=bucket_policy_only,json=bucketPolicyOnly" json:"bucket_policy_only,omitempty"`
+	PublicAccessPrevention   *string                   `protobuf:"bytes,2,opt,name=public_access_prevention,json=publicAccessPrevention" json:"public_access_prevention,omitempty"`
+	UniformBucketLevelAccess *UniformBucketLevelAccess `protobuf:"bytes,3,opt,name=uniform_bucket_level_access,json=uniformBucketLevelAccess" json:"uniform_bucket_level_access,omitempty"`
 }
 
 func (x *BucketIamConfiguration) Reset() {
@@ -713,8 +713,8 @@ func (x *BucketIamConfiguration) GetBucketPolicyOnly() *BucketPolicyOnly {
 }
 
 func (x *BucketIamConfiguration) GetPublicAccessPrevention() string {
-	if x != nil {
-		return x.PublicAccessPrevention
+	if x != nil && x.PublicAccessPrevention != nil {
+		return *x.PublicAccessPrevention
 	}
 	return ""
 }
@@ -731,8 +731,8 @@ type Action struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	StorageClass string `protobuf:"bytes,1,opt,name=storage_class,json=storageClass,proto3" json:"storage_class,omitempty"`
-	Type         string `protobuf:"bytes,2,opt,name=type,proto3" json:"type,omitempty"`
+	StorageClass *string `protobuf:"bytes,1,opt,name=storage_class,json=storageClass" json:"storage_class,omitempty"`
+	Type         *string `protobuf:"bytes,2,opt,name=type" json:"type,omitempty"`
 }
 
 func (x *Action) Reset() {
@@ -768,15 +768,15 @@ func (*Action) Descriptor() ([]byte, []int) {
 }
 
 func (x *Action) GetStorageClass() string {
-	if x != nil {
-		return x.StorageClass
+	if x != nil && x.StorageClass != nil {
+		return *x.StorageClass
 	}
 	return ""
 }
 
 func (x *Action) GetType() string {
-	if x != nil {
-		return x.Type
+	if x != nil && x.Type != nil {
+		return *x.Type
 	}
 	return ""
 }
@@ -786,18 +786,18 @@ type Condition struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Age                     int32    `protobuf:"varint,1,opt,name=age,proto3" json:"age,omitempty"`
-	CreatedBefore           string   `protobuf:"bytes,2,opt,name=created_before,json=createdBefore,proto3" json:"created_before,omitempty"`
-	CustomTimeBefore        string   `protobuf:"bytes,3,opt,name=custom_time_before,json=customTimeBefore,proto3" json:"custom_time_before,omitempty"`
-	DaysSinceCustomTime     int32    `protobuf:"varint,4,opt,name=days_since_custom_time,json=daysSinceCustomTime,proto3" json:"days_since_custom_time,omitempty"`
-	DaysSinceNoncurrentTime int32    `protobuf:"varint,5,opt,name=days_since_noncurrent_time,json=daysSinceNoncurrentTime,proto3" json:"days_since_noncurrent_time,omitempty"`
-	IsLive                  bool     `protobuf:"varint,6,opt,name=is_live,json=isLive,proto3" json:"is_live,omitempty"`
-	MatchesPattern          string   `protobuf:"bytes,7,opt,name=matches_pattern,json=matchesPattern,proto3" json:"matches_pattern,omitempty"`
-	MatchesPrefix           []string `protobuf:"bytes,8,rep,name=matches_prefix,json=matchesPrefix,proto3" json:"matches_prefix,omitempty"`
-	MatchesStorageClass     []string `protobuf:"bytes,9,rep,name=matches_storage_class,json=matchesStorageClass,proto3" json:"matches_storage_class,omitempty"`
-	MatchesSuffix           []string `protobuf:"bytes,10,rep,name=matches_suffix,json=matchesSuffix,proto3" json:"matches_suffix,omitempty"`
-	NoncurrentTimeBefore    string   `protobuf:"bytes,11,opt,name=noncurrent_time_before,json=noncurrentTimeBefore,proto3" json:"noncurrent_time_before,omitempty"`
-	NumNewerVersions        int32    `protobuf:"varint,12,opt,name=num_newer_versions,json=numNewerVersions,proto3" json:"num_newer_versions,omitempty"`
+	Age                     *int32   `protobuf:"varint,1,opt,name=age" json:"age,omitempty"`
+	CreatedBefore           *string  `protobuf:"bytes,2,opt,name=created_before,json=createdBefore" json:"created_before,omitempty"`
+	CustomTimeBefore        *string  `protobuf:"bytes,3,opt,name=custom_time_before,json=customTimeBefore" json:"custom_time_before,omitempty"`
+	DaysSinceCustomTime     *int32   `protobuf:"varint,4,opt,name=days_since_custom_time,json=daysSinceCustomTime" json:"days_since_custom_time,omitempty"`
+	DaysSinceNoncurrentTime *int32   `protobuf:"varint,5,opt,name=days_since_noncurrent_time,json=daysSinceNoncurrentTime" json:"days_since_noncurrent_time,omitempty"`
+	IsLive                  *bool    `protobuf:"varint,6,opt,name=is_live,json=isLive" json:"is_live,omitempty"`
+	MatchesPattern          *string  `protobuf:"bytes,7,opt,name=matches_pattern,json=matchesPattern" json:"matches_pattern,omitempty"`
+	MatchesPrefix           []string `protobuf:"bytes,8,rep,name=matches_prefix,json=matchesPrefix" json:"matches_prefix,omitempty"`
+	MatchesStorageClass     []string `protobuf:"bytes,9,rep,name=matches_storage_class,json=matchesStorageClass" json:"matches_storage_class,omitempty"`
+	MatchesSuffix           []string `protobuf:"bytes,10,rep,name=matches_suffix,json=matchesSuffix" json:"matches_suffix,omitempty"`
+	NoncurrentTimeBefore    *string  `protobuf:"bytes,11,opt,name=noncurrent_time_before,json=noncurrentTimeBefore" json:"noncurrent_time_before,omitempty"`
+	NumNewerVersions        *int32   `protobuf:"varint,12,opt,name=num_newer_versions,json=numNewerVersions" json:"num_newer_versions,omitempty"`
 }
 
 func (x *Condition) Reset() {
@@ -833,50 +833,50 @@ func (*Condition) Descriptor() ([]byte, []int) {
 }
 
 func (x *Condition) GetAge() int32 {
-	if x != nil {
-		return x.Age
+	if x != nil && x.Age != nil {
+		return *x.Age
 	}
 	return 0
 }
 
 func (x *Condition) GetCreatedBefore() string {
-	if x != nil {
-		return x.CreatedBefore
+	if x != nil && x.CreatedBefore != nil {
+		return *x.CreatedBefore
 	}
 	return ""
 }
 
 func (x *Condition) GetCustomTimeBefore() string {
-	if x != nil {
-		return x.CustomTimeBefore
+	if x != nil && x.CustomTimeBefore != nil {
+		return *x.CustomTimeBefore
 	}
 	return ""
 }
 
 func (x *Condition) GetDaysSinceCustomTime() int32 {
-	if x != nil {
-		return x.DaysSinceCustomTime
+	if x != nil && x.DaysSinceCustomTime != nil {
+		return *x.DaysSinceCustomTime
 	}
 	return 0
 }
 
 func (x *Condition) GetDaysSinceNoncurrentTime() int32 {
-	if x != nil {
-		return x.DaysSinceNoncurrentTime
+	if x != nil && x.DaysSinceNoncurrentTime != nil {
+		return *x.DaysSinceNoncurrentTime
 	}
 	return 0
 }
 
 func (x *Condition) GetIsLive() bool {
-	if x != nil {
-		return x.IsLive
+	if x != nil && x.IsLive != nil {
+		return *x.IsLive
 	}
 	return false
 }
 
 func (x *Condition) GetMatchesPattern() string {
-	if x != nil {
-		return x.MatchesPattern
+	if x != nil && x.MatchesPattern != nil {
+		return *x.MatchesPattern
 	}
 	return ""
 }
@@ -903,15 +903,15 @@ func (x *Condition) GetMatchesSuffix() []string {
 }
 
 func (x *Condition) GetNoncurrentTimeBefore() string {
-	if x != nil {
-		return x.NoncurrentTimeBefore
+	if x != nil && x.NoncurrentTimeBefore != nil {
+		return *x.NoncurrentTimeBefore
 	}
 	return ""
 }
 
 func (x *Condition) GetNumNewerVersions() int32 {
-	if x != nil {
-		return x.NumNewerVersions
+	if x != nil && x.NumNewerVersions != nil {
+		return *x.NumNewerVersions
 	}
 	return 0
 }
@@ -921,8 +921,8 @@ type Rule struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Action    *Action    `protobuf:"bytes,1,opt,name=action,proto3" json:"action,omitempty"`
-	Condition *Condition `protobuf:"bytes,2,opt,name=condition,proto3" json:"condition,omitempty"`
+	Action    *Action    `protobuf:"bytes,1,opt,name=action" json:"action,omitempty"`
+	Condition *Condition `protobuf:"bytes,2,opt,name=condition" json:"condition,omitempty"`
 }
 
 func (x *Rule) Reset() {
@@ -976,7 +976,7 @@ type BucketLifecycle struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Rule []*Rule `protobuf:"bytes,1,rep,name=rule,proto3" json:"rule,omitempty"`
+	Rule []*Rule `protobuf:"bytes,1,rep,name=rule" json:"rule,omitempty"`
 }
 
 func (x *BucketLifecycle) Reset() {
@@ -1023,8 +1023,8 @@ type BucketLogging struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	LogBucket       string `protobuf:"bytes,1,opt,name=log_bucket,json=logBucket,proto3" json:"log_bucket,omitempty"`
-	LogObjectPrefix string `protobuf:"bytes,2,opt,name=log_object_prefix,json=logObjectPrefix,proto3" json:"log_object_prefix,omitempty"`
+	LogBucket       *string `protobuf:"bytes,1,opt,name=log_bucket,json=logBucket" json:"log_bucket,omitempty"`
+	LogObjectPrefix *string `protobuf:"bytes,2,opt,name=log_object_prefix,json=logObjectPrefix" json:"log_object_prefix,omitempty"`
 }
 
 func (x *BucketLogging) Reset() {
@@ -1060,15 +1060,15 @@ func (*BucketLogging) Descriptor() ([]byte, []int) {
 }
 
 func (x *BucketLogging) GetLogBucket() string {
-	if x != nil {
-		return x.LogBucket
+	if x != nil && x.LogBucket != nil {
+		return *x.LogBucket
 	}
 	return ""
 }
 
 func (x *BucketLogging) GetLogObjectPrefix() string {
-	if x != nil {
-		return x.LogObjectPrefix
+	if x != nil && x.LogObjectPrefix != nil {
+		return *x.LogObjectPrefix
 	}
 	return ""
 }
@@ -1078,7 +1078,7 @@ type BucketObjectRetention struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Mode string `protobuf:"bytes,1,opt,name=mode,proto3" json:"mode,omitempty"`
+	Mode *string `protobuf:"bytes,1,opt,name=mode" json:"mode,omitempty"`
 }
 
 func (x *BucketObjectRetention) Reset() {
@@ -1114,8 +1114,8 @@ func (*BucketObjectRetention) Descriptor() ([]byte, []int) {
 }
 
 func (x *BucketObjectRetention) GetMode() string {
-	if x != nil {
-		return x.Mode
+	if x != nil && x.Mode != nil {
+		return *x.Mode
 	}
 	return ""
 }
@@ -1125,8 +1125,8 @@ type BucketOwner struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Entity   string `protobuf:"bytes,1,opt,name=entity,proto3" json:"entity,omitempty"`
-	EntityId string `protobuf:"bytes,2,opt,name=entity_id,json=entityId,proto3" json:"entity_id,omitempty"`
+	Entity   *string `protobuf:"bytes,1,opt,name=entity" json:"entity,omitempty"`
+	EntityId *string `protobuf:"bytes,2,opt,name=entity_id,json=entityId" json:"entity_id,omitempty"`
 }
 
 func (x *BucketOwner) Reset() {
@@ -1162,15 +1162,15 @@ func (*BucketOwner) Descriptor() ([]byte, []int) {
 }
 
 func (x *BucketOwner) GetEntity() string {
-	if x != nil {
-		return x.Entity
+	if x != nil && x.Entity != nil {
+		return *x.Entity
 	}
 	return ""
 }
 
 func (x *BucketOwner) GetEntityId() string {
-	if x != nil {
-		return x.EntityId
+	if x != nil && x.EntityId != nil {
+		return *x.EntityId
 	}
 	return ""
 }
@@ -1180,9 +1180,9 @@ type BucketRetentionPolicy struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	EffectiveTime   *timestamp.Timestamp `protobuf:"bytes,1,opt,name=effective_time,json=effectiveTime,proto3" json:"effective_time,omitempty"`
-	IsLocked        bool                 `protobuf:"varint,2,opt,name=is_locked,json=isLocked,proto3" json:"is_locked,omitempty"`
-	RetentionPeriod int64                `protobuf:"varint,3,opt,name=retention_period,json=retentionPeriod,proto3" json:"retention_period,omitempty"`
+	EffectiveTime   *timestamp.Timestamp `protobuf:"bytes,1,opt,name=effective_time,json=effectiveTime" json:"effective_time,omitempty"`
+	IsLocked        *bool                `protobuf:"varint,2,opt,name=is_locked,json=isLocked" json:"is_locked,omitempty"`
+	RetentionPeriod *int64               `protobuf:"varint,3,opt,name=retention_period,json=retentionPeriod" json:"retention_period,omitempty"`
 }
 
 func (x *BucketRetentionPolicy) Reset() {
@@ -1225,15 +1225,15 @@ func (x *BucketRetentionPolicy) GetEffectiveTime() *timestamp.Timestamp {
 }
 
 func (x *BucketRetentionPolicy) GetIsLocked() bool {
-	if x != nil {
-		return x.IsLocked
+	if x != nil && x.IsLocked != nil {
+		return *x.IsLocked
 	}
 	return false
 }
 
 func (x *BucketRetentionPolicy) GetRetentionPeriod() int64 {
-	if x != nil {
-		return x.RetentionPeriod
+	if x != nil && x.RetentionPeriod != nil {
+		return *x.RetentionPeriod
 	}
 	return 0
 }
@@ -1243,8 +1243,8 @@ type BucketSoftDeletePolicy struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	EffectiveTime            *timestamp.Timestamp `protobuf:"bytes,1,opt,name=effective_time,json=effectiveTime,proto3" json:"effective_time,omitempty"`
-	RetentionDurationSeconds int64                `protobuf:"varint,2,opt,name=retention_duration_seconds,json=retentionDurationSeconds,proto3" json:"retention_duration_seconds,omitempty"`
+	EffectiveTime            *timestamp.Timestamp `protobuf:"bytes,1,opt,name=effective_time,json=effectiveTime" json:"effective_time,omitempty"`
+	RetentionDurationSeconds *int64               `protobuf:"varint,2,opt,name=retention_duration_seconds,json=retentionDurationSeconds" json:"retention_duration_seconds,omitempty"`
 }
 
 func (x *BucketSoftDeletePolicy) Reset() {
@@ -1287,8 +1287,8 @@ func (x *BucketSoftDeletePolicy) GetEffectiveTime() *timestamp.Timestamp {
 }
 
 func (x *BucketSoftDeletePolicy) GetRetentionDurationSeconds() int64 {
-	if x != nil {
-		return x.RetentionDurationSeconds
+	if x != nil && x.RetentionDurationSeconds != nil {
+		return *x.RetentionDurationSeconds
 	}
 	return 0
 }
@@ -1298,7 +1298,7 @@ type BucketVersioning struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Enabled bool `protobuf:"varint,1,opt,name=enabled,proto3" json:"enabled,omitempty"`
+	Enabled *bool `protobuf:"varint,1,opt,name=enabled" json:"enabled,omitempty"`
 }
 
 func (x *BucketVersioning) Reset() {
@@ -1334,8 +1334,8 @@ func (*BucketVersioning) Descriptor() ([]byte, []int) {
 }
 
 func (x *BucketVersioning) GetEnabled() bool {
-	if x != nil {
-		return x.Enabled
+	if x != nil && x.Enabled != nil {
+		return *x.Enabled
 	}
 	return false
 }
@@ -1345,8 +1345,8 @@ type BucketWebsite struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	MainPageSuffix string `protobuf:"bytes,1,opt,name=main_page_suffix,json=mainPageSuffix,proto3" json:"main_page_suffix,omitempty"`
-	NotFoundPage   string `protobuf:"bytes,2,opt,name=not_found_page,json=notFoundPage,proto3" json:"not_found_page,omitempty"`
+	MainPageSuffix *string `protobuf:"bytes,1,opt,name=main_page_suffix,json=mainPageSuffix" json:"main_page_suffix,omitempty"`
+	NotFoundPage   *string `protobuf:"bytes,2,opt,name=not_found_page,json=notFoundPage" json:"not_found_page,omitempty"`
 }
 
 func (x *BucketWebsite) Reset() {
@@ -1382,15 +1382,15 @@ func (*BucketWebsite) Descriptor() ([]byte, []int) {
 }
 
 func (x *BucketWebsite) GetMainPageSuffix() string {
-	if x != nil {
-		return x.MainPageSuffix
+	if x != nil && x.MainPageSuffix != nil {
+		return *x.MainPageSuffix
 	}
 	return ""
 }
 
 func (x *BucketWebsite) GetNotFoundPage() string {
-	if x != nil {
-		return x.NotFoundPage
+	if x != nil && x.NotFoundPage != nil {
+		return *x.NotFoundPage
 	}
 	return ""
 }
@@ -1400,39 +1400,39 @@ type Bucket struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Acl                   []*BucketAccessControl       `protobuf:"bytes,1,rep,name=acl,proto3" json:"acl,omitempty"`
-	Autoclass             *BucketAutoclass             `protobuf:"bytes,2,opt,name=autoclass,proto3" json:"autoclass,omitempty"`
-	Billing               *BucketBilling               `protobuf:"bytes,3,opt,name=billing,proto3" json:"billing,omitempty"`
-	Cors                  []*BucketCors                `protobuf:"bytes,4,rep,name=cors,proto3" json:"cors,omitempty"`
-	CustomPlacementConfig *BucketCustomPlacementConfig `protobuf:"bytes,5,opt,name=custom_placement_config,json=customPlacementConfig,proto3" json:"custom_placement_config,omitempty"`
-	DefaultEventBasedHold bool                         `protobuf:"varint,6,opt,name=default_event_based_hold,json=defaultEventBasedHold,proto3" json:"default_event_based_hold,omitempty"`
-	DefaultObjectAcl      []*ObjectAccessControl       `protobuf:"bytes,7,rep,name=default_object_acl,json=defaultObjectAcl,proto3" json:"default_object_acl,omitempty"`
-	Encryption            *BucketEncryption            `protobuf:"bytes,8,opt,name=encryption,proto3" json:"encryption,omitempty"`
-	Etag                  string                       `protobuf:"bytes,9,opt,name=etag,proto3" json:"etag,omitempty"`
-	HierarchicalNamespace *BucketHierarchicalNamespace `protobuf:"bytes,10,opt,name=hierarchical_namespace,json=hierarchicalNamespace,proto3" json:"hierarchical_namespace,omitempty"`
-	IamConfiguration      *BucketIamConfiguration      `protobuf:"bytes,11,opt,name=iam_configuration,json=iamConfiguration,proto3" json:"iam_configuration,omitempty"`
-	Id                    string                       `protobuf:"bytes,12,opt,name=id,proto3" json:"id,omitempty"`
-	Kind                  string                       `protobuf:"bytes,13,opt,name=kind,proto3" json:"kind,omitempty"`
-	Labels                map[string]string            `protobuf:"bytes,14,rep,name=labels,proto3" json:"labels,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
-	Lifecycle             *BucketLifecycle             `protobuf:"bytes,15,opt,name=lifecycle,proto3" json:"lifecycle,omitempty"`
-	Location              string                       `protobuf:"bytes,16,opt,name=location,proto3" json:"location,omitempty"`
-	LocationType          string                       `protobuf:"bytes,17,opt,name=location_type,json=locationType,proto3" json:"location_type,omitempty"`
-	Logging               *BucketLogging               `protobuf:"bytes,18,opt,name=logging,proto3" json:"logging,omitempty"`
-	Metageneration        int64                        `protobuf:"varint,19,opt,name=metageneration,proto3" json:"metageneration,omitempty"`
-	Name                  string                       `protobuf:"bytes,20,opt,name=name,proto3" json:"name,omitempty"`
-	ObjectRetention       *BucketObjectRetention       `protobuf:"bytes,21,opt,name=object_retention,json=objectRetention,proto3" json:"object_retention,omitempty"`
-	Owner                 *BucketOwner                 `protobuf:"bytes,22,opt,name=owner,proto3" json:"owner,omitempty"`
-	ProjectNumber         uint64                       `protobuf:"varint,23,opt,name=project_number,json=projectNumber,proto3" json:"project_number,omitempty"`
-	RetentionPolicy       *BucketRetentionPolicy       `protobuf:"bytes,24,opt,name=retention_policy,json=retentionPolicy,proto3" json:"retention_policy,omitempty"`
-	Rpo                   string                       `protobuf:"bytes,25,opt,name=rpo,proto3" json:"rpo,omitempty"`
-	SatisfiesPZS          bool                         `protobuf:"varint,26,opt,name=satisfies_p_z_s,json=satisfiesPZS,proto3" json:"satisfies_p_z_s,omitempty"`
-	SelfLink              string                       `protobuf:"bytes,27,opt,name=self_link,json=selfLink,proto3" json:"self_link,omitempty"`
-	SoftDeletePolicy      *BucketSoftDeletePolicy      `protobuf:"bytes,28,opt,name=soft_delete_policy,json=softDeletePolicy,proto3" json:"soft_delete_policy,omitempty"`
-	StorageClass          string                       `protobuf:"bytes,29,opt,name=storage_class,json=storageClass,proto3" json:"storage_class,omitempty"`
-	TimeCreated           *timestamp.Timestamp         `protobuf:"bytes,30,opt,name=time_created,json=timeCreated,proto3" json:"time_created,omitempty"`
-	Updated               *timestamp.Timestamp         `protobuf:"bytes,31,opt,name=updated,proto3" json:"updated,omitempty"`
-	Versioning            *BucketVersioning            `protobuf:"bytes,32,opt,name=versioning,proto3" json:"versioning,omitempty"`
-	Website               *BucketWebsite               `protobuf:"bytes,33,opt,name=website,proto3" json:"website,omitempty"`
+	Acl                   []*BucketAccessControl       `protobuf:"bytes,1,rep,name=acl" json:"acl,omitempty"`
+	Autoclass             *BucketAutoclass             `protobuf:"bytes,2,opt,name=autoclass" json:"autoclass,omitempty"`
+	Billing               *BucketBilling               `protobuf:"bytes,3,opt,name=billing" json:"billing,omitempty"`
+	Cors                  []*BucketCors                `protobuf:"bytes,4,rep,name=cors" json:"cors,omitempty"`
+	CustomPlacementConfig *BucketCustomPlacementConfig `protobuf:"bytes,5,opt,name=custom_placement_config,json=customPlacementConfig" json:"custom_placement_config,omitempty"`
+	DefaultEventBasedHold *bool                        `protobuf:"varint,6,opt,name=default_event_based_hold,json=defaultEventBasedHold" json:"default_event_based_hold,omitempty"`
+	DefaultObjectAcl      []*ObjectAccessControl       `protobuf:"bytes,7,rep,name=default_object_acl,json=defaultObjectAcl" json:"default_object_acl,omitempty"`
+	Encryption            *BucketEncryption            `protobuf:"bytes,8,opt,name=encryption" json:"encryption,omitempty"`
+	Etag                  *string                      `protobuf:"bytes,9,opt,name=etag" json:"etag,omitempty"`
+	HierarchicalNamespace *BucketHierarchicalNamespace `protobuf:"bytes,10,opt,name=hierarchical_namespace,json=hierarchicalNamespace" json:"hierarchical_namespace,omitempty"`
+	IamConfiguration      *BucketIamConfiguration      `protobuf:"bytes,11,opt,name=iam_configuration,json=iamConfiguration" json:"iam_configuration,omitempty"`
+	Id                    *string                      `protobuf:"bytes,12,opt,name=id" json:"id,omitempty"`
+	Kind                  *string                      `protobuf:"bytes,13,opt,name=kind" json:"kind,omitempty"`
+	Labels                map[string]string            `protobuf:"bytes,14,rep,name=labels" json:"labels,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	Lifecycle             *BucketLifecycle             `protobuf:"bytes,15,opt,name=lifecycle" json:"lifecycle,omitempty"`
+	Location              *string                      `protobuf:"bytes,16,opt,name=location" json:"location,omitempty"`
+	LocationType          *string                      `protobuf:"bytes,17,opt,name=location_type,json=locationType" json:"location_type,omitempty"`
+	Logging               *BucketLogging               `protobuf:"bytes,18,opt,name=logging" json:"logging,omitempty"`
+	Metageneration        *int64                       `protobuf:"varint,19,opt,name=metageneration" json:"metageneration,omitempty"`
+	Name                  *string                      `protobuf:"bytes,20,opt,name=name" json:"name,omitempty"`
+	ObjectRetention       *BucketObjectRetention       `protobuf:"bytes,21,opt,name=object_retention,json=objectRetention" json:"object_retention,omitempty"`
+	Owner                 *BucketOwner                 `protobuf:"bytes,22,opt,name=owner" json:"owner,omitempty"`
+	ProjectNumber         *uint64                      `protobuf:"varint,23,opt,name=project_number,json=projectNumber" json:"project_number,omitempty"`
+	RetentionPolicy       *BucketRetentionPolicy       `protobuf:"bytes,24,opt,name=retention_policy,json=retentionPolicy" json:"retention_policy,omitempty"`
+	Rpo                   *string                      `protobuf:"bytes,25,opt,name=rpo" json:"rpo,omitempty"`
+	SatisfiesPZS          *bool                        `protobuf:"varint,26,opt,name=satisfies_p_z_s,json=satisfiesPZS" json:"satisfies_p_z_s,omitempty"`
+	SelfLink              *string                      `protobuf:"bytes,27,opt,name=self_link,json=selfLink" json:"self_link,omitempty"`
+	SoftDeletePolicy      *BucketSoftDeletePolicy      `protobuf:"bytes,28,opt,name=soft_delete_policy,json=softDeletePolicy" json:"soft_delete_policy,omitempty"`
+	StorageClass          *string                      `protobuf:"bytes,29,opt,name=storage_class,json=storageClass" json:"storage_class,omitempty"`
+	TimeCreated           *timestamp.Timestamp         `protobuf:"bytes,30,opt,name=time_created,json=timeCreated" json:"time_created,omitempty"`
+	Updated               *timestamp.Timestamp         `protobuf:"bytes,31,opt,name=updated" json:"updated,omitempty"`
+	Versioning            *BucketVersioning            `protobuf:"bytes,32,opt,name=versioning" json:"versioning,omitempty"`
+	Website               *BucketWebsite               `protobuf:"bytes,33,opt,name=website" json:"website,omitempty"`
 }
 
 func (x *Bucket) Reset() {
@@ -1503,8 +1503,8 @@ func (x *Bucket) GetCustomPlacementConfig() *BucketCustomPlacementConfig {
 }
 
 func (x *Bucket) GetDefaultEventBasedHold() bool {
-	if x != nil {
-		return x.DefaultEventBasedHold
+	if x != nil && x.DefaultEventBasedHold != nil {
+		return *x.DefaultEventBasedHold
 	}
 	return false
 }
@@ -1524,8 +1524,8 @@ func (x *Bucket) GetEncryption() *BucketEncryption {
 }
 
 func (x *Bucket) GetEtag() string {
-	if x != nil {
-		return x.Etag
+	if x != nil && x.Etag != nil {
+		return *x.Etag
 	}
 	return ""
 }
@@ -1545,15 +1545,15 @@ func (x *Bucket) GetIamConfiguration() *BucketIamConfiguration {
 }
 
 func (x *Bucket) GetId() string {
-	if x != nil {
-		return x.Id
+	if x != nil && x.Id != nil {
+		return *x.Id
 	}
 	return ""
 }
 
 func (x *Bucket) GetKind() string {
-	if x != nil {
-		return x.Kind
+	if x != nil && x.Kind != nil {
+		return *x.Kind
 	}
 	return ""
 }
@@ -1573,15 +1573,15 @@ func (x *Bucket) GetLifecycle() *BucketLifecycle {
 }
 
 func (x *Bucket) GetLocation() string {
-	if x != nil {
-		return x.Location
+	if x != nil && x.Location != nil {
+		return *x.Location
 	}
 	return ""
 }
 
 func (x *Bucket) GetLocationType() string {
-	if x != nil {
-		return x.LocationType
+	if x != nil && x.LocationType != nil {
+		return *x.LocationType
 	}
 	return ""
 }
@@ -1594,15 +1594,15 @@ func (x *Bucket) GetLogging() *BucketLogging {
 }
 
 func (x *Bucket) GetMetageneration() int64 {
-	if x != nil {
-		return x.Metageneration
+	if x != nil && x.Metageneration != nil {
+		return *x.Metageneration
 	}
 	return 0
 }
 
 func (x *Bucket) GetName() string {
-	if x != nil {
-		return x.Name
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
@@ -1622,8 +1622,8 @@ func (x *Bucket) GetOwner() *BucketOwner {
 }
 
 func (x *Bucket) GetProjectNumber() uint64 {
-	if x != nil {
-		return x.ProjectNumber
+	if x != nil && x.ProjectNumber != nil {
+		return *x.ProjectNumber
 	}
 	return 0
 }
@@ -1636,22 +1636,22 @@ func (x *Bucket) GetRetentionPolicy() *BucketRetentionPolicy {
 }
 
 func (x *Bucket) GetRpo() string {
-	if x != nil {
-		return x.Rpo
+	if x != nil && x.Rpo != nil {
+		return *x.Rpo
 	}
 	return ""
 }
 
 func (x *Bucket) GetSatisfiesPZS() bool {
-	if x != nil {
-		return x.SatisfiesPZS
+	if x != nil && x.SatisfiesPZS != nil {
+		return *x.SatisfiesPZS
 	}
 	return false
 }
 
 func (x *Bucket) GetSelfLink() string {
-	if x != nil {
-		return x.SelfLink
+	if x != nil && x.SelfLink != nil {
+		return *x.SelfLink
 	}
 	return ""
 }
@@ -1664,8 +1664,8 @@ func (x *Bucket) GetSoftDeletePolicy() *BucketSoftDeletePolicy {
 }
 
 func (x *Bucket) GetStorageClass() string {
-	if x != nil {
-		return x.StorageClass
+	if x != nil && x.StorageClass != nil {
+		return *x.StorageClass
 	}
 	return ""
 }
@@ -1703,8 +1703,8 @@ type BucketAccessControlProjectTeam struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	ProjectNumber string `protobuf:"bytes,1,opt,name=project_number,json=projectNumber,proto3" json:"project_number,omitempty"`
-	Team          string `protobuf:"bytes,2,opt,name=team,proto3" json:"team,omitempty"`
+	ProjectNumber *string `protobuf:"bytes,1,opt,name=project_number,json=projectNumber" json:"project_number,omitempty"`
+	Team          *string `protobuf:"bytes,2,opt,name=team" json:"team,omitempty"`
 }
 
 func (x *BucketAccessControlProjectTeam) Reset() {
@@ -1740,15 +1740,15 @@ func (*BucketAccessControlProjectTeam) Descriptor() ([]byte, []int) {
 }
 
 func (x *BucketAccessControlProjectTeam) GetProjectNumber() string {
-	if x != nil {
-		return x.ProjectNumber
+	if x != nil && x.ProjectNumber != nil {
+		return *x.ProjectNumber
 	}
 	return ""
 }
 
 func (x *BucketAccessControlProjectTeam) GetTeam() string {
-	if x != nil {
-		return x.Team
+	if x != nil && x.Team != nil {
+		return *x.Team
 	}
 	return ""
 }
@@ -1758,17 +1758,17 @@ type BucketAccessControl struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Bucket      string                          `protobuf:"bytes,1,opt,name=bucket,proto3" json:"bucket,omitempty"`
-	Domain      string                          `protobuf:"bytes,2,opt,name=domain,proto3" json:"domain,omitempty"`
-	Email       string                          `protobuf:"bytes,3,opt,name=email,proto3" json:"email,omitempty"`
-	Entity      string                          `protobuf:"bytes,4,opt,name=entity,proto3" json:"entity,omitempty"`
-	EntityId    string                          `protobuf:"bytes,5,opt,name=entity_id,json=entityId,proto3" json:"entity_id,omitempty"`
-	Etag        string                          `protobuf:"bytes,6,opt,name=etag,proto3" json:"etag,omitempty"`
-	Id          string                          `protobuf:"bytes,7,opt,name=id,proto3" json:"id,omitempty"`
-	Kind        string                          `protobuf:"bytes,8,opt,name=kind,proto3" json:"kind,omitempty"`
-	ProjectTeam *BucketAccessControlProjectTeam `protobuf:"bytes,9,opt,name=project_team,json=projectTeam,proto3" json:"project_team,omitempty"`
-	Role        string                          `protobuf:"bytes,10,opt,name=role,proto3" json:"role,omitempty"`
-	SelfLink    string                          `protobuf:"bytes,11,opt,name=self_link,json=selfLink,proto3" json:"self_link,omitempty"`
+	Bucket      *string                         `protobuf:"bytes,1,opt,name=bucket" json:"bucket,omitempty"`
+	Domain      *string                         `protobuf:"bytes,2,opt,name=domain" json:"domain,omitempty"`
+	Email       *string                         `protobuf:"bytes,3,opt,name=email" json:"email,omitempty"`
+	Entity      *string                         `protobuf:"bytes,4,opt,name=entity" json:"entity,omitempty"`
+	EntityId    *string                         `protobuf:"bytes,5,opt,name=entity_id,json=entityId" json:"entity_id,omitempty"`
+	Etag        *string                         `protobuf:"bytes,6,opt,name=etag" json:"etag,omitempty"`
+	Id          *string                         `protobuf:"bytes,7,opt,name=id" json:"id,omitempty"`
+	Kind        *string                         `protobuf:"bytes,8,opt,name=kind" json:"kind,omitempty"`
+	ProjectTeam *BucketAccessControlProjectTeam `protobuf:"bytes,9,opt,name=project_team,json=projectTeam" json:"project_team,omitempty"`
+	Role        *string                         `protobuf:"bytes,10,opt,name=role" json:"role,omitempty"`
+	SelfLink    *string                         `protobuf:"bytes,11,opt,name=self_link,json=selfLink" json:"self_link,omitempty"`
 }
 
 func (x *BucketAccessControl) Reset() {
@@ -1804,57 +1804,57 @@ func (*BucketAccessControl) Descriptor() ([]byte, []int) {
 }
 
 func (x *BucketAccessControl) GetBucket() string {
-	if x != nil {
-		return x.Bucket
+	if x != nil && x.Bucket != nil {
+		return *x.Bucket
 	}
 	return ""
 }
 
 func (x *BucketAccessControl) GetDomain() string {
-	if x != nil {
-		return x.Domain
+	if x != nil && x.Domain != nil {
+		return *x.Domain
 	}
 	return ""
 }
 
 func (x *BucketAccessControl) GetEmail() string {
-	if x != nil {
-		return x.Email
+	if x != nil && x.Email != nil {
+		return *x.Email
 	}
 	return ""
 }
 
 func (x *BucketAccessControl) GetEntity() string {
-	if x != nil {
-		return x.Entity
+	if x != nil && x.Entity != nil {
+		return *x.Entity
 	}
 	return ""
 }
 
 func (x *BucketAccessControl) GetEntityId() string {
-	if x != nil {
-		return x.EntityId
+	if x != nil && x.EntityId != nil {
+		return *x.EntityId
 	}
 	return ""
 }
 
 func (x *BucketAccessControl) GetEtag() string {
-	if x != nil {
-		return x.Etag
+	if x != nil && x.Etag != nil {
+		return *x.Etag
 	}
 	return ""
 }
 
 func (x *BucketAccessControl) GetId() string {
-	if x != nil {
-		return x.Id
+	if x != nil && x.Id != nil {
+		return *x.Id
 	}
 	return ""
 }
 
 func (x *BucketAccessControl) GetKind() string {
-	if x != nil {
-		return x.Kind
+	if x != nil && x.Kind != nil {
+		return *x.Kind
 	}
 	return ""
 }
@@ -1867,15 +1867,15 @@ func (x *BucketAccessControl) GetProjectTeam() *BucketAccessControlProjectTeam {
 }
 
 func (x *BucketAccessControl) GetRole() string {
-	if x != nil {
-		return x.Role
+	if x != nil && x.Role != nil {
+		return *x.Role
 	}
 	return ""
 }
 
 func (x *BucketAccessControl) GetSelfLink() string {
-	if x != nil {
-		return x.SelfLink
+	if x != nil && x.SelfLink != nil {
+		return *x.SelfLink
 	}
 	return ""
 }
@@ -1885,8 +1885,8 @@ type BucketAccessControls struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Items []*BucketAccessControl `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
-	Kind  string                 `protobuf:"bytes,2,opt,name=kind,proto3" json:"kind,omitempty"`
+	Items []*BucketAccessControl `protobuf:"bytes,1,rep,name=items" json:"items,omitempty"`
+	Kind  *string                `protobuf:"bytes,2,opt,name=kind" json:"kind,omitempty"`
 }
 
 func (x *BucketAccessControls) Reset() {
@@ -1929,8 +1929,8 @@ func (x *BucketAccessControls) GetItems() []*BucketAccessControl {
 }
 
 func (x *BucketAccessControls) GetKind() string {
-	if x != nil {
-		return x.Kind
+	if x != nil && x.Kind != nil {
+		return *x.Kind
 	}
 	return ""
 }
@@ -1940,9 +1940,9 @@ type Buckets struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Items         []*Bucket `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
-	Kind          string    `protobuf:"bytes,2,opt,name=kind,proto3" json:"kind,omitempty"`
-	NextPageToken string    `protobuf:"bytes,3,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
+	Items         []*Bucket `protobuf:"bytes,1,rep,name=items" json:"items,omitempty"`
+	Kind          *string   `protobuf:"bytes,2,opt,name=kind" json:"kind,omitempty"`
+	NextPageToken *string   `protobuf:"bytes,3,opt,name=next_page_token,json=nextPageToken" json:"next_page_token,omitempty"`
 }
 
 func (x *Buckets) Reset() {
@@ -1985,15 +1985,15 @@ func (x *Buckets) GetItems() []*Bucket {
 }
 
 func (x *Buckets) GetKind() string {
-	if x != nil {
-		return x.Kind
+	if x != nil && x.Kind != nil {
+		return *x.Kind
 	}
 	return ""
 }
 
 func (x *Buckets) GetNextPageToken() string {
-	if x != nil {
-		return x.NextPageToken
+	if x != nil && x.NextPageToken != nil {
+		return *x.NextPageToken
 	}
 	return ""
 }
@@ -2003,11 +2003,11 @@ type BulkRestoreObjectsRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	AllowOverwrite        bool                 `protobuf:"varint,1,opt,name=allow_overwrite,json=allowOverwrite,proto3" json:"allow_overwrite,omitempty"`
-	CopySourceAcl         bool                 `protobuf:"varint,2,opt,name=copy_source_acl,json=copySourceAcl,proto3" json:"copy_source_acl,omitempty"`
-	MatchGlobs            []string             `protobuf:"bytes,3,rep,name=match_globs,json=matchGlobs,proto3" json:"match_globs,omitempty"`
-	SoftDeletedAfterTime  *timestamp.Timestamp `protobuf:"bytes,4,opt,name=soft_deleted_after_time,json=softDeletedAfterTime,proto3" json:"soft_deleted_after_time,omitempty"`
-	SoftDeletedBeforeTime *timestamp.Timestamp `protobuf:"bytes,5,opt,name=soft_deleted_before_time,json=softDeletedBeforeTime,proto3" json:"soft_deleted_before_time,omitempty"`
+	AllowOverwrite        *bool                `protobuf:"varint,1,opt,name=allow_overwrite,json=allowOverwrite" json:"allow_overwrite,omitempty"`
+	CopySourceAcl         *bool                `protobuf:"varint,2,opt,name=copy_source_acl,json=copySourceAcl" json:"copy_source_acl,omitempty"`
+	MatchGlobs            []string             `protobuf:"bytes,3,rep,name=match_globs,json=matchGlobs" json:"match_globs,omitempty"`
+	SoftDeletedAfterTime  *timestamp.Timestamp `protobuf:"bytes,4,opt,name=soft_deleted_after_time,json=softDeletedAfterTime" json:"soft_deleted_after_time,omitempty"`
+	SoftDeletedBeforeTime *timestamp.Timestamp `protobuf:"bytes,5,opt,name=soft_deleted_before_time,json=softDeletedBeforeTime" json:"soft_deleted_before_time,omitempty"`
 }
 
 func (x *BulkRestoreObjectsRequest) Reset() {
@@ -2043,15 +2043,15 @@ func (*BulkRestoreObjectsRequest) Descriptor() ([]byte, []int) {
 }
 
 func (x *BulkRestoreObjectsRequest) GetAllowOverwrite() bool {
-	if x != nil {
-		return x.AllowOverwrite
+	if x != nil && x.AllowOverwrite != nil {
+		return *x.AllowOverwrite
 	}
 	return false
 }
 
 func (x *BulkRestoreObjectsRequest) GetCopySourceAcl() bool {
-	if x != nil {
-		return x.CopySourceAcl
+	if x != nil && x.CopySourceAcl != nil {
+		return *x.CopySourceAcl
 	}
 	return false
 }
@@ -2082,16 +2082,16 @@ type Channel struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Address     string            `protobuf:"bytes,1,opt,name=address,proto3" json:"address,omitempty"`
-	Expiration  int64             `protobuf:"varint,2,opt,name=expiration,proto3" json:"expiration,omitempty"`
-	Id          string            `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
-	Kind        string            `protobuf:"bytes,4,opt,name=kind,proto3" json:"kind,omitempty"`
-	Params      map[string]string `protobuf:"bytes,5,rep,name=params,proto3" json:"params,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
-	Payload     bool              `protobuf:"varint,6,opt,name=payload,proto3" json:"payload,omitempty"`
-	ResourceId  string            `protobuf:"bytes,7,opt,name=resource_id,json=resourceId,proto3" json:"resource_id,omitempty"`
-	ResourceUri string            `protobuf:"bytes,8,opt,name=resource_uri,json=resourceUri,proto3" json:"resource_uri,omitempty"`
-	Token       string            `protobuf:"bytes,9,opt,name=token,proto3" json:"token,omitempty"`
-	Type        string            `protobuf:"bytes,10,opt,name=type,proto3" json:"type,omitempty"`
+	Address     *string           `protobuf:"bytes,1,opt,name=address" json:"address,omitempty"`
+	Expiration  *int64            `protobuf:"varint,2,opt,name=expiration" json:"expiration,omitempty"`
+	Id          *string           `protobuf:"bytes,3,opt,name=id" json:"id,omitempty"`
+	Kind        *string           `protobuf:"bytes,4,opt,name=kind" json:"kind,omitempty"`
+	Params      map[string]string `protobuf:"bytes,5,rep,name=params" json:"params,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	Payload     *bool             `protobuf:"varint,6,opt,name=payload" json:"payload,omitempty"`
+	ResourceId  *string           `protobuf:"bytes,7,opt,name=resource_id,json=resourceId" json:"resource_id,omitempty"`
+	ResourceUri *string           `protobuf:"bytes,8,opt,name=resource_uri,json=resourceUri" json:"resource_uri,omitempty"`
+	Token       *string           `protobuf:"bytes,9,opt,name=token" json:"token,omitempty"`
+	Type        *string           `protobuf:"bytes,10,opt,name=type" json:"type,omitempty"`
 }
 
 func (x *Channel) Reset() {
@@ -2127,29 +2127,29 @@ func (*Channel) Descriptor() ([]byte, []int) {
 }
 
 func (x *Channel) GetAddress() string {
-	if x != nil {
-		return x.Address
+	if x != nil && x.Address != nil {
+		return *x.Address
 	}
 	return ""
 }
 
 func (x *Channel) GetExpiration() int64 {
-	if x != nil {
-		return x.Expiration
+	if x != nil && x.Expiration != nil {
+		return *x.Expiration
 	}
 	return 0
 }
 
 func (x *Channel) GetId() string {
-	if x != nil {
-		return x.Id
+	if x != nil && x.Id != nil {
+		return *x.Id
 	}
 	return ""
 }
 
 func (x *Channel) GetKind() string {
-	if x != nil {
-		return x.Kind
+	if x != nil && x.Kind != nil {
+		return *x.Kind
 	}
 	return ""
 }
@@ -2162,36 +2162,36 @@ func (x *Channel) GetParams() map[string]string {
 }
 
 func (x *Channel) GetPayload() bool {
-	if x != nil {
-		return x.Payload
+	if x != nil && x.Payload != nil {
+		return *x.Payload
 	}
 	return false
 }
 
 func (x *Channel) GetResourceId() string {
-	if x != nil {
-		return x.ResourceId
+	if x != nil && x.ResourceId != nil {
+		return *x.ResourceId
 	}
 	return ""
 }
 
 func (x *Channel) GetResourceUri() string {
-	if x != nil {
-		return x.ResourceUri
+	if x != nil && x.ResourceUri != nil {
+		return *x.ResourceUri
 	}
 	return ""
 }
 
 func (x *Channel) GetToken() string {
-	if x != nil {
-		return x.Token
+	if x != nil && x.Token != nil {
+		return *x.Token
 	}
 	return ""
 }
 
 func (x *Channel) GetType() string {
-	if x != nil {
-		return x.Type
+	if x != nil && x.Type != nil {
+		return *x.Type
 	}
 	return ""
 }
@@ -2201,7 +2201,7 @@ type ObjectPreconditions struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	IfGenerationMatch int64 `protobuf:"varint,1,opt,name=if_generation_match,json=ifGenerationMatch,proto3" json:"if_generation_match,omitempty"`
+	IfGenerationMatch *int64 `protobuf:"varint,1,opt,name=if_generation_match,json=ifGenerationMatch" json:"if_generation_match,omitempty"`
 }
 
 func (x *ObjectPreconditions) Reset() {
@@ -2237,8 +2237,8 @@ func (*ObjectPreconditions) Descriptor() ([]byte, []int) {
 }
 
 func (x *ObjectPreconditions) GetIfGenerationMatch() int64 {
-	if x != nil {
-		return x.IfGenerationMatch
+	if x != nil && x.IfGenerationMatch != nil {
+		return *x.IfGenerationMatch
 	}
 	return 0
 }
@@ -2248,9 +2248,9 @@ type ComposeRequestSourceObjects struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Generation          int64                `protobuf:"varint,1,opt,name=generation,proto3" json:"generation,omitempty"`
-	Name                string               `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	ObjectPreconditions *ObjectPreconditions `protobuf:"bytes,3,opt,name=object_preconditions,json=objectPreconditions,proto3" json:"object_preconditions,omitempty"`
+	Generation          *int64               `protobuf:"varint,1,opt,name=generation" json:"generation,omitempty"`
+	Name                *string              `protobuf:"bytes,2,opt,name=name" json:"name,omitempty"`
+	ObjectPreconditions *ObjectPreconditions `protobuf:"bytes,3,opt,name=object_preconditions,json=objectPreconditions" json:"object_preconditions,omitempty"`
 }
 
 func (x *ComposeRequestSourceObjects) Reset() {
@@ -2286,15 +2286,15 @@ func (*ComposeRequestSourceObjects) Descriptor() ([]byte, []int) {
 }
 
 func (x *ComposeRequestSourceObjects) GetGeneration() int64 {
-	if x != nil {
-		return x.Generation
+	if x != nil && x.Generation != nil {
+		return *x.Generation
 	}
 	return 0
 }
 
 func (x *ComposeRequestSourceObjects) GetName() string {
-	if x != nil {
-		return x.Name
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
@@ -2311,9 +2311,9 @@ type ComposeRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Destination   *Object                        `protobuf:"bytes,1,opt,name=destination,proto3" json:"destination,omitempty"`
-	Kind          string                         `protobuf:"bytes,2,opt,name=kind,proto3" json:"kind,omitempty"`
-	SourceObjects []*ComposeRequestSourceObjects `protobuf:"bytes,3,rep,name=source_objects,json=sourceObjects,proto3" json:"source_objects,omitempty"`
+	Destination   *Object                        `protobuf:"bytes,1,opt,name=destination" json:"destination,omitempty"`
+	Kind          *string                        `protobuf:"bytes,2,opt,name=kind" json:"kind,omitempty"`
+	SourceObjects []*ComposeRequestSourceObjects `protobuf:"bytes,3,rep,name=source_objects,json=sourceObjects" json:"source_objects,omitempty"`
 }
 
 func (x *ComposeRequest) Reset() {
@@ -2356,8 +2356,8 @@ func (x *ComposeRequest) GetDestination() *Object {
 }
 
 func (x *ComposeRequest) GetKind() string {
-	if x != nil {
-		return x.Kind
+	if x != nil && x.Kind != nil {
+		return *x.Kind
 	}
 	return ""
 }
@@ -2374,10 +2374,10 @@ type Expr struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Description string `protobuf:"bytes,1,opt,name=description,proto3" json:"description,omitempty"`
-	Expression  string `protobuf:"bytes,2,opt,name=expression,proto3" json:"expression,omitempty"`
-	Location    string `protobuf:"bytes,3,opt,name=location,proto3" json:"location,omitempty"`
-	Title       string `protobuf:"bytes,4,opt,name=title,proto3" json:"title,omitempty"`
+	Description *string `protobuf:"bytes,1,opt,name=description" json:"description,omitempty"`
+	Expression  *string `protobuf:"bytes,2,opt,name=expression" json:"expression,omitempty"`
+	Location    *string `protobuf:"bytes,3,opt,name=location" json:"location,omitempty"`
+	Title       *string `protobuf:"bytes,4,opt,name=title" json:"title,omitempty"`
 }
 
 func (x *Expr) Reset() {
@@ -2413,29 +2413,29 @@ func (*Expr) Descriptor() ([]byte, []int) {
 }
 
 func (x *Expr) GetDescription() string {
-	if x != nil {
-		return x.Description
+	if x != nil && x.Description != nil {
+		return *x.Description
 	}
 	return ""
 }
 
 func (x *Expr) GetExpression() string {
-	if x != nil {
-		return x.Expression
+	if x != nil && x.Expression != nil {
+		return *x.Expression
 	}
 	return ""
 }
 
 func (x *Expr) GetLocation() string {
-	if x != nil {
-		return x.Location
+	if x != nil && x.Location != nil {
+		return *x.Location
 	}
 	return ""
 }
 
 func (x *Expr) GetTitle() string {
-	if x != nil {
-		return x.Title
+	if x != nil && x.Title != nil {
+		return *x.Title
 	}
 	return ""
 }
@@ -2445,7 +2445,7 @@ type FolderPendingRenameInfo struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	OperationId string `protobuf:"bytes,1,opt,name=operation_id,json=operationId,proto3" json:"operation_id,omitempty"`
+	OperationId *string `protobuf:"bytes,1,opt,name=operation_id,json=operationId" json:"operation_id,omitempty"`
 }
 
 func (x *FolderPendingRenameInfo) Reset() {
@@ -2481,8 +2481,8 @@ func (*FolderPendingRenameInfo) Descriptor() ([]byte, []int) {
 }
 
 func (x *FolderPendingRenameInfo) GetOperationId() string {
-	if x != nil {
-		return x.OperationId
+	if x != nil && x.OperationId != nil {
+		return *x.OperationId
 	}
 	return ""
 }
@@ -2492,15 +2492,15 @@ type Folder struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Bucket            string                   `protobuf:"bytes,1,opt,name=bucket,proto3" json:"bucket,omitempty"`
-	CreateTime        *timestamp.Timestamp     `protobuf:"bytes,2,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
-	Id                string                   `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
-	Kind              string                   `protobuf:"bytes,4,opt,name=kind,proto3" json:"kind,omitempty"`
-	Metageneration    int64                    `protobuf:"varint,5,opt,name=metageneration,proto3" json:"metageneration,omitempty"`
-	Name              string                   `protobuf:"bytes,6,opt,name=name,proto3" json:"name,omitempty"`
-	PendingRenameInfo *FolderPendingRenameInfo `protobuf:"bytes,7,opt,name=pending_rename_info,json=pendingRenameInfo,proto3" json:"pending_rename_info,omitempty"`
-	SelfLink          string                   `protobuf:"bytes,8,opt,name=self_link,json=selfLink,proto3" json:"self_link,omitempty"`
-	UpdateTime        *timestamp.Timestamp     `protobuf:"bytes,9,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
+	Bucket            *string                  `protobuf:"bytes,1,opt,name=bucket" json:"bucket,omitempty"`
+	CreateTime        *timestamp.Timestamp     `protobuf:"bytes,2,opt,name=create_time,json=createTime" json:"create_time,omitempty"`
+	Id                *string                  `protobuf:"bytes,3,opt,name=id" json:"id,omitempty"`
+	Kind              *string                  `protobuf:"bytes,4,opt,name=kind" json:"kind,omitempty"`
+	Metageneration    *int64                   `protobuf:"varint,5,opt,name=metageneration" json:"metageneration,omitempty"`
+	Name              *string                  `protobuf:"bytes,6,opt,name=name" json:"name,omitempty"`
+	PendingRenameInfo *FolderPendingRenameInfo `protobuf:"bytes,7,opt,name=pending_rename_info,json=pendingRenameInfo" json:"pending_rename_info,omitempty"`
+	SelfLink          *string                  `protobuf:"bytes,8,opt,name=self_link,json=selfLink" json:"self_link,omitempty"`
+	UpdateTime        *timestamp.Timestamp     `protobuf:"bytes,9,opt,name=update_time,json=updateTime" json:"update_time,omitempty"`
 }
 
 func (x *Folder) Reset() {
@@ -2536,8 +2536,8 @@ func (*Folder) Descriptor() ([]byte, []int) {
 }
 
 func (x *Folder) GetBucket() string {
-	if x != nil {
-		return x.Bucket
+	if x != nil && x.Bucket != nil {
+		return *x.Bucket
 	}
 	return ""
 }
@@ -2550,29 +2550,29 @@ func (x *Folder) GetCreateTime() *timestamp.Timestamp {
 }
 
 func (x *Folder) GetId() string {
-	if x != nil {
-		return x.Id
+	if x != nil && x.Id != nil {
+		return *x.Id
 	}
 	return ""
 }
 
 func (x *Folder) GetKind() string {
-	if x != nil {
-		return x.Kind
+	if x != nil && x.Kind != nil {
+		return *x.Kind
 	}
 	return ""
 }
 
 func (x *Folder) GetMetageneration() int64 {
-	if x != nil {
-		return x.Metageneration
+	if x != nil && x.Metageneration != nil {
+		return *x.Metageneration
 	}
 	return 0
 }
 
 func (x *Folder) GetName() string {
-	if x != nil {
-		return x.Name
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
@@ -2585,8 +2585,8 @@ func (x *Folder) GetPendingRenameInfo() *FolderPendingRenameInfo {
 }
 
 func (x *Folder) GetSelfLink() string {
-	if x != nil {
-		return x.SelfLink
+	if x != nil && x.SelfLink != nil {
+		return *x.SelfLink
 	}
 	return ""
 }
@@ -2603,9 +2603,9 @@ type Folders struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Items         []*Folder `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
-	Kind          string    `protobuf:"bytes,2,opt,name=kind,proto3" json:"kind,omitempty"`
-	NextPageToken string    `protobuf:"bytes,3,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
+	Items         []*Folder `protobuf:"bytes,1,rep,name=items" json:"items,omitempty"`
+	Kind          *string   `protobuf:"bytes,2,opt,name=kind" json:"kind,omitempty"`
+	NextPageToken *string   `protobuf:"bytes,3,opt,name=next_page_token,json=nextPageToken" json:"next_page_token,omitempty"`
 }
 
 func (x *Folders) Reset() {
@@ -2648,15 +2648,15 @@ func (x *Folders) GetItems() []*Folder {
 }
 
 func (x *Folders) GetKind() string {
-	if x != nil {
-		return x.Kind
+	if x != nil && x.Kind != nil {
+		return *x.Kind
 	}
 	return ""
 }
 
 func (x *Folders) GetNextPageToken() string {
-	if x != nil {
-		return x.NextPageToken
+	if x != nil && x.NextPageToken != nil {
+		return *x.NextPageToken
 	}
 	return ""
 }
@@ -2666,8 +2666,8 @@ type GoogleLongrunningListOperationsResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	NextPageToken string                        `protobuf:"bytes,1,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
-	Operations    []*GoogleLongrunningOperation `protobuf:"bytes,2,rep,name=operations,proto3" json:"operations,omitempty"`
+	NextPageToken *string                       `protobuf:"bytes,1,opt,name=next_page_token,json=nextPageToken" json:"next_page_token,omitempty"`
+	Operations    []*GoogleLongrunningOperation `protobuf:"bytes,2,rep,name=operations" json:"operations,omitempty"`
 }
 
 func (x *GoogleLongrunningListOperationsResponse) Reset() {
@@ -2703,8 +2703,8 @@ func (*GoogleLongrunningListOperationsResponse) Descriptor() ([]byte, []int) {
 }
 
 func (x *GoogleLongrunningListOperationsResponse) GetNextPageToken() string {
-	if x != nil {
-		return x.NextPageToken
+	if x != nil && x.NextPageToken != nil {
+		return *x.NextPageToken
 	}
 	return ""
 }
@@ -2721,11 +2721,11 @@ type GoogleLongrunningOperation struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Done     bool                 `protobuf:"varint,1,opt,name=done,proto3" json:"done,omitempty"`
-	Error    *GoogleRpcStatus     `protobuf:"bytes,2,opt,name=error,proto3" json:"error,omitempty"`
-	Metadata map[string]*any1.Any `protobuf:"bytes,3,rep,name=metadata,proto3" json:"metadata,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
-	Name     string               `protobuf:"bytes,4,opt,name=name,proto3" json:"name,omitempty"`
-	Response map[string]*any1.Any `protobuf:"bytes,5,rep,name=response,proto3" json:"response,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+	Done     *bool                `protobuf:"varint,1,opt,name=done" json:"done,omitempty"`
+	Error    *GoogleRpcStatus     `protobuf:"bytes,2,opt,name=error" json:"error,omitempty"`
+	Metadata map[string]*any1.Any `protobuf:"bytes,3,rep,name=metadata" json:"metadata,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	Name     *string              `protobuf:"bytes,4,opt,name=name" json:"name,omitempty"`
+	Response map[string]*any1.Any `protobuf:"bytes,5,rep,name=response" json:"response,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 }
 
 func (x *GoogleLongrunningOperation) Reset() {
@@ -2761,8 +2761,8 @@ func (*GoogleLongrunningOperation) Descriptor() ([]byte, []int) {
 }
 
 func (x *GoogleLongrunningOperation) GetDone() bool {
-	if x != nil {
-		return x.Done
+	if x != nil && x.Done != nil {
+		return *x.Done
 	}
 	return false
 }
@@ -2782,8 +2782,8 @@ func (x *GoogleLongrunningOperation) GetMetadata() map[string]*any1.Any {
 }
 
 func (x *GoogleLongrunningOperation) GetName() string {
-	if x != nil {
-		return x.Name
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
@@ -2800,9 +2800,9 @@ type GoogleRpcStatus struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Code    int32       `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
-	Details []*any1.Any `protobuf:"bytes,2,rep,name=details,proto3" json:"details,omitempty"`
-	Message string      `protobuf:"bytes,3,opt,name=message,proto3" json:"message,omitempty"`
+	Code    *int32      `protobuf:"varint,1,opt,name=code" json:"code,omitempty"`
+	Details []*any1.Any `protobuf:"bytes,2,rep,name=details" json:"details,omitempty"`
+	Message *string     `protobuf:"bytes,3,opt,name=message" json:"message,omitempty"`
 }
 
 func (x *GoogleRpcStatus) Reset() {
@@ -2838,8 +2838,8 @@ func (*GoogleRpcStatus) Descriptor() ([]byte, []int) {
 }
 
 func (x *GoogleRpcStatus) GetCode() int32 {
-	if x != nil {
-		return x.Code
+	if x != nil && x.Code != nil {
+		return *x.Code
 	}
 	return 0
 }
@@ -2852,8 +2852,8 @@ func (x *GoogleRpcStatus) GetDetails() []*any1.Any {
 }
 
 func (x *GoogleRpcStatus) GetMessage() string {
-	if x != nil {
-		return x.Message
+	if x != nil && x.Message != nil {
+		return *x.Message
 	}
 	return ""
 }
@@ -2863,9 +2863,9 @@ type HmacKey struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Kind     string           `protobuf:"bytes,1,opt,name=kind,proto3" json:"kind,omitempty"`
-	Metadata *HmacKeyMetadata `protobuf:"bytes,2,opt,name=metadata,proto3" json:"metadata,omitempty"`
-	Secret   string           `protobuf:"bytes,3,opt,name=secret,proto3" json:"secret,omitempty"`
+	Kind     *string          `protobuf:"bytes,1,opt,name=kind" json:"kind,omitempty"`
+	Metadata *HmacKeyMetadata `protobuf:"bytes,2,opt,name=metadata" json:"metadata,omitempty"`
+	Secret   *string          `protobuf:"bytes,3,opt,name=secret" json:"secret,omitempty"`
 }
 
 func (x *HmacKey) Reset() {
@@ -2901,8 +2901,8 @@ func (*HmacKey) Descriptor() ([]byte, []int) {
 }
 
 func (x *HmacKey) GetKind() string {
-	if x != nil {
-		return x.Kind
+	if x != nil && x.Kind != nil {
+		return *x.Kind
 	}
 	return ""
 }
@@ -2915,8 +2915,8 @@ func (x *HmacKey) GetMetadata() *HmacKeyMetadata {
 }
 
 func (x *HmacKey) GetSecret() string {
-	if x != nil {
-		return x.Secret
+	if x != nil && x.Secret != nil {
+		return *x.Secret
 	}
 	return ""
 }
@@ -2926,16 +2926,16 @@ type HmacKeyMetadata struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	AccessId            string               `protobuf:"bytes,1,opt,name=access_id,json=accessId,proto3" json:"access_id,omitempty"`
-	Etag                string               `protobuf:"bytes,2,opt,name=etag,proto3" json:"etag,omitempty"`
-	Id                  string               `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
-	Kind                string               `protobuf:"bytes,4,opt,name=kind,proto3" json:"kind,omitempty"`
-	ProjectId           string               `protobuf:"bytes,5,opt,name=project_id,json=projectId,proto3" json:"project_id,omitempty"`
-	SelfLink            string               `protobuf:"bytes,6,opt,name=self_link,json=selfLink,proto3" json:"self_link,omitempty"`
-	ServiceAccountEmail string               `protobuf:"bytes,7,opt,name=service_account_email,json=serviceAccountEmail,proto3" json:"service_account_email,omitempty"`
-	State               string               `protobuf:"bytes,8,opt,name=state,proto3" json:"state,omitempty"`
-	TimeCreated         *timestamp.Timestamp `protobuf:"bytes,9,opt,name=time_created,json=timeCreated,proto3" json:"time_created,omitempty"`
-	Updated             *timestamp.Timestamp `protobuf:"bytes,10,opt,name=updated,proto3" json:"updated,omitempty"`
+	AccessId            *string              `protobuf:"bytes,1,opt,name=access_id,json=accessId" json:"access_id,omitempty"`
+	Etag                *string              `protobuf:"bytes,2,opt,name=etag" json:"etag,omitempty"`
+	Id                  *string              `protobuf:"bytes,3,opt,name=id" json:"id,omitempty"`
+	Kind                *string              `protobuf:"bytes,4,opt,name=kind" json:"kind,omitempty"`
+	ProjectId           *string              `protobuf:"bytes,5,opt,name=project_id,json=projectId" json:"project_id,omitempty"`
+	SelfLink            *string              `protobuf:"bytes,6,opt,name=self_link,json=selfLink" json:"self_link,omitempty"`
+	ServiceAccountEmail *string              `protobuf:"bytes,7,opt,name=service_account_email,json=serviceAccountEmail" json:"service_account_email,omitempty"`
+	State               *string              `protobuf:"bytes,8,opt,name=state" json:"state,omitempty"`
+	TimeCreated         *timestamp.Timestamp `protobuf:"bytes,9,opt,name=time_created,json=timeCreated" json:"time_created,omitempty"`
+	Updated             *timestamp.Timestamp `protobuf:"bytes,10,opt,name=updated" json:"updated,omitempty"`
 }
 
 func (x *HmacKeyMetadata) Reset() {
@@ -2971,57 +2971,57 @@ func (*HmacKeyMetadata) Descriptor() ([]byte, []int) {
 }
 
 func (x *HmacKeyMetadata) GetAccessId() string {
-	if x != nil {
-		return x.AccessId
+	if x != nil && x.AccessId != nil {
+		return *x.AccessId
 	}
 	return ""
 }
 
 func (x *HmacKeyMetadata) GetEtag() string {
-	if x != nil {
-		return x.Etag
+	if x != nil && x.Etag != nil {
+		return *x.Etag
 	}
 	return ""
 }
 
 func (x *HmacKeyMetadata) GetId() string {
-	if x != nil {
-		return x.Id
+	if x != nil && x.Id != nil {
+		return *x.Id
 	}
 	return ""
 }
 
 func (x *HmacKeyMetadata) GetKind() string {
-	if x != nil {
-		return x.Kind
+	if x != nil && x.Kind != nil {
+		return *x.Kind
 	}
 	return ""
 }
 
 func (x *HmacKeyMetadata) GetProjectId() string {
-	if x != nil {
-		return x.ProjectId
+	if x != nil && x.ProjectId != nil {
+		return *x.ProjectId
 	}
 	return ""
 }
 
 func (x *HmacKeyMetadata) GetSelfLink() string {
-	if x != nil {
-		return x.SelfLink
+	if x != nil && x.SelfLink != nil {
+		return *x.SelfLink
 	}
 	return ""
 }
 
 func (x *HmacKeyMetadata) GetServiceAccountEmail() string {
-	if x != nil {
-		return x.ServiceAccountEmail
+	if x != nil && x.ServiceAccountEmail != nil {
+		return *x.ServiceAccountEmail
 	}
 	return ""
 }
 
 func (x *HmacKeyMetadata) GetState() string {
-	if x != nil {
-		return x.State
+	if x != nil && x.State != nil {
+		return *x.State
 	}
 	return ""
 }
@@ -3045,9 +3045,9 @@ type HmacKeysMetadata struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Items         []*HmacKeyMetadata `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
-	Kind          string             `protobuf:"bytes,2,opt,name=kind,proto3" json:"kind,omitempty"`
-	NextPageToken string             `protobuf:"bytes,3,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
+	Items         []*HmacKeyMetadata `protobuf:"bytes,1,rep,name=items" json:"items,omitempty"`
+	Kind          *string            `protobuf:"bytes,2,opt,name=kind" json:"kind,omitempty"`
+	NextPageToken *string            `protobuf:"bytes,3,opt,name=next_page_token,json=nextPageToken" json:"next_page_token,omitempty"`
 }
 
 func (x *HmacKeysMetadata) Reset() {
@@ -3090,15 +3090,15 @@ func (x *HmacKeysMetadata) GetItems() []*HmacKeyMetadata {
 }
 
 func (x *HmacKeysMetadata) GetKind() string {
-	if x != nil {
-		return x.Kind
+	if x != nil && x.Kind != nil {
+		return *x.Kind
 	}
 	return ""
 }
 
 func (x *HmacKeysMetadata) GetNextPageToken() string {
-	if x != nil {
-		return x.NextPageToken
+	if x != nil && x.NextPageToken != nil {
+		return *x.NextPageToken
 	}
 	return ""
 }
@@ -3108,14 +3108,14 @@ type ManagedFolder struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Bucket         string               `protobuf:"bytes,1,opt,name=bucket,proto3" json:"bucket,omitempty"`
-	CreateTime     *timestamp.Timestamp `protobuf:"bytes,2,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
-	Id             string               `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
-	Kind           string               `protobuf:"bytes,4,opt,name=kind,proto3" json:"kind,omitempty"`
-	Metageneration int64                `protobuf:"varint,5,opt,name=metageneration,proto3" json:"metageneration,omitempty"`
-	Name           string               `protobuf:"bytes,6,opt,name=name,proto3" json:"name,omitempty"`
-	SelfLink       string               `protobuf:"bytes,7,opt,name=self_link,json=selfLink,proto3" json:"self_link,omitempty"`
-	UpdateTime     *timestamp.Timestamp `protobuf:"bytes,8,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
+	Bucket         *string              `protobuf:"bytes,1,opt,name=bucket" json:"bucket,omitempty"`
+	CreateTime     *timestamp.Timestamp `protobuf:"bytes,2,opt,name=create_time,json=createTime" json:"create_time,omitempty"`
+	Id             *string              `protobuf:"bytes,3,opt,name=id" json:"id,omitempty"`
+	Kind           *string              `protobuf:"bytes,4,opt,name=kind" json:"kind,omitempty"`
+	Metageneration *int64               `protobuf:"varint,5,opt,name=metageneration" json:"metageneration,omitempty"`
+	Name           *string              `protobuf:"bytes,6,opt,name=name" json:"name,omitempty"`
+	SelfLink       *string              `protobuf:"bytes,7,opt,name=self_link,json=selfLink" json:"self_link,omitempty"`
+	UpdateTime     *timestamp.Timestamp `protobuf:"bytes,8,opt,name=update_time,json=updateTime" json:"update_time,omitempty"`
 }
 
 func (x *ManagedFolder) Reset() {
@@ -3151,8 +3151,8 @@ func (*ManagedFolder) Descriptor() ([]byte, []int) {
 }
 
 func (x *ManagedFolder) GetBucket() string {
-	if x != nil {
-		return x.Bucket
+	if x != nil && x.Bucket != nil {
+		return *x.Bucket
 	}
 	return ""
 }
@@ -3165,36 +3165,36 @@ func (x *ManagedFolder) GetCreateTime() *timestamp.Timestamp {
 }
 
 func (x *ManagedFolder) GetId() string {
-	if x != nil {
-		return x.Id
+	if x != nil && x.Id != nil {
+		return *x.Id
 	}
 	return ""
 }
 
 func (x *ManagedFolder) GetKind() string {
-	if x != nil {
-		return x.Kind
+	if x != nil && x.Kind != nil {
+		return *x.Kind
 	}
 	return ""
 }
 
 func (x *ManagedFolder) GetMetageneration() int64 {
-	if x != nil {
-		return x.Metageneration
+	if x != nil && x.Metageneration != nil {
+		return *x.Metageneration
 	}
 	return 0
 }
 
 func (x *ManagedFolder) GetName() string {
-	if x != nil {
-		return x.Name
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
 
 func (x *ManagedFolder) GetSelfLink() string {
-	if x != nil {
-		return x.SelfLink
+	if x != nil && x.SelfLink != nil {
+		return *x.SelfLink
 	}
 	return ""
 }
@@ -3211,9 +3211,9 @@ type ManagedFolders struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Items         []*ManagedFolder `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
-	Kind          string           `protobuf:"bytes,2,opt,name=kind,proto3" json:"kind,omitempty"`
-	NextPageToken string           `protobuf:"bytes,3,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
+	Items         []*ManagedFolder `protobuf:"bytes,1,rep,name=items" json:"items,omitempty"`
+	Kind          *string          `protobuf:"bytes,2,opt,name=kind" json:"kind,omitempty"`
+	NextPageToken *string          `protobuf:"bytes,3,opt,name=next_page_token,json=nextPageToken" json:"next_page_token,omitempty"`
 }
 
 func (x *ManagedFolders) Reset() {
@@ -3256,15 +3256,15 @@ func (x *ManagedFolders) GetItems() []*ManagedFolder {
 }
 
 func (x *ManagedFolders) GetKind() string {
-	if x != nil {
-		return x.Kind
+	if x != nil && x.Kind != nil {
+		return *x.Kind
 	}
 	return ""
 }
 
 func (x *ManagedFolders) GetNextPageToken() string {
-	if x != nil {
-		return x.NextPageToken
+	if x != nil && x.NextPageToken != nil {
+		return *x.NextPageToken
 	}
 	return ""
 }
@@ -3274,15 +3274,15 @@ type Notification struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	CustomAttributes map[string]string `protobuf:"bytes,1,rep,name=custom_attributes,proto3" json:"custom_attributes,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
-	Etag             string            `protobuf:"bytes,2,opt,name=etag,proto3" json:"etag,omitempty"`
-	EventTypes       []string          `protobuf:"bytes,3,rep,name=event_types,proto3" json:"event_types,omitempty"`
-	Id               string            `protobuf:"bytes,4,opt,name=id,proto3" json:"id,omitempty"`
-	Kind             string            `protobuf:"bytes,5,opt,name=kind,proto3" json:"kind,omitempty"`
-	ObjectNamePrefix string            `protobuf:"bytes,6,opt,name=object_name_prefix,proto3" json:"object_name_prefix,omitempty"`
-	PayloadFormat    string            `protobuf:"bytes,7,opt,name=payload_format,proto3" json:"payload_format,omitempty"`
-	SelfLink         string            `protobuf:"bytes,8,opt,name=self_link,json=selfLink,proto3" json:"self_link,omitempty"`
-	Topic            string            `protobuf:"bytes,9,opt,name=topic,proto3" json:"topic,omitempty"`
+	CustomAttributes map[string]string `protobuf:"bytes,1,rep,name=custom_attributes" json:"custom_attributes,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	Etag             *string           `protobuf:"bytes,2,opt,name=etag" json:"etag,omitempty"`
+	EventTypes       []string          `protobuf:"bytes,3,rep,name=event_types" json:"event_types,omitempty"`
+	Id               *string           `protobuf:"bytes,4,opt,name=id" json:"id,omitempty"`
+	Kind             *string           `protobuf:"bytes,5,opt,name=kind" json:"kind,omitempty"`
+	ObjectNamePrefix *string           `protobuf:"bytes,6,opt,name=object_name_prefix" json:"object_name_prefix,omitempty"`
+	PayloadFormat    *string           `protobuf:"bytes,7,opt,name=payload_format" json:"payload_format,omitempty"`
+	SelfLink         *string           `protobuf:"bytes,8,opt,name=self_link,json=selfLink" json:"self_link,omitempty"`
+	Topic            *string           `protobuf:"bytes,9,opt,name=topic" json:"topic,omitempty"`
 }
 
 func (x *Notification) Reset() {
@@ -3325,8 +3325,8 @@ func (x *Notification) GetCustomAttributes() map[string]string {
 }
 
 func (x *Notification) GetEtag() string {
-	if x != nil {
-		return x.Etag
+	if x != nil && x.Etag != nil {
+		return *x.Etag
 	}
 	return ""
 }
@@ -3339,43 +3339,43 @@ func (x *Notification) GetEventTypes() []string {
 }
 
 func (x *Notification) GetId() string {
-	if x != nil {
-		return x.Id
+	if x != nil && x.Id != nil {
+		return *x.Id
 	}
 	return ""
 }
 
 func (x *Notification) GetKind() string {
-	if x != nil {
-		return x.Kind
+	if x != nil && x.Kind != nil {
+		return *x.Kind
 	}
 	return ""
 }
 
 func (x *Notification) GetObjectNamePrefix() string {
-	if x != nil {
-		return x.ObjectNamePrefix
+	if x != nil && x.ObjectNamePrefix != nil {
+		return *x.ObjectNamePrefix
 	}
 	return ""
 }
 
 func (x *Notification) GetPayloadFormat() string {
-	if x != nil {
-		return x.PayloadFormat
+	if x != nil && x.PayloadFormat != nil {
+		return *x.PayloadFormat
 	}
 	return ""
 }
 
 func (x *Notification) GetSelfLink() string {
-	if x != nil {
-		return x.SelfLink
+	if x != nil && x.SelfLink != nil {
+		return *x.SelfLink
 	}
 	return ""
 }
 
 func (x *Notification) GetTopic() string {
-	if x != nil {
-		return x.Topic
+	if x != nil && x.Topic != nil {
+		return *x.Topic
 	}
 	return ""
 }
@@ -3385,8 +3385,8 @@ type Notifications struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Items []*Notification `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
-	Kind  string          `protobuf:"bytes,2,opt,name=kind,proto3" json:"kind,omitempty"`
+	Items []*Notification `protobuf:"bytes,1,rep,name=items" json:"items,omitempty"`
+	Kind  *string         `protobuf:"bytes,2,opt,name=kind" json:"kind,omitempty"`
 }
 
 func (x *Notifications) Reset() {
@@ -3429,8 +3429,8 @@ func (x *Notifications) GetItems() []*Notification {
 }
 
 func (x *Notifications) GetKind() string {
-	if x != nil {
-		return x.Kind
+	if x != nil && x.Kind != nil {
+		return *x.Kind
 	}
 	return ""
 }
@@ -3440,8 +3440,8 @@ type ObjectCustomerEncryption struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	EncryptionAlgorithm string `protobuf:"bytes,1,opt,name=encryption_algorithm,json=encryptionAlgorithm,proto3" json:"encryption_algorithm,omitempty"`
-	KeySha256           string `protobuf:"bytes,2,opt,name=key_sha256,json=keySha256,proto3" json:"key_sha256,omitempty"`
+	EncryptionAlgorithm *string `protobuf:"bytes,1,opt,name=encryption_algorithm,json=encryptionAlgorithm" json:"encryption_algorithm,omitempty"`
+	KeySha256           *string `protobuf:"bytes,2,opt,name=key_sha256,json=keySha256" json:"key_sha256,omitempty"`
 }
 
 func (x *ObjectCustomerEncryption) Reset() {
@@ -3477,15 +3477,15 @@ func (*ObjectCustomerEncryption) Descriptor() ([]byte, []int) {
 }
 
 func (x *ObjectCustomerEncryption) GetEncryptionAlgorithm() string {
-	if x != nil {
-		return x.EncryptionAlgorithm
+	if x != nil && x.EncryptionAlgorithm != nil {
+		return *x.EncryptionAlgorithm
 	}
 	return ""
 }
 
 func (x *ObjectCustomerEncryption) GetKeySha256() string {
-	if x != nil {
-		return x.KeySha256
+	if x != nil && x.KeySha256 != nil {
+		return *x.KeySha256
 	}
 	return ""
 }
@@ -3495,8 +3495,8 @@ type ObjectOwner struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Entity   string `protobuf:"bytes,1,opt,name=entity,proto3" json:"entity,omitempty"`
-	EntityId string `protobuf:"bytes,2,opt,name=entity_id,json=entityId,proto3" json:"entity_id,omitempty"`
+	Entity   *string `protobuf:"bytes,1,opt,name=entity" json:"entity,omitempty"`
+	EntityId *string `protobuf:"bytes,2,opt,name=entity_id,json=entityId" json:"entity_id,omitempty"`
 }
 
 func (x *ObjectOwner) Reset() {
@@ -3532,15 +3532,15 @@ func (*ObjectOwner) Descriptor() ([]byte, []int) {
 }
 
 func (x *ObjectOwner) GetEntity() string {
-	if x != nil {
-		return x.Entity
+	if x != nil && x.Entity != nil {
+		return *x.Entity
 	}
 	return ""
 }
 
 func (x *ObjectOwner) GetEntityId() string {
-	if x != nil {
-		return x.EntityId
+	if x != nil && x.EntityId != nil {
+		return *x.EntityId
 	}
 	return ""
 }
@@ -3550,8 +3550,8 @@ type ObjectRetention struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Mode            string               `protobuf:"bytes,1,opt,name=mode,proto3" json:"mode,omitempty"`
-	RetainUntilTime *timestamp.Timestamp `protobuf:"bytes,2,opt,name=retain_until_time,json=retainUntilTime,proto3" json:"retain_until_time,omitempty"`
+	Mode            *string              `protobuf:"bytes,1,opt,name=mode" json:"mode,omitempty"`
+	RetainUntilTime *timestamp.Timestamp `protobuf:"bytes,2,opt,name=retain_until_time,json=retainUntilTime" json:"retain_until_time,omitempty"`
 }
 
 func (x *ObjectRetention) Reset() {
@@ -3587,8 +3587,8 @@ func (*ObjectRetention) Descriptor() ([]byte, []int) {
 }
 
 func (x *ObjectRetention) GetMode() string {
-	if x != nil {
-		return x.Mode
+	if x != nil && x.Mode != nil {
+		return *x.Mode
 	}
 	return ""
 }
@@ -3605,41 +3605,41 @@ type Object struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Acl                     []*ObjectAccessControl    `protobuf:"bytes,1,rep,name=acl,proto3" json:"acl,omitempty"`
-	Bucket                  string                    `protobuf:"bytes,2,opt,name=bucket,proto3" json:"bucket,omitempty"`
-	CacheControl            string                    `protobuf:"bytes,3,opt,name=cache_control,json=cacheControl,proto3" json:"cache_control,omitempty"`
-	ComponentCount          int32                     `protobuf:"varint,4,opt,name=component_count,json=componentCount,proto3" json:"component_count,omitempty"`
-	ContentDisposition      string                    `protobuf:"bytes,5,opt,name=content_disposition,json=contentDisposition,proto3" json:"content_disposition,omitempty"`
-	ContentEncoding         string                    `protobuf:"bytes,6,opt,name=content_encoding,json=contentEncoding,proto3" json:"content_encoding,omitempty"`
-	ContentLanguage         string                    `protobuf:"bytes,7,opt,name=content_language,json=contentLanguage,proto3" json:"content_language,omitempty"`
-	ContentType             string                    `protobuf:"bytes,8,opt,name=content_type,json=contentType,proto3" json:"content_type,omitempty"`
-	Crc32C                  string                    `protobuf:"bytes,9,opt,name=crc32c,proto3" json:"crc32c,omitempty"`
-	CustomTime              *timestamp.Timestamp      `protobuf:"bytes,10,opt,name=custom_time,json=customTime,proto3" json:"custom_time,omitempty"`
-	CustomerEncryption      *ObjectCustomerEncryption `protobuf:"bytes,11,opt,name=customer_encryption,json=customerEncryption,proto3" json:"customer_encryption,omitempty"`
-	Etag                    string                    `protobuf:"bytes,12,opt,name=etag,proto3" json:"etag,omitempty"`
-	EventBasedHold          bool                      `protobuf:"varint,13,opt,name=event_based_hold,json=eventBasedHold,proto3" json:"event_based_hold,omitempty"`
-	Generation              int64                     `protobuf:"varint,14,opt,name=generation,proto3" json:"generation,omitempty"`
-	HardDeleteTime          *timestamp.Timestamp      `protobuf:"bytes,15,opt,name=hard_delete_time,json=hardDeleteTime,proto3" json:"hard_delete_time,omitempty"`
-	Id                      string                    `protobuf:"bytes,16,opt,name=id,proto3" json:"id,omitempty"`
-	Kind                    string                    `protobuf:"bytes,17,opt,name=kind,proto3" json:"kind,omitempty"`
-	KmsKeyName              string                    `protobuf:"bytes,18,opt,name=kms_key_name,json=kmsKeyName,proto3" json:"kms_key_name,omitempty"`
-	Md5Hash                 string                    `protobuf:"bytes,19,opt,name=md5_hash,json=md5Hash,proto3" json:"md5_hash,omitempty"`
-	MediaLink               string                    `protobuf:"bytes,20,opt,name=media_link,json=mediaLink,proto3" json:"media_link,omitempty"`
-	Metadata                map[string]string         `protobuf:"bytes,21,rep,name=metadata,proto3" json:"metadata,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
-	Metageneration          int64                     `protobuf:"varint,22,opt,name=metageneration,proto3" json:"metageneration,omitempty"`
-	Name                    string                    `protobuf:"bytes,23,opt,name=name,proto3" json:"name,omitempty"`
-	Owner                   *ObjectOwner              `protobuf:"bytes,24,opt,name=owner,proto3" json:"owner,omitempty"`
-	Retention               *ObjectRetention          `protobuf:"bytes,25,opt,name=retention,proto3" json:"retention,omitempty"`
-	RetentionExpirationTime *timestamp.Timestamp      `protobuf:"bytes,26,opt,name=retention_expiration_time,json=retentionExpirationTime,proto3" json:"retention_expiration_time,omitempty"`
-	SelfLink                string                    `protobuf:"bytes,27,opt,name=self_link,json=selfLink,proto3" json:"self_link,omitempty"`
-	Size                    uint64                    `protobuf:"varint,28,opt,name=size,proto3" json:"size,omitempty"`
-	SoftDeleteTime          *timestamp.Timestamp      `protobuf:"bytes,29,opt,name=soft_delete_time,json=softDeleteTime,proto3" json:"soft_delete_time,omitempty"`
-	StorageClass            string                    `protobuf:"bytes,30,opt,name=storage_class,json=storageClass,proto3" json:"storage_class,omitempty"`
-	TemporaryHold           bool                      `protobuf:"varint,31,opt,name=temporary_hold,json=temporaryHold,proto3" json:"temporary_hold,omitempty"`
-	TimeCreated             *timestamp.Timestamp      `protobuf:"bytes,32,opt,name=time_created,json=timeCreated,proto3" json:"time_created,omitempty"`
-	TimeDeleted             *timestamp.Timestamp      `protobuf:"bytes,33,opt,name=time_deleted,json=timeDeleted,proto3" json:"time_deleted,omitempty"`
-	TimeStorageClassUpdated *timestamp.Timestamp      `protobuf:"bytes,34,opt,name=time_storage_class_updated,json=timeStorageClassUpdated,proto3" json:"time_storage_class_updated,omitempty"`
-	Updated                 *timestamp.Timestamp      `protobuf:"bytes,35,opt,name=updated,proto3" json:"updated,omitempty"`
+	Acl                     []*ObjectAccessControl    `protobuf:"bytes,1,rep,name=acl" json:"acl,omitempty"`
+	Bucket                  *string                   `protobuf:"bytes,2,opt,name=bucket" json:"bucket,omitempty"`
+	CacheControl            *string                   `protobuf:"bytes,3,opt,name=cache_control,json=cacheControl" json:"cache_control,omitempty"`
+	ComponentCount          *int32                    `protobuf:"varint,4,opt,name=component_count,json=componentCount" json:"component_count,omitempty"`
+	ContentDisposition      *string                   `protobuf:"bytes,5,opt,name=content_disposition,json=contentDisposition" json:"content_disposition,omitempty"`
+	ContentEncoding         *string                   `protobuf:"bytes,6,opt,name=content_encoding,json=contentEncoding" json:"content_encoding,omitempty"`
+	ContentLanguage         *string                   `protobuf:"bytes,7,opt,name=content_language,json=contentLanguage" json:"content_language,omitempty"`
+	ContentType             *string                   `protobuf:"bytes,8,opt,name=content_type,json=contentType" json:"content_type,omitempty"`
+	Crc32C                  *string                   `protobuf:"bytes,9,opt,name=crc32c" json:"crc32c,omitempty"`
+	CustomTime              *timestamp.Timestamp      `protobuf:"bytes,10,opt,name=custom_time,json=customTime" json:"custom_time,omitempty"`
+	CustomerEncryption      *ObjectCustomerEncryption `protobuf:"bytes,11,opt,name=customer_encryption,json=customerEncryption" json:"customer_encryption,omitempty"`
+	Etag                    *string                   `protobuf:"bytes,12,opt,name=etag" json:"etag,omitempty"`
+	EventBasedHold          *bool                     `protobuf:"varint,13,opt,name=event_based_hold,json=eventBasedHold" json:"event_based_hold,omitempty"`
+	Generation              *int64                    `protobuf:"varint,14,opt,name=generation" json:"generation,omitempty"`
+	HardDeleteTime          *timestamp.Timestamp      `protobuf:"bytes,15,opt,name=hard_delete_time,json=hardDeleteTime" json:"hard_delete_time,omitempty"`
+	Id                      *string                   `protobuf:"bytes,16,opt,name=id" json:"id,omitempty"`
+	Kind                    *string                   `protobuf:"bytes,17,opt,name=kind" json:"kind,omitempty"`
+	KmsKeyName              *string                   `protobuf:"bytes,18,opt,name=kms_key_name,json=kmsKeyName" json:"kms_key_name,omitempty"`
+	Md5Hash                 *string                   `protobuf:"bytes,19,opt,name=md5_hash,json=md5Hash" json:"md5_hash,omitempty"`
+	MediaLink               *string                   `protobuf:"bytes,20,opt,name=media_link,json=mediaLink" json:"media_link,omitempty"`
+	Metadata                map[string]string         `protobuf:"bytes,21,rep,name=metadata" json:"metadata,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	Metageneration          *int64                    `protobuf:"varint,22,opt,name=metageneration" json:"metageneration,omitempty"`
+	Name                    *string                   `protobuf:"bytes,23,opt,name=name" json:"name,omitempty"`
+	Owner                   *ObjectOwner              `protobuf:"bytes,24,opt,name=owner" json:"owner,omitempty"`
+	Retention               *ObjectRetention          `protobuf:"bytes,25,opt,name=retention" json:"retention,omitempty"`
+	RetentionExpirationTime *timestamp.Timestamp      `protobuf:"bytes,26,opt,name=retention_expiration_time,json=retentionExpirationTime" json:"retention_expiration_time,omitempty"`
+	SelfLink                *string                   `protobuf:"bytes,27,opt,name=self_link,json=selfLink" json:"self_link,omitempty"`
+	Size                    *uint64                   `protobuf:"varint,28,opt,name=size" json:"size,omitempty"`
+	SoftDeleteTime          *timestamp.Timestamp      `protobuf:"bytes,29,opt,name=soft_delete_time,json=softDeleteTime" json:"soft_delete_time,omitempty"`
+	StorageClass            *string                   `protobuf:"bytes,30,opt,name=storage_class,json=storageClass" json:"storage_class,omitempty"`
+	TemporaryHold           *bool                     `protobuf:"varint,31,opt,name=temporary_hold,json=temporaryHold" json:"temporary_hold,omitempty"`
+	TimeCreated             *timestamp.Timestamp      `protobuf:"bytes,32,opt,name=time_created,json=timeCreated" json:"time_created,omitempty"`
+	TimeDeleted             *timestamp.Timestamp      `protobuf:"bytes,33,opt,name=time_deleted,json=timeDeleted" json:"time_deleted,omitempty"`
+	TimeStorageClassUpdated *timestamp.Timestamp      `protobuf:"bytes,34,opt,name=time_storage_class_updated,json=timeStorageClassUpdated" json:"time_storage_class_updated,omitempty"`
+	Updated                 *timestamp.Timestamp      `protobuf:"bytes,35,opt,name=updated" json:"updated,omitempty"`
 }
 
 func (x *Object) Reset() {
@@ -3682,57 +3682,57 @@ func (x *Object) GetAcl() []*ObjectAccessControl {
 }
 
 func (x *Object) GetBucket() string {
-	if x != nil {
-		return x.Bucket
+	if x != nil && x.Bucket != nil {
+		return *x.Bucket
 	}
 	return ""
 }
 
 func (x *Object) GetCacheControl() string {
-	if x != nil {
-		return x.CacheControl
+	if x != nil && x.CacheControl != nil {
+		return *x.CacheControl
 	}
 	return ""
 }
 
 func (x *Object) GetComponentCount() int32 {
-	if x != nil {
-		return x.ComponentCount
+	if x != nil && x.ComponentCount != nil {
+		return *x.ComponentCount
 	}
 	return 0
 }
 
 func (x *Object) GetContentDisposition() string {
-	if x != nil {
-		return x.ContentDisposition
+	if x != nil && x.ContentDisposition != nil {
+		return *x.ContentDisposition
 	}
 	return ""
 }
 
 func (x *Object) GetContentEncoding() string {
-	if x != nil {
-		return x.ContentEncoding
+	if x != nil && x.ContentEncoding != nil {
+		return *x.ContentEncoding
 	}
 	return ""
 }
 
 func (x *Object) GetContentLanguage() string {
-	if x != nil {
-		return x.ContentLanguage
+	if x != nil && x.ContentLanguage != nil {
+		return *x.ContentLanguage
 	}
 	return ""
 }
 
 func (x *Object) GetContentType() string {
-	if x != nil {
-		return x.ContentType
+	if x != nil && x.ContentType != nil {
+		return *x.ContentType
 	}
 	return ""
 }
 
 func (x *Object) GetCrc32C() string {
-	if x != nil {
-		return x.Crc32C
+	if x != nil && x.Crc32C != nil {
+		return *x.Crc32C
 	}
 	return ""
 }
@@ -3752,22 +3752,22 @@ func (x *Object) GetCustomerEncryption() *ObjectCustomerEncryption {
 }
 
 func (x *Object) GetEtag() string {
-	if x != nil {
-		return x.Etag
+	if x != nil && x.Etag != nil {
+		return *x.Etag
 	}
 	return ""
 }
 
 func (x *Object) GetEventBasedHold() bool {
-	if x != nil {
-		return x.EventBasedHold
+	if x != nil && x.EventBasedHold != nil {
+		return *x.EventBasedHold
 	}
 	return false
 }
 
 func (x *Object) GetGeneration() int64 {
-	if x != nil {
-		return x.Generation
+	if x != nil && x.Generation != nil {
+		return *x.Generation
 	}
 	return 0
 }
@@ -3780,36 +3780,36 @@ func (x *Object) GetHardDeleteTime() *timestamp.Timestamp {
 }
 
 func (x *Object) GetId() string {
-	if x != nil {
-		return x.Id
+	if x != nil && x.Id != nil {
+		return *x.Id
 	}
 	return ""
 }
 
 func (x *Object) GetKind() string {
-	if x != nil {
-		return x.Kind
+	if x != nil && x.Kind != nil {
+		return *x.Kind
 	}
 	return ""
 }
 
 func (x *Object) GetKmsKeyName() string {
-	if x != nil {
-		return x.KmsKeyName
+	if x != nil && x.KmsKeyName != nil {
+		return *x.KmsKeyName
 	}
 	return ""
 }
 
 func (x *Object) GetMd5Hash() string {
-	if x != nil {
-		return x.Md5Hash
+	if x != nil && x.Md5Hash != nil {
+		return *x.Md5Hash
 	}
 	return ""
 }
 
 func (x *Object) GetMediaLink() string {
-	if x != nil {
-		return x.MediaLink
+	if x != nil && x.MediaLink != nil {
+		return *x.MediaLink
 	}
 	return ""
 }
@@ -3822,15 +3822,15 @@ func (x *Object) GetMetadata() map[string]string {
 }
 
 func (x *Object) GetMetageneration() int64 {
-	if x != nil {
-		return x.Metageneration
+	if x != nil && x.Metageneration != nil {
+		return *x.Metageneration
 	}
 	return 0
 }
 
 func (x *Object) GetName() string {
-	if x != nil {
-		return x.Name
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
@@ -3857,15 +3857,15 @@ func (x *Object) GetRetentionExpirationTime() *timestamp.Timestamp {
 }
 
 func (x *Object) GetSelfLink() string {
-	if x != nil {
-		return x.SelfLink
+	if x != nil && x.SelfLink != nil {
+		return *x.SelfLink
 	}
 	return ""
 }
 
 func (x *Object) GetSize() uint64 {
-	if x != nil {
-		return x.Size
+	if x != nil && x.Size != nil {
+		return *x.Size
 	}
 	return 0
 }
@@ -3878,15 +3878,15 @@ func (x *Object) GetSoftDeleteTime() *timestamp.Timestamp {
 }
 
 func (x *Object) GetStorageClass() string {
-	if x != nil {
-		return x.StorageClass
+	if x != nil && x.StorageClass != nil {
+		return *x.StorageClass
 	}
 	return ""
 }
 
 func (x *Object) GetTemporaryHold() bool {
-	if x != nil {
-		return x.TemporaryHold
+	if x != nil && x.TemporaryHold != nil {
+		return *x.TemporaryHold
 	}
 	return false
 }
@@ -3924,8 +3924,8 @@ type ObjectAccessControlProjectTeam struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	ProjectNumber string `protobuf:"bytes,1,opt,name=project_number,json=projectNumber,proto3" json:"project_number,omitempty"`
-	Team          string `protobuf:"bytes,2,opt,name=team,proto3" json:"team,omitempty"`
+	ProjectNumber *string `protobuf:"bytes,1,opt,name=project_number,json=projectNumber" json:"project_number,omitempty"`
+	Team          *string `protobuf:"bytes,2,opt,name=team" json:"team,omitempty"`
 }
 
 func (x *ObjectAccessControlProjectTeam) Reset() {
@@ -3961,15 +3961,15 @@ func (*ObjectAccessControlProjectTeam) Descriptor() ([]byte, []int) {
 }
 
 func (x *ObjectAccessControlProjectTeam) GetProjectNumber() string {
-	if x != nil {
-		return x.ProjectNumber
+	if x != nil && x.ProjectNumber != nil {
+		return *x.ProjectNumber
 	}
 	return ""
 }
 
 func (x *ObjectAccessControlProjectTeam) GetTeam() string {
-	if x != nil {
-		return x.Team
+	if x != nil && x.Team != nil {
+		return *x.Team
 	}
 	return ""
 }
@@ -3979,19 +3979,19 @@ type ObjectAccessControl struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Bucket      string                          `protobuf:"bytes,1,opt,name=bucket,proto3" json:"bucket,omitempty"`
-	Domain      string                          `protobuf:"bytes,2,opt,name=domain,proto3" json:"domain,omitempty"`
-	Email       string                          `protobuf:"bytes,3,opt,name=email,proto3" json:"email,omitempty"`
-	Entity      string                          `protobuf:"bytes,4,opt,name=entity,proto3" json:"entity,omitempty"`
-	EntityId    string                          `protobuf:"bytes,5,opt,name=entity_id,json=entityId,proto3" json:"entity_id,omitempty"`
-	Etag        string                          `protobuf:"bytes,6,opt,name=etag,proto3" json:"etag,omitempty"`
-	Generation  int64                           `protobuf:"varint,7,opt,name=generation,proto3" json:"generation,omitempty"`
-	Id          string                          `protobuf:"bytes,8,opt,name=id,proto3" json:"id,omitempty"`
-	Kind        string                          `protobuf:"bytes,9,opt,name=kind,proto3" json:"kind,omitempty"`
-	Object      string                          `protobuf:"bytes,10,opt,name=object,proto3" json:"object,omitempty"`
-	ProjectTeam *ObjectAccessControlProjectTeam `protobuf:"bytes,11,opt,name=project_team,json=projectTeam,proto3" json:"project_team,omitempty"`
-	Role        string                          `protobuf:"bytes,12,opt,name=role,proto3" json:"role,omitempty"`
-	SelfLink    string                          `protobuf:"bytes,13,opt,name=self_link,json=selfLink,proto3" json:"self_link,omitempty"`
+	Bucket      *string                         `protobuf:"bytes,1,opt,name=bucket" json:"bucket,omitempty"`
+	Domain      *string                         `protobuf:"bytes,2,opt,name=domain" json:"domain,omitempty"`
+	Email       *string                         `protobuf:"bytes,3,opt,name=email" json:"email,omitempty"`
+	Entity      *string                         `protobuf:"bytes,4,opt,name=entity" json:"entity,omitempty"`
+	EntityId    *string                         `protobuf:"bytes,5,opt,name=entity_id,json=entityId" json:"entity_id,omitempty"`
+	Etag        *string                         `protobuf:"bytes,6,opt,name=etag" json:"etag,omitempty"`
+	Generation  *int64                          `protobuf:"varint,7,opt,name=generation" json:"generation,omitempty"`
+	Id          *string                         `protobuf:"bytes,8,opt,name=id" json:"id,omitempty"`
+	Kind        *string                         `protobuf:"bytes,9,opt,name=kind" json:"kind,omitempty"`
+	Object      *string                         `protobuf:"bytes,10,opt,name=object" json:"object,omitempty"`
+	ProjectTeam *ObjectAccessControlProjectTeam `protobuf:"bytes,11,opt,name=project_team,json=projectTeam" json:"project_team,omitempty"`
+	Role        *string                         `protobuf:"bytes,12,opt,name=role" json:"role,omitempty"`
+	SelfLink    *string                         `protobuf:"bytes,13,opt,name=self_link,json=selfLink" json:"self_link,omitempty"`
 }
 
 func (x *ObjectAccessControl) Reset() {
@@ -4027,71 +4027,71 @@ func (*ObjectAccessControl) Descriptor() ([]byte, []int) {
 }
 
 func (x *ObjectAccessControl) GetBucket() string {
-	if x != nil {
-		return x.Bucket
+	if x != nil && x.Bucket != nil {
+		return *x.Bucket
 	}
 	return ""
 }
 
 func (x *ObjectAccessControl) GetDomain() string {
-	if x != nil {
-		return x.Domain
+	if x != nil && x.Domain != nil {
+		return *x.Domain
 	}
 	return ""
 }
 
 func (x *ObjectAccessControl) GetEmail() string {
-	if x != nil {
-		return x.Email
+	if x != nil && x.Email != nil {
+		return *x.Email
 	}
 	return ""
 }
 
 func (x *ObjectAccessControl) GetEntity() string {
-	if x != nil {
-		return x.Entity
+	if x != nil && x.Entity != nil {
+		return *x.Entity
 	}
 	return ""
 }
 
 func (x *ObjectAccessControl) GetEntityId() string {
-	if x != nil {
-		return x.EntityId
+	if x != nil && x.EntityId != nil {
+		return *x.EntityId
 	}
 	return ""
 }
 
 func (x *ObjectAccessControl) GetEtag() string {
-	if x != nil {
-		return x.Etag
+	if x != nil && x.Etag != nil {
+		return *x.Etag
 	}
 	return ""
 }
 
 func (x *ObjectAccessControl) GetGeneration() int64 {
-	if x != nil {
-		return x.Generation
+	if x != nil && x.Generation != nil {
+		return *x.Generation
 	}
 	return 0
 }
 
 func (x *ObjectAccessControl) GetId() string {
-	if x != nil {
-		return x.Id
+	if x != nil && x.Id != nil {
+		return *x.Id
 	}
 	return ""
 }
 
 func (x *ObjectAccessControl) GetKind() string {
-	if x != nil {
-		return x.Kind
+	if x != nil && x.Kind != nil {
+		return *x.Kind
 	}
 	return ""
 }
 
 func (x *ObjectAccessControl) GetObject() string {
-	if x != nil {
-		return x.Object
+	if x != nil && x.Object != nil {
+		return *x.Object
 	}
 	return ""
 }
@@ -4104,15 +4104,15 @@ func (x *ObjectAccessControl) GetProjectTeam() *ObjectAccessControlProjectTeam {
 }
 
 func (x *ObjectAccessControl) GetRole() string {
-	if x != nil {
-		return x.Role
+	if x != nil && x.Role != nil {
+		return *x.Role
 	}
 	return ""
 }
 
 func (x *ObjectAccessControl) GetSelfLink() string {
-	if x != nil {
-		return x.SelfLink
+	if x != nil && x.SelfLink != nil {
+		return *x.SelfLink
 	}
 	return ""
 }
@@ -4122,8 +4122,8 @@ type ObjectAccessControls struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Items []*ObjectAccessControl `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
-	Kind  string                 `protobuf:"bytes,2,opt,name=kind,proto3" json:"kind,omitempty"`
+	Items []*ObjectAccessControl `protobuf:"bytes,1,rep,name=items" json:"items,omitempty"`
+	Kind  *string                `protobuf:"bytes,2,opt,name=kind" json:"kind,omitempty"`
 }
 
 func (x *ObjectAccessControls) Reset() {
@@ -4166,8 +4166,8 @@ func (x *ObjectAccessControls) GetItems() []*ObjectAccessControl {
 }
 
 func (x *ObjectAccessControls) GetKind() string {
-	if x != nil {
-		return x.Kind
+	if x != nil && x.Kind != nil {
+		return *x.Kind
 	}
 	return ""
 }
@@ -4177,10 +4177,10 @@ type Objects struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Items         []*Object `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
-	Kind          string    `protobuf:"bytes,2,opt,name=kind,proto3" json:"kind,omitempty"`
-	NextPageToken string    `protobuf:"bytes,3,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
-	Prefixes      []string  `protobuf:"bytes,4,rep,name=prefixes,proto3" json:"prefixes,omitempty"`
+	Items         []*Object `protobuf:"bytes,1,rep,name=items" json:"items,omitempty"`
+	Kind          *string   `protobuf:"bytes,2,opt,name=kind" json:"kind,omitempty"`
+	NextPageToken *string   `protobuf:"bytes,3,opt,name=next_page_token,json=nextPageToken" json:"next_page_token,omitempty"`
+	Prefixes      []string  `protobuf:"bytes,4,rep,name=prefixes" json:"prefixes,omitempty"`
 }
 
 func (x *Objects) Reset() {
@@ -4223,15 +4223,15 @@ func (x *Objects) GetItems() []*Object {
 }
 
 func (x *Objects) GetKind() string {
-	if x != nil {
-		return x.Kind
+	if x != nil && x.Kind != nil {
+		return *x.Kind
 	}
 	return ""
 }
 
 func (x *Objects) GetNextPageToken() string {
-	if x != nil {
-		return x.NextPageToken
+	if x != nil && x.NextPageToken != nil {
+		return *x.NextPageToken
 	}
 	return ""
 }
@@ -4248,9 +4248,9 @@ type PolicyBindings struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Condition *Expr    `protobuf:"bytes,1,opt,name=condition,proto3" json:"condition,omitempty"`
-	Members   []string `protobuf:"bytes,2,rep,name=members,proto3" json:"members,omitempty"`
-	Role      string   `protobuf:"bytes,3,opt,name=role,proto3" json:"role,omitempty"`
+	Condition *Expr    `protobuf:"bytes,1,opt,name=condition" json:"condition,omitempty"`
+	Members   []string `protobuf:"bytes,2,rep,name=members" json:"members,omitempty"`
+	Role      *string  `protobuf:"bytes,3,opt,name=role" json:"role,omitempty"`
 }
 
 func (x *PolicyBindings) Reset() {
@@ -4300,8 +4300,8 @@ func (x *PolicyBindings) GetMembers() []string {
 }
 
 func (x *PolicyBindings) GetRole() string {
-	if x != nil {
-		return x.Role
+	if x != nil && x.Role != nil {
+		return *x.Role
 	}
 	return ""
 }
@@ -4311,11 +4311,11 @@ type Policy struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Bindings   []*PolicyBindings `protobuf:"bytes,1,rep,name=bindings,proto3" json:"bindings,omitempty"`
-	Etag       []byte            `protobuf:"bytes,2,opt,name=etag,proto3" json:"etag,omitempty"`
-	Kind       string            `protobuf:"bytes,3,opt,name=kind,proto3" json:"kind,omitempty"`
-	ResourceId string            `protobuf:"bytes,4,opt,name=resource_id,json=resourceId,proto3" json:"resource_id,omitempty"`
-	Version    int32             `protobuf:"varint,5,opt,name=version,proto3" json:"version,omitempty"`
+	Bindings   []*PolicyBindings `protobuf:"bytes,1,rep,name=bindings" json:"bindings,omitempty"`
+	Etag       []byte            `protobuf:"bytes,2,opt,name=etag" json:"etag,omitempty"`
+	Kind       *string           `protobuf:"bytes,3,opt,name=kind" json:"kind,omitempty"`
+	ResourceId *string           `protobuf:"bytes,4,opt,name=resource_id,json=resourceId" json:"resource_id,omitempty"`
+	Version    *int32            `protobuf:"varint,5,opt,name=version" json:"version,omitempty"`
 }
 
 func (x *Policy) Reset() {
@@ -4365,22 +4365,22 @@ func (x *Policy) GetEtag() []byte {
 }
 
 func (x *Policy) GetKind() string {
-	if x != nil {
-		return x.Kind
+	if x != nil && x.Kind != nil {
+		return *x.Kind
 	}
 	return ""
 }
 
 func (x *Policy) GetResourceId() string {
-	if x != nil {
-		return x.ResourceId
+	if x != nil && x.ResourceId != nil {
+		return *x.ResourceId
 	}
 	return ""
 }
 
 func (x *Policy) GetVersion() int32 {
-	if x != nil {
-		return x.Version
+	if x != nil && x.Version != nil {
+		return *x.Version
 	}
 	return 0
 }
@@ -4390,12 +4390,12 @@ type RewriteResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Done                bool    `protobuf:"varint,1,opt,name=done,proto3" json:"done,omitempty"`
-	Kind                string  `protobuf:"bytes,2,opt,name=kind,proto3" json:"kind,omitempty"`
-	ObjectSize          int64   `protobuf:"varint,3,opt,name=object_size,json=objectSize,proto3" json:"object_size,omitempty"`
-	Resource            *Object `protobuf:"bytes,4,opt,name=resource,proto3" json:"resource,omitempty"`
-	RewriteToken        string  `protobuf:"bytes,5,opt,name=rewrite_token,json=rewriteToken,proto3" json:"rewrite_token,omitempty"`
-	TotalBytesRewritten int64   `protobuf:"varint,6,opt,name=total_bytes_rewritten,json=totalBytesRewritten,proto3" json:"total_bytes_rewritten,omitempty"`
+	Done                *bool   `protobuf:"varint,1,opt,name=done" json:"done,omitempty"`
+	Kind                *string `protobuf:"bytes,2,opt,name=kind" json:"kind,omitempty"`
+	ObjectSize          *int64  `protobuf:"varint,3,opt,name=object_size,json=objectSize" json:"object_size,omitempty"`
+	Resource            *Object `protobuf:"bytes,4,opt,name=resource" json:"resource,omitempty"`
+	RewriteToken        *string `protobuf:"bytes,5,opt,name=rewrite_token,json=rewriteToken" json:"rewrite_token,omitempty"`
+	TotalBytesRewritten *int64  `protobuf:"varint,6,opt,name=total_bytes_rewritten,json=totalBytesRewritten" json:"total_bytes_rewritten,omitempty"`
 }
 
 func (x *RewriteResponse) Reset() {
@@ -4431,22 +4431,22 @@ func (*RewriteResponse) Descriptor() ([]byte, []int) {
 }
 
 func (x *RewriteResponse) GetDone() bool {
-	if x != nil {
-		return x.Done
+	if x != nil && x.Done != nil {
+		return *x.Done
 	}
 	return false
 }
 
 func (x *RewriteResponse) GetKind() string {
-	if x != nil {
-		return x.Kind
+	if x != nil && x.Kind != nil {
+		return *x.Kind
 	}
 	return ""
 }
 
 func (x *RewriteResponse) GetObjectSize() int64 {
-	if x != nil {
-		return x.ObjectSize
+	if x != nil && x.ObjectSize != nil {
+		return *x.ObjectSize
 	}
 	return 0
 }
@@ -4459,15 +4459,15 @@ func (x *RewriteResponse) GetResource() *Object {
 }
 
 func (x *RewriteResponse) GetRewriteToken() string {
-	if x != nil {
-		return x.RewriteToken
+	if x != nil && x.RewriteToken != nil {
+		return *x.RewriteToken
 	}
 	return ""
 }
 
 func (x *RewriteResponse) GetTotalBytesRewritten() int64 {
-	if x != nil {
-		return x.TotalBytesRewritten
+	if x != nil && x.TotalBytesRewritten != nil {
+		return *x.TotalBytesRewritten
 	}
 	return 0
 }
@@ -4477,8 +4477,8 @@ type ServiceAccount struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	EmailAddress string `protobuf:"bytes,1,opt,name=email_address,proto3" json:"email_address,omitempty"`
-	Kind         string `protobuf:"bytes,2,opt,name=kind,proto3" json:"kind,omitempty"`
+	EmailAddress *string `protobuf:"bytes,1,opt,name=email_address" json:"email_address,omitempty"`
+	Kind         *string `protobuf:"bytes,2,opt,name=kind" json:"kind,omitempty"`
 }
 
 func (x *ServiceAccount) Reset() {
@@ -4514,15 +4514,15 @@ func (*ServiceAccount) Descriptor() ([]byte, []int) {
 }
 
 func (x *ServiceAccount) GetEmailAddress() string {
-	if x != nil {
-		return x.EmailAddress
+	if x != nil && x.EmailAddress != nil {
+		return *x.EmailAddress
 	}
 	return ""
 }
 
 func (x *ServiceAccount) GetKind() string {
-	if x != nil {
-		return x.Kind
+	if x != nil && x.Kind != nil {
+		return *x.Kind
 	}
 	return ""
 }
@@ -4532,8 +4532,8 @@ type TestIamPermissionsResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Kind        string   `protobuf:"bytes,1,opt,name=kind,proto3" json:"kind,omitempty"`
-	Permissions []string `protobuf:"bytes,2,rep,name=permissions,proto3" json:"permissions,omitempty"`
+	Kind        *string  `protobuf:"bytes,1,opt,name=kind" json:"kind,omitempty"`
+	Permissions []string `protobuf:"bytes,2,rep,name=permissions" json:"permissions,omitempty"`
 }
 
 func (x *TestIamPermissionsResponse) Reset() {
@@ -4569,8 +4569,8 @@ func (*TestIamPermissionsResponse) Descriptor() ([]byte, []int) {
 }
 
 func (x *TestIamPermissionsResponse) GetKind() string {
-	if x != nil {
-		return x.Kind
+	if x != nil && x.Kind != nil {
+		return *x.Kind
 	}
 	return ""
 }
@@ -4587,8 +4587,8 @@ type DisableAnywhereCacheRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	AnywhereCacheId string `protobuf:"bytes,1,opt,name=anywhere_cache_id,json=anywhereCacheId,proto3" json:"anywhere_cache_id,omitempty"`
-	Bucket          string `protobuf:"bytes,2,opt,name=bucket,proto3" json:"bucket,omitempty"`
+	AnywhereCacheId *string `protobuf:"bytes,1,opt,name=anywhere_cache_id,json=anywhereCacheId" json:"anywhere_cache_id,omitempty"`
+	Bucket          *string `protobuf:"bytes,2,opt,name=bucket" json:"bucket,omitempty"`
 }
 
 func (x *DisableAnywhereCacheRequest) Reset() {
@@ -4624,15 +4624,15 @@ func (*DisableAnywhereCacheRequest) Descriptor() ([]byte, []int) {
 }
 
 func (x *DisableAnywhereCacheRequest) GetAnywhereCacheId() string {
-	if x != nil {
-		return x.AnywhereCacheId
+	if x != nil && x.AnywhereCacheId != nil {
+		return *x.AnywhereCacheId
 	}
 	return ""
 }
 
 func (x *DisableAnywhereCacheRequest) GetBucket() string {
-	if x != nil {
-		return x.Bucket
+	if x != nil && x.Bucket != nil {
+		return *x.Bucket
 	}
 	return ""
 }
@@ -4642,8 +4642,8 @@ type GetAnywhereCacheRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	AnywhereCacheId string `protobuf:"bytes,1,opt,name=anywhere_cache_id,json=anywhereCacheId,proto3" json:"anywhere_cache_id,omitempty"`
-	Bucket          string `protobuf:"bytes,2,opt,name=bucket,proto3" json:"bucket,omitempty"`
+	AnywhereCacheId *string `protobuf:"bytes,1,opt,name=anywhere_cache_id,json=anywhereCacheId" json:"anywhere_cache_id,omitempty"`
+	Bucket          *string `protobuf:"bytes,2,opt,name=bucket" json:"bucket,omitempty"`
 }
 
 func (x *GetAnywhereCacheRequest) Reset() {
@@ -4679,15 +4679,15 @@ func (*GetAnywhereCacheRequest) Descriptor() ([]byte, []int) {
 }
 
 func (x *GetAnywhereCacheRequest) GetAnywhereCacheId() string {
-	if x != nil {
-		return x.AnywhereCacheId
+	if x != nil && x.AnywhereCacheId != nil {
+		return *x.AnywhereCacheId
 	}
 	return ""
 }
 
 func (x *GetAnywhereCacheRequest) GetBucket() string {
-	if x != nil {
-		return x.Bucket
+	if x != nil && x.Bucket != nil {
+		return *x.Bucket
 	}
 	return ""
 }
@@ -4697,8 +4697,8 @@ type InsertAnywhereCacheRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Bucket        string         `protobuf:"bytes,1,opt,name=bucket,proto3" json:"bucket,omitempty"`
-	AnywhereCache *AnywhereCache `protobuf:"bytes,2,opt,name=anywhere_cache,json=anywhereCache,proto3" json:"anywhere_cache,omitempty"`
+	Bucket        *string        `protobuf:"bytes,1,opt,name=bucket" json:"bucket,omitempty"`
+	AnywhereCache *AnywhereCache `protobuf:"bytes,2,opt,name=anywhere_cache,json=anywhereCache" json:"anywhere_cache,omitempty"`
 }
 
 func (x *InsertAnywhereCacheRequest) Reset() {
@@ -4734,8 +4734,8 @@ func (*InsertAnywhereCacheRequest) Descriptor() ([]byte, []int) {
 }
 
 func (x *InsertAnywhereCacheRequest) GetBucket() string {
-	if x != nil {
-		return x.Bucket
+	if x != nil && x.Bucket != nil {
+		return *x.Bucket
 	}
 	return ""
 }
@@ -4752,7 +4752,7 @@ type ListAnywhereCachesRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Bucket string `protobuf:"bytes,1,opt,name=bucket,proto3" json:"bucket,omitempty"`
+	Bucket *string `protobuf:"bytes,1,opt,name=bucket" json:"bucket,omitempty"`
 }
 
 func (x *ListAnywhereCachesRequest) Reset() {
@@ -4788,8 +4788,8 @@ func (*ListAnywhereCachesRequest) Descriptor() ([]byte, []int) {
 }
 
 func (x *ListAnywhereCachesRequest) GetBucket() string {
-	if x != nil {
-		return x.Bucket
+	if x != nil && x.Bucket != nil {
+		return *x.Bucket
 	}
 	return ""
 }
@@ -4799,8 +4799,8 @@ type PauseAnywhereCacheRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	AnywhereCacheId string `protobuf:"bytes,1,opt,name=anywhere_cache_id,json=anywhereCacheId,proto3" json:"anywhere_cache_id,omitempty"`
-	Bucket          string `protobuf:"bytes,2,opt,name=bucket,proto3" json:"bucket,omitempty"`
+	AnywhereCacheId *string `protobuf:"bytes,1,opt,name=anywhere_cache_id,json=anywhereCacheId" json:"anywhere_cache_id,omitempty"`
+	Bucket          *string `protobuf:"bytes,2,opt,name=bucket" json:"bucket,omitempty"`
 }
 
 func (x *PauseAnywhereCacheRequest) Reset() {
@@ -4836,15 +4836,15 @@ func (*PauseAnywhereCacheRequest) Descriptor() ([]byte, []int) {
 }
 
 func (x *PauseAnywhereCacheRequest) GetAnywhereCacheId() string {
-	if x != nil {
-		return x.AnywhereCacheId
+	if x != nil && x.AnywhereCacheId != nil {
+		return *x.AnywhereCacheId
 	}
 	return ""
 }
 
 func (x *PauseAnywhereCacheRequest) GetBucket() string {
-	if x != nil {
-		return x.Bucket
+	if x != nil && x.Bucket != nil {
+		return *x.Bucket
 	}
 	return ""
 }
@@ -4854,8 +4854,8 @@ type ResumeAnywhereCacheRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Bucket          string `protobuf:"bytes,1,opt,name=bucket,proto3" json:"bucket,omitempty"`
-	AnywhereCacheId string `protobuf:"bytes,2,opt,name=anywhere_cache_id,json=anywhereCacheId,proto3" json:"anywhere_cache_id,omitempty"`
+	AnywhereCacheId *string `protobuf:"bytes,1,opt,name=anywhere_cache_id,json=anywhereCacheId" json:"anywhere_cache_id,omitempty"`
+	Bucket          *string `protobuf:"bytes,2,opt,name=bucket" json:"bucket,omitempty"`
 }
 
 func (x *ResumeAnywhereCacheRequest) Reset() {
@@ -4890,16 +4890,16 @@ func (*ResumeAnywhereCacheRequest) Descriptor() ([]byte, []int) {
 	return file_mockgcp_storage_v1_generated_proto_rawDescGZIP(), []int{64}
 }
 
-func (x *ResumeAnywhereCacheRequest) GetBucket() string {
-	if x != nil {
-		return x.Bucket
+func (x *ResumeAnywhereCacheRequest) GetAnywhereCacheId() string {
+	if x != nil && x.AnywhereCacheId != nil {
+		return *x.AnywhereCacheId
 	}
 	return ""
 }
 
-func (x *ResumeAnywhereCacheRequest) GetAnywhereCacheId() string {
-	if x != nil {
-		return x.AnywhereCacheId
+func (x *ResumeAnywhereCacheRequest) GetBucket() string {
+	if x != nil && x.Bucket != nil {
+		return *x.Bucket
 	}
 	return ""
 }
@@ -4909,9 +4909,9 @@ type UpdateAnywhereCacheRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Bucket          string         `protobuf:"bytes,1,opt,name=bucket,proto3" json:"bucket,omitempty"`
-	AnywhereCacheId string         `protobuf:"bytes,2,opt,name=anywhere_cache_id,json=anywhereCacheId,proto3" json:"anywhere_cache_id,omitempty"`
-	AnywhereCache   *AnywhereCache `protobuf:"bytes,3,opt,name=anywhere_cache,json=anywhereCache,proto3" json:"anywhere_cache,omitempty"`
+	AnywhereCacheId *string        `protobuf:"bytes,1,opt,name=anywhere_cache_id,json=anywhereCacheId" json:"anywhere_cache_id,omitempty"`
+	Bucket          *string        `protobuf:"bytes,2,opt,name=bucket" json:"bucket,omitempty"`
+	AnywhereCache   *AnywhereCache `protobuf:"bytes,3,opt,name=anywhere_cache,json=anywhereCache" json:"anywhere_cache,omitempty"`
 }
 
 func (x *UpdateAnywhereCacheRequest) Reset() {
@@ -4946,16 +4946,16 @@ func (*UpdateAnywhereCacheRequest) Descriptor() ([]byte, []int) {
 	return file_mockgcp_storage_v1_generated_proto_rawDescGZIP(), []int{65}
 }
 
-func (x *UpdateAnywhereCacheRequest) GetBucket() string {
-	if x != nil {
-		return x.Bucket
+func (x *UpdateAnywhereCacheRequest) GetAnywhereCacheId() string {
+	if x != nil && x.AnywhereCacheId != nil {
+		return *x.AnywhereCacheId
 	}
 	return ""
 }
 
-func (x *UpdateAnywhereCacheRequest) GetAnywhereCacheId() string {
-	if x != nil {
-		return x.AnywhereCacheId
+func (x *UpdateAnywhereCacheRequest) GetBucket() string {
+	if x != nil && x.Bucket != nil {
+		return *x.Bucket
 	}
 	return ""
 }
@@ -4972,8 +4972,8 @@ type DeleteBucketAccessControlRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Bucket string `protobuf:"bytes,1,opt,name=bucket,proto3" json:"bucket,omitempty"`
-	Entity string `protobuf:"bytes,2,opt,name=entity,proto3" json:"entity,omitempty"`
+	Bucket *string `protobuf:"bytes,1,opt,name=bucket" json:"bucket,omitempty"`
+	Entity *string `protobuf:"bytes,2,opt,name=entity" json:"entity,omitempty"`
 }
 
 func (x *DeleteBucketAccessControlRequest) Reset() {
@@ -5009,15 +5009,15 @@ func (*DeleteBucketAccessControlRequest) Descriptor() ([]byte, []int) {
 }
 
 func (x *DeleteBucketAccessControlRequest) GetBucket() string {
-	if x != nil {
-		return x.Bucket
+	if x != nil && x.Bucket != nil {
+		return *x.Bucket
 	}
 	return ""
 }
 
 func (x *DeleteBucketAccessControlRequest) GetEntity() string {
-	if x != nil {
-		return x.Entity
+	if x != nil && x.Entity != nil {
+		return *x.Entity
 	}
 	return ""
 }
@@ -5027,8 +5027,8 @@ type GetBucketAccessControlRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Bucket string `protobuf:"bytes,1,opt,name=bucket,proto3" json:"bucket,omitempty"`
-	Entity string `protobuf:"bytes,2,opt,name=entity,proto3" json:"entity,omitempty"`
+	Bucket *string `protobuf:"bytes,1,opt,name=bucket" json:"bucket,omitempty"`
+	Entity *string `protobuf:"bytes,2,opt,name=entity" json:"entity,omitempty"`
 }
 
 func (x *GetBucketAccessControlRequest) Reset() {
@@ -5064,15 +5064,15 @@ func (*GetBucketAccessControlRequest) Descriptor() ([]byte, []int) {
 }
 
 func (x *GetBucketAccessControlRequest) GetBucket() string {
-	if x != nil {
-		return x.Bucket
+	if x != nil && x.Bucket != nil {
+		return *x.Bucket
 	}
 	return ""
 }
 
 func (x *GetBucketAccessControlRequest) GetEntity() string {
-	if x != nil {
-		return x.Entity
+	if x != nil && x.Entity != nil {
+		return *x.Entity
 	}
 	return ""
 }
@@ -5082,8 +5082,8 @@ type InsertBucketAccessControlRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Bucket              string               `protobuf:"bytes,1,opt,name=bucket,proto3" json:"bucket,omitempty"`
-	BucketAccessControl *BucketAccessControl `protobuf:"bytes,2,opt,name=bucket_access_control,json=bucketAccessControl,proto3" json:"bucket_access_control,omitempty"`
+	Bucket              *string              `protobuf:"bytes,1,opt,name=bucket" json:"bucket,omitempty"`
+	BucketAccessControl *BucketAccessControl `protobuf:"bytes,2,opt,name=bucket_access_control,json=bucketAccessControl" json:"bucket_access_control,omitempty"`
 }
 
 func (x *InsertBucketAccessControlRequest) Reset() {
@@ -5119,8 +5119,8 @@ func (*InsertBucketAccessControlRequest) Descriptor() ([]byte, []int) {
 }
 
 func (x *InsertBucketAccessControlRequest) GetBucket() string {
-	if x != nil {
-		return x.Bucket
+	if x != nil && x.Bucket != nil {
+		return *x.Bucket
 	}
 	return ""
 }
@@ -5137,7 +5137,7 @@ type ListBucketAccessControlsRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Bucket string `protobuf:"bytes,1,opt,name=bucket,proto3" json:"bucket,omitempty"`
+	Bucket *string `protobuf:"bytes,1,opt,name=bucket" json:"bucket,omitempty"`
 }
 
 func (x *ListBucketAccessControlsRequest) Reset() {
@@ -5173,8 +5173,8 @@ func (*ListBucketAccessControlsRequest) Descriptor() ([]byte, []int) {
 }
 
 func (x *ListBucketAccessControlsRequest) GetBucket() string {
-	if x != nil {
-		return x.Bucket
+	if x != nil && x.Bucket != nil {
+		return *x.Bucket
 	}
 	return ""
 }
@@ -5184,9 +5184,9 @@ type PatchBucketAccessControlRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Bucket              string               `protobuf:"bytes,1,opt,name=bucket,proto3" json:"bucket,omitempty"`
-	Entity              string               `protobuf:"bytes,2,opt,name=entity,proto3" json:"entity,omitempty"`
-	BucketAccessControl *BucketAccessControl `protobuf:"bytes,3,opt,name=bucket_access_control,json=bucketAccessControl,proto3" json:"bucket_access_control,omitempty"`
+	Bucket              *string              `protobuf:"bytes,1,opt,name=bucket" json:"bucket,omitempty"`
+	Entity              *string              `protobuf:"bytes,2,opt,name=entity" json:"entity,omitempty"`
+	BucketAccessControl *BucketAccessControl `protobuf:"bytes,3,opt,name=bucket_access_control,json=bucketAccessControl" json:"bucket_access_control,omitempty"`
 }
 
 func (x *PatchBucketAccessControlRequest) Reset() {
@@ -5222,15 +5222,15 @@ func (*PatchBucketAccessControlRequest) Descriptor() ([]byte, []int) {
 }
 
 func (x *PatchBucketAccessControlRequest) GetBucket() string {
-	if x != nil {
-		return x.Bucket
+	if x != nil && x.Bucket != nil {
+		return *x.Bucket
 	}
 	return ""
 }
 
 func (x *PatchBucketAccessControlRequest) GetEntity() string {
-	if x != nil {
-		return x.Entity
+	if x != nil && x.Entity != nil {
+		return *x.Entity
 	}
 	return ""
 }
@@ -5247,9 +5247,9 @@ type UpdateBucketAccessControlRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Bucket              string               `protobuf:"bytes,1,opt,name=bucket,proto3" json:"bucket,omitempty"`
-	Entity              string               `protobuf:"bytes,2,opt,name=entity,proto3" json:"entity,omitempty"`
-	BucketAccessControl *BucketAccessControl `protobuf:"bytes,3,opt,name=bucket_access_control,json=bucketAccessControl,proto3" json:"bucket_access_control,omitempty"`
+	Bucket              *string              `protobuf:"bytes,1,opt,name=bucket" json:"bucket,omitempty"`
+	Entity              *string              `protobuf:"bytes,2,opt,name=entity" json:"entity,omitempty"`
+	BucketAccessControl *BucketAccessControl `protobuf:"bytes,3,opt,name=bucket_access_control,json=bucketAccessControl" json:"bucket_access_control,omitempty"`
 }
 
 func (x *UpdateBucketAccessControlRequest) Reset() {
@@ -5285,15 +5285,15 @@ func (*UpdateBucketAccessControlRequest) Descriptor() ([]byte, []int) {
 }
 
 func (x *UpdateBucketAccessControlRequest) GetBucket() string {
-	if x != nil {
-		return x.Bucket
+	if x != nil && x.Bucket != nil {
+		return *x.Bucket
 	}
 	return ""
 }
 
 func (x *UpdateBucketAccessControlRequest) GetEntity() string {
-	if x != nil {
-		return x.Entity
+	if x != nil && x.Entity != nil {
+		return *x.Entity
 	}
 	return ""
 }
@@ -5310,7 +5310,7 @@ type DeleteBucketRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Name *string `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
 }
 
 func (x *DeleteBucketRequest) Reset() {
@@ -5346,8 +5346,8 @@ func (*DeleteBucketRequest) Descriptor() ([]byte, []int) {
 }
 
 func (x *DeleteBucketRequest) GetName() string {
-	if x != nil {
-		return x.Name
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
@@ -5357,7 +5357,7 @@ type GetBucketRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Name *string `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
 }
 
 func (x *GetBucketRequest) Reset() {
@@ -5393,8 +5393,8 @@ func (*GetBucketRequest) Descriptor() ([]byte, []int) {
 }
 
 func (x *GetBucketRequest) GetName() string {
-	if x != nil {
-		return x.Name
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
@@ -5404,7 +5404,7 @@ type InsertBucketRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Bucket *Bucket `protobuf:"bytes,1,opt,name=bucket,proto3" json:"bucket,omitempty"`
+	Bucket *Bucket `protobuf:"bytes,1,opt,name=bucket" json:"bucket,omitempty"`
 }
 
 func (x *InsertBucketRequest) Reset() {
@@ -5489,7 +5489,7 @@ type LockRetentionPolicyBucketRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Name *string `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
 }
 
 func (x *LockRetentionPolicyBucketRequest) Reset() {
@@ -5525,8 +5525,8 @@ func (*LockRetentionPolicyBucketRequest) Descriptor() ([]byte, []int) {
 }
 
 func (x *LockRetentionPolicyBucketRequest) GetName() string {
-	if x != nil {
-		return x.Name
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
@@ -5536,8 +5536,8 @@ type PatchBucketRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Name   string  `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Bucket *Bucket `protobuf:"bytes,2,opt,name=bucket,proto3" json:"bucket,omitempty"`
+	Name   *string `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
+	Bucket *Bucket `protobuf:"bytes,2,opt,name=bucket" json:"bucket,omitempty"`
 }
 
 func (x *PatchBucketRequest) Reset() {
@@ -5573,8 +5573,8 @@ func (*PatchBucketRequest) Descriptor() ([]byte, []int) {
 }
 
 func (x *PatchBucketRequest) GetName() string {
-	if x != nil {
-		return x.Name
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
@@ -5591,8 +5591,8 @@ type UpdateBucketRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Name   string  `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Bucket *Bucket `protobuf:"bytes,2,opt,name=bucket,proto3" json:"bucket,omitempty"`
+	Name   *string `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
+	Bucket *Bucket `protobuf:"bytes,2,opt,name=bucket" json:"bucket,omitempty"`
 }
 
 func (x *UpdateBucketRequest) Reset() {
@@ -5628,8 +5628,8 @@ func (*UpdateBucketRequest) Descriptor() ([]byte, []int) {
 }
 
 func (x *UpdateBucketRequest) GetName() string {
-	if x != nil {
-		return x.Name
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
@@ -5646,7 +5646,7 @@ type StopChannelRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Channel *Channel `protobuf:"bytes,1,opt,name=channel,proto3" json:"channel,omitempty"`
+	Channel *Channel `protobuf:"bytes,1,opt,name=channel" json:"channel,omitempty"`
 }
 
 func (x *StopChannelRequest) Reset() {
@@ -5693,8 +5693,8 @@ type DeleteDefaultObjectAccessControlRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Bucket string `protobuf:"bytes,1,opt,name=bucket,proto3" json:"bucket,omitempty"`
-	Entity string `protobuf:"bytes,2,opt,name=entity,proto3" json:"entity,omitempty"`
+	Bucket *string `protobuf:"bytes,1,opt,name=bucket" json:"bucket,omitempty"`
+	Entity *string `protobuf:"bytes,2,opt,name=entity" json:"entity,omitempty"`
 }
 
 func (x *DeleteDefaultObjectAccessControlRequest) Reset() {
@@ -5730,15 +5730,15 @@ func (*DeleteDefaultObjectAccessControlRequest) Descriptor() ([]byte, []int) {
 }
 
 func (x *DeleteDefaultObjectAccessControlRequest) GetBucket() string {
-	if x != nil {
-		return x.Bucket
+	if x != nil && x.Bucket != nil {
+		return *x.Bucket
 	}
 	return ""
 }
 
 func (x *DeleteDefaultObjectAccessControlRequest) GetEntity() string {
-	if x != nil {
-		return x.Entity
+	if x != nil && x.Entity != nil {
+		return *x.Entity
 	}
 	return ""
 }
@@ -5748,8 +5748,8 @@ type GetDefaultObjectAccessControlRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Bucket string `protobuf:"bytes,1,opt,name=bucket,proto3" json:"bucket,omitempty"`
-	Entity string `protobuf:"bytes,2,opt,name=entity,proto3" json:"entity,omitempty"`
+	Bucket *string `protobuf:"bytes,1,opt,name=bucket" json:"bucket,omitempty"`
+	Entity *string `protobuf:"bytes,2,opt,name=entity" json:"entity,omitempty"`
 }
 
 func (x *GetDefaultObjectAccessControlRequest) Reset() {
@@ -5785,15 +5785,15 @@ func (*GetDefaultObjectAccessControlRequest) Descriptor() ([]byte, []int) {
 }
 
 func (x *GetDefaultObjectAccessControlRequest) GetBucket() string {
-	if x != nil {
-		return x.Bucket
+	if x != nil && x.Bucket != nil {
+		return *x.Bucket
 	}
 	return ""
 }
 
 func (x *GetDefaultObjectAccessControlRequest) GetEntity() string {
-	if x != nil {
-		return x.Entity
+	if x != nil && x.Entity != nil {
+		return *x.Entity
 	}
 	return ""
 }
@@ -5803,8 +5803,8 @@ type InsertDefaultObjectAccessControlRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Bucket                     string               `protobuf:"bytes,1,opt,name=bucket,proto3" json:"bucket,omitempty"`
-	DefaultObjectAccessControl *ObjectAccessControl `protobuf:"bytes,2,opt,name=default_object_access_control,json=defaultObjectAccessControl,proto3" json:"default_object_access_control,omitempty"`
+	Bucket                     *string              `protobuf:"bytes,1,opt,name=bucket" json:"bucket,omitempty"`
+	DefaultObjectAccessControl *ObjectAccessControl `protobuf:"bytes,2,opt,name=default_object_access_control,json=defaultObjectAccessControl" json:"default_object_access_control,omitempty"`
 }
 
 func (x *InsertDefaultObjectAccessControlRequest) Reset() {
@@ -5840,8 +5840,8 @@ func (*InsertDefaultObjectAccessControlRequest) Descriptor() ([]byte, []int) {
 }
 
 func (x *InsertDefaultObjectAccessControlRequest) GetBucket() string {
-	if x != nil {
-		return x.Bucket
+	if x != nil && x.Bucket != nil {
+		return *x.Bucket
 	}
 	return ""
 }
@@ -5858,7 +5858,7 @@ type ListDefaultObjectAccessControlsRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Bucket string `protobuf:"bytes,1,opt,name=bucket,proto3" json:"bucket,omitempty"`
+	Bucket *string `protobuf:"bytes,1,opt,name=bucket" json:"bucket,omitempty"`
 }
 
 func (x *ListDefaultObjectAccessControlsRequest) Reset() {
@@ -5894,8 +5894,8 @@ func (*ListDefaultObjectAccessControlsRequest) Descriptor() ([]byte, []int) {
 }
 
 func (x *ListDefaultObjectAccessControlsRequest) GetBucket() string {
-	if x != nil {
-		return x.Bucket
+	if x != nil && x.Bucket != nil {
+		return *x.Bucket
 	}
 	return ""
 }
@@ -5905,9 +5905,9 @@ type PatchDefaultObjectAccessControlRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Bucket                     string               `protobuf:"bytes,1,opt,name=bucket,proto3" json:"bucket,omitempty"`
-	Entity                     string               `protobuf:"bytes,2,opt,name=entity,proto3" json:"entity,omitempty"`
-	DefaultObjectAccessControl *ObjectAccessControl `protobuf:"bytes,3,opt,name=default_object_access_control,json=defaultObjectAccessControl,proto3" json:"default_object_access_control,omitempty"`
+	Bucket                     *string              `protobuf:"bytes,1,opt,name=bucket" json:"bucket,omitempty"`
+	Entity                     *string              `protobuf:"bytes,2,opt,name=entity" json:"entity,omitempty"`
+	DefaultObjectAccessControl *ObjectAccessControl `protobuf:"bytes,3,opt,name=default_object_access_control,json=defaultObjectAccessControl" json:"default_object_access_control,omitempty"`
 }
 
 func (x *PatchDefaultObjectAccessControlRequest) Reset() {
@@ -5943,15 +5943,15 @@ func (*PatchDefaultObjectAccessControlRequest) Descriptor() ([]byte, []int) {
 }
 
 func (x *PatchDefaultObjectAccessControlRequest) GetBucket() string {
-	if x != nil {
-		return x.Bucket
+	if x != nil && x.Bucket != nil {
+		return *x.Bucket
 	}
 	return ""
 }
 
 func (x *PatchDefaultObjectAccessControlRequest) GetEntity() string {
-	if x != nil {
-		return x.Entity
+	if x != nil && x.Entity != nil {
+		return *x.Entity
 	}
 	return ""
 }
@@ -5968,9 +5968,9 @@ type UpdateDefaultObjectAccessControlRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Bucket                     string               `protobuf:"bytes,1,opt,name=bucket,proto3" json:"bucket,omitempty"`
-	Entity                     string               `protobuf:"bytes,2,opt,name=entity,proto3" json:"entity,omitempty"`
-	DefaultObjectAccessControl *ObjectAccessControl `protobuf:"bytes,3,opt,name=default_object_access_control,json=defaultObjectAccessControl,proto3" json:"default_object_access_control,omitempty"`
+	Bucket                     *string              `protobuf:"bytes,1,opt,name=bucket" json:"bucket,omitempty"`
+	Entity                     *string              `protobuf:"bytes,2,opt,name=entity" json:"entity,omitempty"`
+	DefaultObjectAccessControl *ObjectAccessControl `protobuf:"bytes,3,opt,name=default_object_access_control,json=defaultObjectAccessControl" json:"default_object_access_control,omitempty"`
 }
 
 func (x *UpdateDefaultObjectAccessControlRequest) Reset() {
@@ -6006,15 +6006,15 @@ func (*UpdateDefaultObjectAccessControlRequest) Descriptor() ([]byte, []int) {
 }
 
 func (x *UpdateDefaultObjectAccessControlRequest) GetBucket() string {
-	if x != nil {
-		return x.Bucket
+	if x != nil && x.Bucket != nil {
+		return *x.Bucket
 	}
 	return ""
 }
 
 func (x *UpdateDefaultObjectAccessControlRequest) GetEntity() string {
-	if x != nil {
-		return x.Entity
+	if x != nil && x.Entity != nil {
+		return *x.Entity
 	}
 	return ""
 }
@@ -6031,8 +6031,8 @@ type DeleteFolderRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Bucket string `protobuf:"bytes,1,opt,name=bucket,proto3" json:"bucket,omitempty"`
-	Name   string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Bucket *string `protobuf:"bytes,1,opt,name=bucket" json:"bucket,omitempty"`
+	Name   *string `protobuf:"bytes,2,opt,name=name" json:"name,omitempty"`
 }
 
 func (x *DeleteFolderRequest) Reset() {
@@ -6068,15 +6068,15 @@ func (*DeleteFolderRequest) Descriptor() ([]byte, []int) {
 }
 
 func (x *DeleteFolderRequest) GetBucket() string {
-	if x != nil {
-		return x.Bucket
+	if x != nil && x.Bucket != nil {
+		return *x.Bucket
 	}
 	return ""
 }
 
 func (x *DeleteFolderRequest) GetName() string {
-	if x != nil {
-		return x.Name
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
@@ -6086,8 +6086,8 @@ type GetFolderRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Name   string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Bucket string `protobuf:"bytes,2,opt,name=bucket,proto3" json:"bucket,omitempty"`
+	Bucket *string `protobuf:"bytes,1,opt,name=bucket" json:"bucket,omitempty"`
+	Name   *string `protobuf:"bytes,2,opt,name=name" json:"name,omitempty"`
 }
 
 func (x *GetFolderRequest) Reset() {
@@ -6122,16 +6122,16 @@ func (*GetFolderRequest) Descriptor() ([]byte, []int) {
 	return file_mockgcp_storage_v1_generated_proto_rawDescGZIP(), []int{87}
 }
 
-func (x *GetFolderRequest) GetName() string {
-	if x != nil {
-		return x.Name
+func (x *GetFolderRequest) GetBucket() string {
+	if x != nil && x.Bucket != nil {
+		return *x.Bucket
 	}
 	return ""
 }
 
-func (x *GetFolderRequest) GetBucket() string {
-	if x != nil {
-		return x.Bucket
+func (x *GetFolderRequest) GetName() string {
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
@@ -6141,8 +6141,8 @@ type InsertFolderRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Bucket string  `protobuf:"bytes,1,opt,name=bucket,proto3" json:"bucket,omitempty"`
-	Folder *Folder `protobuf:"bytes,2,opt,name=folder,proto3" json:"folder,omitempty"`
+	Bucket *string `protobuf:"bytes,1,opt,name=bucket" json:"bucket,omitempty"`
+	Folder *Folder `protobuf:"bytes,2,opt,name=folder" json:"folder,omitempty"`
 }
 
 func (x *InsertFolderRequest) Reset() {
@@ -6178,8 +6178,8 @@ func (*InsertFolderRequest) Descriptor() ([]byte, []int) {
 }
 
 func (x *InsertFolderRequest) GetBucket() string {
-	if x != nil {
-		return x.Bucket
+	if x != nil && x.Bucket != nil {
+		return *x.Bucket
 	}
 	return ""
 }
@@ -6196,7 +6196,7 @@ type ListFoldersRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Bucket string `protobuf:"bytes,1,opt,name=bucket,proto3" json:"bucket,omitempty"`
+	Bucket *string `protobuf:"bytes,1,opt,name=bucket" json:"bucket,omitempty"`
 }
 
 func (x *ListFoldersRequest) Reset() {
@@ -6232,8 +6232,8 @@ func (*ListFoldersRequest) Descriptor() ([]byte, []int) {
 }
 
 func (x *ListFoldersRequest) GetBucket() string {
-	if x != nil {
-		return x.Bucket
+	if x != nil && x.Bucket != nil {
+		return *x.Bucket
 	}
 	return ""
 }
@@ -6243,9 +6243,9 @@ type RenameFolderRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Bucket            string `protobuf:"bytes,1,opt,name=bucket,proto3" json:"bucket,omitempty"`
-	DestinationFolder string `protobuf:"bytes,2,opt,name=destination_folder,json=destinationFolder,proto3" json:"destination_folder,omitempty"`
-	SourceFolder      string `protobuf:"bytes,3,opt,name=source_folder,json=sourceFolder,proto3" json:"source_folder,omitempty"`
+	SourceFolder      *string `protobuf:"bytes,1,opt,name=source_folder,json=sourceFolder" json:"source_folder,omitempty"`
+	Bucket            *string `protobuf:"bytes,2,opt,name=bucket" json:"bucket,omitempty"`
+	DestinationFolder *string `protobuf:"bytes,3,opt,name=destination_folder,json=destinationFolder" json:"destination_folder,omitempty"`
 }
 
 func (x *RenameFolderRequest) Reset() {
@@ -6280,23 +6280,23 @@ func (*RenameFolderRequest) Descriptor() ([]byte, []int) {
 	return file_mockgcp_storage_v1_generated_proto_rawDescGZIP(), []int{90}
 }
 
+func (x *RenameFolderRequest) GetSourceFolder() string {
+	if x != nil && x.SourceFolder != nil {
+		return *x.SourceFolder
+	}
+	return ""
+}
+
 func (x *RenameFolderRequest) GetBucket() string {
-	if x != nil {
-		return x.Bucket
+	if x != nil && x.Bucket != nil {
+		return *x.Bucket
 	}
 	return ""
 }
 
 func (x *RenameFolderRequest) GetDestinationFolder() string {
-	if x != nil {
-		return x.DestinationFolder
-	}
-	return ""
-}
-
-func (x *RenameFolderRequest) GetSourceFolder() string {
-	if x != nil {
-		return x.SourceFolder
+	if x != nil && x.DestinationFolder != nil {
+		return *x.DestinationFolder
 	}
 	return ""
 }
@@ -6306,8 +6306,8 @@ type DeleteManagedFolderRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Bucket string `protobuf:"bytes,1,opt,name=bucket,proto3" json:"bucket,omitempty"`
-	Name   string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Bucket *string `protobuf:"bytes,1,opt,name=bucket" json:"bucket,omitempty"`
+	Name   *string `protobuf:"bytes,2,opt,name=name" json:"name,omitempty"`
 }
 
 func (x *DeleteManagedFolderRequest) Reset() {
@@ -6343,15 +6343,15 @@ func (*DeleteManagedFolderRequest) Descriptor() ([]byte, []int) {
 }
 
 func (x *DeleteManagedFolderRequest) GetBucket() string {
-	if x != nil {
-		return x.Bucket
+	if x != nil && x.Bucket != nil {
+		return *x.Bucket
 	}
 	return ""
 }
 
 func (x *DeleteManagedFolderRequest) GetName() string {
-	if x != nil {
-		return x.Name
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
@@ -6361,8 +6361,8 @@ type GetManagedFolderRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Name   string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Bucket string `protobuf:"bytes,2,opt,name=bucket,proto3" json:"bucket,omitempty"`
+	Bucket *string `protobuf:"bytes,1,opt,name=bucket" json:"bucket,omitempty"`
+	Name   *string `protobuf:"bytes,2,opt,name=name" json:"name,omitempty"`
 }
 
 func (x *GetManagedFolderRequest) Reset() {
@@ -6397,16 +6397,16 @@ func (*GetManagedFolderRequest) Descriptor() ([]byte, []int) {
 	return file_mockgcp_storage_v1_generated_proto_rawDescGZIP(), []int{92}
 }
 
-func (x *GetManagedFolderRequest) GetName() string {
-	if x != nil {
-		return x.Name
+func (x *GetManagedFolderRequest) GetBucket() string {
+	if x != nil && x.Bucket != nil {
+		return *x.Bucket
 	}
 	return ""
 }
 
-func (x *GetManagedFolderRequest) GetBucket() string {
-	if x != nil {
-		return x.Bucket
+func (x *GetManagedFolderRequest) GetName() string {
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
@@ -6416,8 +6416,8 @@ type InsertManagedFolderRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Bucket        string         `protobuf:"bytes,1,opt,name=bucket,proto3" json:"bucket,omitempty"`
-	ManagedFolder *ManagedFolder `protobuf:"bytes,2,opt,name=managed_folder,json=managedFolder,proto3" json:"managed_folder,omitempty"`
+	Bucket        *string        `protobuf:"bytes,1,opt,name=bucket" json:"bucket,omitempty"`
+	ManagedFolder *ManagedFolder `protobuf:"bytes,2,opt,name=managed_folder,json=managedFolder" json:"managed_folder,omitempty"`
 }
 
 func (x *InsertManagedFolderRequest) Reset() {
@@ -6453,8 +6453,8 @@ func (*InsertManagedFolderRequest) Descriptor() ([]byte, []int) {
 }
 
 func (x *InsertManagedFolderRequest) GetBucket() string {
-	if x != nil {
-		return x.Bucket
+	if x != nil && x.Bucket != nil {
+		return *x.Bucket
 	}
 	return ""
 }
@@ -6471,7 +6471,7 @@ type ListManagedFoldersRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Bucket string `protobuf:"bytes,1,opt,name=bucket,proto3" json:"bucket,omitempty"`
+	Bucket *string `protobuf:"bytes,1,opt,name=bucket" json:"bucket,omitempty"`
 }
 
 func (x *ListManagedFoldersRequest) Reset() {
@@ -6507,8 +6507,8 @@ func (*ListManagedFoldersRequest) Descriptor() ([]byte, []int) {
 }
 
 func (x *ListManagedFoldersRequest) GetBucket() string {
-	if x != nil {
-		return x.Bucket
+	if x != nil && x.Bucket != nil {
+		return *x.Bucket
 	}
 	return ""
 }
@@ -6518,8 +6518,8 @@ type DeleteNotificationRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Bucket string `protobuf:"bytes,1,opt,name=bucket,proto3" json:"bucket,omitempty"`
-	Name   string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Name   *string `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
+	Bucket *string `protobuf:"bytes,2,opt,name=bucket" json:"bucket,omitempty"`
 }
 
 func (x *DeleteNotificationRequest) Reset() {
@@ -6554,16 +6554,16 @@ func (*DeleteNotificationRequest) Descriptor() ([]byte, []int) {
 	return file_mockgcp_storage_v1_generated_proto_rawDescGZIP(), []int{95}
 }
 
-func (x *DeleteNotificationRequest) GetBucket() string {
-	if x != nil {
-		return x.Bucket
+func (x *DeleteNotificationRequest) GetName() string {
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
 
-func (x *DeleteNotificationRequest) GetName() string {
-	if x != nil {
-		return x.Name
+func (x *DeleteNotificationRequest) GetBucket() string {
+	if x != nil && x.Bucket != nil {
+		return *x.Bucket
 	}
 	return ""
 }
@@ -6573,8 +6573,8 @@ type GetNotificationRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Name   string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Bucket string `protobuf:"bytes,2,opt,name=bucket,proto3" json:"bucket,omitempty"`
+	Bucket *string `protobuf:"bytes,1,opt,name=bucket" json:"bucket,omitempty"`
+	Name   *string `protobuf:"bytes,2,opt,name=name" json:"name,omitempty"`
 }
 
 func (x *GetNotificationRequest) Reset() {
@@ -6609,16 +6609,16 @@ func (*GetNotificationRequest) Descriptor() ([]byte, []int) {
 	return file_mockgcp_storage_v1_generated_proto_rawDescGZIP(), []int{96}
 }
 
-func (x *GetNotificationRequest) GetName() string {
-	if x != nil {
-		return x.Name
+func (x *GetNotificationRequest) GetBucket() string {
+	if x != nil && x.Bucket != nil {
+		return *x.Bucket
 	}
 	return ""
 }
 
-func (x *GetNotificationRequest) GetBucket() string {
-	if x != nil {
-		return x.Bucket
+func (x *GetNotificationRequest) GetName() string {
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
@@ -6628,8 +6628,8 @@ type InsertNotificationRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Bucket       string        `protobuf:"bytes,1,opt,name=bucket,proto3" json:"bucket,omitempty"`
-	Notification *Notification `protobuf:"bytes,2,opt,name=notification,proto3" json:"notification,omitempty"`
+	Bucket       *string       `protobuf:"bytes,1,opt,name=bucket" json:"bucket,omitempty"`
+	Notification *Notification `protobuf:"bytes,2,opt,name=notification" json:"notification,omitempty"`
 }
 
 func (x *InsertNotificationRequest) Reset() {
@@ -6665,8 +6665,8 @@ func (*InsertNotificationRequest) Descriptor() ([]byte, []int) {
 }
 
 func (x *InsertNotificationRequest) GetBucket() string {
-	if x != nil {
-		return x.Bucket
+	if x != nil && x.Bucket != nil {
+		return *x.Bucket
 	}
 	return ""
 }
@@ -6683,7 +6683,7 @@ type ListNotificationsRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Bucket string `protobuf:"bytes,1,opt,name=bucket,proto3" json:"bucket,omitempty"`
+	Bucket *string `protobuf:"bytes,1,opt,name=bucket" json:"bucket,omitempty"`
 }
 
 func (x *ListNotificationsRequest) Reset() {
@@ -6719,8 +6719,8 @@ func (*ListNotificationsRequest) Descriptor() ([]byte, []int) {
 }
 
 func (x *ListNotificationsRequest) GetBucket() string {
-	if x != nil {
-		return x.Bucket
+	if x != nil && x.Bucket != nil {
+		return *x.Bucket
 	}
 	return ""
 }
@@ -6730,9 +6730,9 @@ type DeleteObjectAccessControlRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Bucket string `protobuf:"bytes,1,opt,name=bucket,proto3" json:"bucket,omitempty"`
-	Entity string `protobuf:"bytes,2,opt,name=entity,proto3" json:"entity,omitempty"`
-	Object string `protobuf:"bytes,3,opt,name=object,proto3" json:"object,omitempty"`
+	Bucket *string `protobuf:"bytes,1,opt,name=bucket" json:"bucket,omitempty"`
+	Entity *string `protobuf:"bytes,2,opt,name=entity" json:"entity,omitempty"`
+	Object *string `protobuf:"bytes,3,opt,name=object" json:"object,omitempty"`
 }
 
 func (x *DeleteObjectAccessControlRequest) Reset() {
@@ -6768,22 +6768,22 @@ func (*DeleteObjectAccessControlRequest) Descriptor() ([]byte, []int) {
 }
 
 func (x *DeleteObjectAccessControlRequest) GetBucket() string {
-	if x != nil {
-		return x.Bucket
+	if x != nil && x.Bucket != nil {
+		return *x.Bucket
 	}
 	return ""
 }
 
 func (x *DeleteObjectAccessControlRequest) GetEntity() string {
-	if x != nil {
-		return x.Entity
+	if x != nil && x.Entity != nil {
+		return *x.Entity
 	}
 	return ""
 }
 
 func (x *DeleteObjectAccessControlRequest) GetObject() string {
-	if x != nil {
-		return x.Object
+	if x != nil && x.Object != nil {
+		return *x.Object
 	}
 	return ""
 }
@@ -6793,9 +6793,9 @@ type GetObjectAccessControlRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Object string `protobuf:"bytes,1,opt,name=object,proto3" json:"object,omitempty"`
-	Bucket string `protobuf:"bytes,2,opt,name=bucket,proto3" json:"bucket,omitempty"`
-	Entity string `protobuf:"bytes,3,opt,name=entity,proto3" json:"entity,omitempty"`
+	Object *string `protobuf:"bytes,1,opt,name=object" json:"object,omitempty"`
+	Bucket *string `protobuf:"bytes,2,opt,name=bucket" json:"bucket,omitempty"`
+	Entity *string `protobuf:"bytes,3,opt,name=entity" json:"entity,omitempty"`
 }
 
 func (x *GetObjectAccessControlRequest) Reset() {
@@ -6831,22 +6831,22 @@ func (*GetObjectAccessControlRequest) Descriptor() ([]byte, []int) {
 }
 
 func (x *GetObjectAccessControlRequest) GetObject() string {
-	if x != nil {
-		return x.Object
+	if x != nil && x.Object != nil {
+		return *x.Object
 	}
 	return ""
 }
 
 func (x *GetObjectAccessControlRequest) GetBucket() string {
-	if x != nil {
-		return x.Bucket
+	if x != nil && x.Bucket != nil {
+		return *x.Bucket
 	}
 	return ""
 }
 
 func (x *GetObjectAccessControlRequest) GetEntity() string {
-	if x != nil {
-		return x.Entity
+	if x != nil && x.Entity != nil {
+		return *x.Entity
 	}
 	return ""
 }
@@ -6856,9 +6856,9 @@ type InsertObjectAccessControlRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Bucket              string               `protobuf:"bytes,1,opt,name=bucket,proto3" json:"bucket,omitempty"`
-	Object              string               `protobuf:"bytes,2,opt,name=object,proto3" json:"object,omitempty"`
-	ObjectAccessControl *ObjectAccessControl `protobuf:"bytes,3,opt,name=object_access_control,json=objectAccessControl,proto3" json:"object_access_control,omitempty"`
+	Object              *string              `protobuf:"bytes,1,opt,name=object" json:"object,omitempty"`
+	Bucket              *string              `protobuf:"bytes,2,opt,name=bucket" json:"bucket,omitempty"`
+	ObjectAccessControl *ObjectAccessControl `protobuf:"bytes,3,opt,name=object_access_control,json=objectAccessControl" json:"object_access_control,omitempty"`
 }
 
 func (x *InsertObjectAccessControlRequest) Reset() {
@@ -6893,16 +6893,16 @@ func (*InsertObjectAccessControlRequest) Descriptor() ([]byte, []int) {
 	return file_mockgcp_storage_v1_generated_proto_rawDescGZIP(), []int{101}
 }
 
-func (x *InsertObjectAccessControlRequest) GetBucket() string {
-	if x != nil {
-		return x.Bucket
+func (x *InsertObjectAccessControlRequest) GetObject() string {
+	if x != nil && x.Object != nil {
+		return *x.Object
 	}
 	return ""
 }
 
-func (x *InsertObjectAccessControlRequest) GetObject() string {
-	if x != nil {
-		return x.Object
+func (x *InsertObjectAccessControlRequest) GetBucket() string {
+	if x != nil && x.Bucket != nil {
+		return *x.Bucket
 	}
 	return ""
 }
@@ -6919,8 +6919,8 @@ type ListObjectAccessControlsRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Bucket string `protobuf:"bytes,1,opt,name=bucket,proto3" json:"bucket,omitempty"`
-	Object string `protobuf:"bytes,2,opt,name=object,proto3" json:"object,omitempty"`
+	Object *string `protobuf:"bytes,1,opt,name=object" json:"object,omitempty"`
+	Bucket *string `protobuf:"bytes,2,opt,name=bucket" json:"bucket,omitempty"`
 }
 
 func (x *ListObjectAccessControlsRequest) Reset() {
@@ -6955,16 +6955,16 @@ func (*ListObjectAccessControlsRequest) Descriptor() ([]byte, []int) {
 	return file_mockgcp_storage_v1_generated_proto_rawDescGZIP(), []int{102}
 }
 
-func (x *ListObjectAccessControlsRequest) GetBucket() string {
-	if x != nil {
-		return x.Bucket
+func (x *ListObjectAccessControlsRequest) GetObject() string {
+	if x != nil && x.Object != nil {
+		return *x.Object
 	}
 	return ""
 }
 
-func (x *ListObjectAccessControlsRequest) GetObject() string {
-	if x != nil {
-		return x.Object
+func (x *ListObjectAccessControlsRequest) GetBucket() string {
+	if x != nil && x.Bucket != nil {
+		return *x.Bucket
 	}
 	return ""
 }
@@ -6974,10 +6974,10 @@ type PatchObjectAccessControlRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Bucket              string               `protobuf:"bytes,1,opt,name=bucket,proto3" json:"bucket,omitempty"`
-	Entity              string               `protobuf:"bytes,2,opt,name=entity,proto3" json:"entity,omitempty"`
-	Object              string               `protobuf:"bytes,3,opt,name=object,proto3" json:"object,omitempty"`
-	ObjectAccessControl *ObjectAccessControl `protobuf:"bytes,4,opt,name=object_access_control,json=objectAccessControl,proto3" json:"object_access_control,omitempty"`
+	Bucket              *string              `protobuf:"bytes,1,opt,name=bucket" json:"bucket,omitempty"`
+	Entity              *string              `protobuf:"bytes,2,opt,name=entity" json:"entity,omitempty"`
+	Object              *string              `protobuf:"bytes,3,opt,name=object" json:"object,omitempty"`
+	ObjectAccessControl *ObjectAccessControl `protobuf:"bytes,4,opt,name=object_access_control,json=objectAccessControl" json:"object_access_control,omitempty"`
 }
 
 func (x *PatchObjectAccessControlRequest) Reset() {
@@ -7013,22 +7013,22 @@ func (*PatchObjectAccessControlRequest) Descriptor() ([]byte, []int) {
 }
 
 func (x *PatchObjectAccessControlRequest) GetBucket() string {
-	if x != nil {
-		return x.Bucket
+	if x != nil && x.Bucket != nil {
+		return *x.Bucket
 	}
 	return ""
 }
 
 func (x *PatchObjectAccessControlRequest) GetEntity() string {
-	if x != nil {
-		return x.Entity
+	if x != nil && x.Entity != nil {
+		return *x.Entity
 	}
 	return ""
 }
 
 func (x *PatchObjectAccessControlRequest) GetObject() string {
-	if x != nil {
-		return x.Object
+	if x != nil && x.Object != nil {
+		return *x.Object
 	}
 	return ""
 }
@@ -7045,10 +7045,10 @@ type UpdateObjectAccessControlRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Bucket              string               `protobuf:"bytes,1,opt,name=bucket,proto3" json:"bucket,omitempty"`
-	Entity              string               `protobuf:"bytes,2,opt,name=entity,proto3" json:"entity,omitempty"`
-	Object              string               `protobuf:"bytes,3,opt,name=object,proto3" json:"object,omitempty"`
-	ObjectAccessControl *ObjectAccessControl `protobuf:"bytes,4,opt,name=object_access_control,json=objectAccessControl,proto3" json:"object_access_control,omitempty"`
+	Object              *string              `protobuf:"bytes,1,opt,name=object" json:"object,omitempty"`
+	Bucket              *string              `protobuf:"bytes,2,opt,name=bucket" json:"bucket,omitempty"`
+	Entity              *string              `protobuf:"bytes,3,opt,name=entity" json:"entity,omitempty"`
+	ObjectAccessControl *ObjectAccessControl `protobuf:"bytes,4,opt,name=object_access_control,json=objectAccessControl" json:"object_access_control,omitempty"`
 }
 
 func (x *UpdateObjectAccessControlRequest) Reset() {
@@ -7083,23 +7083,23 @@ func (*UpdateObjectAccessControlRequest) Descriptor() ([]byte, []int) {
 	return file_mockgcp_storage_v1_generated_proto_rawDescGZIP(), []int{104}
 }
 
+func (x *UpdateObjectAccessControlRequest) GetObject() string {
+	if x != nil && x.Object != nil {
+		return *x.Object
+	}
+	return ""
+}
+
 func (x *UpdateObjectAccessControlRequest) GetBucket() string {
-	if x != nil {
-		return x.Bucket
+	if x != nil && x.Bucket != nil {
+		return *x.Bucket
 	}
 	return ""
 }
 
 func (x *UpdateObjectAccessControlRequest) GetEntity() string {
-	if x != nil {
-		return x.Entity
-	}
-	return ""
-}
-
-func (x *UpdateObjectAccessControlRequest) GetObject() string {
-	if x != nil {
-		return x.Object
+	if x != nil && x.Entity != nil {
+		return *x.Entity
 	}
 	return ""
 }
@@ -7116,8 +7116,8 @@ type BulkRestoreObjectRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Bucket string                     `protobuf:"bytes,1,opt,name=bucket,proto3" json:"bucket,omitempty"`
-	Object *BulkRestoreObjectsRequest `protobuf:"bytes,2,opt,name=object,proto3" json:"object,omitempty"`
+	Bucket *string                    `protobuf:"bytes,1,opt,name=bucket" json:"bucket,omitempty"`
+	Object *BulkRestoreObjectsRequest `protobuf:"bytes,2,opt,name=object" json:"object,omitempty"`
 }
 
 func (x *BulkRestoreObjectRequest) Reset() {
@@ -7153,8 +7153,8 @@ func (*BulkRestoreObjectRequest) Descriptor() ([]byte, []int) {
 }
 
 func (x *BulkRestoreObjectRequest) GetBucket() string {
-	if x != nil {
-		return x.Bucket
+	if x != nil && x.Bucket != nil {
+		return *x.Bucket
 	}
 	return ""
 }
@@ -7171,9 +7171,9 @@ type ComposeObjectRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	DestinationBucket string          `protobuf:"bytes,1,opt,name=destination_bucket,json=destinationBucket,proto3" json:"destination_bucket,omitempty"`
-	DestinationObject string          `protobuf:"bytes,2,opt,name=destination_object,json=destinationObject,proto3" json:"destination_object,omitempty"`
-	Object            *ComposeRequest `protobuf:"bytes,3,opt,name=object,proto3" json:"object,omitempty"`
+	DestinationBucket *string         `protobuf:"bytes,1,opt,name=destination_bucket,json=destinationBucket" json:"destination_bucket,omitempty"`
+	DestinationObject *string         `protobuf:"bytes,2,opt,name=destination_object,json=destinationObject" json:"destination_object,omitempty"`
+	Object            *ComposeRequest `protobuf:"bytes,3,opt,name=object" json:"object,omitempty"`
 }
 
 func (x *ComposeObjectRequest) Reset() {
@@ -7209,15 +7209,15 @@ func (*ComposeObjectRequest) Descriptor() ([]byte, []int) {
 }
 
 func (x *ComposeObjectRequest) GetDestinationBucket() string {
-	if x != nil {
-		return x.DestinationBucket
+	if x != nil && x.DestinationBucket != nil {
+		return *x.DestinationBucket
 	}
 	return ""
 }
 
 func (x *ComposeObjectRequest) GetDestinationObject() string {
-	if x != nil {
-		return x.DestinationObject
+	if x != nil && x.DestinationObject != nil {
+		return *x.DestinationObject
 	}
 	return ""
 }
@@ -7234,11 +7234,11 @@ type CopyObjectRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	SourceObject      string  `protobuf:"bytes,1,opt,name=source_object,json=sourceObject,proto3" json:"source_object,omitempty"`
-	DestinationBucket string  `protobuf:"bytes,2,opt,name=destination_bucket,json=destinationBucket,proto3" json:"destination_bucket,omitempty"`
-	DestinationObject string  `protobuf:"bytes,3,opt,name=destination_object,json=destinationObject,proto3" json:"destination_object,omitempty"`
-	SourceBucket      string  `protobuf:"bytes,4,opt,name=source_bucket,json=sourceBucket,proto3" json:"source_bucket,omitempty"`
-	Object            *Object `protobuf:"bytes,5,opt,name=object,proto3" json:"object,omitempty"`
+	SourceBucket      *string `protobuf:"bytes,1,opt,name=source_bucket,json=sourceBucket" json:"source_bucket,omitempty"`
+	DestinationObject *string `protobuf:"bytes,2,opt,name=destination_object,json=destinationObject" json:"destination_object,omitempty"`
+	SourceObject      *string `protobuf:"bytes,3,opt,name=source_object,json=sourceObject" json:"source_object,omitempty"`
+	DestinationBucket *string `protobuf:"bytes,4,opt,name=destination_bucket,json=destinationBucket" json:"destination_bucket,omitempty"`
+	Object            *Object `protobuf:"bytes,5,opt,name=object" json:"object,omitempty"`
 }
 
 func (x *CopyObjectRequest) Reset() {
@@ -7273,30 +7273,30 @@ func (*CopyObjectRequest) Descriptor() ([]byte, []int) {
 	return file_mockgcp_storage_v1_generated_proto_rawDescGZIP(), []int{107}
 }
 
-func (x *CopyObjectRequest) GetSourceObject() string {
-	if x != nil {
-		return x.SourceObject
-	}
-	return ""
-}
-
-func (x *CopyObjectRequest) GetDestinationBucket() string {
-	if x != nil {
-		return x.DestinationBucket
+func (x *CopyObjectRequest) GetSourceBucket() string {
+	if x != nil && x.SourceBucket != nil {
+		return *x.SourceBucket
 	}
 	return ""
 }
 
 func (x *CopyObjectRequest) GetDestinationObject() string {
-	if x != nil {
-		return x.DestinationObject
+	if x != nil && x.DestinationObject != nil {
+		return *x.DestinationObject
 	}
 	return ""
 }
 
-func (x *CopyObjectRequest) GetSourceBucket() string {
-	if x != nil {
-		return x.SourceBucket
+func (x *CopyObjectRequest) GetSourceObject() string {
+	if x != nil && x.SourceObject != nil {
+		return *x.SourceObject
+	}
+	return ""
+}
+
+func (x *CopyObjectRequest) GetDestinationBucket() string {
+	if x != nil && x.DestinationBucket != nil {
+		return *x.DestinationBucket
 	}
 	return ""
 }
@@ -7313,8 +7313,8 @@ type DeleteObjectRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Bucket string `protobuf:"bytes,1,opt,name=bucket,proto3" json:"bucket,omitempty"`
-	Name   string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Name   *string `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
+	Bucket *string `protobuf:"bytes,2,opt,name=bucket" json:"bucket,omitempty"`
 }
 
 func (x *DeleteObjectRequest) Reset() {
@@ -7349,16 +7349,16 @@ func (*DeleteObjectRequest) Descriptor() ([]byte, []int) {
 	return file_mockgcp_storage_v1_generated_proto_rawDescGZIP(), []int{108}
 }
 
-func (x *DeleteObjectRequest) GetBucket() string {
-	if x != nil {
-		return x.Bucket
+func (x *DeleteObjectRequest) GetName() string {
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
 
-func (x *DeleteObjectRequest) GetName() string {
-	if x != nil {
-		return x.Name
+func (x *DeleteObjectRequest) GetBucket() string {
+	if x != nil && x.Bucket != nil {
+		return *x.Bucket
 	}
 	return ""
 }
@@ -7368,8 +7368,8 @@ type GetObjectRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Name   string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Bucket string `protobuf:"bytes,2,opt,name=bucket,proto3" json:"bucket,omitempty"`
+	Name   *string `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
+	Bucket *string `protobuf:"bytes,2,opt,name=bucket" json:"bucket,omitempty"`
 }
 
 func (x *GetObjectRequest) Reset() {
@@ -7405,15 +7405,15 @@ func (*GetObjectRequest) Descriptor() ([]byte, []int) {
 }
 
 func (x *GetObjectRequest) GetName() string {
-	if x != nil {
-		return x.Name
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
 
 func (x *GetObjectRequest) GetBucket() string {
-	if x != nil {
-		return x.Bucket
+	if x != nil && x.Bucket != nil {
+		return *x.Bucket
 	}
 	return ""
 }
@@ -7423,8 +7423,8 @@ type InsertObjectRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Bucket string  `protobuf:"bytes,1,opt,name=bucket,proto3" json:"bucket,omitempty"`
-	Object *Object `protobuf:"bytes,2,opt,name=object,proto3" json:"object,omitempty"`
+	Bucket *string `protobuf:"bytes,1,opt,name=bucket" json:"bucket,omitempty"`
+	Object *Object `protobuf:"bytes,2,opt,name=object" json:"object,omitempty"`
 }
 
 func (x *InsertObjectRequest) Reset() {
@@ -7460,8 +7460,8 @@ func (*InsertObjectRequest) Descriptor() ([]byte, []int) {
 }
 
 func (x *InsertObjectRequest) GetBucket() string {
-	if x != nil {
-		return x.Bucket
+	if x != nil && x.Bucket != nil {
+		return *x.Bucket
 	}
 	return ""
 }
@@ -7478,7 +7478,7 @@ type ListObjectsRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Bucket string `protobuf:"bytes,1,opt,name=bucket,proto3" json:"bucket,omitempty"`
+	Bucket *string `protobuf:"bytes,1,opt,name=bucket" json:"bucket,omitempty"`
 }
 
 func (x *ListObjectsRequest) Reset() {
@@ -7514,8 +7514,8 @@ func (*ListObjectsRequest) Descriptor() ([]byte, []int) {
 }
 
 func (x *ListObjectsRequest) GetBucket() string {
-	if x != nil {
-		return x.Bucket
+	if x != nil && x.Bucket != nil {
+		return *x.Bucket
 	}
 	return ""
 }
@@ -7525,9 +7525,9 @@ type PatchObjectRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Bucket string  `protobuf:"bytes,1,opt,name=bucket,proto3" json:"bucket,omitempty"`
-	Name   string  `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	Object *Object `protobuf:"bytes,3,opt,name=object,proto3" json:"object,omitempty"`
+	Name   *string `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
+	Bucket *string `protobuf:"bytes,2,opt,name=bucket" json:"bucket,omitempty"`
+	Object *Object `protobuf:"bytes,3,opt,name=object" json:"object,omitempty"`
 }
 
 func (x *PatchObjectRequest) Reset() {
@@ -7562,16 +7562,16 @@ func (*PatchObjectRequest) Descriptor() ([]byte, []int) {
 	return file_mockgcp_storage_v1_generated_proto_rawDescGZIP(), []int{112}
 }
 
-func (x *PatchObjectRequest) GetBucket() string {
-	if x != nil {
-		return x.Bucket
+func (x *PatchObjectRequest) GetName() string {
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
 
-func (x *PatchObjectRequest) GetName() string {
-	if x != nil {
-		return x.Name
+func (x *PatchObjectRequest) GetBucket() string {
+	if x != nil && x.Bucket != nil {
+		return *x.Bucket
 	}
 	return ""
 }
@@ -7588,9 +7588,9 @@ type RestoreObjectRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Bucket string  `protobuf:"bytes,1,opt,name=bucket,proto3" json:"bucket,omitempty"`
-	Name   string  `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	Object *Object `protobuf:"bytes,3,opt,name=object,proto3" json:"object,omitempty"`
+	Name   *string `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
+	Bucket *string `protobuf:"bytes,2,opt,name=bucket" json:"bucket,omitempty"`
+	Object *Object `protobuf:"bytes,3,opt,name=object" json:"object,omitempty"`
 }
 
 func (x *RestoreObjectRequest) Reset() {
@@ -7625,16 +7625,16 @@ func (*RestoreObjectRequest) Descriptor() ([]byte, []int) {
 	return file_mockgcp_storage_v1_generated_proto_rawDescGZIP(), []int{113}
 }
 
-func (x *RestoreObjectRequest) GetBucket() string {
-	if x != nil {
-		return x.Bucket
+func (x *RestoreObjectRequest) GetName() string {
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
 
-func (x *RestoreObjectRequest) GetName() string {
-	if x != nil {
-		return x.Name
+func (x *RestoreObjectRequest) GetBucket() string {
+	if x != nil && x.Bucket != nil {
+		return *x.Bucket
 	}
 	return ""
 }
@@ -7651,11 +7651,11 @@ type RewriteObjectRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	DestinationObject string  `protobuf:"bytes,1,opt,name=destination_object,json=destinationObject,proto3" json:"destination_object,omitempty"`
-	SourceBucket      string  `protobuf:"bytes,2,opt,name=source_bucket,json=sourceBucket,proto3" json:"source_bucket,omitempty"`
-	SourceObject      string  `protobuf:"bytes,3,opt,name=source_object,json=sourceObject,proto3" json:"source_object,omitempty"`
-	DestinationBucket string  `protobuf:"bytes,4,opt,name=destination_bucket,json=destinationBucket,proto3" json:"destination_bucket,omitempty"`
-	Object            *Object `protobuf:"bytes,5,opt,name=object,proto3" json:"object,omitempty"`
+	DestinationObject *string `protobuf:"bytes,1,opt,name=destination_object,json=destinationObject" json:"destination_object,omitempty"`
+	SourceObject      *string `protobuf:"bytes,2,opt,name=source_object,json=sourceObject" json:"source_object,omitempty"`
+	DestinationBucket *string `protobuf:"bytes,3,opt,name=destination_bucket,json=destinationBucket" json:"destination_bucket,omitempty"`
+	SourceBucket      *string `protobuf:"bytes,4,opt,name=source_bucket,json=sourceBucket" json:"source_bucket,omitempty"`
+	Object            *Object `protobuf:"bytes,5,opt,name=object" json:"object,omitempty"`
 }
 
 func (x *RewriteObjectRequest) Reset() {
@@ -7691,29 +7691,29 @@ func (*RewriteObjectRequest) Descriptor() ([]byte, []int) {
 }
 
 func (x *RewriteObjectRequest) GetDestinationObject() string {
-	if x != nil {
-		return x.DestinationObject
-	}
-	return ""
-}
-
-func (x *RewriteObjectRequest) GetSourceBucket() string {
-	if x != nil {
-		return x.SourceBucket
+	if x != nil && x.DestinationObject != nil {
+		return *x.DestinationObject
 	}
 	return ""
 }
 
 func (x *RewriteObjectRequest) GetSourceObject() string {
-	if x != nil {
-		return x.SourceObject
+	if x != nil && x.SourceObject != nil {
+		return *x.SourceObject
 	}
 	return ""
 }
 
 func (x *RewriteObjectRequest) GetDestinationBucket() string {
-	if x != nil {
-		return x.DestinationBucket
+	if x != nil && x.DestinationBucket != nil {
+		return *x.DestinationBucket
+	}
+	return ""
+}
+
+func (x *RewriteObjectRequest) GetSourceBucket() string {
+	if x != nil && x.SourceBucket != nil {
+		return *x.SourceBucket
 	}
 	return ""
 }
@@ -7730,9 +7730,9 @@ type UpdateObjectRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Bucket string  `protobuf:"bytes,1,opt,name=bucket,proto3" json:"bucket,omitempty"`
-	Name   string  `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	Object *Object `protobuf:"bytes,3,opt,name=object,proto3" json:"object,omitempty"`
+	Bucket *string `protobuf:"bytes,1,opt,name=bucket" json:"bucket,omitempty"`
+	Name   *string `protobuf:"bytes,2,opt,name=name" json:"name,omitempty"`
+	Object *Object `protobuf:"bytes,3,opt,name=object" json:"object,omitempty"`
 }
 
 func (x *UpdateObjectRequest) Reset() {
@@ -7768,15 +7768,15 @@ func (*UpdateObjectRequest) Descriptor() ([]byte, []int) {
 }
 
 func (x *UpdateObjectRequest) GetBucket() string {
-	if x != nil {
-		return x.Bucket
+	if x != nil && x.Bucket != nil {
+		return *x.Bucket
 	}
 	return ""
 }
 
 func (x *UpdateObjectRequest) GetName() string {
-	if x != nil {
-		return x.Name
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
@@ -7793,8 +7793,8 @@ type WatchAllObjectRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Bucket string   `protobuf:"bytes,1,opt,name=bucket,proto3" json:"bucket,omitempty"`
-	Object *Channel `protobuf:"bytes,2,opt,name=object,proto3" json:"object,omitempty"`
+	Bucket *string  `protobuf:"bytes,1,opt,name=bucket" json:"bucket,omitempty"`
+	Object *Channel `protobuf:"bytes,2,opt,name=object" json:"object,omitempty"`
 }
 
 func (x *WatchAllObjectRequest) Reset() {
@@ -7830,8 +7830,8 @@ func (*WatchAllObjectRequest) Descriptor() ([]byte, []int) {
 }
 
 func (x *WatchAllObjectRequest) GetBucket() string {
-	if x != nil {
-		return x.Bucket
+	if x != nil && x.Bucket != nil {
+		return *x.Bucket
 	}
 	return ""
 }
@@ -7848,7 +7848,7 @@ type CreateProjectsHmacKeyRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	ProjectId string `protobuf:"bytes,1,opt,name=project_id,json=projectId,proto3" json:"project_id,omitempty"`
+	ProjectId *string `protobuf:"bytes,1,opt,name=project_id,json=projectId" json:"project_id,omitempty"`
 }
 
 func (x *CreateProjectsHmacKeyRequest) Reset() {
@@ -7884,8 +7884,8 @@ func (*CreateProjectsHmacKeyRequest) Descriptor() ([]byte, []int) {
 }
 
 func (x *CreateProjectsHmacKeyRequest) GetProjectId() string {
-	if x != nil {
-		return x.ProjectId
+	if x != nil && x.ProjectId != nil {
+		return *x.ProjectId
 	}
 	return ""
 }
@@ -7895,8 +7895,8 @@ type DeleteProjectsHmacKeyRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	AccessId  string `protobuf:"bytes,1,opt,name=access_id,json=accessId,proto3" json:"access_id,omitempty"`
-	ProjectId string `protobuf:"bytes,2,opt,name=project_id,json=projectId,proto3" json:"project_id,omitempty"`
+	AccessId  *string `protobuf:"bytes,1,opt,name=access_id,json=accessId" json:"access_id,omitempty"`
+	ProjectId *string `protobuf:"bytes,2,opt,name=project_id,json=projectId" json:"project_id,omitempty"`
 }
 
 func (x *DeleteProjectsHmacKeyRequest) Reset() {
@@ -7932,15 +7932,15 @@ func (*DeleteProjectsHmacKeyRequest) Descriptor() ([]byte, []int) {
 }
 
 func (x *DeleteProjectsHmacKeyRequest) GetAccessId() string {
-	if x != nil {
-		return x.AccessId
+	if x != nil && x.AccessId != nil {
+		return *x.AccessId
 	}
 	return ""
 }
 
 func (x *DeleteProjectsHmacKeyRequest) GetProjectId() string {
-	if x != nil {
-		return x.ProjectId
+	if x != nil && x.ProjectId != nil {
+		return *x.ProjectId
 	}
 	return ""
 }
@@ -7950,8 +7950,8 @@ type GetProjectsHmacKeyRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	AccessId  string `protobuf:"bytes,1,opt,name=access_id,json=accessId,proto3" json:"access_id,omitempty"`
-	ProjectId string `protobuf:"bytes,2,opt,name=project_id,json=projectId,proto3" json:"project_id,omitempty"`
+	AccessId  *string `protobuf:"bytes,1,opt,name=access_id,json=accessId" json:"access_id,omitempty"`
+	ProjectId *string `protobuf:"bytes,2,opt,name=project_id,json=projectId" json:"project_id,omitempty"`
 }
 
 func (x *GetProjectsHmacKeyRequest) Reset() {
@@ -7987,15 +7987,15 @@ func (*GetProjectsHmacKeyRequest) Descriptor() ([]byte, []int) {
 }
 
 func (x *GetProjectsHmacKeyRequest) GetAccessId() string {
-	if x != nil {
-		return x.AccessId
+	if x != nil && x.AccessId != nil {
+		return *x.AccessId
 	}
 	return ""
 }
 
 func (x *GetProjectsHmacKeyRequest) GetProjectId() string {
-	if x != nil {
-		return x.ProjectId
+	if x != nil && x.ProjectId != nil {
+		return *x.ProjectId
 	}
 	return ""
 }
@@ -8005,7 +8005,7 @@ type ListProjectsHmacKeysRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	ProjectId string `protobuf:"bytes,1,opt,name=project_id,json=projectId,proto3" json:"project_id,omitempty"`
+	ProjectId *string `protobuf:"bytes,1,opt,name=project_id,json=projectId" json:"project_id,omitempty"`
 }
 
 func (x *ListProjectsHmacKeysRequest) Reset() {
@@ -8041,8 +8041,8 @@ func (*ListProjectsHmacKeysRequest) Descriptor() ([]byte, []int) {
 }
 
 func (x *ListProjectsHmacKeysRequest) GetProjectId() string {
-	if x != nil {
-		return x.ProjectId
+	if x != nil && x.ProjectId != nil {
+		return *x.ProjectId
 	}
 	return ""
 }
@@ -8052,9 +8052,9 @@ type UpdateProjectsHmacKeyRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	AccessId        string           `protobuf:"bytes,1,opt,name=access_id,json=accessId,proto3" json:"access_id,omitempty"`
-	ProjectId       string           `protobuf:"bytes,2,opt,name=project_id,json=projectId,proto3" json:"project_id,omitempty"`
-	ProjectsHmacKey *HmacKeyMetadata `protobuf:"bytes,3,opt,name=projects_hmac_key,json=projectsHmacKey,proto3" json:"projects_hmac_key,omitempty"`
+	AccessId        *string          `protobuf:"bytes,1,opt,name=access_id,json=accessId" json:"access_id,omitempty"`
+	ProjectId       *string          `protobuf:"bytes,2,opt,name=project_id,json=projectId" json:"project_id,omitempty"`
+	ProjectsHmacKey *HmacKeyMetadata `protobuf:"bytes,3,opt,name=projects_hmac_key,json=projectsHmacKey" json:"projects_hmac_key,omitempty"`
 }
 
 func (x *UpdateProjectsHmacKeyRequest) Reset() {
@@ -8090,15 +8090,15 @@ func (*UpdateProjectsHmacKeyRequest) Descriptor() ([]byte, []int) {
 }
 
 func (x *UpdateProjectsHmacKeyRequest) GetAccessId() string {
-	if x != nil {
-		return x.AccessId
+	if x != nil && x.AccessId != nil {
+		return *x.AccessId
 	}
 	return ""
 }
 
 func (x *UpdateProjectsHmacKeyRequest) GetProjectId() string {
-	if x != nil {
-		return x.ProjectId
+	if x != nil && x.ProjectId != nil {
+		return *x.ProjectId
 	}
 	return ""
 }
@@ -8115,7 +8115,7 @@ type GetProjectsServiceAccountRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	ProjectId string `protobuf:"bytes,1,opt,name=project_id,json=projectId,proto3" json:"project_id,omitempty"`
+	ProjectId *string `protobuf:"bytes,1,opt,name=project_id,json=projectId" json:"project_id,omitempty"`
 }
 
 func (x *GetProjectsServiceAccountRequest) Reset() {
@@ -8151,8 +8151,8 @@ func (*GetProjectsServiceAccountRequest) Descriptor() ([]byte, []int) {
 }
 
 func (x *GetProjectsServiceAccountRequest) GetProjectId() string {
-	if x != nil {
-		return x.ProjectId
+	if x != nil && x.ProjectId != nil {
+		return *x.ProjectId
 	}
 	return ""
 }
@@ -8165,14 +8165,14 @@ var file_mockgcp_storage_v1_generated_proto_rawDesc = []byte{
 	0x72, 0x6f, 0x74, 0x6f, 0x12, 0x17, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x63, 0x6c, 0x6f,
 	0x75, 0x64, 0x2e, 0x73, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x2e, 0x76, 0x31, 0x1a, 0x1c, 0x67,
 	0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x61, 0x6e, 0x6e, 0x6f, 0x74, 0x61,
-	0x74, 0x69, 0x6f, 0x6e, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x1b, 0x67, 0x6f, 0x6f,
-	0x67, 0x6c, 0x65, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2f, 0x65, 0x6d, 0x70,
-	0x74, 0x79, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x1f, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65,
-	0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2f, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74,
-	0x61, 0x6d, 0x70, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x1e, 0x67, 0x6f, 0x6f, 0x67, 0x6c,
-	0x65, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2f, 0x64, 0x75, 0x72, 0x61, 0x74,
-	0x69, 0x6f, 0x6e, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x19, 0x67, 0x6f, 0x6f, 0x67, 0x6c,
-	0x65, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2f, 0x61, 0x6e, 0x79, 0x2e, 0x70,
+	0x74, 0x69, 0x6f, 0x6e, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x1f, 0x67, 0x6f, 0x6f,
+	0x67, 0x6c, 0x65, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2f, 0x74, 0x69, 0x6d,
+	0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x1e, 0x67, 0x6f,
+	0x6f, 0x67, 0x6c, 0x65, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2f, 0x64, 0x75,
+	0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x19, 0x67, 0x6f,
+	0x6f, 0x67, 0x6c, 0x65, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2f, 0x61, 0x6e,
+	0x79, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x1b, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2f,
+	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2f, 0x65, 0x6d, 0x70, 0x74, 0x79, 0x2e, 0x70,
 	0x72, 0x6f, 0x74, 0x6f, 0x22, 0xb7, 0x03, 0x0a, 0x0d, 0x41, 0x6e, 0x79, 0x77, 0x68, 0x65, 0x72,
 	0x65, 0x43, 0x61, 0x63, 0x68, 0x65, 0x12, 0x29, 0x0a, 0x10, 0x61, 0x64, 0x6d, 0x69, 0x73, 0x73,
 	0x69, 0x6f, 0x6e, 0x5f, 0x70, 0x6f, 0x6c, 0x69, 0x63, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
@@ -9051,17 +9051,17 @@ var file_mockgcp_storage_v1_generated_proto_rawDesc = []byte{
 	0x0a, 0x06, 0x62, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06,
 	0x62, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x22, 0x60, 0x0a, 0x1a, 0x52, 0x65, 0x73, 0x75, 0x6d, 0x65,
 	0x41, 0x6e, 0x79, 0x77, 0x68, 0x65, 0x72, 0x65, 0x43, 0x61, 0x63, 0x68, 0x65, 0x52, 0x65, 0x71,
-	0x75, 0x65, 0x73, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x62, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x18, 0x01,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x62, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x12, 0x2a, 0x0a, 0x11,
-	0x61, 0x6e, 0x79, 0x77, 0x68, 0x65, 0x72, 0x65, 0x5f, 0x63, 0x61, 0x63, 0x68, 0x65, 0x5f, 0x69,
-	0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0f, 0x61, 0x6e, 0x79, 0x77, 0x68, 0x65, 0x72,
-	0x65, 0x43, 0x61, 0x63, 0x68, 0x65, 0x49, 0x64, 0x22, 0xaf, 0x01, 0x0a, 0x1a, 0x55, 0x70, 0x64,
+	0x75, 0x65, 0x73, 0x74, 0x12, 0x2a, 0x0a, 0x11, 0x61, 0x6e, 0x79, 0x77, 0x68, 0x65, 0x72, 0x65,
+	0x5f, 0x63, 0x61, 0x63, 0x68, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x0f, 0x61, 0x6e, 0x79, 0x77, 0x68, 0x65, 0x72, 0x65, 0x43, 0x61, 0x63, 0x68, 0x65, 0x49, 0x64,
+	0x12, 0x16, 0x0a, 0x06, 0x62, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x06, 0x62, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x22, 0xaf, 0x01, 0x0a, 0x1a, 0x55, 0x70, 0x64,
 	0x61, 0x74, 0x65, 0x41, 0x6e, 0x79, 0x77, 0x68, 0x65, 0x72, 0x65, 0x43, 0x61, 0x63, 0x68, 0x65,
-	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x62, 0x75, 0x63, 0x6b, 0x65,
-	0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x62, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x12,
-	0x2a, 0x0a, 0x11, 0x61, 0x6e, 0x79, 0x77, 0x68, 0x65, 0x72, 0x65, 0x5f, 0x63, 0x61, 0x63, 0x68,
-	0x65, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0f, 0x61, 0x6e, 0x79, 0x77,
-	0x68, 0x65, 0x72, 0x65, 0x43, 0x61, 0x63, 0x68, 0x65, 0x49, 0x64, 0x12, 0x4d, 0x0a, 0x0e, 0x61,
+	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x2a, 0x0a, 0x11, 0x61, 0x6e, 0x79, 0x77, 0x68,
+	0x65, 0x72, 0x65, 0x5f, 0x63, 0x61, 0x63, 0x68, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x0f, 0x61, 0x6e, 0x79, 0x77, 0x68, 0x65, 0x72, 0x65, 0x43, 0x61, 0x63, 0x68,
+	0x65, 0x49, 0x64, 0x12, 0x16, 0x0a, 0x06, 0x62, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x06, 0x62, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x12, 0x4d, 0x0a, 0x0e, 0x61,
 	0x6e, 0x79, 0x77, 0x68, 0x65, 0x72, 0x65, 0x5f, 0x63, 0x61, 0x63, 0x68, 0x65, 0x18, 0x03, 0x20,
 	0x01, 0x28, 0x0b, 0x32, 0x26, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x63, 0x6c, 0x6f,
 	0x75, 0x64, 0x2e, 0x73, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x2e, 0x76, 0x31, 0x2e, 0x41, 0x6e,
@@ -9203,10 +9203,10 @@ var file_mockgcp_storage_v1_generated_proto_rawDesc = []byte{
 	0x63, 0x6b, 0x65, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x62, 0x75, 0x63, 0x6b,
 	0x65, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
 	0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x22, 0x3e, 0x0a, 0x10, 0x47, 0x65, 0x74, 0x46, 0x6f, 0x6c,
-	0x64, 0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61,
-	0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x16,
-	0x0a, 0x06, 0x62, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06,
-	0x62, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x22, 0x66, 0x0a, 0x13, 0x49, 0x6e, 0x73, 0x65, 0x72, 0x74,
+	0x64, 0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x62, 0x75,
+	0x63, 0x6b, 0x65, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x62, 0x75, 0x63, 0x6b,
+	0x65, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x22, 0x66, 0x0a, 0x13, 0x49, 0x6e, 0x73, 0x65, 0x72, 0x74,
 	0x46, 0x6f, 0x6c, 0x64, 0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x16, 0x0a,
 	0x06, 0x62, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x62,
 	0x75, 0x63, 0x6b, 0x65, 0x74, 0x12, 0x37, 0x0a, 0x06, 0x66, 0x6f, 0x6c, 0x64, 0x65, 0x72, 0x18,
@@ -9217,23 +9217,23 @@ var file_mockgcp_storage_v1_generated_proto_rawDesc = []byte{
 	0x75, 0x65, 0x73, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x62, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x18, 0x01,
 	0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x62, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x22, 0x81, 0x01, 0x0a,
 	0x13, 0x52, 0x65, 0x6e, 0x61, 0x6d, 0x65, 0x46, 0x6f, 0x6c, 0x64, 0x65, 0x72, 0x52, 0x65, 0x71,
-	0x75, 0x65, 0x73, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x62, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x18, 0x01,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x62, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x12, 0x2d, 0x0a, 0x12,
-	0x64, 0x65, 0x73, 0x74, 0x69, 0x6e, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x66, 0x6f, 0x6c, 0x64,
-	0x65, 0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x11, 0x64, 0x65, 0x73, 0x74, 0x69, 0x6e,
-	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x46, 0x6f, 0x6c, 0x64, 0x65, 0x72, 0x12, 0x23, 0x0a, 0x0d, 0x73,
-	0x6f, 0x75, 0x72, 0x63, 0x65, 0x5f, 0x66, 0x6f, 0x6c, 0x64, 0x65, 0x72, 0x18, 0x03, 0x20, 0x01,
-	0x28, 0x09, 0x52, 0x0c, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x46, 0x6f, 0x6c, 0x64, 0x65, 0x72,
+	0x75, 0x65, 0x73, 0x74, 0x12, 0x23, 0x0a, 0x0d, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x5f, 0x66,
+	0x6f, 0x6c, 0x64, 0x65, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x73, 0x6f, 0x75,
+	0x72, 0x63, 0x65, 0x46, 0x6f, 0x6c, 0x64, 0x65, 0x72, 0x12, 0x16, 0x0a, 0x06, 0x62, 0x75, 0x63,
+	0x6b, 0x65, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x62, 0x75, 0x63, 0x6b, 0x65,
+	0x74, 0x12, 0x2d, 0x0a, 0x12, 0x64, 0x65, 0x73, 0x74, 0x69, 0x6e, 0x61, 0x74, 0x69, 0x6f, 0x6e,
+	0x5f, 0x66, 0x6f, 0x6c, 0x64, 0x65, 0x72, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x11, 0x64,
+	0x65, 0x73, 0x74, 0x69, 0x6e, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x46, 0x6f, 0x6c, 0x64, 0x65, 0x72,
 	0x22, 0x48, 0x0a, 0x1a, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x4d, 0x61, 0x6e, 0x61, 0x67, 0x65,
 	0x64, 0x46, 0x6f, 0x6c, 0x64, 0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x16,
 	0x0a, 0x06, 0x62, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06,
 	0x62, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02,
 	0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x22, 0x45, 0x0a, 0x17, 0x47, 0x65,
 	0x74, 0x4d, 0x61, 0x6e, 0x61, 0x67, 0x65, 0x64, 0x46, 0x6f, 0x6c, 0x64, 0x65, 0x72, 0x52, 0x65,
-	0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x62, 0x75, 0x63,
-	0x6b, 0x65, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x62, 0x75, 0x63, 0x6b, 0x65,
-	0x74, 0x22, 0x83, 0x01, 0x0a, 0x1a, 0x49, 0x6e, 0x73, 0x65, 0x72, 0x74, 0x4d, 0x61, 0x6e, 0x61,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x62, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x62, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x12, 0x12, 0x0a,
+	0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d,
+	0x65, 0x22, 0x83, 0x01, 0x0a, 0x1a, 0x49, 0x6e, 0x73, 0x65, 0x72, 0x74, 0x4d, 0x61, 0x6e, 0x61,
 	0x67, 0x65, 0x64, 0x46, 0x6f, 0x6c, 0x64, 0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
 	0x12, 0x16, 0x0a, 0x06, 0x62, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
 	0x52, 0x06, 0x62, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x12, 0x4d, 0x0a, 0x0e, 0x6d, 0x61, 0x6e, 0x61,
@@ -9246,14 +9246,14 @@ var file_mockgcp_storage_v1_generated_proto_rawDesc = []byte{
 	0x75, 0x65, 0x73, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x62, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x18, 0x01,
 	0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x62, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x22, 0x47, 0x0a, 0x19,
 	0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x4e, 0x6f, 0x74, 0x69, 0x66, 0x69, 0x63, 0x61, 0x74, 0x69,
-	0x6f, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x62, 0x75, 0x63,
-	0x6b, 0x65, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x62, 0x75, 0x63, 0x6b, 0x65,
-	0x74, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52,
-	0x04, 0x6e, 0x61, 0x6d, 0x65, 0x22, 0x44, 0x0a, 0x16, 0x47, 0x65, 0x74, 0x4e, 0x6f, 0x74, 0x69,
+	0x6f, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d,
+	0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x16, 0x0a,
+	0x06, 0x62, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x62,
+	0x75, 0x63, 0x6b, 0x65, 0x74, 0x22, 0x44, 0x0a, 0x16, 0x47, 0x65, 0x74, 0x4e, 0x6f, 0x74, 0x69,
 	0x66, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12,
-	0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e,
-	0x61, 0x6d, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x62, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x18, 0x02, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x06, 0x62, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x22, 0x7e, 0x0a, 0x19, 0x49,
+	0x16, 0x0a, 0x06, 0x62, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x06, 0x62, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x22, 0x7e, 0x0a, 0x19, 0x49,
 	0x6e, 0x73, 0x65, 0x72, 0x74, 0x4e, 0x6f, 0x74, 0x69, 0x66, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6f,
 	0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x62, 0x75, 0x63, 0x6b,
 	0x65, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x62, 0x75, 0x63, 0x6b, 0x65, 0x74,
@@ -9280,10 +9280,10 @@ var file_mockgcp_storage_v1_generated_proto_rawDesc = []byte{
 	0x65, 0x6e, 0x74, 0x69, 0x74, 0x79, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x65, 0x6e,
 	0x74, 0x69, 0x74, 0x79, 0x22, 0xb4, 0x01, 0x0a, 0x20, 0x49, 0x6e, 0x73, 0x65, 0x72, 0x74, 0x4f,
 	0x62, 0x6a, 0x65, 0x63, 0x74, 0x41, 0x63, 0x63, 0x65, 0x73, 0x73, 0x43, 0x6f, 0x6e, 0x74, 0x72,
-	0x6f, 0x6c, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x62, 0x75, 0x63,
-	0x6b, 0x65, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x62, 0x75, 0x63, 0x6b, 0x65,
-	0x74, 0x12, 0x16, 0x0a, 0x06, 0x6f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28,
-	0x09, 0x52, 0x06, 0x6f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x12, 0x60, 0x0a, 0x15, 0x6f, 0x62, 0x6a,
+	0x6f, 0x6c, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x6f, 0x62, 0x6a,
+	0x65, 0x63, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x6f, 0x62, 0x6a, 0x65, 0x63,
+	0x74, 0x12, 0x16, 0x0a, 0x06, 0x62, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x06, 0x62, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x12, 0x60, 0x0a, 0x15, 0x6f, 0x62, 0x6a,
 	0x65, 0x63, 0x74, 0x5f, 0x61, 0x63, 0x63, 0x65, 0x73, 0x73, 0x5f, 0x63, 0x6f, 0x6e, 0x74, 0x72,
 	0x6f, 0x6c, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2c, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c,
 	0x65, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2e, 0x73, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x2e,
@@ -9292,9 +9292,9 @@ var file_mockgcp_storage_v1_generated_proto_rawDesc = []byte{
 	0x63, 0x65, 0x73, 0x73, 0x43, 0x6f, 0x6e, 0x74, 0x72, 0x6f, 0x6c, 0x22, 0x51, 0x0a, 0x1f, 0x4c,
 	0x69, 0x73, 0x74, 0x4f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x41, 0x63, 0x63, 0x65, 0x73, 0x73, 0x43,
 	0x6f, 0x6e, 0x74, 0x72, 0x6f, 0x6c, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x16,
-	0x0a, 0x06, 0x62, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06,
-	0x62, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x6f, 0x62, 0x6a, 0x65, 0x63, 0x74,
-	0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x6f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x22, 0xcb,
+	0x0a, 0x06, 0x6f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06,
+	0x6f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x62, 0x75, 0x63, 0x6b, 0x65, 0x74,
+	0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x62, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x22, 0xcb,
 	0x01, 0x0a, 0x1f, 0x50, 0x61, 0x74, 0x63, 0x68, 0x4f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x41, 0x63,
 	0x63, 0x65, 0x73, 0x73, 0x43, 0x6f, 0x6e, 0x74, 0x72, 0x6f, 0x6c, 0x52, 0x65, 0x71, 0x75, 0x65,
 	0x73, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x62, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x18, 0x01, 0x20, 0x01,
@@ -9310,11 +9310,11 @@ var file_mockgcp_storage_v1_generated_proto_rawDesc = []byte{
 	0x63, 0x63, 0x65, 0x73, 0x73, 0x43, 0x6f, 0x6e, 0x74, 0x72, 0x6f, 0x6c, 0x22, 0xcc, 0x01, 0x0a,
 	0x20, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x4f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x41, 0x63, 0x63,
 	0x65, 0x73, 0x73, 0x43, 0x6f, 0x6e, 0x74, 0x72, 0x6f, 0x6c, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
-	0x74, 0x12, 0x16, 0x0a, 0x06, 0x62, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28,
-	0x09, 0x52, 0x06, 0x62, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x65, 0x6e, 0x74,
-	0x69, 0x74, 0x79, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x65, 0x6e, 0x74, 0x69, 0x74,
-	0x79, 0x12, 0x16, 0x0a, 0x06, 0x6f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28,
-	0x09, 0x52, 0x06, 0x6f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x12, 0x60, 0x0a, 0x15, 0x6f, 0x62, 0x6a,
+	0x74, 0x12, 0x16, 0x0a, 0x06, 0x6f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x06, 0x6f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x62, 0x75, 0x63,
+	0x6b, 0x65, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x62, 0x75, 0x63, 0x6b, 0x65,
+	0x74, 0x12, 0x16, 0x0a, 0x06, 0x65, 0x6e, 0x74, 0x69, 0x74, 0x79, 0x18, 0x03, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x06, 0x65, 0x6e, 0x74, 0x69, 0x74, 0x79, 0x12, 0x60, 0x0a, 0x15, 0x6f, 0x62, 0x6a,
 	0x65, 0x63, 0x74, 0x5f, 0x61, 0x63, 0x63, 0x65, 0x73, 0x73, 0x5f, 0x63, 0x6f, 0x6e, 0x74, 0x72,
 	0x6f, 0x6c, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2c, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c,
 	0x65, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2e, 0x73, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x2e,
@@ -9342,24 +9342,24 @@ var file_mockgcp_storage_v1_generated_proto_rawDesc = []byte{
 	0x70, 0x6f, 0x73, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x52, 0x06, 0x6f, 0x62, 0x6a,
 	0x65, 0x63, 0x74, 0x22, 0xf4, 0x01, 0x0a, 0x11, 0x43, 0x6f, 0x70, 0x79, 0x4f, 0x62, 0x6a, 0x65,
 	0x63, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x23, 0x0a, 0x0d, 0x73, 0x6f, 0x75,
-	0x72, 0x63, 0x65, 0x5f, 0x6f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
-	0x52, 0x0c, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x4f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x12, 0x2d,
-	0x0a, 0x12, 0x64, 0x65, 0x73, 0x74, 0x69, 0x6e, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x62, 0x75,
-	0x63, 0x6b, 0x65, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x11, 0x64, 0x65, 0x73, 0x74,
-	0x69, 0x6e, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x42, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x12, 0x2d, 0x0a,
-	0x12, 0x64, 0x65, 0x73, 0x74, 0x69, 0x6e, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x6f, 0x62, 0x6a,
-	0x65, 0x63, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x11, 0x64, 0x65, 0x73, 0x74, 0x69,
-	0x6e, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x4f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x12, 0x23, 0x0a, 0x0d,
-	0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x5f, 0x62, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x18, 0x04, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x0c, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x42, 0x75, 0x63, 0x6b, 0x65,
+	0x72, 0x63, 0x65, 0x5f, 0x62, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x0c, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x42, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x12, 0x2d,
+	0x0a, 0x12, 0x64, 0x65, 0x73, 0x74, 0x69, 0x6e, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x6f, 0x62,
+	0x6a, 0x65, 0x63, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x11, 0x64, 0x65, 0x73, 0x74,
+	0x69, 0x6e, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x4f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x12, 0x23, 0x0a,
+	0x0d, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x5f, 0x6f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x18, 0x03,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x4f, 0x62, 0x6a, 0x65,
+	0x63, 0x74, 0x12, 0x2d, 0x0a, 0x12, 0x64, 0x65, 0x73, 0x74, 0x69, 0x6e, 0x61, 0x74, 0x69, 0x6f,
+	0x6e, 0x5f, 0x62, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x11,
+	0x64, 0x65, 0x73, 0x74, 0x69, 0x6e, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x42, 0x75, 0x63, 0x6b, 0x65,
 	0x74, 0x12, 0x37, 0x0a, 0x06, 0x6f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x18, 0x05, 0x20, 0x01, 0x28,
 	0x0b, 0x32, 0x1f, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64,
 	0x2e, 0x73, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x2e, 0x76, 0x31, 0x2e, 0x4f, 0x62, 0x6a, 0x65,
 	0x63, 0x74, 0x52, 0x06, 0x6f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x22, 0x41, 0x0a, 0x13, 0x44, 0x65,
 	0x6c, 0x65, 0x74, 0x65, 0x4f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
-	0x74, 0x12, 0x16, 0x0a, 0x06, 0x62, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28,
-	0x09, 0x52, 0x06, 0x62, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d,
-	0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x22, 0x3e, 0x0a,
+	0x74, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x62, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x62, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x22, 0x3e, 0x0a,
 	0x10, 0x47, 0x65, 0x74, 0x4f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
 	0x74, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
 	0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x62, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x18,
@@ -9374,18 +9374,18 @@ var file_mockgcp_storage_v1_generated_proto_rawDesc = []byte{
 	0x65, 0x63, 0x74, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x62,
 	0x75, 0x63, 0x6b, 0x65, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x62, 0x75, 0x63,
 	0x6b, 0x65, 0x74, 0x22, 0x79, 0x0a, 0x12, 0x50, 0x61, 0x74, 0x63, 0x68, 0x4f, 0x62, 0x6a, 0x65,
-	0x63, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x62, 0x75, 0x63,
-	0x6b, 0x65, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x62, 0x75, 0x63, 0x6b, 0x65,
-	0x74, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52,
-	0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x37, 0x0a, 0x06, 0x6f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x18,
+	0x63, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d,
+	0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x16, 0x0a,
+	0x06, 0x62, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x62,
+	0x75, 0x63, 0x6b, 0x65, 0x74, 0x12, 0x37, 0x0a, 0x06, 0x6f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x18,
 	0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1f, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x63,
 	0x6c, 0x6f, 0x75, 0x64, 0x2e, 0x73, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x2e, 0x76, 0x31, 0x2e,
 	0x4f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x52, 0x06, 0x6f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x22, 0x7b,
 	0x0a, 0x14, 0x52, 0x65, 0x73, 0x74, 0x6f, 0x72, 0x65, 0x4f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x52,
-	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x62, 0x75, 0x63, 0x6b, 0x65, 0x74,
-	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x62, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x12, 0x12,
-	0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61,
-	0x6d, 0x65, 0x12, 0x37, 0x0a, 0x06, 0x6f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x18, 0x03, 0x20, 0x01,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x62, 0x75,
+	0x63, 0x6b, 0x65, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x62, 0x75, 0x63, 0x6b,
+	0x65, 0x74, 0x12, 0x37, 0x0a, 0x06, 0x6f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x18, 0x03, 0x20, 0x01,
 	0x28, 0x0b, 0x32, 0x1f, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x63, 0x6c, 0x6f, 0x75,
 	0x64, 0x2e, 0x73, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x2e, 0x76, 0x31, 0x2e, 0x4f, 0x62, 0x6a,
 	0x65, 0x63, 0x74, 0x52, 0x06, 0x6f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x22, 0xf7, 0x01, 0x0a, 0x14,
@@ -9393,14 +9393,14 @@ var file_mockgcp_storage_v1_generated_proto_rawDesc = []byte{
 	0x75, 0x65, 0x73, 0x74, 0x12, 0x2d, 0x0a, 0x12, 0x64, 0x65, 0x73, 0x74, 0x69, 0x6e, 0x61, 0x74,
 	0x69, 0x6f, 0x6e, 0x5f, 0x6f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
 	0x52, 0x11, 0x64, 0x65, 0x73, 0x74, 0x69, 0x6e, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x4f, 0x62, 0x6a,
-	0x65, 0x63, 0x74, 0x12, 0x23, 0x0a, 0x0d, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x5f, 0x62, 0x75,
-	0x63, 0x6b, 0x65, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x73, 0x6f, 0x75, 0x72,
-	0x63, 0x65, 0x42, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x12, 0x23, 0x0a, 0x0d, 0x73, 0x6f, 0x75, 0x72,
-	0x63, 0x65, 0x5f, 0x6f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52,
-	0x0c, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x4f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x12, 0x2d, 0x0a,
-	0x12, 0x64, 0x65, 0x73, 0x74, 0x69, 0x6e, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x62, 0x75, 0x63,
-	0x6b, 0x65, 0x74, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x11, 0x64, 0x65, 0x73, 0x74, 0x69,
-	0x6e, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x42, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x12, 0x37, 0x0a, 0x06,
+	0x65, 0x63, 0x74, 0x12, 0x23, 0x0a, 0x0d, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x5f, 0x6f, 0x62,
+	0x6a, 0x65, 0x63, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x73, 0x6f, 0x75, 0x72,
+	0x63, 0x65, 0x4f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x12, 0x2d, 0x0a, 0x12, 0x64, 0x65, 0x73, 0x74,
+	0x69, 0x6e, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x62, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x18, 0x03,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x11, 0x64, 0x65, 0x73, 0x74, 0x69, 0x6e, 0x61, 0x74, 0x69, 0x6f,
+	0x6e, 0x42, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x12, 0x23, 0x0a, 0x0d, 0x73, 0x6f, 0x75, 0x72, 0x63,
+	0x65, 0x5f, 0x62, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c,
+	0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x42, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x12, 0x37, 0x0a, 0x06,
 	0x6f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x18, 0x05, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1f, 0x2e, 0x67,
 	0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2e, 0x73, 0x74, 0x6f, 0x72,
 	0x61, 0x67, 0x65, 0x2e, 0x76, 0x31, 0x2e, 0x4f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x52, 0x06, 0x6f,
@@ -10165,7 +10165,7 @@ var file_mockgcp_storage_v1_generated_proto_rawDesc = []byte{
 	0x6f, 0x75, 0x64, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x67,
 	0x6f, 0x2f, 0x73, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x2f, 0x61, 0x70, 0x69, 0x76, 0x31, 0x2f,
 	0x73, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x70, 0x62, 0x3b, 0x73, 0x74, 0x6f, 0x72, 0x61, 0x67,
-	0x65, 0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x65, 0x70, 0x62,
 }
 
 var (
