@@ -19,7 +19,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	testvariable "github.com/GoogleCloudPlatform/k8s-config-connector/pkg/test/resourcefixture/variable"
 	"hash/fnv"
 	"io"
 	"io/ioutil"
@@ -30,6 +29,8 @@ import (
 	"strconv"
 	"strings"
 	"testing"
+
+	testvariable "github.com/GoogleCloudPlatform/k8s-config-connector/pkg/test/resourcefixture/variable"
 
 	"github.com/GoogleCloudPlatform/k8s-config-connector/config/tests/samples/create"
 	opcorev1beta1 "github.com/GoogleCloudPlatform/k8s-config-connector/operator/pkg/apis/core/v1beta1"
@@ -416,11 +417,13 @@ func testFixturesInSeries(ctx context.Context, t *testing.T, testPause bool, can
 					addReplacement("response.etag", "abcdef0123A=")
 
 					addReplacement("createTime", "2024-04-01T12:34:56.123456Z")
+					addReplacement("timeCreated", "2024-04-01T12:34:56.123456Z")
 					addReplacement("response.createTime", "2024-04-01T12:34:56.123456Z")
 					addReplacement("creationTimestamp", "2024-04-01T12:34:56.123456Z")
 					addReplacement("metadata.genericMetadata.createTime", "2024-04-01T12:34:56.123456Z")
 
 					addReplacement("updateTime", "2024-04-01T12:34:56.123456Z")
+					addReplacement("updated", "2024-04-01T12:34:56.123456Z")
 					addReplacement("response.updateTime", "2024-04-01T12:34:56.123456Z")
 					addReplacement("metadata.genericMetadata.updateTime", "2024-04-01T12:34:56.123456Z")
 
@@ -453,6 +456,8 @@ func testFixturesInSeries(ctx context.Context, t *testing.T, testPause bool, can
 					events.RemoveHTTPResponseHeader("Date")
 					events.RemoveHTTPResponseHeader("Alt-Svc")
 					events.RemoveHTTPResponseHeader("Server-Timing")
+					events.RemoveHTTPResponseHeader("X-Guploader-Uploadid")
+					events.RemoveHTTPResponseHeader("Etag")
 
 					got := events.FormatHTTP()
 					expectedPath := filepath.Join(fixture.SourceDir, "_http.log")
