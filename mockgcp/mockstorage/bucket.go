@@ -48,16 +48,15 @@ func (s *bucketsServer) InsertBucket(ctx context.Context, req *pb.InsertBucketRe
 	now := timestamppb.Now()
 
 	obj := proto.Clone(req.GetBucket()).(*pb.Bucket)
-	obj.Name = fqn
-	obj.Id = fqn
-	obj.Kind = "storage#bucket"
-	obj.Name = fqn
-	obj.ProjectNumber = 0 // todo
-	obj.Location = "US"
-	obj.LocationType = "multi-region"
-	obj.Rpo = "DEFAULT"
-	obj.SelfLink = fmt.Sprintf("https://www.googleapis.com/storage/v1/b/%s", obj.Name)
-	obj.StorageClass = "STANDARD"
+	obj.Name = proto.String(fqn)
+	obj.Id = proto.String(fqn)
+	obj.Kind = proto.String("storage#bucket")
+	// obj.ProjectNumber = 0 // todo
+	obj.Location = proto.String("US")
+	obj.LocationType = proto.String("multi-region")
+	obj.Rpo = proto.String("DEFAULT")
+	obj.SelfLink = proto.String(fmt.Sprintf("https://www.googleapis.com/storage/v1/b/%s", fqn))
+	obj.StorageClass = proto.String("STANDARD")
 	obj.TimeCreated = now
 	obj.Updated = now
 
@@ -66,18 +65,24 @@ func (s *bucketsServer) InsertBucket(ctx context.Context, req *pb.InsertBucketRe
 		iamConfiguration = &pb.BucketIamConfiguration{}
 		obj.IamConfiguration = iamConfiguration
 	}
-	if iamConfiguration.PublicAccessPrevention == "" {
-		iamConfiguration.PublicAccessPrevention = "inherited"
+	if iamConfiguration.PublicAccessPrevention == nil {
+		iamConfiguration.PublicAccessPrevention = proto.String("inherited")
 	}
 	bucketPolicyOnly := iamConfiguration.BucketPolicyOnly
 	if bucketPolicyOnly == nil {
 		bucketPolicyOnly = &pb.BucketPolicyOnly{}
 		iamConfiguration.BucketPolicyOnly = bucketPolicyOnly
 	}
+	if bucketPolicyOnly.Enabled == nil {
+		bucketPolicyOnly.Enabled = proto.Bool(false)
+	}
 	ubla := iamConfiguration.UniformBucketLevelAccess
 	if ubla == nil {
 		ubla = &pb.UniformBucketLevelAccess{}
 		iamConfiguration.UniformBucketLevelAccess = ubla
+	}
+	if ubla.Enabled == nil {
+		ubla.Enabled = proto.Bool(false)
 	}
 
 	if err := s.storage.Create(ctx, fqn, obj); err != nil {
