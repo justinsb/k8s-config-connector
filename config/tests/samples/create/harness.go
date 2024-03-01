@@ -505,13 +505,16 @@ func (h *Harness) waitForCRDReady(obj client.Object) {
 }
 
 func (h *Harness) CompareGoldenFile(p string, got string, normalizers ...func(s string) string) {
+	for _, normalizer := range normalizers {
+		got = normalizer(got)
+	}
+
 	if os.Getenv("WRITE_GOLDEN_OUTPUT") != "" {
 		// Short-circuit when the output is correct
 		b, err := os.ReadFile(p)
 		if err == nil {
 			want := string(b)
 			for _, normalizer := range normalizers {
-				got = normalizer(got)
 				want = normalizer(want)
 			}
 			if want == got {
@@ -527,7 +530,6 @@ func (h *Harness) CompareGoldenFile(p string, got string, normalizers ...func(s 
 		want := string(h.MustReadFile(p))
 
 		for _, normalizer := range normalizers {
-			got = normalizer(got)
 			want = normalizer(want)
 		}
 
