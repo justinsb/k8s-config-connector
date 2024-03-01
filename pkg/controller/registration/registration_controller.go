@@ -28,6 +28,7 @@ import (
 	"github.com/GoogleCloudPlatform/k8s-config-connector/pkg/controller/direct/monitoring"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/pkg/controller/direct/securesourcemanager"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/pkg/controller/direct/vertexai"
+	"github.com/GoogleCloudPlatform/k8s-config-connector/pkg/controller/direct/workstations"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/pkg/controller/gsakeysecretgenerator"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/pkg/controller/iam/auditconfig"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/pkg/controller/iam/partialpolicy"
@@ -198,6 +199,11 @@ func registerDefaultController(r *ReconcileRegistration, config *controller.Conf
 			return schemaUpdater, nil
 		case schema.GroupKind{Group: "vertexai.cnrm.cloud.google.com", Kind: "VertexAITensorboard"}:
 			if err := vertexai.AddTensorboardReconciler(r.mgr, config); err != nil {
+				return nil, err
+			}
+			return schemaUpdater, nil
+		case schema.GroupKind{Group: "workstations.cnrm.cloud.google.com", Kind: "WorkstationsWorkstationCluster"}:
+			if err := workstations.AddWorkstationClusterController(r.mgr, config); err != nil {
 				return nil, err
 			}
 			return schemaUpdater, nil

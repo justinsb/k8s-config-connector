@@ -113,6 +113,42 @@ func (m *structTypeMapping) Validate(checkMissing bool) []ValidationError {
 				continue
 			}
 		}
+
+		// statusField := m.outType.lookupField(ParseFieldPath("status"))
+		// if statusField != nil {
+		// 	statusType := statusField.Type()
+
+		// 	missing := make(map[FieldID]Field)
+		// 	for _, cloudField := range statusType.Fields() {
+		// 		cloudField := cloudField
+
+		// 		id := cloudField.ID()
+		// 		missing[id] = cloudField
+		// 	}
+
+		// 	for _, mapping := range m.fields {
+		// 		outPath := mapping.OutPath
+		// 		if len(outPath.fields) == 2 && outPath.fields[0] == "status" {
+		// 			delete(missing, outPath.fields[1])
+		// 		}
+		// 	}
+
+		// 	for _, ignore := range m.ignore {
+		// 		delete(missing, ignore.ID)
+		// 	}
+
+		// 	for name, field := range missing {
+		// 		proposal := buildGoField(field)
+
+		// 		klog.Infof("outType.Fields = %v", m.outType.Fields())
+
+		// 		errors = append(errors, ValidationError{
+		// 			Message:  fmt.Sprintf("field %s not found in output type %v", name, m.outType),
+		// 			Proposal: proposal,
+		// 		})
+		// 		continue
+		// 	}
+		// }
 	}
 
 	if checkMissing {
@@ -304,6 +340,8 @@ func convertToGoType(t reflect.Type) string {
 		return "string"
 	case reflect.Bool:
 		return "bool"
+	case reflect.Int:
+		return "int"
 	case reflect.Uint8:
 		return "uint8"
 	case reflect.Int32:

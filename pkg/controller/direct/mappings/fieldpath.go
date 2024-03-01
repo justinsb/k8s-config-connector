@@ -25,10 +25,14 @@ type fieldPath struct {
 }
 
 func (f *fieldPath) HasPrefix(prefix *fieldPath) bool {
-	if len(f.fields) < len(prefix.fields) {
+	var prefixFields []FieldID
+	if prefix != nil {
+		prefixFields = prefix.fields
+	}
+	if len(f.fields) < len(prefixFields) {
 		return false
 	}
-	for i, id := range prefix.fields {
+	for i, id := range prefixFields {
 		if f.fields[i] != id {
 			return false
 		}

@@ -426,7 +426,7 @@ func (r *reconcileContext) doReconcile(ctx context.Context, u *unstructured.Unst
 		}
 		if !k8s.HasAbandonAnnotation(u) {
 			if _, err := adapter.Delete(ctx); err != nil {
-				if !errors.Is(err, kcciamclient.NotFoundError) && !k8s.IsReferenceNotFoundError(err) {
+				if !errors.Is(err, kcciamclient.ErrNotFound) && !k8s.IsReferenceNotFoundError(err) {
 					if unwrappedErr, ok := lifecyclehandler.CausedByUnresolvableDeps(err); ok {
 						logger.Info(unwrappedErr.Error(), "resource", k8s.GetNamespacedName(u))
 						// resource, err := toK8sResource(u)
