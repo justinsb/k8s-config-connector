@@ -43,6 +43,7 @@ gen-proto:
 		./third_party/googleapis/mockgcp/cloud/securesourcemanager/v1/*.proto \
 		./third_party/googleapis/mockgcp/cloud/security/privateca/v1/*.proto \
 		./third_party/googleapis/mockgcp/cloud/secretmanager/v1/*.proto \
+		./third_party/googleapis/mockgcp/cloud/workstations/v1beta/*.proto \
 		./third_party/googleapis/mockgcp/monitoring/dashboard/v1/*.proto \
 		./third_party/googleapis/mockgcp/api/serviceusage/v1/*.proto \
 		./third_party/googleapis/mockgcp/api/serviceusage/v1beta1/*.proto

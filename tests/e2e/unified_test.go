@@ -287,6 +287,9 @@ func TestAllInSeries(t *testing.T) {
 
 					addReplacement("metadata.endTime", "2024-04-01T12:34:56.123456Z")
 
+					addReplacement("insertTime", "2024-04-01T12:34:56.123456Z")
+					addReplacement("startTime", "2024-04-01T12:34:56.123456Z")
+
 					// Specific to vertexai
 					addReplacement("blobStoragePathPrefix", "cloud-ai-platform-00000000-1111-2222-3333-444444444444")
 					addReplacement("response.blobStoragePathPrefix", "cloud-ai-platform-00000000-1111-2222-3333-444444444444")
@@ -315,6 +318,7 @@ func TestAllInSeries(t *testing.T) {
 					// Remove headers that just aren't very relevant to testing
 					events.RemoveHTTPResponseHeader("Date")
 					events.RemoveHTTPResponseHeader("Alt-Svc")
+					events.RemoveHTTPResponseHeader("Etag")
 
 					got := events.FormatHTTP()
 					expectedPath := filepath.Join(fixture.SourceDir, "_http.log")
