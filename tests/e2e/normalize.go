@@ -58,6 +58,9 @@ func normalizeObject(u *unstructured.Unstructured, project testgcp.GCPProject, u
 	visitor.replacePaths[".status.etag"] = "abcdef123456"
 
 	// Specific to BigQuery
+	visitor.replacePaths[".access[].userByEmail"] = "user@google.com"
+
+	// Specific to BigQuery
 	visitor.replacePaths[".spec.access[].userByEmail"] = "user@google.com"
 
 	// Specific to GCS
