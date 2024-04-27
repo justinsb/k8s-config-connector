@@ -12,14 +12,30 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-apiVersion: facade.facade/v1alpha1
-kind: CloudSQL
+apiVersion: storage.cnrm.cloud.google.com/v1beta1
+kind: StorageBucket
 metadata:
-  name: collateral
-  namespace: clearing-service
+  labels:
+    label-one: "value-one"
+  name: storagebucket-${uniqueId}
 spec:
-  regions:
-  - us-east1
-  - us-central1
-  # a lowercase RFC 1123 subdomain must consist of lower case alphanumeric characters, '-' or '.', and must start and end with an alphanumeric character (e.g. 'example.com', regex used for validation is '[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*')
-  name: collateral-db
+  versioning:
+    enabled: false
+  lifecycleRule:
+    - action:
+        type: Delete
+      condition:
+        age: 7
+
+---
+
+kind: RunCLI
+args: [ "powertools", "force-set-field", "--namespace=${projectId}", "--kind=StorageBucket", "--name=storagebucket-${uniqueId}", "spec.location=EU" ]
+
+---
+
+TEST: READ-OBJECT
+apiVersion: storage.cnrm.cloud.google.com/v1beta1
+kind: StorageBucket
+metadata:
+  name: storagebucket-${uniqueId}
