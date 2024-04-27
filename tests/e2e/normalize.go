@@ -57,8 +57,9 @@ func normalizeObject(u *unstructured.Unstructured, project testgcp.GCPProject, u
 	visitor.replacePaths[".status.lastModifiedTime"] = "1970-01-01T00:00:00Z"
 	visitor.replacePaths[".status.etag"] = "abcdef123456"
 
-	// Specific to BigQuery
+	// Specific to BigTable
 	visitor.replacePaths[".access[].userByEmail"] = "user@google.com"
+	visitor.replacePaths[".instances[].createTime"] = "1970-01-01T00:00:00Z"
 
 	// Specific to BigQuery
 	visitor.replacePaths[".spec.access[].userByEmail"] = "user@google.com"
