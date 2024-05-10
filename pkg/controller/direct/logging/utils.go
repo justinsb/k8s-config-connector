@@ -19,7 +19,9 @@ import (
 	"fmt"
 	"reflect"
 
+	pb "cloud.google.com/go/logging/apiv2/loggingpb"
 	krm "github.com/GoogleCloudPlatform/k8s-config-connector/pkg/clients/generated/apis/logging/v1beta1"
+	"github.com/google/go-cmp/cmp"
 	"github.com/googleapis/gax-go/v2/apierror"
 	api "google.golang.org/api/logging/v2"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
@@ -73,6 +75,13 @@ func setStatus(u *unstructured.Unstructured, typedStatus any) error {
 // todo acpana: house these somewhere else
 
 func compareMetricDescriptors(kccObj *krm.LogmetricMetricDescriptor, apiObj *api.MetricDescriptor) bool {
+	desired := &pb.MetricDescriptor{
+		DisplayName: kccObj.DisplayName,
+		Labels:      convertKCCtoAPIForLogMetricLabels(kccObj.Labels),
+	}
+
+	diff := cmp.Diff(kccObj, convertAPItoKRM_MetricDescriptor(apiObj))
+	klog.Infof("compareMetricDescriptors: diff: %v", diff)
 	return reflect.DeepEqual(kccObj, convertAPItoKRM_MetricDescriptor(apiObj))
 }
 
@@ -138,74 +147,78 @@ func convertAPItoKRM_LogMetricMetadata(apiMetadata *api.MetricDescriptorMetadata
 
 // compareBucketOptions return true if the bucket options are the same, false otherwise.
 func compareBucketOptions(kccObj *krm.LogmetricBucketOptions, apiObj *api.BucketOptions) bool {
-	if kccObj == nil && apiObj == nil {
-		return true
-	}
-	if kccObj == nil || apiObj == nil {
-		return false
-	}
+	// if kccObj == nil && apiObj == nil {
+	// 	return true
+	// }
+	// if kccObj == nil || apiObj == nil {
+	// 	return false
+	// }
 
-	if equal := compareExplicitBuckets(kccObj.ExplicitBuckets, apiObj.ExplicitBuckets); !equal {
-		return false
-	}
-	if equal := compareExponentialBuckets(kccObj.ExponentialBuckets, apiObj.ExponentialBuckets); !equal {
-		return false
-	}
-	if equal := compareLinearBuckets(kccObj.LinearBuckets, apiObj.LinearBuckets); !equal {
-		return false
-	}
+	apiForm := convertKCCtoAPIForBucketOptions(kccObj)
 
-	return true
+	klog.Infof("compareBucketOptions: diff: %v", cmp.Diff(apiForm, apiObj))
+	return reflect.DeepEqual(apiForm, apiObj)
+	// if equal := compareExplicitBuckets(kccObj.ExplicitBuckets, apiObj.ExplicitBuckets); !equal {
+	// 	return false
+	// }
+	// if equal := compareExponentialBuckets(kccObj.ExponentialBuckets, apiObj.ExponentialBuckets); !equal {
+	// 	return false
+	// }
+	// if equal := compareLinearBuckets(kccObj.LinearBuckets, apiObj.LinearBuckets); !equal {
+	// 	return false
+	// }
+
+	// return true
 }
 
-func compareExplicitBuckets(kccObj *krm.LogmetricExplicitBuckets, apiObj *api.Explicit) bool {
-	if kccObj == nil && apiObj == nil {
-		return true
-	} else if kccObj == nil || apiObj == nil {
-		return false
-	}
+// func compareExplicitBuckets(kccObj *krm.LogmetricExplicitBuckets, apiObj *api.Explicit) bool {
+// 	if kccObj == nil && apiObj == nil {
+// 		return true
+// 	} else if kccObj == nil || apiObj == nil {
+// 		return false
+// 	}
 
-	return reflect.DeepEqual(kccObj.Bounds, apiObj.Bounds)
-}
+// 	return reflect.DeepEqual(kccObj.Bounds, apiObj.Bounds)
+// }
 
-func compareExponentialBuckets(kccObj *krm.LogmetricExponentialBuckets, apiObj *api.Exponential) bool {
-	if kccObj == nil && apiObj == nil {
-		return true
-	} else if kccObj == nil || apiObj == nil {
-		return false
-	}
+// func compareExponentialBuckets(kccObj *krm.LogmetricExponentialBuckets, apiObj *api.Exponential) bool {
+// 	if kccObj == nil && apiObj == nil {
+// 		return true
+// 	} else if kccObj == nil || apiObj == nil {
+// 		return false
+// 	}
 
-	apiExponentialBuckets := struct {
-		growthFactor     float64
-		numFiniteBuckets int64
-		scale            float64
-	}{
-		growthFactor:     apiObj.GrowthFactor,
-		numFiniteBuckets: apiObj.NumFiniteBuckets,
-		scale:            apiObj.Scale,
-	}
+// 	apiExponentialBuckets := struct {
+// 		growthFactor     float64
+// 		numFiniteBuckets int64
+// 		scale            float64
+// 	}{
+// 		growthFactor:     apiObj.GrowthFactor,
+// 		numFiniteBuckets: apiObj.NumFiniteBuckets,
+// 		scale:            apiObj.Scale,
+// 	}
 
-	return reflect.DeepEqual(kccObj, apiExponentialBuckets)
-}
+// 	return reflect.DeepEqual(kccObj, apiExponentialBuckets)
+// }
 
-func compareLinearBuckets(kccObj *krm.LogmetricLinearBuckets, apiObj *api.Linear) bool {
-	if kccObj == nil && apiObj == nil {
-		return true
-	} else if kccObj == nil || apiObj == nil {
-		return false
-	}
-	apiLinearBuckets := struct {
-		numFiniteBuckets int64
-		offset           float64
-		witdh            float64
-	}{
-		numFiniteBuckets: apiObj.NumFiniteBuckets,
-		offset:           apiObj.Offset,
-		witdh:            apiObj.Width,
-	}
+// func compareLinearBuckets(kccObj *krm.LogmetricLinearBuckets, apiObj *api.Linear) bool {
+// 	if kccObj == nil && apiObj == nil {
+// 		return true
+// 	} else if kccObj == nil || apiObj == nil {
+// 		return false
+// 	}
+// 	apiLinearBuckets := struct {
+// 		numFiniteBuckets int64
+// 		offset           float64
+// 		witdh            float64
+// 	}{
+// 		numFiniteBuckets: apiObj.NumFiniteBuckets,
+// 		offset:           apiObj.Offset,
+// 		witdh:            apiObj.Width,
+// 	}
 
-	return reflect.DeepEqual(kccObj, apiLinearBuckets)
-}
+// 	return reflect.DeepEqual(kccObj, apiLinearBuckets)
+// }
 
 func convertKCCtoAPIForBucketOptions(kccObj *krm.LogmetricBucketOptions) *api.BucketOptions {
 	if kccObj == nil {
