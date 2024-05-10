@@ -246,7 +246,7 @@ X-Xss-Protection: 0
 {
   "error": {
     "code": 404,
-    "message": "Metric logginglogmetric-${uniqueId} does not exist",
+    "message": "Metric logginglogmetric-${uniqueId} does not exist.",
     "status": "NOT_FOUND"
   }
 }
