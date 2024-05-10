@@ -23,6 +23,7 @@ import (
 	api "google.golang.org/api/logging/v2"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/apimachinery/pkg/util/sets"
 	"k8s.io/klog/v2"
 	"sigs.k8s.io/controller-runtime/pkg/manager"
 
@@ -176,8 +177,8 @@ func (a *logMetricAdapter) Create(ctx context.Context, u *unstructured.Unstructu
 			}
 
 			// validate that the bucket is in the same project
-			if a.parentID != fmt.Sprintf("projects/%s", parts[1]) { // todo acpana rebase on main and rework
-				return fmt.Errorf("bucket %q is not in the same project %q", bucketName, a.parentID)
+			if a.projectID != fmt.Sprintf("projects/%s", parts[1]) { // todo acpana rebase on main and rework
+				return fmt.Errorf("bucket %q is not in the same project %q", bucketName, a.projectID)
 			}
 		}
 	}
@@ -215,53 +216,64 @@ func logMetricStatusToKRM(in *api.LogMetric, out *krm.LoggingLogMetricStatus) er
 }
 
 func (a *logMetricAdapter) Update(ctx context.Context, u *unstructured.Unstructured) error {
+	log := klog.FromContext(ctx).WithName(ctrlName)
+	log.V(2).Info("updating object", "u", u)
+
+	latest := a.actual
+
 	update := new(api.LogMetric)
 	*update = *a.actual
 
-	if ValueOf(a.desired.Spec.Description) != a.actual.Description {
-		update.Description = ValueOf(a.desired.Spec.Description)
-	}
-	if ValueOf(a.desired.Spec.Disabled) != a.actual.Disabled {
-		update.Disabled = ValueOf(a.desired.Spec.Disabled)
-	}
-	if a.desired.Spec.Filter != a.actual.Filter {
-		// todo acpana: revisit UX, err out if filter of desired is empty
-		if a.desired.Spec.Filter != "" {
-			update.Filter = a.desired.Spec.Filter
-		} else {
-			// filter is a REQUIRED field
-			update.Filter = a.actual.Filter
+	changedFields := a.computeChangedFields()
+	if !changedFields.IsEmpty() {
+		log.Info("updating logMetric", "changedFields", changedFields.List())
+
+		if ValueOf(a.desired.Spec.Description) != a.actual.Description {
+			update.Description = ValueOf(a.desired.Spec.Description)
 		}
-	}
-	if !compareMetricDescriptors(a.desired.Spec.MetricDescriptor, a.actual.MetricDescriptor) {
-		update.MetricDescriptor = convertKCCtoAPIForMetricDescriptor(a.desired.Spec.MetricDescriptor)
-	}
+		if ValueOf(a.desired.Spec.Disabled) != a.actual.Disabled {
+			update.Disabled = ValueOf(a.desired.Spec.Disabled)
+		}
+		if a.desired.Spec.Filter != a.actual.Filter {
+			// todo acpana: revisit UX, err out if filter of desired is empty
+			if a.desired.Spec.Filter != "" {
+				update.Filter = a.desired.Spec.Filter
+			} else {
+				// filter is a REQUIRED field
+				update.Filter = a.actual.Filter
+			}
+		}
+		if !compareMetricDescriptors(a.desired.Spec.MetricDescriptor, a.actual.MetricDescriptor) {
+			update.MetricDescriptor = convertKCCtoAPIForMetricDescriptor(a.desired.Spec.MetricDescriptor)
+		}
 
-	if !reflect.DeepEqual(a.desired.Spec.LabelExtractors, a.actual.LabelExtractors) {
-		update.LabelExtractors = a.desired.Spec.LabelExtractors
-	}
+		if !reflect.DeepEqual(a.desired.Spec.LabelExtractors, a.actual.LabelExtractors) {
+			update.LabelExtractors = a.desired.Spec.LabelExtractors
+		}
 
-	if !compareBucketOptions(a.desired.Spec.BucketOptions, a.actual.BucketOptions) {
-		update.BucketOptions = convertKCCtoAPIForBucketOptions(a.desired.Spec.BucketOptions)
-	}
+		if !compareBucketOptions(a.desired.Spec.BucketOptions, a.actual.BucketOptions) {
+			update.BucketOptions = convertKCCtoAPIForBucketOptions(a.desired.Spec.BucketOptions)
+		}
 
-	if ValueOf(a.desired.Spec.ValueExtractor) != a.actual.ValueExtractor {
-		update.ValueExtractor = ValueOf(a.desired.Spec.ValueExtractor)
-	}
-	if a.desired.Spec.LoggingLogBucketRef != nil && a.desired.Spec.LoggingLogBucketRef.External != a.actual.BucketName {
-		update.BucketName = a.desired.Spec.LoggingLogBucketRef.External
-	}
+		if ValueOf(a.desired.Spec.ValueExtractor) != a.actual.ValueExtractor {
+			update.ValueExtractor = ValueOf(a.desired.Spec.ValueExtractor)
+		}
+		if a.desired.Spec.LoggingLogBucketRef != nil && a.desired.Spec.LoggingLogBucketRef.External != a.actual.BucketName {
+			update.BucketName = a.desired.Spec.LoggingLogBucketRef.External
+		}
 
-	// DANGER: this is an upsert; it will create the LogMetric if it doesn't exists
-	// but this behavior is consistent with the DCL backed behavior we provide for this resource.
-	// todo acpana: look for / switch to a better method and/or use etags etc
-	actualUpdate, err := a.logMetricClient.Update(a.fullyQualifiedName(), update).Context(ctx).Do()
-	if err != nil {
-		return fmt.Errorf("logMetric update failed: %w", err)
+		// DANGER: this is an upsert; it will create the LogMetric if it doesn't exists
+		// but this behavior is consistent with the DCL backed behavior we provide for this resource.
+		// todo acpana: look for / switch to a better method and/or use etags etc
+		updated, err := a.logMetricClient.Update(a.fullyQualifiedName(), update).Context(ctx).Do()
+		if err != nil {
+			return fmt.Errorf("logMetric update failed: %w", err)
+		}
+		latest = updated
 	}
 
 	status := &krm.LoggingLogMetricStatus{}
-	if err := logMetricStatusToKRM(actualUpdate, status); err != nil {
+	if err := logMetricStatusToKRM(latest, status); err != nil {
 		return err
 	}
 
@@ -273,6 +285,63 @@ func (a *logMetricAdapter) Update(ctx context.Context, u *unstructured.Unstructu
 	}
 
 	return setStatus(u, status)
+}
+
+type ChangeList struct {
+	fields sets.Set[string]
+}
+
+func NewChangeList() *ChangeList {
+	return &ChangeList{fields: sets.New[string]()}
+}
+
+func (l *ChangeList) IsEmpty() bool {
+	return l.fields.Len() == 0
+}
+
+func (l *ChangeList) List() []string {
+	return sets.List(l.fields)
+}
+
+func Detect[T comparable](changeList *ChangeList, fieldName string, krm *T, api T) bool {
+	if krm == nil {
+		return false
+	}
+	if *krm == api {
+		return false
+	}
+	changeList.fields.Insert(fieldName)
+	return true
+}
+
+func (a *logMetricAdapter) computeChangedFields() *ChangeList {
+	l := NewChangeList()
+
+	desired := convertKCCtoAPI(a.desired)
+
+	Detect(l, "description", a.desired.Spec.Description, desired.Description)
+	Detect(l, "disabled", a.desired.Spec.Disabled, desired.Disabled)
+	Detect(l, "filter", &a.desired.Spec.Filter, desired.Filter)
+	Detect(l, "valueExtractor", a.desired.Spec.ValueExtractor, desired.ValueExtractor)
+	// Ignored: version
+
+	if !compareMetricDescriptors(a.desired.Spec.MetricDescriptor, a.actual.MetricDescriptor) {
+		l.fields.Insert("metricDescriptor")
+	}
+
+	if !reflect.DeepEqual(a.desired.Spec.LabelExtractors, a.actual.LabelExtractors) {
+		l.fields.Insert("labelExtractors")
+	}
+
+	if !compareBucketOptions(a.desired.Spec.BucketOptions, a.actual.BucketOptions) {
+		l.fields.Insert("bucketOptions")
+	}
+
+	if a.desired.Spec.LoggingLogBucketRef != nil && a.desired.Spec.LoggingLogBucketRef.External != a.actual.BucketName {
+		l.fields.Insert("bucketName")
+	}
+
+	return l
 }
 
 func (a *logMetricAdapter) fullyQualifiedName() string {
