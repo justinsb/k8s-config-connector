@@ -226,7 +226,11 @@ func (a *logMetricAdapter) Update(ctx context.Context, u *unstructured.Unstructu
 	*update = *a.actual
 
 	changedFields := a.computeChangedFields()
-	if !changedFields.IsEmpty() {
+	if !a.hasChanges(ctx, u) {
+		if !changedFields.IsEmpty() {
+			log.Info("field changes detected but status.updateTime does not match", "changedFields", changedFields.List())
+		}
+	} else if !changedFields.IsEmpty() {
 		log.Info("updating logMetric", "changedFields", changedFields.List())
 
 		if ValueOf(a.desired.Spec.Description) != a.actual.Description {
@@ -271,6 +275,8 @@ func (a *logMetricAdapter) Update(ctx context.Context, u *unstructured.Unstructu
 			return fmt.Errorf("logMetric update failed: %w", err)
 		}
 		latest = updated
+	} else {
+		log.Info("changedFields was empty; skipping update")
 	}
 
 	status := &krm.LoggingLogMetricStatus{}
@@ -279,9 +285,9 @@ func (a *logMetricAdapter) Update(ctx context.Context, u *unstructured.Unstructu
 	}
 
 	// actualUpdate may not contain the description for the metric descriptor.
-	if update.Description != "" {
+	if latest.Description != "" {
 		if status.MetricDescriptor != nil {
-			status.MetricDescriptor.Description = &update.Description
+			status.MetricDescriptor.Description = &latest.Description
 		}
 	}
 
@@ -343,6 +349,35 @@ func (a *logMetricAdapter) computeChangedFields() *ChangeList {
 	}
 
 	return l
+}
+
+func (a *logMetricAdapter) hasChanges(ctx context.Context, u *unstructured.Unstructured) bool {
+	log := klog.FromContext(ctx)
+
+	if u.GetGeneration() != getObservedGeneration(u) {
+		log.Info("generation does not match", "generation", u.GetGeneration(), "observedGeneration", getObservedGeneration(u))
+		return true
+	}
+
+	gcpUpdateTime := a.actual.UpdateTime
+	if gcpUpdateTime == "" {
+		log.Info("updateTime is not set in GCP")
+		return true
+	}
+	// gcpUpdateTimestamp := time.Parse(time.RFC3339, gcpUpdateTime)
+
+	obj := &krm.LoggingLogMetric{}
+	if err := runtime.DefaultUnstructuredConverter.FromUnstructured(u.Object, &obj); err != nil {
+		log.Error(err, "error converting from unstructured")
+		return true
+	}
+	if ValueOf(obj.Status.UpdateTime) == gcpUpdateTime {
+		log.Info("status.updateTime matches gcp updateTime", "status.updateTime", ValueOf(obj.Status.UpdateTime), "gcpUpdateTime", gcpUpdateTime)
+		return false
+	}
+
+	log.Info("status.updateTime does not match gcp updateTime", "status.updateTime", ValueOf(obj.Status.UpdateTime), "gcpUpdateTime", gcpUpdateTime)
+	return true
 }
 
 func (a *logMetricAdapter) fullyQualifiedName() string {

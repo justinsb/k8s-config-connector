@@ -19,7 +19,6 @@ import (
 	"fmt"
 	"reflect"
 
-	pb "cloud.google.com/go/logging/apiv2/loggingpb"
 	krm "github.com/GoogleCloudPlatform/k8s-config-connector/pkg/clients/generated/apis/logging/v1beta1"
 	"github.com/google/go-cmp/cmp"
 	"github.com/googleapis/gax-go/v2/apierror"
@@ -70,15 +69,20 @@ func setStatus(u *unstructured.Unstructured, typedStatus any) error {
 	return nil
 }
 
+func getObservedGeneration(u *unstructured.Unstructured) int64 {
+	v, _, _ := unstructured.NestedInt64(u.Object, "status", "observedGeneration")
+	return v
+}
+
 // todo acpana: end common things
 
 // todo acpana: house these somewhere else
 
 func compareMetricDescriptors(kccObj *krm.LogmetricMetricDescriptor, apiObj *api.MetricDescriptor) bool {
-	desired := &pb.MetricDescriptor{
-		DisplayName: kccObj.DisplayName,
-		Labels:      convertKCCtoAPIForLogMetricLabels(kccObj.Labels),
-	}
+	// desired := &pb.MetricDescriptor{
+	// 	DisplayName: kccObj.DisplayName,
+	// 	Labels:      convertKCCtoAPIForLogMetricLabels(kccObj.Labels),
+	// }
 
 	diff := cmp.Diff(kccObj, convertAPItoKRM_MetricDescriptor(apiObj))
 	klog.Infof("compareMetricDescriptors: diff: %v", diff)
