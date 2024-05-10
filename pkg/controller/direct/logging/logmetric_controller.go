@@ -224,9 +224,12 @@ func (a *logMetricAdapter) Update(ctx context.Context, u *unstructured.Unstructu
 	update := new(api.LogMetric)
 	*update = *a.actual
 
+	observedGeneration := getObservedGeneration(u)
+	generation := u.GetGeneration()
+
 	changedFields := a.computeChangedFields()
-	if !changedFields.IsEmpty() {
-		log.Info("updating logMetric", "changedFields", changedFields.List())
+	if generation != observedGeneration && !changedFields.IsEmpty() {
+		log.Info("updating logMetric", "changedFields", changedFields.List(), "generation", generation, "observedGeneration", observedGeneration)
 
 		if ValueOf(a.desired.Spec.Description) != a.actual.Description {
 			update.Description = ValueOf(a.desired.Spec.Description)
