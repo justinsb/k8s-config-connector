@@ -1,6 +1,6 @@
-GET https://logging.googleapis.com/v2/projects/${projectId}/metrics/logginglogmetric-${uniqueId}?alt=json&prettyPrint=false
-User-Agent: google-api-go-client/0.5
-X-Goog-Api-Client: gl-go/1.22.3 gdcl/0.177.0
+GET https://logging.googleapis.com/v2/projects/${projectId}/metrics/logginglogmetric-${uniqueId}?alt=json
+Content-Type: application/json
+User-Agent: kcc/controller-manager DeclarativeClientLib/0.0.1
 
 404 Not Found
 Cache-Control: private
@@ -23,10 +23,9 @@ X-Xss-Protection: 0
 
 ---
 
-POST https://logging.googleapis.com/v2/projects/${projectId}/metrics?alt=json&prettyPrint=false
+POST https://logging.googleapis.com/v2/projects/${projectId}/metrics?alt=json
 Content-Type: application/json
-User-Agent: google-api-go-client/0.5
-X-Goog-Api-Client: gl-go/1.22.3 gdcl/0.177.0
+User-Agent: kcc/controller-manager DeclarativeClientLib/0.0.1
 
 {
   "bucketOptions": {
@@ -79,67 +78,9 @@ X-Xss-Protection: 0
 
 ---
 
-GET https://logging.googleapis.com/v2/projects/${projectId}/metrics/logginglogmetric-${uniqueId}?alt=json&prettyPrint=false
-User-Agent: google-api-go-client/0.5
-X-Goog-Api-Client: gl-go/1.22.3 gdcl/0.177.0
-
-200 OK
-Cache-Control: private
-Content-Type: application/json; charset=UTF-8
-Server: ESF
-Vary: Origin
-Vary: X-Origin
-Vary: Referer
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-Xss-Protection: 0
-
-{
-  "bucketOptions": {
-    "exponentialBuckets": {
-      "growthFactor": 2.5,
-      "numFiniteBuckets": 4,
-      "scale": 0.5
-    }
-  },
-  "createTime": "2024-04-01T12:34:56.123456Z",
-  "filter": "resource.type=gae_app AND severity\u003c=ERROR",
-  "metricDescriptor": {
-    "metricKind": "DELTA",
-    "name": "projects/${projectId}/metricDescriptors/logging.googleapis.com/user/logginglogmetric-${uniqueId}",
-    "type": "logging.googleapis.com/user/logginglogmetric-${uniqueId}",
-    "valueType": "DISTRIBUTION"
-  },
-  "name": "logginglogmetric-${uniqueId}",
-  "updateTime": "2024-04-01T12:34:56.123456Z",
-  "valueExtractor": "EXTRACT(jsonPayload.request)"
-}
-
----
-
-PUT https://logging.googleapis.com/v2/projects/${projectId}/metrics/logginglogmetric-${uniqueId}?alt=json&prettyPrint=false
+GET https://logging.googleapis.com/v2/projects/${projectId}/metrics/logginglogmetric-${uniqueId}?alt=json
 Content-Type: application/json
-User-Agent: google-api-go-client/0.5
-X-Goog-Api-Client: gl-go/1.22.3 gdcl/0.177.0
-
-{
-  "bucketOptions": {
-    "exponentialBuckets": {
-      "growthFactor": 2.5,
-      "numFiniteBuckets": 4,
-      "scale": 0.5
-    }
-  },
-  "createTime": "2024-04-01T12:34:56.123456Z",
-  "filter": "resource.type=gae_app AND severity\u003c=ERROR",
-  "metricDescriptor": {
-    "metricKind": "DELTA",
-    "valueType": "DISTRIBUTION"
-  },
-  "name": "logginglogmetric-${uniqueId}",
-  "updateTime": "2024-04-01T12:34:56.123456Z",
-  "valueExtractor": "EXTRACT(jsonPayload.request)"
-}
+User-Agent: kcc/controller-manager DeclarativeClientLib/0.0.1
 
 200 OK
 Cache-Control: private
@@ -175,48 +116,9 @@ X-Xss-Protection: 0
 
 ---
 
-GET https://logging.googleapis.com/v2/projects/${projectId}/metrics/logginglogmetric-${uniqueId}?alt=json&prettyPrint=false
-User-Agent: google-api-go-client/0.5
-X-Goog-Api-Client: gl-go/1.22.3 gdcl/0.177.0
-
-200 OK
-Cache-Control: private
-Content-Type: application/json; charset=UTF-8
-Server: ESF
-Vary: Origin
-Vary: X-Origin
-Vary: Referer
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-Xss-Protection: 0
-
-{
-  "bucketOptions": {
-    "exponentialBuckets": {
-      "growthFactor": 2.5,
-      "numFiniteBuckets": 4,
-      "scale": 0.5
-    }
-  },
-  "createTime": "2024-04-01T12:34:56.123456Z",
-  "filter": "resource.type=gae_app AND severity\u003c=ERROR",
-  "metricDescriptor": {
-    "metricKind": "DELTA",
-    "name": "projects/${projectId}/metricDescriptors/logging.googleapis.com/user/logginglogmetric-${uniqueId}",
-    "type": "logging.googleapis.com/user/logginglogmetric-${uniqueId}",
-    "valueType": "DISTRIBUTION"
-  },
-  "name": "logginglogmetric-${uniqueId}",
-  "updateTime": "2024-04-01T12:34:56.123456Z",
-  "valueExtractor": "EXTRACT(jsonPayload.request)"
-}
-
----
-
-PUT https://logging.googleapis.com/v2/projects/${projectId}/metrics/logginglogmetric-${uniqueId}?alt=json&prettyPrint=false
+PUT https://logging.googleapis.com/v2/projects/${projectId}/metrics/logginglogmetric-${uniqueId}?alt=json
 Content-Type: application/json
-User-Agent: google-api-go-client/0.5
-X-Goog-Api-Client: gl-go/1.22.3 gdcl/0.177.0
+User-Agent: kcc/controller-manager DeclarativeClientLib/0.0.1
 
 {
   "bucketOptions": {
@@ -226,14 +128,12 @@ X-Goog-Api-Client: gl-go/1.22.3 gdcl/0.177.0
       "scale": 0.7
     }
   },
-  "createTime": "2024-04-01T12:34:56.123456Z",
   "filter": "resource.type=gae_app AND severity\u003c=ERROR",
   "metricDescriptor": {
+    "labels": [],
     "metricKind": "DELTA",
     "valueType": "DISTRIBUTION"
   },
-  "name": "logginglogmetric-${uniqueId}",
-  "updateTime": "2024-04-01T12:34:56.123456Z",
   "valueExtractor": "EXTRACT(jsonPayload.request)"
 }
 
@@ -271,9 +171,47 @@ X-Xss-Protection: 0
 
 ---
 
-DELETE https://logging.googleapis.com/v2/projects/${projectId}/metrics/logginglogmetric-${uniqueId}?alt=json&prettyPrint=false
-User-Agent: google-api-go-client/0.5
-X-Goog-Api-Client: gl-go/1.22.3 gdcl/0.177.0
+GET https://logging.googleapis.com/v2/projects/${projectId}/metrics/logginglogmetric-${uniqueId}?alt=json
+Content-Type: application/json
+User-Agent: kcc/controller-manager DeclarativeClientLib/0.0.1
+
+200 OK
+Cache-Control: private
+Content-Type: application/json; charset=UTF-8
+Server: ESF
+Vary: Origin
+Vary: X-Origin
+Vary: Referer
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 0
+
+{
+  "bucketOptions": {
+    "exponentialBuckets": {
+      "growthFactor": 3.5,
+      "numFiniteBuckets": 5,
+      "scale": 0.7
+    }
+  },
+  "createTime": "2024-04-01T12:34:56.123456Z",
+  "filter": "resource.type=gae_app AND severity\u003c=ERROR",
+  "metricDescriptor": {
+    "metricKind": "DELTA",
+    "name": "projects/${projectId}/metricDescriptors/logging.googleapis.com/user/logginglogmetric-${uniqueId}",
+    "type": "logging.googleapis.com/user/logginglogmetric-${uniqueId}",
+    "valueType": "DISTRIBUTION"
+  },
+  "name": "logginglogmetric-${uniqueId}",
+  "updateTime": "2024-04-01T12:34:56.123456Z",
+  "valueExtractor": "EXTRACT(jsonPayload.request)"
+}
+
+---
+
+DELETE https://logging.googleapis.com/v2/projects/${projectId}/metrics/logginglogmetric-${uniqueId}?alt=json
+Content-Type: application/json
+User-Agent: kcc/controller-manager DeclarativeClientLib/0.0.1
 
 200 OK
 Cache-Control: private
@@ -287,3 +225,28 @@ X-Frame-Options: SAMEORIGIN
 X-Xss-Protection: 0
 
 {}
+
+---
+
+GET https://logging.googleapis.com/v2/projects/${projectId}/metrics/logginglogmetric-${uniqueId}?alt=json
+Content-Type: application/json
+User-Agent: kcc/controller-manager DeclarativeClientLib/0.0.1
+
+404 Not Found
+Cache-Control: private
+Content-Type: application/json; charset=UTF-8
+Server: ESF
+Vary: Origin
+Vary: X-Origin
+Vary: Referer
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 0
+
+{
+  "error": {
+    "code": 404,
+    "message": "Metric logginglogmetric-${uniqueId} does not exist",
+    "status": "NOT_FOUND"
+  }
+}
