@@ -45,6 +45,9 @@ func (s *metricsService) GetLogMetric(ctx context.Context, req *pb.GetLogMetricR
 
 	obj := &pb.LogMetric{}
 	if err := s.storage.Get(ctx, fqn, obj); err != nil {
+		if status.Code(err) == codes.NotFound {
+			return nil, status.Errorf(codes.NotFound, "Metric %s does not exist.", name.MetricName)
+		}
 		return nil, err
 	}
 
