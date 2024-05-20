@@ -1,0 +1,1298 @@
+// Copyright 2024 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+package google.cloud.containeranalysis.v1;
+import "google/api/annotations.proto";
+import "google/protobuf/any.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+option go_package = "cloud.google.com/go/containeranalysis/apiv1/containeranalysispb;containeranalysispb";
+service ProjectsServer {
+}
+service ProjectsLocationsServer {
+}
+service ProjectsLocationsNotesServer {
+  rpc GetProjectsLocationsNote(GetProjectsLocationsNoteRequest) returns (Note){
+  option (google.api.http) = {
+    get: "/v1/{name=*}"
+  };
+}
+;
+  rpc ListProjectsLocationsNotes(ListProjectsLocationsNotesRequest) returns (ListNotesResponse){
+  option (google.api.http) = {
+    get: "/v1/{parent=*}/notes"
+  };
+}
+;
+}
+service ProjectsLocationsNotesOccurrencesServer {
+  rpc ListProjectsLocationsNotesOccurrences(ListProjectsLocationsNotesOccurrencesRequest) returns (ListNoteOccurrencesResponse){
+  option (google.api.http) = {
+    get: "/v1/{name=*}/occurrences"
+  };
+}
+;
+}
+service ProjectsLocationsOccurrencesServer {
+  rpc GetProjectsLocationsOccurrence(GetProjectsLocationsOccurrenceRequest) returns (Occurrence){
+  option (google.api.http) = {
+    get: "/v1/{name=*}"
+  };
+}
+;
+  rpc GetNotesProjectsLocationsOccurrence(GetNotesProjectsLocationsOccurrenceRequest) returns (Note){
+  option (google.api.http) = {
+    get: "/v1/{name=*}/notes"
+  };
+}
+;
+  rpc GetVulnerabilitySummaryProjectsLocationsOccurrence(GetVulnerabilitySummaryProjectsLocationsOccurrenceRequest) returns (VulnerabilityOccurrencesSummary){
+  option (google.api.http) = {
+    get: "/v1/{parent=*}/occurrences:vulnerabilitySummary"
+  };
+}
+;
+  rpc ListProjectsLocationsOccurrences(ListProjectsLocationsOccurrencesRequest) returns (ListOccurrencesResponse){
+  option (google.api.http) = {
+    get: "/v1/{parent=*}/occurrences"
+  };
+}
+;
+}
+service ProjectsLocationsResourcesServer {
+  rpc ExportSBOMProjectsLocationsResource(ExportSBOMProjectsLocationsResourceRequest) returns (ExportSBOMResponse){
+  option (google.api.http) = {
+    post: "/v1/{name=*}:exportSBOM"
+    body: "projects_locations_resource"
+  };
+}
+;
+}
+service ProjectsNotesServer {
+  rpc BatchCreateProjectsNote(BatchCreateProjectsNoteRequest) returns (BatchCreateNotesResponse){
+  option (google.api.http) = {
+    post: "/v1/{parent=*}/notes:batchCreate"
+    body: "projects_note"
+  };
+}
+;
+  rpc CreateProjectsNote(CreateProjectsNoteRequest) returns (Note){
+  option (google.api.http) = {
+    post: "/v1/{parent=*}/notes"
+    body: "projects_note"
+  };
+}
+;
+  rpc DeleteProjectsNote(DeleteProjectsNoteRequest) returns (Empty){
+  option (google.api.http) = {
+    delete: "/v1/{name=*}"
+  };
+}
+;
+  rpc GetProjectsNote(GetProjectsNoteRequest) returns (Note){
+  option (google.api.http) = {
+    get: "/v1/{name=*}"
+  };
+}
+;
+  rpc ListProjectsNotes(ListProjectsNotesRequest) returns (ListNotesResponse){
+  option (google.api.http) = {
+    get: "/v1/{parent=*}/notes"
+  };
+}
+;
+  rpc PatchProjectsNote(PatchProjectsNoteRequest) returns (Note){
+  option (google.api.http) = {
+    patch: "/v1/{name=*}"
+    body: "projects_note"
+  };
+}
+;
+}
+service ProjectsNotesOccurrencesServer {
+  rpc ListProjectsNotesOccurrences(ListProjectsNotesOccurrencesRequest) returns (ListNoteOccurrencesResponse){
+  option (google.api.http) = {
+    get: "/v1/{name=*}/occurrences"
+  };
+}
+;
+}
+service ProjectsOccurrencesServer {
+  rpc BatchCreateProjectsOccurrence(BatchCreateProjectsOccurrenceRequest) returns (BatchCreateOccurrencesResponse){
+  option (google.api.http) = {
+    post: "/v1/{parent=*}/occurrences:batchCreate"
+    body: "projects_occurrence"
+  };
+}
+;
+  rpc CreateProjectsOccurrence(CreateProjectsOccurrenceRequest) returns (Occurrence){
+  option (google.api.http) = {
+    post: "/v1/{parent=*}/occurrences"
+    body: "projects_occurrence"
+  };
+}
+;
+  rpc DeleteProjectsOccurrence(DeleteProjectsOccurrenceRequest) returns (Empty){
+  option (google.api.http) = {
+    delete: "/v1/{name=*}"
+  };
+}
+;
+  rpc GetProjectsOccurrence(GetProjectsOccurrenceRequest) returns (Occurrence){
+  option (google.api.http) = {
+    get: "/v1/{name=*}"
+  };
+}
+;
+  rpc GetNotesProjectsOccurrence(GetNotesProjectsOccurrenceRequest) returns (Note){
+  option (google.api.http) = {
+    get: "/v1/{name=*}/notes"
+  };
+}
+;
+  rpc GetVulnerabilitySummaryProjectsOccurrence(GetVulnerabilitySummaryProjectsOccurrenceRequest) returns (VulnerabilityOccurrencesSummary){
+  option (google.api.http) = {
+    get: "/v1/{parent=*}/occurrences:vulnerabilitySummary"
+  };
+}
+;
+  rpc ListProjectsOccurrences(ListProjectsOccurrencesRequest) returns (ListOccurrencesResponse){
+  option (google.api.http) = {
+    get: "/v1/{parent=*}/occurrences"
+  };
+}
+;
+  rpc PatchProjectsOccurrence(PatchProjectsOccurrenceRequest) returns (Occurrence){
+  option (google.api.http) = {
+    patch: "/v1/{name=*}"
+    body: "projects_occurrence"
+  };
+}
+;
+}
+service ProjectsResourcesServer {
+  rpc ExportSBOMProjectsResource(ExportSBOMProjectsResourceRequest) returns (ExportSBOMResponse){
+  option (google.api.http) = {
+    post: "/v1/{name=*}:exportSBOM"
+    body: "projects_resource"
+  };
+}
+;
+}
+message AliasContext {
+  string kind = 1 [json_name="kind"];
+  string name = 2 [json_name="name"];
+}
+message AnalysisCompleted {
+  repeated string analysis_type = 1 [json_name="analysisType"];
+}
+message Artifact {
+  string checksum = 1 [json_name="checksum"];
+  string id = 2 [json_name="id"];
+  repeated string names = 3 [json_name="names"];
+}
+message Assessment {
+  string cve = 1 [json_name="cve"];
+  repeated string impacts = 2 [json_name="impacts"];
+  Justification justification = 3 [json_name="justification"];
+  string long_description = 4 [json_name="longDescription"];
+  repeated RelatedUrl related_uris = 5 [json_name="relatedUris"];
+  repeated Remediation remediations = 6 [json_name="remediations"];
+  string short_description = 7 [json_name="shortDescription"];
+  string state = 8 [json_name="state"];
+  string vulnerability_id = 9 [json_name="vulnerabilityId"];
+}
+message AttestationNote {
+  Hint hint = 1 [json_name="hint"];
+}
+message AttestationOccurrence {
+  repeated Jwt jwts = 1 [json_name="jwts"];
+  bytes serialized_payload = 2 [json_name="serializedPayload"];
+  repeated Signature signatures = 3 [json_name="signatures"];
+}
+message BatchCreateNotesRequest {
+  map<string, Note> notes = 1 [json_name="notes"];
+}
+message BatchCreateNotesResponse {
+  repeated Note notes = 1 [json_name="notes"];
+}
+message BatchCreateOccurrencesRequest {
+  repeated Occurrence occurrences = 1 [json_name="occurrences"];
+}
+message BatchCreateOccurrencesResponse {
+  repeated Occurrence occurrences = 1 [json_name="occurrences"];
+}
+message Binding {
+  Expr condition = 1 [json_name="condition"];
+  repeated string members = 2 [json_name="members"];
+  string role = 3 [json_name="role"];
+}
+message BuildDefinition {
+  string build_type = 1 [json_name="buildType"];
+  map<string, .google.protobuf.Any> external_parameters = 2 [json_name="externalParameters"];
+  map<string, .google.protobuf.Any> internal_parameters = 3 [json_name="internalParameters"];
+  repeated ResourceDescriptor resolved_dependencies = 4 [json_name="resolvedDependencies"];
+}
+message BuildMetadata {
+  .google.protobuf.Timestamp finished_on = 1 [json_name="finishedOn"];
+  string invocation_id = 2 [json_name="invocationId"];
+  .google.protobuf.Timestamp started_on = 3 [json_name="startedOn"];
+}
+message BuildNote {
+  string builder_version = 1 [json_name="builderVersion"];
+}
+message BuildOccurrence {
+  InTotoSlsaProvenanceV1 in_toto_slsa_provenance_v1 = 1 [json_name="inTotoSlsaProvenanceV1"];
+  InTotoProvenance intoto_provenance = 2 [json_name="intotoProvenance"];
+  InTotoStatement intoto_statement = 3 [json_name="intotoStatement"];
+  BuildProvenance provenance = 4 [json_name="provenance"];
+  string provenance_bytes = 5 [json_name="provenanceBytes"];
+}
+message BuildProvenance {
+  map<string, string> build_options = 1 [json_name="buildOptions"];
+  string builder_version = 2 [json_name="builderVersion"];
+  repeated Artifact built_artifacts = 3 [json_name="builtArtifacts"];
+  repeated Command commands = 4 [json_name="commands"];
+  .google.protobuf.Timestamp create_time = 5 [json_name="createTime"];
+  string creator = 6 [json_name="creator"];
+  .google.protobuf.Timestamp end_time = 7 [json_name="endTime"];
+  string id = 8 [json_name="id"];
+  string logs_uri = 9 [json_name="logsUri"];
+  string project_id = 10 [json_name="projectId"];
+  Source source_provenance = 11 [json_name="sourceProvenance"];
+  .google.protobuf.Timestamp start_time = 12 [json_name="startTime"];
+  string trigger_id = 13 [json_name="triggerId"];
+}
+message BuildStep {
+  repeated int32 allow_exit_codes = 1 [json_name="allowExitCodes"];
+  bool allow_failure = 2 [json_name="allowFailure"];
+  repeated string args = 3 [json_name="args"];
+  bool automap_substitutions = 4 [json_name="automapSubstitutions"];
+  string dir = 5 [json_name="dir"];
+  string entrypoint = 6 [json_name="entrypoint"];
+  repeated string env = 7 [json_name="env"];
+  int32 exit_code = 8 [json_name="exitCode"];
+  string id = 9 [json_name="id"];
+  string name = 10 [json_name="name"];
+  TimeSpan pull_timing = 11 [json_name="pullTiming"];
+  string script = 12 [json_name="script"];
+  repeated string secret_env = 13 [json_name="secretEnv"];
+  string status = 14 [json_name="status"];
+  .google.protobuf.Duration timeout = 15 [json_name="timeout"];
+  TimeSpan timing = 16 [json_name="timing"];
+  repeated Volume volumes = 17 [json_name="volumes"];
+  repeated string wait_for = 18 [json_name="waitFor"];
+}
+message BuilderConfig {
+  string id = 1 [json_name="id"];
+}
+message CVSS {
+  string attack_complexity = 1 [json_name="attackComplexity"];
+  string attack_vector = 2 [json_name="attackVector"];
+  string authentication = 3 [json_name="authentication"];
+  string availability_impact = 4 [json_name="availabilityImpact"];
+  float base_score = 5 [json_name="baseScore"];
+  string confidentiality_impact = 6 [json_name="confidentialityImpact"];
+  float exploitability_score = 7 [json_name="exploitabilityScore"];
+  float impact_score = 8 [json_name="impactScore"];
+  string integrity_impact = 9 [json_name="integrityImpact"];
+  string privileges_required = 10 [json_name="privilegesRequired"];
+  string scope = 11 [json_name="scope"];
+  string user_interaction = 12 [json_name="userInteraction"];
+}
+message CVSSv3 {
+  string attack_complexity = 1 [json_name="attackComplexity"];
+  string attack_vector = 2 [json_name="attackVector"];
+  string availability_impact = 3 [json_name="availabilityImpact"];
+  float base_score = 4 [json_name="baseScore"];
+  string confidentiality_impact = 5 [json_name="confidentialityImpact"];
+  float exploitability_score = 6 [json_name="exploitabilityScore"];
+  float impact_score = 7 [json_name="impactScore"];
+  string integrity_impact = 8 [json_name="integrityImpact"];
+  string privileges_required = 9 [json_name="privilegesRequired"];
+  string scope = 10 [json_name="scope"];
+  string user_interaction = 11 [json_name="userInteraction"];
+}
+message Category {
+  string category_id = 1 [json_name="categoryId"];
+  string name = 2 [json_name="name"];
+}
+message CisBenchmark {
+  int32 profile_level = 1 [json_name="profileLevel"];
+  string severity = 2 [json_name="severity"];
+}
+message CloudRepoSourceContext {
+  AliasContext alias_context = 1 [json_name="aliasContext"];
+  RepoId repo_id = 2 [json_name="repoId"];
+  string revision_id = 3 [json_name="revisionId"];
+}
+message CloudStorageLocation {
+}
+message Command {
+  repeated string args = 1 [json_name="args"];
+  string dir = 2 [json_name="dir"];
+  repeated string env = 3 [json_name="env"];
+  string id = 4 [json_name="id"];
+  string name = 5 [json_name="name"];
+  repeated string wait_for = 6 [json_name="waitFor"];
+}
+message Completeness {
+  bool arguments = 1 [json_name="arguments"];
+  bool environment = 2 [json_name="environment"];
+  bool materials = 3 [json_name="materials"];
+}
+message ComplianceNote {
+  CisBenchmark cis_benchmark = 1 [json_name="cisBenchmark"];
+  string description = 2 [json_name="description"];
+  string impact = 3 [json_name="impact"];
+  string rationale = 4 [json_name="rationale"];
+  string remediation = 5 [json_name="remediation"];
+  bytes scan_instructions = 6 [json_name="scanInstructions"];
+  string title = 7 [json_name="title"];
+  repeated ComplianceVersion version = 8 [json_name="version"];
+}
+message ComplianceOccurrence {
+  string non_compliance_reason = 1 [json_name="nonComplianceReason"];
+  repeated NonCompliantFile non_compliant_files = 2 [json_name="nonCompliantFiles"];
+  ComplianceVersion version = 3 [json_name="version"];
+}
+message ComplianceVersion {
+  string benchmark_document = 1 [json_name="benchmarkDocument"];
+  string cpe_uri = 2 [json_name="cpeUri"];
+  string version = 3 [json_name="version"];
+}
+message ContaineranalysisGoogleDevtoolsCloudbuildV1ApprovalConfig {
+  bool approval_required = 1 [json_name="approvalRequired"];
+}
+message ContaineranalysisGoogleDevtoolsCloudbuildV1ApprovalResult {
+  .google.protobuf.Timestamp approval_time = 1 [json_name="approvalTime"];
+  string approver_account = 2 [json_name="approverAccount"];
+  string comment = 3 [json_name="comment"];
+  string decision = 4 [json_name="decision"];
+  string url = 5 [json_name="url"];
+}
+message ContaineranalysisGoogleDevtoolsCloudbuildV1Artifacts {
+  repeated string images = 1 [json_name="images"];
+  repeated ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsMavenArtifact maven_artifacts = 2 [json_name="mavenArtifacts"];
+  repeated ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsNpmPackage npm_packages = 3 [json_name="npmPackages"];
+  ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsArtifactObjects objects = 4 [json_name="objects"];
+  repeated ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsPythonPackage python_packages = 5 [json_name="pythonPackages"];
+}
+message ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsArtifactObjects {
+  string location = 1 [json_name="location"];
+  repeated string paths = 2 [json_name="paths"];
+  ContaineranalysisGoogleDevtoolsCloudbuildV1TimeSpan timing = 3 [json_name="timing"];
+}
+message ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsMavenArtifact {
+  string artifact_id = 1 [json_name="artifactId"];
+  string group_id = 2 [json_name="groupId"];
+  string path = 3 [json_name="path"];
+  string repository = 4 [json_name="repository"];
+  string version = 5 [json_name="version"];
+}
+message ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsNpmPackage {
+  string package_path = 1 [json_name="packagePath"];
+  string repository = 2 [json_name="repository"];
+}
+message ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsPythonPackage {
+  repeated string paths = 1 [json_name="paths"];
+  string repository = 2 [json_name="repository"];
+}
+message ContaineranalysisGoogleDevtoolsCloudbuildV1Build {
+  ContaineranalysisGoogleDevtoolsCloudbuildV1BuildApproval approval = 1 [json_name="approval"];
+  ContaineranalysisGoogleDevtoolsCloudbuildV1Artifacts artifacts = 2 [json_name="artifacts"];
+  ContaineranalysisGoogleDevtoolsCloudbuildV1Secrets available_secrets = 3 [json_name="availableSecrets"];
+  string build_trigger_id = 4 [json_name="buildTriggerId"];
+  .google.protobuf.Timestamp create_time = 5 [json_name="createTime"];
+  ContaineranalysisGoogleDevtoolsCloudbuildV1BuildFailureInfo failure_info = 6 [json_name="failureInfo"];
+  .google.protobuf.Timestamp finish_time = 7 [json_name="finishTime"];
+  ContaineranalysisGoogleDevtoolsCloudbuildV1GitConfig git_config = 8 [json_name="gitConfig"];
+  string id = 9 [json_name="id"];
+  repeated string images = 10 [json_name="images"];
+  string log_url = 11 [json_name="logUrl"];
+  string logs_bucket = 12 [json_name="logsBucket"];
+  string name = 13 [json_name="name"];
+  ContaineranalysisGoogleDevtoolsCloudbuildV1BuildOptions options = 14 [json_name="options"];
+  string project_id = 15 [json_name="projectId"];
+  .google.protobuf.Duration queue_ttl = 16 [json_name="queueTtl"];
+  ContaineranalysisGoogleDevtoolsCloudbuildV1Results results = 17 [json_name="results"];
+  repeated ContaineranalysisGoogleDevtoolsCloudbuildV1Secret secrets = 18 [json_name="secrets"];
+  string service_account = 19 [json_name="serviceAccount"];
+  ContaineranalysisGoogleDevtoolsCloudbuildV1Source source = 20 [json_name="source"];
+  ContaineranalysisGoogleDevtoolsCloudbuildV1SourceProvenance source_provenance = 21 [json_name="sourceProvenance"];
+  .google.protobuf.Timestamp start_time = 22 [json_name="startTime"];
+  string status = 23 [json_name="status"];
+  string status_detail = 24 [json_name="statusDetail"];
+  repeated ContaineranalysisGoogleDevtoolsCloudbuildV1BuildStep steps = 25 [json_name="steps"];
+  map<string, string> substitutions = 26 [json_name="substitutions"];
+  repeated string tags = 27 [json_name="tags"];
+  .google.protobuf.Duration timeout = 28 [json_name="timeout"];
+  map<string, ContaineranalysisGoogleDevtoolsCloudbuildV1TimeSpan> timing = 29 [json_name="timing"];
+  repeated ContaineranalysisGoogleDevtoolsCloudbuildV1BuildWarning warnings = 30 [json_name="warnings"];
+}
+message ContaineranalysisGoogleDevtoolsCloudbuildV1BuildApproval {
+  ContaineranalysisGoogleDevtoolsCloudbuildV1ApprovalConfig config = 1 [json_name="config"];
+  ContaineranalysisGoogleDevtoolsCloudbuildV1ApprovalResult result = 2 [json_name="result"];
+  string state = 3 [json_name="state"];
+}
+message ContaineranalysisGoogleDevtoolsCloudbuildV1BuildFailureInfo {
+  string detail = 1 [json_name="detail"];
+  string type = 2 [json_name="type"];
+}
+message ContaineranalysisGoogleDevtoolsCloudbuildV1BuildOptions {
+  bool automap_substitutions = 1 [json_name="automapSubstitutions"];
+  string default_logs_bucket_behavior = 2 [json_name="defaultLogsBucketBehavior"];
+  int64 disk_size_gb = 3 [json_name="diskSizeGb"];
+  bool dynamic_substitutions = 4 [json_name="dynamicSubstitutions"];
+  repeated string env = 5 [json_name="env"];
+  string log_streaming_option = 6 [json_name="logStreamingOption"];
+  string logging = 7 [json_name="logging"];
+  string machine_type = 8 [json_name="machineType"];
+  ContaineranalysisGoogleDevtoolsCloudbuildV1BuildOptionsPoolOption pool = 9 [json_name="pool"];
+  string requested_verify_option = 10 [json_name="requestedVerifyOption"];
+  repeated string secret_env = 11 [json_name="secretEnv"];
+  repeated string source_provenance_hash = 12 [json_name="sourceProvenanceHash"];
+  string substitution_option = 13 [json_name="substitutionOption"];
+  repeated ContaineranalysisGoogleDevtoolsCloudbuildV1Volume volumes = 14 [json_name="volumes"];
+  string worker_pool = 15 [json_name="workerPool"];
+}
+message ContaineranalysisGoogleDevtoolsCloudbuildV1BuildOptionsPoolOption {
+  string name = 1 [json_name="name"];
+}
+message ContaineranalysisGoogleDevtoolsCloudbuildV1BuildStep {
+  repeated int32 allow_exit_codes = 1 [json_name="allowExitCodes"];
+  bool allow_failure = 2 [json_name="allowFailure"];
+  repeated string args = 3 [json_name="args"];
+  bool automap_substitutions = 4 [json_name="automapSubstitutions"];
+  string dir = 5 [json_name="dir"];
+  string entrypoint = 6 [json_name="entrypoint"];
+  repeated string env = 7 [json_name="env"];
+  int32 exit_code = 8 [json_name="exitCode"];
+  string id = 9 [json_name="id"];
+  string name = 10 [json_name="name"];
+  ContaineranalysisGoogleDevtoolsCloudbuildV1TimeSpan pull_timing = 11 [json_name="pullTiming"];
+  string script = 12 [json_name="script"];
+  repeated string secret_env = 13 [json_name="secretEnv"];
+  string status = 14 [json_name="status"];
+  .google.protobuf.Duration timeout = 15 [json_name="timeout"];
+  ContaineranalysisGoogleDevtoolsCloudbuildV1TimeSpan timing = 16 [json_name="timing"];
+  repeated ContaineranalysisGoogleDevtoolsCloudbuildV1Volume volumes = 17 [json_name="volumes"];
+  repeated string wait_for = 18 [json_name="waitFor"];
+}
+message ContaineranalysisGoogleDevtoolsCloudbuildV1BuildWarning {
+  string priority = 1 [json_name="priority"];
+  string text = 2 [json_name="text"];
+}
+message ContaineranalysisGoogleDevtoolsCloudbuildV1BuiltImage {
+  string digest = 1 [json_name="digest"];
+  string name = 2 [json_name="name"];
+  ContaineranalysisGoogleDevtoolsCloudbuildV1TimeSpan push_timing = 3 [json_name="pushTiming"];
+}
+message ContaineranalysisGoogleDevtoolsCloudbuildV1ConnectedRepository {
+  string dir = 1 [json_name="dir"];
+  string repository = 2 [json_name="repository"];
+  string revision = 3 [json_name="revision"];
+}
+message ContaineranalysisGoogleDevtoolsCloudbuildV1DeveloperConnectConfig {
+  string dir = 1 [json_name="dir"];
+  string git_repository_link = 2 [json_name="gitRepositoryLink"];
+  string revision = 3 [json_name="revision"];
+}
+message ContaineranalysisGoogleDevtoolsCloudbuildV1FileHashes {
+  repeated ContaineranalysisGoogleDevtoolsCloudbuildV1Hash file_hash = 1 [json_name="fileHash"];
+}
+message ContaineranalysisGoogleDevtoolsCloudbuildV1GitConfig {
+  ContaineranalysisGoogleDevtoolsCloudbuildV1GitConfigHttpConfig http = 1 [json_name="http"];
+}
+message ContaineranalysisGoogleDevtoolsCloudbuildV1GitConfigHttpConfig {
+  string proxy_secret_version_name = 1 [json_name="proxySecretVersionName"];
+}
+message ContaineranalysisGoogleDevtoolsCloudbuildV1GitSource {
+  string dir = 1 [json_name="dir"];
+  string revision = 2 [json_name="revision"];
+  string url = 3 [json_name="url"];
+}
+message ContaineranalysisGoogleDevtoolsCloudbuildV1Hash {
+  string type = 1 [json_name="type"];
+  bytes value = 2 [json_name="value"];
+}
+message ContaineranalysisGoogleDevtoolsCloudbuildV1InlineSecret {
+  map<string, bytes> env_map = 1 [json_name="envMap"];
+  string kms_key_name = 2 [json_name="kmsKeyName"];
+}
+message ContaineranalysisGoogleDevtoolsCloudbuildV1RepoSource {
+  string branch_name = 1 [json_name="branchName"];
+  string commit_sha = 2 [json_name="commitSha"];
+  string dir = 3 [json_name="dir"];
+  bool invert_regex = 4 [json_name="invertRegex"];
+  string project_id = 5 [json_name="projectId"];
+  string repo_name = 6 [json_name="repoName"];
+  map<string, string> substitutions = 7 [json_name="substitutions"];
+  string tag_name = 8 [json_name="tagName"];
+}
+message ContaineranalysisGoogleDevtoolsCloudbuildV1Results {
+  string artifact_manifest = 1 [json_name="artifactManifest"];
+  ContaineranalysisGoogleDevtoolsCloudbuildV1TimeSpan artifact_timing = 2 [json_name="artifactTiming"];
+  repeated string build_step_images = 3 [json_name="buildStepImages"];
+  repeated bytes build_step_outputs = 4 [json_name="buildStepOutputs"];
+  repeated ContaineranalysisGoogleDevtoolsCloudbuildV1BuiltImage images = 5 [json_name="images"];
+  repeated ContaineranalysisGoogleDevtoolsCloudbuildV1UploadedMavenArtifact maven_artifacts = 6 [json_name="mavenArtifacts"];
+  repeated ContaineranalysisGoogleDevtoolsCloudbuildV1UploadedNpmPackage npm_packages = 7 [json_name="npmPackages"];
+  int64 num_artifacts = 8 [json_name="numArtifacts"];
+  repeated ContaineranalysisGoogleDevtoolsCloudbuildV1UploadedPythonPackage python_packages = 9 [json_name="pythonPackages"];
+}
+message ContaineranalysisGoogleDevtoolsCloudbuildV1Secret {
+  string kms_key_name = 1 [json_name="kmsKeyName"];
+  map<string, bytes> secret_env = 2 [json_name="secretEnv"];
+}
+message ContaineranalysisGoogleDevtoolsCloudbuildV1SecretManagerSecret {
+  string env = 1 [json_name="env"];
+  string version_name = 2 [json_name="versionName"];
+}
+message ContaineranalysisGoogleDevtoolsCloudbuildV1Secrets {
+  repeated ContaineranalysisGoogleDevtoolsCloudbuildV1InlineSecret inline = 1 [json_name="inline"];
+  repeated ContaineranalysisGoogleDevtoolsCloudbuildV1SecretManagerSecret secret_manager = 2 [json_name="secretManager"];
+}
+message ContaineranalysisGoogleDevtoolsCloudbuildV1Source {
+  ContaineranalysisGoogleDevtoolsCloudbuildV1ConnectedRepository connected_repository = 1 [json_name="connectedRepository"];
+  ContaineranalysisGoogleDevtoolsCloudbuildV1DeveloperConnectConfig developer_connect_config = 2 [json_name="developerConnectConfig"];
+  ContaineranalysisGoogleDevtoolsCloudbuildV1GitSource git_source = 3 [json_name="gitSource"];
+  ContaineranalysisGoogleDevtoolsCloudbuildV1RepoSource repo_source = 4 [json_name="repoSource"];
+  ContaineranalysisGoogleDevtoolsCloudbuildV1StorageSource storage_source = 5 [json_name="storageSource"];
+  ContaineranalysisGoogleDevtoolsCloudbuildV1StorageSourceManifest storage_source_manifest = 6 [json_name="storageSourceManifest"];
+}
+message ContaineranalysisGoogleDevtoolsCloudbuildV1SourceProvenance {
+  map<string, ContaineranalysisGoogleDevtoolsCloudbuildV1FileHashes> file_hashes = 1 [json_name="fileHashes"];
+  ContaineranalysisGoogleDevtoolsCloudbuildV1ConnectedRepository resolved_connected_repository = 2 [json_name="resolvedConnectedRepository"];
+  ContaineranalysisGoogleDevtoolsCloudbuildV1GitSource resolved_git_source = 3 [json_name="resolvedGitSource"];
+  ContaineranalysisGoogleDevtoolsCloudbuildV1RepoSource resolved_repo_source = 4 [json_name="resolvedRepoSource"];
+  ContaineranalysisGoogleDevtoolsCloudbuildV1StorageSource resolved_storage_source = 5 [json_name="resolvedStorageSource"];
+  ContaineranalysisGoogleDevtoolsCloudbuildV1StorageSourceManifest resolved_storage_source_manifest = 6 [json_name="resolvedStorageSourceManifest"];
+}
+message ContaineranalysisGoogleDevtoolsCloudbuildV1StorageSource {
+  string bucket = 1 [json_name="bucket"];
+  int64 generation = 2 [json_name="generation"];
+  string object = 3 [json_name="object"];
+  string source_fetcher = 4 [json_name="sourceFetcher"];
+}
+message ContaineranalysisGoogleDevtoolsCloudbuildV1StorageSourceManifest {
+  string bucket = 1 [json_name="bucket"];
+  int64 generation = 2 [json_name="generation"];
+  string object = 3 [json_name="object"];
+}
+message ContaineranalysisGoogleDevtoolsCloudbuildV1TimeSpan {
+  .google.protobuf.Timestamp end_time = 1 [json_name="endTime"];
+  .google.protobuf.Timestamp start_time = 2 [json_name="startTime"];
+}
+message ContaineranalysisGoogleDevtoolsCloudbuildV1UploadedMavenArtifact {
+  ContaineranalysisGoogleDevtoolsCloudbuildV1FileHashes file_hashes = 1 [json_name="fileHashes"];
+  ContaineranalysisGoogleDevtoolsCloudbuildV1TimeSpan push_timing = 2 [json_name="pushTiming"];
+  string uri = 3 [json_name="uri"];
+}
+message ContaineranalysisGoogleDevtoolsCloudbuildV1UploadedNpmPackage {
+  ContaineranalysisGoogleDevtoolsCloudbuildV1FileHashes file_hashes = 1 [json_name="fileHashes"];
+  ContaineranalysisGoogleDevtoolsCloudbuildV1TimeSpan push_timing = 2 [json_name="pushTiming"];
+  string uri = 3 [json_name="uri"];
+}
+message ContaineranalysisGoogleDevtoolsCloudbuildV1UploadedPythonPackage {
+  ContaineranalysisGoogleDevtoolsCloudbuildV1FileHashes file_hashes = 1 [json_name="fileHashes"];
+  ContaineranalysisGoogleDevtoolsCloudbuildV1TimeSpan push_timing = 2 [json_name="pushTiming"];
+  string uri = 3 [json_name="uri"];
+}
+message ContaineranalysisGoogleDevtoolsCloudbuildV1Volume {
+  string name = 1 [json_name="name"];
+  string path = 2 [json_name="path"];
+}
+message DSSEAttestationNote {
+  DSSEHint hint = 1 [json_name="hint"];
+}
+message DSSEAttestationOccurrence {
+  Envelope envelope = 1 [json_name="envelope"];
+  InTotoStatement statement = 2 [json_name="statement"];
+}
+message DSSEHint {
+  string human_readable_name = 1 [json_name="humanReadableName"];
+}
+message DeploymentNote {
+  repeated string resource_uri = 1 [json_name="resourceUri"];
+}
+message DeploymentOccurrence {
+  string address = 1 [json_name="address"];
+  string config = 2 [json_name="config"];
+  .google.protobuf.Timestamp deploy_time = 3 [json_name="deployTime"];
+  string platform = 4 [json_name="platform"];
+  repeated string resource_uri = 5 [json_name="resourceUri"];
+  .google.protobuf.Timestamp undeploy_time = 6 [json_name="undeployTime"];
+  string user_email = 7 [json_name="userEmail"];
+}
+message Detail {
+  string affected_cpe_uri = 1 [json_name="affectedCpeUri"];
+  string affected_package = 2 [json_name="affectedPackage"];
+  Version affected_version_end = 3 [json_name="affectedVersionEnd"];
+  Version affected_version_start = 4 [json_name="affectedVersionStart"];
+  string description = 5 [json_name="description"];
+  string fixed_cpe_uri = 6 [json_name="fixedCpeUri"];
+  string fixed_package = 7 [json_name="fixedPackage"];
+  Version fixed_version = 8 [json_name="fixedVersion"];
+  bool is_obsolete = 9 [json_name="isObsolete"];
+  string package_type = 10 [json_name="packageType"];
+  string severity_name = 11 [json_name="severityName"];
+  string source = 12 [json_name="source"];
+  .google.protobuf.Timestamp source_update_time = 13 [json_name="sourceUpdateTime"];
+  string vendor = 14 [json_name="vendor"];
+}
+message Digest {
+  string algo = 1 [json_name="algo"];
+  bytes digest_bytes = 2 [json_name="digestBytes"];
+}
+message DiscoveryNote {
+  string analysis_kind = 1 [json_name="analysisKind"];
+}
+message DiscoveryOccurrence {
+  AnalysisCompleted analysis_completed = 1 [json_name="analysisCompleted"];
+  repeated Status analysis_error = 2 [json_name="analysisError"];
+  string analysis_status = 3 [json_name="analysisStatus"];
+  Status analysis_status_error = 4 [json_name="analysisStatusError"];
+  .google.protobuf.Timestamp archive_time = 5 [json_name="archiveTime"];
+  string continuous_analysis = 6 [json_name="continuousAnalysis"];
+  string cpe = 7 [json_name="cpe"];
+  .google.protobuf.Timestamp last_scan_time = 8 [json_name="lastScanTime"];
+  SBOMStatus sbom_status = 9 [json_name="sbomStatus"];
+}
+message Distribution {
+  string architecture = 1 [json_name="architecture"];
+  string cpe_uri = 2 [json_name="cpeUri"];
+  string description = 3 [json_name="description"];
+  Version latest_version = 4 [json_name="latestVersion"];
+  string maintainer = 5 [json_name="maintainer"];
+  string url = 6 [json_name="url"];
+}
+message Empty {
+}
+message Envelope {
+  bytes payload = 1 [json_name="payload"];
+  string payload_type = 2 [json_name="payloadType"];
+  repeated EnvelopeSignature signatures = 3 [json_name="signatures"];
+}
+message EnvelopeSignature {
+  string keyid = 1 [json_name="keyid"];
+  bytes sig = 2 [json_name="sig"];
+}
+message ExportSBOMRequest {
+  CloudStorageLocation cloud_storage_location = 1 [json_name="cloudStorageLocation"];
+}
+message ExportSBOMResponse {
+  string discovery_occurrence = 1 [json_name="discoveryOccurrence"];
+}
+message Expr {
+  string description = 1 [json_name="description"];
+  string expression = 2 [json_name="expression"];
+  string location = 3 [json_name="location"];
+  string title = 4 [json_name="title"];
+}
+message FileHashes {
+  repeated Hash file_hash = 1 [json_name="fileHash"];
+}
+message Fingerprint {
+  string v1_name = 1 [json_name="v1Name"];
+  repeated string v2_blob = 2 [json_name="v2Blob"];
+  string v2_name = 3 [json_name="v2Name"];
+}
+message FixableTotalByDigest {
+  int64 fixable_count = 1 [json_name="fixableCount"];
+  string resource_uri = 2 [json_name="resourceUri"];
+  string severity = 3 [json_name="severity"];
+  int64 total_count = 4 [json_name="totalCount"];
+}
+message GerritSourceContext {
+  AliasContext alias_context = 1 [json_name="aliasContext"];
+  string gerrit_project = 2 [json_name="gerritProject"];
+  string host_uri = 3 [json_name="hostUri"];
+  string revision_id = 4 [json_name="revisionId"];
+}
+message GetIamPolicyRequest {
+  GetPolicyOptions options = 1 [json_name="options"];
+}
+message GetPolicyOptions {
+  int32 requested_policy_version = 1 [json_name="requestedPolicyVersion"];
+}
+message GitSourceContext {
+  string revision_id = 1 [json_name="revisionId"];
+  string url = 2 [json_name="url"];
+}
+message GoogleDevtoolsContaineranalysisV1alpha1OperationMetadata {
+  .google.protobuf.Timestamp create_time = 1 [json_name="createTime"];
+  .google.protobuf.Timestamp end_time = 2 [json_name="endTime"];
+}
+message GrafeasV1FileLocation {
+  string file_path = 1 [json_name="filePath"];
+}
+message GrafeasV1SlsaProvenanceZeroTwoSlsaBuilder {
+  string id = 1 [json_name="id"];
+}
+message GrafeasV1SlsaProvenanceZeroTwoSlsaCompleteness {
+  bool environment = 1 [json_name="environment"];
+  bool materials = 2 [json_name="materials"];
+  bool parameters = 3 [json_name="parameters"];
+}
+message GrafeasV1SlsaProvenanceZeroTwoSlsaConfigSource {
+  map<string, string> digest = 1 [json_name="digest"];
+  string entry_point = 2 [json_name="entryPoint"];
+  string uri = 3 [json_name="uri"];
+}
+message GrafeasV1SlsaProvenanceZeroTwoSlsaInvocation {
+  GrafeasV1SlsaProvenanceZeroTwoSlsaConfigSource config_source = 1 [json_name="configSource"];
+  map<string, .google.protobuf.Any> environment = 2 [json_name="environment"];
+  map<string, .google.protobuf.Any> parameters = 3 [json_name="parameters"];
+}
+message GrafeasV1SlsaProvenanceZeroTwoSlsaMaterial {
+  map<string, string> digest = 1 [json_name="digest"];
+  string uri = 2 [json_name="uri"];
+}
+message GrafeasV1SlsaProvenanceZeroTwoSlsaMetadata {
+  .google.protobuf.Timestamp build_finished_on = 1 [json_name="buildFinishedOn"];
+  string build_invocation_id = 2 [json_name="buildInvocationId"];
+  .google.protobuf.Timestamp build_started_on = 3 [json_name="buildStartedOn"];
+  GrafeasV1SlsaProvenanceZeroTwoSlsaCompleteness completeness = 4 [json_name="completeness"];
+  bool reproducible = 5 [json_name="reproducible"];
+}
+message Hash {
+  string type = 1 [json_name="type"];
+  bytes value = 2 [json_name="value"];
+}
+message Hint {
+  string human_readable_name = 1 [json_name="humanReadableName"];
+}
+message Identity {
+  int32 revision = 1 [json_name="revision"];
+  string update_id = 2 [json_name="updateId"];
+}
+message ImageNote {
+  Fingerprint fingerprint = 1 [json_name="fingerprint"];
+  string resource_url = 2 [json_name="resourceUrl"];
+}
+message ImageOccurrence {
+  string base_resource_url = 1 [json_name="baseResourceUrl"];
+  int32 distance = 2 [json_name="distance"];
+  Fingerprint fingerprint = 3 [json_name="fingerprint"];
+  repeated Layer layer_info = 4 [json_name="layerInfo"];
+}
+message InTotoProvenance {
+  BuilderConfig builder_config = 1 [json_name="builderConfig"];
+  repeated string materials = 2 [json_name="materials"];
+  Metadata metadata = 3 [json_name="metadata"];
+  Recipe recipe = 4 [json_name="recipe"];
+}
+message InTotoSlsaProvenanceV1 {
+  string _type = 1 [json_name="_type"];
+  SlsaProvenanceV1 predicate = 2 [json_name="predicate"];
+  string predicate_type = 3 [json_name="predicateType"];
+  repeated Subject subject = 4 [json_name="subject"];
+}
+message InTotoStatement {
+  string _type = 1 [json_name="_type"];
+  string predicate_type = 2 [json_name="predicateType"];
+  InTotoProvenance provenance = 3 [json_name="provenance"];
+  SlsaProvenance slsa_provenance = 4 [json_name="slsaProvenance"];
+  SlsaProvenanceZeroTwo slsa_provenance_zero_two = 5 [json_name="slsaProvenanceZeroTwo"];
+  repeated Subject subject = 6 [json_name="subject"];
+}
+message Justification {
+  string details = 1 [json_name="details"];
+  string justification_type = 2 [json_name="justificationType"];
+}
+message Jwt {
+  string compact_jwt = 1 [json_name="compactJwt"];
+}
+message KnowledgeBase {
+  string name = 1 [json_name="name"];
+  string url = 2 [json_name="url"];
+}
+message Layer {
+  string arguments = 1 [json_name="arguments"];
+  string directive = 2 [json_name="directive"];
+}
+message License {
+  string comments = 1 [json_name="comments"];
+  string expression = 2 [json_name="expression"];
+}
+message ListNoteOccurrencesResponse {
+  string next_page_token = 1 [json_name="nextPageToken"];
+  repeated Occurrence occurrences = 2 [json_name="occurrences"];
+}
+message ListNotesResponse {
+  string next_page_token = 1 [json_name="nextPageToken"];
+  repeated Note notes = 2 [json_name="notes"];
+}
+message ListOccurrencesResponse {
+  string next_page_token = 1 [json_name="nextPageToken"];
+  repeated Occurrence occurrences = 2 [json_name="occurrences"];
+}
+message Location {
+  string cpe_uri = 1 [json_name="cpeUri"];
+  string path = 2 [json_name="path"];
+  Version version = 3 [json_name="version"];
+}
+message Material {
+  map<string, string> digest = 1 [json_name="digest"];
+  string uri = 2 [json_name="uri"];
+}
+message Metadata {
+  .google.protobuf.Timestamp build_finished_on = 1 [json_name="buildFinishedOn"];
+  string build_invocation_id = 2 [json_name="buildInvocationId"];
+  .google.protobuf.Timestamp build_started_on = 3 [json_name="buildStartedOn"];
+  Completeness completeness = 4 [json_name="completeness"];
+  bool reproducible = 5 [json_name="reproducible"];
+}
+message NonCompliantFile {
+  string display_command = 1 [json_name="displayCommand"];
+  string path = 2 [json_name="path"];
+  string reason = 3 [json_name="reason"];
+}
+message Note {
+  AttestationNote attestation = 1 [json_name="attestation"];
+  BuildNote build = 2 [json_name="build"];
+  ComplianceNote compliance = 3 [json_name="compliance"];
+  .google.protobuf.Timestamp create_time = 4 [json_name="createTime"];
+  DeploymentNote deployment = 5 [json_name="deployment"];
+  DiscoveryNote discovery = 6 [json_name="discovery"];
+  DSSEAttestationNote dsse_attestation = 7 [json_name="dsseAttestation"];
+  .google.protobuf.Timestamp expiration_time = 8 [json_name="expirationTime"];
+  ImageNote image = 9 [json_name="image"];
+  string kind = 10 [json_name="kind"];
+  string long_description = 11 [json_name="longDescription"];
+  string name = 12 [json_name="name"];
+  PackageNote package = 13 [json_name="package"];
+  repeated string related_note_names = 14 [json_name="relatedNoteNames"];
+  repeated RelatedUrl related_url = 15 [json_name="relatedUrl"];
+  SBOMReferenceNote sbom_reference = 16 [json_name="sbomReference"];
+  string short_description = 17 [json_name="shortDescription"];
+  .google.protobuf.Timestamp update_time = 18 [json_name="updateTime"];
+  UpgradeNote upgrade = 19 [json_name="upgrade"];
+  VulnerabilityNote vulnerability = 20 [json_name="vulnerability"];
+  VulnerabilityAssessmentNote vulnerability_assessment = 21 [json_name="vulnerabilityAssessment"];
+}
+message Occurrence {
+  AttestationOccurrence attestation = 1 [json_name="attestation"];
+  BuildOccurrence build = 2 [json_name="build"];
+  ComplianceOccurrence compliance = 3 [json_name="compliance"];
+  .google.protobuf.Timestamp create_time = 4 [json_name="createTime"];
+  DeploymentOccurrence deployment = 5 [json_name="deployment"];
+  DiscoveryOccurrence discovery = 6 [json_name="discovery"];
+  DSSEAttestationOccurrence dsse_attestation = 7 [json_name="dsseAttestation"];
+  Envelope envelope = 8 [json_name="envelope"];
+  ImageOccurrence image = 9 [json_name="image"];
+  string kind = 10 [json_name="kind"];
+  string name = 11 [json_name="name"];
+  string note_name = 12 [json_name="noteName"];
+  PackageOccurrence package = 13 [json_name="package"];
+  string remediation = 14 [json_name="remediation"];
+  string resource_uri = 15 [json_name="resourceUri"];
+  SBOMReferenceOccurrence sbom_reference = 16 [json_name="sbomReference"];
+  .google.protobuf.Timestamp update_time = 17 [json_name="updateTime"];
+  UpgradeOccurrence upgrade = 18 [json_name="upgrade"];
+  VulnerabilityOccurrence vulnerability = 19 [json_name="vulnerability"];
+}
+message PackageIssue {
+  string affected_cpe_uri = 1 [json_name="affectedCpeUri"];
+  string affected_package = 2 [json_name="affectedPackage"];
+  Version affected_version = 3 [json_name="affectedVersion"];
+  string effective_severity = 4 [json_name="effectiveSeverity"];
+  repeated GrafeasV1FileLocation file_location = 5 [json_name="fileLocation"];
+  bool fix_available = 6 [json_name="fixAvailable"];
+  string fixed_cpe_uri = 7 [json_name="fixedCpeUri"];
+  string fixed_package = 8 [json_name="fixedPackage"];
+  Version fixed_version = 9 [json_name="fixedVersion"];
+  string package_type = 10 [json_name="packageType"];
+}
+message PackageNote {
+  string architecture = 1 [json_name="architecture"];
+  string cpe_uri = 2 [json_name="cpeUri"];
+  string description = 3 [json_name="description"];
+  repeated Digest digest = 4 [json_name="digest"];
+  repeated Distribution distribution = 5 [json_name="distribution"];
+  License license = 6 [json_name="license"];
+  string maintainer = 7 [json_name="maintainer"];
+  string name = 8 [json_name="name"];
+  string package_type = 9 [json_name="packageType"];
+  string url = 10 [json_name="url"];
+  Version version = 11 [json_name="version"];
+}
+message PackageOccurrence {
+  string architecture = 1 [json_name="architecture"];
+  string cpe_uri = 2 [json_name="cpeUri"];
+  License license = 3 [json_name="license"];
+  repeated Location location = 4 [json_name="location"];
+  string name = 5 [json_name="name"];
+  string package_type = 6 [json_name="packageType"];
+  Version version = 7 [json_name="version"];
+}
+message Policy {
+  repeated Binding bindings = 1 [json_name="bindings"];
+  bytes etag = 2 [json_name="etag"];
+  int32 version = 3 [json_name="version"];
+}
+message Product {
+  string generic_uri = 1 [json_name="genericUri"];
+  string id = 2 [json_name="id"];
+  string name = 3 [json_name="name"];
+}
+message ProjectRepoId {
+  string project_id = 1 [json_name="projectId"];
+  string repo_name = 2 [json_name="repoName"];
+}
+message ProvenanceBuilder {
+  repeated ResourceDescriptor builder_dependencies = 1 [json_name="builderDependencies"];
+  string id = 2 [json_name="id"];
+  map<string, string> version = 3 [json_name="version"];
+}
+message Publisher {
+  string issuing_authority = 1 [json_name="issuingAuthority"];
+  string name = 2 [json_name="name"];
+  string publisher_namespace = 3 [json_name="publisherNamespace"];
+}
+message Recipe {
+  repeated .google.protobuf.Any arguments = 1 [json_name="arguments"];
+  int64 defined_in_material = 2 [json_name="definedInMaterial"];
+  string entry_point = 3 [json_name="entryPoint"];
+  repeated .google.protobuf.Any environment = 4 [json_name="environment"];
+  string type = 5 [json_name="type"];
+}
+message RelatedUrl {
+  string label = 1 [json_name="label"];
+  string url = 2 [json_name="url"];
+}
+message Remediation {
+  string details = 1 [json_name="details"];
+  string remediation_type = 2 [json_name="remediationType"];
+  RelatedUrl remediation_uri = 3 [json_name="remediationUri"];
+}
+message RepoId {
+  ProjectRepoId project_repo_id = 1 [json_name="projectRepoId"];
+  string uid = 2 [json_name="uid"];
+}
+message ResourceDescriptor {
+  map<string, .google.protobuf.Any> annotations = 1 [json_name="annotations"];
+  bytes content = 2 [json_name="content"];
+  map<string, string> digest = 3 [json_name="digest"];
+  string download_location = 4 [json_name="downloadLocation"];
+  string media_type = 5 [json_name="mediaType"];
+  string name = 6 [json_name="name"];
+  string uri = 7 [json_name="uri"];
+}
+message RunDetails {
+  ProvenanceBuilder builder = 1 [json_name="builder"];
+  repeated ResourceDescriptor byproducts = 2 [json_name="byproducts"];
+  BuildMetadata metadata = 3 [json_name="metadata"];
+}
+message SBOMReferenceNote {
+  string format = 1 [json_name="format"];
+  string version = 2 [json_name="version"];
+}
+message SBOMReferenceOccurrence {
+  SbomReferenceIntotoPayload payload = 1 [json_name="payload"];
+  string payload_type = 2 [json_name="payloadType"];
+  repeated EnvelopeSignature signatures = 3 [json_name="signatures"];
+}
+message SBOMStatus {
+  string error = 1 [json_name="error"];
+  string sbom_state = 2 [json_name="sbomState"];
+}
+message SbomReferenceIntotoPayload {
+  string _type = 1 [json_name="_type"];
+  SbomReferenceIntotoPredicate predicate = 2 [json_name="predicate"];
+  string predicate_type = 3 [json_name="predicateType"];
+  repeated Subject subject = 4 [json_name="subject"];
+}
+message SbomReferenceIntotoPredicate {
+  map<string, string> digest = 1 [json_name="digest"];
+  string location = 2 [json_name="location"];
+  string mime_type = 3 [json_name="mimeType"];
+  string referrer_id = 4 [json_name="referrerId"];
+}
+message SetIamPolicyRequest {
+  Policy policy = 1 [json_name="policy"];
+}
+message Signature {
+  string public_key_id = 1 [json_name="publicKeyId"];
+  bytes signature = 2 [json_name="signature"];
+}
+message SlsaBuilder {
+  string id = 1 [json_name="id"];
+}
+message SlsaCompleteness {
+  bool arguments = 1 [json_name="arguments"];
+  bool environment = 2 [json_name="environment"];
+  bool materials = 3 [json_name="materials"];
+}
+message SlsaMetadata {
+  .google.protobuf.Timestamp build_finished_on = 1 [json_name="buildFinishedOn"];
+  string build_invocation_id = 2 [json_name="buildInvocationId"];
+  .google.protobuf.Timestamp build_started_on = 3 [json_name="buildStartedOn"];
+  SlsaCompleteness completeness = 4 [json_name="completeness"];
+  bool reproducible = 5 [json_name="reproducible"];
+}
+message SlsaProvenance {
+  SlsaBuilder builder = 1 [json_name="builder"];
+  repeated Material materials = 2 [json_name="materials"];
+  SlsaMetadata metadata = 3 [json_name="metadata"];
+  SlsaRecipe recipe = 4 [json_name="recipe"];
+}
+message SlsaProvenanceV1 {
+  BuildDefinition build_definition = 1 [json_name="buildDefinition"];
+  RunDetails run_details = 2 [json_name="runDetails"];
+}
+message SlsaProvenanceZeroTwo {
+  map<string, .google.protobuf.Any> build_config = 1 [json_name="buildConfig"];
+  string build_type = 2 [json_name="buildType"];
+  GrafeasV1SlsaProvenanceZeroTwoSlsaBuilder builder = 3 [json_name="builder"];
+  GrafeasV1SlsaProvenanceZeroTwoSlsaInvocation invocation = 4 [json_name="invocation"];
+  repeated GrafeasV1SlsaProvenanceZeroTwoSlsaMaterial materials = 5 [json_name="materials"];
+  GrafeasV1SlsaProvenanceZeroTwoSlsaMetadata metadata = 6 [json_name="metadata"];
+}
+message SlsaRecipe {
+  map<string, .google.protobuf.Any> arguments = 1 [json_name="arguments"];
+  int64 defined_in_material = 2 [json_name="definedInMaterial"];
+  string entry_point = 3 [json_name="entryPoint"];
+  map<string, .google.protobuf.Any> environment = 4 [json_name="environment"];
+  string type = 5 [json_name="type"];
+}
+message Source {
+  repeated SourceContext additional_contexts = 1 [json_name="additionalContexts"];
+  string artifact_storage_source_uri = 2 [json_name="artifactStorageSourceUri"];
+  SourceContext context = 3 [json_name="context"];
+  map<string, FileHashes> file_hashes = 4 [json_name="fileHashes"];
+}
+message SourceContext {
+  CloudRepoSourceContext cloud_repo = 1 [json_name="cloudRepo"];
+  GerritSourceContext gerrit = 2 [json_name="gerrit"];
+  GitSourceContext git = 3 [json_name="git"];
+  map<string, string> labels = 4 [json_name="labels"];
+}
+message Status {
+  int32 code = 1 [json_name="code"];
+  repeated .google.protobuf.Any details = 2 [json_name="details"];
+  string message = 3 [json_name="message"];
+}
+message Subject {
+  map<string, string> digest = 1 [json_name="digest"];
+  string name = 2 [json_name="name"];
+}
+message TestIamPermissionsRequest {
+  repeated string permissions = 1 [json_name="permissions"];
+}
+message TestIamPermissionsResponse {
+  repeated string permissions = 1 [json_name="permissions"];
+}
+message TimeSpan {
+  .google.protobuf.Timestamp end_time = 1 [json_name="endTime"];
+  .google.protobuf.Timestamp start_time = 2 [json_name="startTime"];
+}
+message UpgradeDistribution {
+  string classification = 1 [json_name="classification"];
+  string cpe_uri = 2 [json_name="cpeUri"];
+  repeated string cve = 3 [json_name="cve"];
+  string severity = 4 [json_name="severity"];
+}
+message UpgradeNote {
+  repeated UpgradeDistribution distributions = 1 [json_name="distributions"];
+  string package = 2 [json_name="package"];
+  Version version = 3 [json_name="version"];
+  WindowsUpdate windows_update = 4 [json_name="windowsUpdate"];
+}
+message UpgradeOccurrence {
+  UpgradeDistribution distribution = 1 [json_name="distribution"];
+  string package = 2 [json_name="package"];
+  Version parsed_version = 3 [json_name="parsedVersion"];
+  WindowsUpdate windows_update = 4 [json_name="windowsUpdate"];
+}
+message Version {
+  int32 epoch = 1 [json_name="epoch"];
+  string full_name = 2 [json_name="fullName"];
+  bool inclusive = 3 [json_name="inclusive"];
+  string kind = 4 [json_name="kind"];
+  string name = 5 [json_name="name"];
+  string revision = 6 [json_name="revision"];
+}
+message VexAssessment {
+  string cve = 1 [json_name="cve"];
+  repeated string impacts = 2 [json_name="impacts"];
+  Justification justification = 3 [json_name="justification"];
+  string note_name = 4 [json_name="noteName"];
+  repeated RelatedUrl related_uris = 5 [json_name="relatedUris"];
+  repeated Remediation remediations = 6 [json_name="remediations"];
+  string state = 7 [json_name="state"];
+  string vulnerability_id = 8 [json_name="vulnerabilityId"];
+}
+message Volume {
+  string name = 1 [json_name="name"];
+  string path = 2 [json_name="path"];
+}
+message VulnerabilityAssessmentNote {
+  Assessment assessment = 1 [json_name="assessment"];
+  string language_code = 2 [json_name="languageCode"];
+  string long_description = 3 [json_name="longDescription"];
+  Product product = 4 [json_name="product"];
+  Publisher publisher = 5 [json_name="publisher"];
+  string short_description = 6 [json_name="shortDescription"];
+  string title = 7 [json_name="title"];
+}
+message VulnerabilityNote {
+  float cvss_score = 1 [json_name="cvssScore"];
+  CVSS cvss_v2 = 2 [json_name="cvssV2"];
+  CVSSv3 cvss_v3 = 3 [json_name="cvssV3"];
+  string cvss_version = 4 [json_name="cvssVersion"];
+  repeated Detail details = 5 [json_name="details"];
+  string severity = 6 [json_name="severity"];
+  .google.protobuf.Timestamp source_update_time = 7 [json_name="sourceUpdateTime"];
+  repeated WindowsDetail windows_details = 8 [json_name="windowsDetails"];
+}
+message VulnerabilityOccurrence {
+  float cvss_score = 1 [json_name="cvssScore"];
+  CVSS cvss_v2 = 2 [json_name="cvssV2"];
+  string cvss_version = 3 [json_name="cvssVersion"];
+  CVSS cvssv3 = 4 [json_name="cvssv3"];
+  string effective_severity = 5 [json_name="effectiveSeverity"];
+  string extra_details = 6 [json_name="extraDetails"];
+  bool fix_available = 7 [json_name="fixAvailable"];
+  string long_description = 8 [json_name="longDescription"];
+  repeated PackageIssue package_issue = 9 [json_name="packageIssue"];
+  repeated RelatedUrl related_urls = 10 [json_name="relatedUrls"];
+  string severity = 11 [json_name="severity"];
+  string short_description = 12 [json_name="shortDescription"];
+  string type = 13 [json_name="type"];
+  VexAssessment vex_assessment = 14 [json_name="vexAssessment"];
+}
+message VulnerabilityOccurrencesSummary {
+  repeated FixableTotalByDigest counts = 1 [json_name="counts"];
+}
+message WindowsDetail {
+  string cpe_uri = 1 [json_name="cpeUri"];
+  string description = 2 [json_name="description"];
+  repeated KnowledgeBase fixing_kbs = 3 [json_name="fixingKbs"];
+  string name = 4 [json_name="name"];
+}
+message WindowsUpdate {
+  repeated Category categories = 1 [json_name="categories"];
+  string description = 2 [json_name="description"];
+  Identity identity = 3 [json_name="identity"];
+  repeated string kb_article_ids = 4 [json_name="kbArticleIds"];
+  .google.protobuf.Timestamp last_published_timestamp = 5 [json_name="lastPublishedTimestamp"];
+  string support_url = 6 [json_name="supportUrl"];
+  string title = 7 [json_name="title"];
+}
+message GetProjectsLocationsNoteRequest {
+  string name = 1;
+}
+message ListProjectsLocationsNotesRequest {
+  string filter = 1;
+  int32 page_size = 2;
+  string page_token = 3;
+  string parent = 4;
+}
+message ListProjectsLocationsNotesOccurrencesRequest {
+  string filter = 1;
+  string name = 2;
+  int32 page_size = 3;
+  string page_token = 4;
+}
+message GetProjectsLocationsOccurrenceRequest {
+  string name = 1;
+}
+message GetNotesProjectsLocationsOccurrenceRequest {
+  string name = 1;
+}
+message GetVulnerabilitySummaryProjectsLocationsOccurrenceRequest {
+  string filter = 1;
+  string parent = 2;
+}
+message ListProjectsLocationsOccurrencesRequest {
+  string filter = 1;
+  int32 page_size = 2;
+  string page_token = 3;
+  string parent = 4;
+}
+message ExportSBOMProjectsLocationsResourceRequest {
+  string name = 1;
+  ExportSBOMRequest projects_locations_resource = 2;
+}
+message BatchCreateProjectsNoteRequest {
+  string parent = 1;
+  BatchCreateNotesRequest projects_note = 2;
+}
+message CreateProjectsNoteRequest {
+  string note_id = 1;
+  string parent = 2;
+  Note projects_note = 3;
+}
+message DeleteProjectsNoteRequest {
+  string name = 1;
+}
+message GetProjectsNoteRequest {
+  string name = 1;
+}
+message ListProjectsNotesRequest {
+  string filter = 1;
+  int32 page_size = 2;
+  string page_token = 3;
+  string parent = 4;
+}
+message PatchProjectsNoteRequest {
+  string name = 1;
+  string update_mask = 2;
+  Note projects_note = 3;
+}
+message ListProjectsNotesOccurrencesRequest {
+  string filter = 1;
+  string name = 2;
+  int32 page_size = 3;
+  string page_token = 4;
+}
+message BatchCreateProjectsOccurrenceRequest {
+  string parent = 1;
+  BatchCreateOccurrencesRequest projects_occurrence = 2;
+}
+message CreateProjectsOccurrenceRequest {
+  string parent = 1;
+  Occurrence projects_occurrence = 2;
+}
+message DeleteProjectsOccurrenceRequest {
+  string name = 1;
+}
+message GetProjectsOccurrenceRequest {
+  string name = 1;
+}
+message GetNotesProjectsOccurrenceRequest {
+  string name = 1;
+}
+message GetVulnerabilitySummaryProjectsOccurrenceRequest {
+  string filter = 1;
+  string parent = 2;
+}
+message ListProjectsOccurrencesRequest {
+  string filter = 1;
+  int32 page_size = 2;
+  string page_token = 3;
+  string parent = 4;
+}
+message PatchProjectsOccurrenceRequest {
+  string name = 1;
+  string update_mask = 2;
+  Occurrence projects_occurrence = 3;
+}
+message ExportSBOMProjectsResourceRequest {
+  string name = 1;
+  ExportSBOMRequest projects_resource = 2;
+}
