@@ -107,7 +107,7 @@ func (s *GrafeasServerV1) UpdateNote(ctx context.Context, req *pb.UpdateNoteRequ
 	return obj, nil
 }
 
-//func (s *GrafeasServerV1) DeleteProjectsNote(ctx context.Context, req *pb.DeleteProjectsNoteRequest) (*Empty, error) {
+//func (s *GrafeasServerV1) DeleteNote(ctx context.Context, req *pb.DeleteProjectsNoteRequest) (*Empty, error) {
 //	name, err := s.parseProjectNoteName(req.Name)
 //	if err != nil {
 //		return nil, err
