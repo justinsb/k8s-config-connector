@@ -30,6 +30,7 @@ gen-proto:
 		./apis/mockgcp/cloud/resourcemanager/v1/*.proto \
 		./apis/mockgcp/storage/v1/*.proto \
 		./apis/mockgcp/devtools/containeranalysis/v1/*.proto \
+		./third_party/googleapis/mockgrafeas/v1/*.proto \
 		./third_party/googleapis/mockgcp/api/apikeys/v2/*.proto \
 		./third_party/googleapis/mockgcp/devtools/artifactregistry/v1/*.proto \
 		./third_party/googleapis/mockgcp/iam/admin/v1/*.proto \
@@ -75,10 +76,11 @@ generate-protos-from-openapi:
 	mkdir -p apis/mockgcp/cloud/bigquery/v2/
 	cd tools/gapic; go run . --proto-version=2 ../../bigquery-v2.json > ../../apis/mockgcp/cloud/bigquery/v2/api.proto
 
-	wget -O containeranalysis-v1.json https://raw.githubusercontent.com/googleapis/google-api-go-client/main/containeranalysis/v1/containeranalysis-api.json
-	mkdir -p apis/mockgcp/devtools/containeranalysis/v1/
-	cd tools/gapic; go run . ../../containeranalysis-v1.json > ../../apis/mockgcp/devtools/containeranalysis/v1/containeranalysis.proto
+	# wget -O containeranalysis-v1.json https://raw.githubusercontent.com/googleapis/google-api-go-client/main/containeranalysis/v1/containeranalysis-api.json
+	# mkdir -p apis/mockgcp/devtools/containeranalysis/v1/
+	# cd tools/gapic; go run . ../../containeranalysis-v1.json > ../../apis/mockgcp/devtools/containeranalysis/v1/containeranalysis.proto
 
+	
 	wget -O servicenetworking-api.json https://raw.githubusercontent.com/googleapis/google-api-go-client/main/servicenetworking/v1/servicenetworking-api.json
 	mkdir -p apis/mockgcp/cloud/servicenetworking/v1/
 	cd tools/gapic; go run . ../../servicenetworking-api.json > ../../apis/mockgcp/cloud/servicenetworking/v1/servicenetworking.proto

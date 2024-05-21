@@ -18,18 +18,19 @@ import (
 	"context"
 	"fmt"
 
-	pb "github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/generated/mockgcp/devtools/containeranalysis/v1"
+	pb "github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/generated/mockgrafeas/v1"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/proto"
+	"k8s.io/klog/v2"
 )
 
-type ContainerAnalysisV1 struct {
+type GrafeasServerV1 struct {
 	*MockService
-	pb.UnimplementedProjectsNotesServerServer
+	pb.UnimplementedGrafeasServer
 }
 
-func (s *ContainerAnalysisV1) GetProjectsNote(ctx context.Context, req *pb.GetProjectsNoteRequest) (*pb.Note, error) {
+func (s *GrafeasServerV1) GetNote(ctx context.Context, req *pb.GetNoteRequest) (*pb.Note, error) {
 	name, err := s.parseProjectNoteName(req.Name)
 	if err != nil {
 		return nil, err
@@ -37,6 +38,7 @@ func (s *ContainerAnalysisV1) GetProjectsNote(ctx context.Context, req *pb.GetPr
 
 	fqn := name.String()
 
+	klog.Infof("GETTING %v", fqn)
 	obj := &pb.Note{}
 	if err := s.storage.Get(ctx, fqn, obj); err != nil {
 		return nil, err
@@ -45,7 +47,7 @@ func (s *ContainerAnalysisV1) GetProjectsNote(ctx context.Context, req *pb.GetPr
 	return obj, nil
 }
 
-func (s *ContainerAnalysisV1) CreateProjectsNote(ctx context.Context, req *pb.CreateProjectsNoteRequest) (*pb.Note, error) {
+func (s *GrafeasServerV1) CreateNote(ctx context.Context, req *pb.CreateNoteRequest) (*pb.Note, error) {
 	fmt.Println("________________________________________________________________________________")
 	fmt.Println("CREATE")
 	fmt.Println("________________________________________________________________________________")
@@ -57,9 +59,10 @@ func (s *ContainerAnalysisV1) CreateProjectsNote(ctx context.Context, req *pb.Cr
 
 	fqn := name.String()
 
-	obj := proto.Clone(req.ProjectsNote).(*pb.Note)
+	obj := proto.Clone(req.GetNote()).(*pb.Note)
 	obj.Name = fqn
 
+	klog.Infof("CREATING %v", fqn)
 	if err := s.storage.Create(ctx, fqn, obj); err != nil {
 		return nil, err
 	}
@@ -67,8 +70,9 @@ func (s *ContainerAnalysisV1) CreateProjectsNote(ctx context.Context, req *pb.Cr
 	return obj, nil
 }
 
-func (s *ContainerAnalysisV1) UpdateProjectsNote(ctx context.Context, req *pb.PatchProjectsNoteRequest) (*pb.Note, error) {
+func (s *GrafeasServerV1) UpdateNote(ctx context.Context, req *pb.UpdateNoteRequest) (*pb.Note, error) {
 	reqName := req.GetName()
+	klog.Infof("reqName %v", reqName)
 
 	name, err := s.parseProjectNoteName(reqName)
 	if err != nil {
@@ -77,12 +81,13 @@ func (s *ContainerAnalysisV1) UpdateProjectsNote(ctx context.Context, req *pb.Pa
 
 	fqn := name.String()
 	obj := &pb.Note{}
+	klog.Infof("GET %v", fqn)
 	if err := s.storage.Get(ctx, fqn, obj); err != nil {
 		return nil, err
 	}
 
 	// Required. A list of fields to be updated in this request.
-	paths := req.GetUpdateMask()
+	paths := req.GetUpdateMask().GetPaths()
 
 	// TODO: Some sort of helper for fieldmask?
 	for _, path := range paths {
@@ -93,6 +98,8 @@ func (s *ContainerAnalysisV1) UpdateProjectsNote(ctx context.Context, req *pb.Pa
 		}
 	}
 
+	klog.Infof("Update %v", fqn)
+
 	if err := s.storage.Update(ctx, fqn, obj); err != nil {
 		return nil, err
 	}
@@ -100,7 +107,7 @@ func (s *ContainerAnalysisV1) UpdateProjectsNote(ctx context.Context, req *pb.Pa
 	return obj, nil
 }
 
-//func (s *ContainerAnalysisV1) DeleteProjectsNote(ctx context.Context, req *pb.DeleteProjectsNoteRequest) (*Empty, error) {
+//func (s *GrafeasServerV1) DeleteProjectsNote(ctx context.Context, req *pb.DeleteProjectsNoteRequest) (*Empty, error) {
 //	name, err := s.parseProjectNoteName(req.Name)
 //	if err != nil {
 //		return nil, err

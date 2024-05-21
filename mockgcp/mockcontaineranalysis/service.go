@@ -24,7 +24,7 @@ import (
 
 	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/common"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/common/operations"
-	pb "github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/generated/mockgcp/devtools/containeranalysis/v1"
+	pb "github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/generated/mockgrafeas/v1"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/pkg/storage"
 )
 
@@ -33,7 +33,7 @@ type MockService struct {
 	*common.MockEnvironment
 	storage    storage.Storage
 	operations *operations.Operations
-	v1         *ContainerAnalysisV1
+	// v1         *ContainerAnalysisV1
 }
 
 // New creates a MockService.
@@ -51,12 +51,12 @@ func (s *MockService) ExpectedHost() string {
 }
 
 func (s *MockService) Register(grpcServer *grpc.Server) {
-	pb.RegisterProjectsNotesServerServer(grpcServer, &ContainerAnalysisV1{MockService: s})
+	pb.RegisterGrafeasServer(grpcServer, &GrafeasServerV1{MockService: s})
 }
 
 func (s *MockService) NewHTTPMux(ctx context.Context, conn *grpc.ClientConn) (http.Handler, error) {
 	mux, err := httpmux.NewServeMux(ctx, conn, httpmux.Options{},
-		pb.RegisterProjectsNotesServerHandler)
+		pb.RegisterGrafeasHandler)
 	if err != nil {
 		return nil, err
 	}
