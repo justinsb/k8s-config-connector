@@ -6,7 +6,7 @@ metadata:
   finalizers:
   - cnrm.cloud.google.com/finalizer
   - cnrm.cloud.google.com/deletion-defender
-  generation: 3
+  generation: 4
   labels:
     cnrm-test: "true"
   name: monitoringdashboard-${uniqueId}
@@ -62,4 +62,4 @@ status:
     status: "True"
     type: Ready
   etag: abcdef123456
-  observedGeneration: 3
+  observedGeneration: 4
