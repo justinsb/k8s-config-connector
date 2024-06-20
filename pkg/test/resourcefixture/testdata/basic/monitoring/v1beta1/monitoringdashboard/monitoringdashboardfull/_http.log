@@ -96,6 +96,13 @@ x-goog-request-params: parent=projects%2F${projectId}
               ]
             },
             "title": "Widget 4"
+          },
+          {
+            "sectionHeader": {
+              "dividerBelow": true,
+              "subtitle": "Example SectionHeader"
+            },
+            "title": "SectionHeader Widget"
           }
         ]
       }
@@ -151,7 +158,15 @@ X-Xss-Protection: 0
             "text": {
               "content": "Widget 2",
               "format": "MARKDOWN",
-              "style": {}
+              "style": {
+                "backgroundColor": "#000",
+                "fontSize": "FS_LARGE",
+                "horizontalAlignment": "H_CENTER",
+                "padding": "P_MEDIUM",
+                "pointerLocation": "PL_TOP_LEFT",
+                "textColor": "#fff",
+                "verticalAlignment": "V_CENTER"
+              }
             }
           },
           {
