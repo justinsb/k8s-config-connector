@@ -124,32 +124,32 @@ func ColumnLayout_Column_ToProto(mapCtx *MapContext, in *krm.ColumnLayout_Column
 	out.Widgets = Slice_ToProto(mapCtx, in.Widgets, Widget_ToProto)
 	return out
 }
+func DashboardFilter_FromProto(mapCtx *MapContext, in *pb.DashboardFilter) *krm.DashboardFilter {
+	if in == nil {
+		return nil
+	}
+	out := &krm.DashboardFilter{}
+	out.LabelKey = LazyPtr(in.GetLabelKey())
+	out.TemplateVariable = LazyPtr(in.GetTemplateVariable())
+	out.StringValue = LazyPtr(in.GetStringValue())
+	out.FilterType = Enum_FromProto(mapCtx, in.FilterType)
+	return out
+}
 
-// func DashboardFilter_FromProto(mapCtx *MapContext, in *pb.DashboardFilter) *krm.DashboardFilter {
-// 	if in == nil {
-// 		return nil
-// 	}
-// 	out := &krm.DashboardFilter{}
-// 	out.LabelKey = LazyPtr(in.GetLabelKey())
-// 	out.TemplateVariable = LazyPtr(in.GetTemplateVariable())
-// 	out.StringValue = LazyPtr(in.GetStringValue())
-// 	out.FilterType = Enum_FromProto(mapCtx, in.FilterType)
-// 	return out
-// }
-// func DashboardFilter_ToProto(mapCtx *MapContext, in *krm.DashboardFilter) *pb.DashboardFilter {
-// 	if in == nil {
-// 		return nil
-// 	}
-// 	out := &pb.DashboardFilter{}
-// 	out.LabelKey = ValueOf(in.LabelKey)
-// 	out.TemplateVariable = ValueOf(in.TemplateVariable)
-// 	if oneof := DashboardFilter_StringValue_ToProto(mapCtx, in.StringValue); oneof != nil {
-// 		out.DefaultValue = oneof
-// 	}
-// 	out.FilterType = Enum_ToProto[pb.DashboardFilter_FilterType](mapCtx, in.FilterType)
-// 	return out
-// }
-
+//	func DashboardFilter_ToProto(mapCtx *MapContext, in *krm.DashboardFilter) *pb.DashboardFilter {
+//		if in == nil {
+//			return nil
+//		}
+//		out := &pb.DashboardFilter{}
+//		out.LabelKey = ValueOf(in.LabelKey)
+//		out.TemplateVariable = ValueOf(in.TemplateVariable)
+//		if oneof := DashboardFilter_StringValue_ToProto(mapCtx, in.StringValue); oneof != nil {
+//			out.DefaultValue = oneof
+//		}
+//		out.FilterType = Enum_ToProto[pb.DashboardFilter_FilterType](mapCtx, in.FilterType)
+//		return out
+//	}
+//
 //	func Dashboard_LabelsEntry_FromProto(mapCtx *MapContext, in *pb.Dashboard_LabelsEntry) *krm.Dashboard_LabelsEntry {
 //		if in == nil {
 //			return nil
@@ -236,7 +236,6 @@ func LogsPanel_FromProto(mapCtx *MapContext, in *pb.LogsPanel) *krm.LogsPanel {
 	out.ResourceNames = LogsPanel_ResourceNames_FromProto(mapCtx, in.ResourceNames)
 	return out
 }
-
 func LogsPanel_ToProto(mapCtx *MapContext, in *krm.LogsPanel) *pb.LogsPanel {
 	if in == nil {
 		return nil
@@ -596,7 +595,7 @@ func Text_FromProto(mapCtx *MapContext, in *pb.Text) *krm.Text {
 	out := &krm.Text{}
 	out.Content = LazyPtr(in.GetContent())
 	out.Format = Enum_FromProto(mapCtx, in.Format)
-	// MISSING: Style
+	out.Style = Text_TextStyle_FromProto(mapCtx, in.GetStyle())
 	return out
 }
 func Text_ToProto(mapCtx *MapContext, in *krm.Text) *pb.Text {
@@ -606,7 +605,7 @@ func Text_ToProto(mapCtx *MapContext, in *krm.Text) *pb.Text {
 	out := &pb.Text{}
 	out.Content = ValueOf(in.Content)
 	out.Format = Enum_ToProto[pb.Text_Format](mapCtx, in.Format)
-	// MISSING: Style
+	out.Style = Text_TextStyle_ToProto(mapCtx, in.Style)
 	return out
 }
 func Text_TextStyle_FromProto(mapCtx *MapContext, in *pb.Text_TextStyle) *krm.Text_TextStyle {
