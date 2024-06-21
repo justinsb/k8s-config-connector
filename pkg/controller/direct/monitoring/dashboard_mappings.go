@@ -59,6 +59,16 @@ func DataSet_MinAlignmentPeriod_ToProto(mapCtx *MapContext, in *string) *duratio
 }
 
 // TODO: The format is not documented, we need to validate
+func PieChartDataSet_MinAlignmentPeriod_FromProto(mapCtx *MapContext, in *durationpb.Duration) *string {
+	return SecondsString_FromProto(mapCtx, in)
+}
+
+// TODO: The format is not documented, we need to validate
+func PieChartDataSet_MinAlignmentPeriod_ToProto(mapCtx *MapContext, in *string) *durationpb.Duration {
+	return SecondsString_ToProto(mapCtx, in, "minAlignmentPeriod")
+}
+
+// TODO: The format is not documented, we need to validate
 func SparkChartView_MinAlignmentPeriod_FromProto(mapCtx *MapContext, in *durationpb.Duration) *string {
 	return SecondsString_FromProto(mapCtx, in)
 }
