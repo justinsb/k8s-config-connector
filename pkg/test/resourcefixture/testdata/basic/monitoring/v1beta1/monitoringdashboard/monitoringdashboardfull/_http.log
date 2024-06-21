@@ -103,6 +103,12 @@ x-goog-request-params: parent=projects%2F${projectId}
               "subtitle": "Example SectionHeader"
             },
             "title": "SectionHeader Widget"
+          },
+          {
+            "collapsibleGroup": {
+              "collapsed": true
+            },
+            "title": "CollapsibleGroup Widget"
           }
         ]
       }
