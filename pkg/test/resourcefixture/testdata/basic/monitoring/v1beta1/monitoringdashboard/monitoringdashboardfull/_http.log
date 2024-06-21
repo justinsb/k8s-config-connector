@@ -1,3 +1,165 @@
+POST https://monitoring.googleapis.com/v3/projects/${projectId}/alertPolicies?alt=json
+Content-Type: application/json
+User-Agent: Terraform/ (+https://www.terraform.io) Terraform-Plugin-SDK/2.10.1 terraform-provider-google-beta/kcc/controller-manager
+
+{
+  "combiner": "AND_WITH_MATCHING_RESOURCE",
+  "conditions": [
+    {
+      "conditionThreshold": {
+        "aggregations": [
+          {
+            "alignmentPeriod": "60s",
+            "crossSeriesReducer": "REDUCE_MEAN",
+            "groupByFields": [
+              "project",
+              "resource.label.instance_id",
+              "resource.label.zone"
+            ],
+            "perSeriesAligner": "ALIGN_MAX"
+          }
+        ],
+        "comparison": "COMPARISON_GT",
+        "duration": "900s",
+        "filter": "metric.type=\"compute.googleapis.com/instance/cpu/utilization\" AND resource.type=\"gce_instance\"",
+        "thresholdValue": 0.9,
+        "trigger": {
+          "count": 1
+        }
+      },
+      "displayName": "Very high CPU usage"
+    }
+  ],
+  "displayName": "Test Alert Policy",
+  "enabled": true,
+  "userLabels": {
+    "cnrm-test": "true",
+    "managed-by-cnrm": "true"
+  }
+}
+
+200 OK
+Cache-Control: private
+Content-Type: application/json; charset=UTF-8
+Server: ESF
+Vary: Origin
+Vary: X-Origin
+Vary: Referer
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 0
+
+{
+  "combiner": "AND_WITH_MATCHING_RESOURCE",
+  "conditions": [
+    {
+      "conditionThreshold": {
+        "aggregations": [
+          {
+            "alignmentPeriod": "60s",
+            "crossSeriesReducer": "REDUCE_MEAN",
+            "groupByFields": [
+              "project",
+              "resource.label.instance_id",
+              "resource.label.zone"
+            ],
+            "perSeriesAligner": "ALIGN_MAX"
+          }
+        ],
+        "comparison": "COMPARISON_GT",
+        "duration": "900s",
+        "filter": "metric.type=\"compute.googleapis.com/instance/cpu/utilization\" AND resource.type=\"gce_instance\"",
+        "thresholdValue": 0.9,
+        "trigger": {
+          "count": 1
+        }
+      },
+      "displayName": "Very high CPU usage",
+      "name": "projects/${projectId}/alertPolicies/${alertPolicyID}/conditions/${conditionID}"
+    }
+  ],
+  "creationRecord": {
+    "mutateTime": "2024-04-01T12:34:56.123456Z",
+    "mutatedBy": "user@example.com"
+  },
+  "displayName": "Test Alert Policy",
+  "enabled": true,
+  "mutationRecord": {
+    "mutateTime": "2024-04-01T12:34:56.123456Z",
+    "mutatedBy": "user@example.com"
+  },
+  "name": "projects/${projectId}/alertPolicies/${alertPolicyID}",
+  "userLabels": {
+    "cnrm-test": "true",
+    "managed-by-cnrm": "true"
+  }
+}
+
+---
+
+GET https://monitoring.googleapis.com/v3/projects/${projectId}/alertPolicies/${alertPolicyID}?alt=json
+Content-Type: application/json
+User-Agent: Terraform/ (+https://www.terraform.io) Terraform-Plugin-SDK/2.10.1 terraform-provider-google-beta/kcc/controller-manager
+
+200 OK
+Cache-Control: private
+Content-Type: application/json; charset=UTF-8
+Server: ESF
+Vary: Origin
+Vary: X-Origin
+Vary: Referer
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 0
+
+{
+  "combiner": "AND_WITH_MATCHING_RESOURCE",
+  "conditions": [
+    {
+      "conditionThreshold": {
+        "aggregations": [
+          {
+            "alignmentPeriod": "60s",
+            "crossSeriesReducer": "REDUCE_MEAN",
+            "groupByFields": [
+              "project",
+              "resource.label.instance_id",
+              "resource.label.zone"
+            ],
+            "perSeriesAligner": "ALIGN_MAX"
+          }
+        ],
+        "comparison": "COMPARISON_GT",
+        "duration": "900s",
+        "filter": "metric.type=\"compute.googleapis.com/instance/cpu/utilization\" AND resource.type=\"gce_instance\"",
+        "thresholdValue": 0.9,
+        "trigger": {
+          "count": 1
+        }
+      },
+      "displayName": "Very high CPU usage",
+      "name": "projects/${projectId}/alertPolicies/${alertPolicyID}/conditions/${conditionID}"
+    }
+  ],
+  "creationRecord": {
+    "mutateTime": "2024-04-01T12:34:56.123456Z",
+    "mutatedBy": "user@example.com"
+  },
+  "displayName": "Test Alert Policy",
+  "enabled": true,
+  "mutationRecord": {
+    "mutateTime": "2024-04-01T12:34:56.123456Z",
+    "mutatedBy": "user@example.com"
+  },
+  "name": "projects/${projectId}/alertPolicies/${alertPolicyID}",
+  "userLabels": {
+    "cnrm-test": "true",
+    "managed-by-cnrm": "true"
+  }
+}
+
+---
+
 GET https://monitoring.googleapis.com/v1/projects/${projectId}/dashboards/monitoringdashboard-${uniqueId}?%24alt=json%3Benum-encoding%3Dint
 Content-Type: application/json
 User-Agent: kcc/controller-manager
@@ -30,33 +192,33 @@ User-Agent: kcc/controller-manager
 x-goog-request-params: parent=projects%2F${projectId}
 
 {
-  "columnLayout": {
-    "columns": [
+  "displayName": "monitoringdashboard-full",
+  "mosaicLayout": {
+    "columns": 2,
+    "tiles": [
       {
-        "weight": "2",
-        "widgets": [
-          {
-            "title": "Widget 1",
-            "xyChart": {
-              "dataSets": [
-                {
-                  "plotType": 1,
-                  "timeSeriesQuery": {
-                    "timeSeriesFilter": {
-                      "aggregation": {
-                        "perSeriesAligner": 2
-                      },
-                      "filter": "metric.type=\"agent.googleapis.com/nginx/connections/accepted_count\""
+        "height": 2,
+        "widget": {
+          "title": "Widget 1",
+          "xyChart": {
+            "dataSets": [
+              {
+                "plotType": 1,
+                "timeSeriesQuery": {
+                  "timeSeriesFilter": {
+                    "aggregation": {
+                      "perSeriesAligner": 2
                     },
-                    "unitOverride": "1"
-                  }
+                    "filter": "metric.type=\"agent.googleapis.com/nginx/connections/accepted_count\""
+                  },
+                  "unitOverride": "1"
                 }
-              ],
-              "timeshiftDuration": "600.500s",
-              "yAxis": {
-                "label": "y1Axis",
-                "scale": 1
               }
+            ],
+            "timeshiftDuration": "600.500s",
+            "yAxis": {
+              "label": "y1Axis",
+              "scale": 1
             }
           },
           {
@@ -116,11 +278,107 @@ x-goog-request-params: parent=projects%2F${projectId}
             },
             "title": "AlertChart Widget"
           }
-        ]
+        },
+        "width": 2
+      },
+      {
+        "height": 1,
+        "widget": {
+          "text": {
+            "content": "Widget 2",
+            "format": 1,
+            "style": {
+              "backgroundColor": "#000",
+              "fontSize": 4,
+              "horizontalAlignment": 2,
+              "padding": 3,
+              "pointerLocation": 5,
+              "textColor": "#fff",
+              "verticalAlignment": 2
+            }
+          }
+        },
+        "width": 2,
+        "yPos": 2
+      },
+      {
+        "height": 2,
+        "widget": {
+          "title": "Widget 3",
+          "xyChart": {
+            "dataSets": [
+              {
+                "plotType": 3,
+                "timeSeriesQuery": {
+                  "timeSeriesFilter": {
+                    "aggregation": {
+                      "perSeriesAligner": 2
+                    },
+                    "filter": "metric.type=\"agent.googleapis.com/nginx/connections/accepted_count\""
+                  },
+                  "unitOverride": "1"
+                }
+              }
+            ],
+            "yAxis": {
+              "label": "y1Axis",
+              "scale": 1
+            }
+          }
+        },
+        "width": 2,
+        "yPos": 3
+      },
+      {
+        "height": 1,
+        "widget": {
+          "logsPanel": {
+            "filter": "metric.type=\"agent.googleapis.com/nginx/connections/accepted_count\"",
+            "resourceNames": [
+              "projects/${projectId}"
+            ]
+          },
+          "title": "Widget 4"
+        },
+        "width": 2,
+        "yPos": 5
+      },
+      {
+        "height": 1,
+        "widget": {
+          "sectionHeader": {
+            "dividerBelow": true,
+            "subtitle": "Example SectionHeader"
+          },
+          "title": "SectionHeader Widget"
+        },
+        "width": 2,
+        "yPos": 6
+      },
+      {
+        "height": 1,
+        "widget": {
+          "collapsibleGroup": {
+            "collapsed": true
+          },
+          "title": "CollapsibleGroup Widget"
+        },
+        "width": 2,
+        "yPos": 7
+      },
+      {
+        "height": 1,
+        "widget": {
+          "alertChart": {
+            "name": "projects/${projectId}/alertPolicies/${alertPolicyID}"
+          },
+          "title": "AlertChart Widget"
+        },
+        "width": 2,
+        "yPos": 8
       }
     ]
   },
-  "displayName": "monitoringdashboard-full",
   "name": "projects/${projectId}/dashboards/monitoringdashboard-${uniqueId}"
 }
 
@@ -136,34 +394,35 @@ X-Frame-Options: SAMEORIGIN
 X-Xss-Protection: 0
 
 {
-  "columnLayout": {
-    "columns": [
+  "displayName": "monitoringdashboard-full",
+  "etag": "abcdef0123A=",
+  "mosaicLayout": {
+    "columns": 2,
+    "tiles": [
       {
-        "weight": "2",
-        "widgets": [
-          {
-            "title": "Widget 1",
-            "xyChart": {
-              "dataSets": [
-                {
-                  "plotType": "LINE",
-                  "targetAxis": "Y1",
-                  "timeSeriesQuery": {
-                    "timeSeriesFilter": {
-                      "aggregation": {
-                        "perSeriesAligner": "ALIGN_RATE"
-                      },
-                      "filter": "metric.type=\"agent.googleapis.com/nginx/connections/accepted_count\""
+        "height": 2,
+        "widget": {
+          "title": "Widget 1",
+          "xyChart": {
+            "dataSets": [
+              {
+                "plotType": 1,
+                "targetAxis": 1,
+                "timeSeriesQuery": {
+                  "timeSeriesFilter": {
+                    "aggregation": {
+                      "perSeriesAligner": 2
                     },
-                    "unitOverride": "1"
-                  }
+                    "filter": "metric.type=\"agent.googleapis.com/nginx/connections/accepted_count\""
+                  },
+                  "unitOverride": "1"
                 }
-              ],
-              "timeshiftDuration": "600.500s",
-              "yAxis": {
-                "label": "y1Axis",
-                "scale": "LINEAR"
               }
+            ],
+            "timeshiftDuration": "600.500s",
+            "yAxis": {
+              "label": "y1Axis",
+              "scale": 1
             }
           },
           {
@@ -214,12 +473,108 @@ X-Xss-Protection: 0
             },
             "title": "Widget 4"
           }
-        ]
+        },
+        "width": 2
+      },
+      {
+        "height": 1,
+        "widget": {
+          "text": {
+            "content": "Widget 2",
+            "format": 1,
+            "style": {
+              "backgroundColor": "#000",
+              "fontSize": 4,
+              "horizontalAlignment": 2,
+              "padding": 3,
+              "pointerLocation": 5,
+              "textColor": "#fff",
+              "verticalAlignment": 2
+            }
+          }
+        },
+        "width": 2,
+        "yPos": 2
+      },
+      {
+        "height": 2,
+        "widget": {
+          "title": "Widget 3",
+          "xyChart": {
+            "dataSets": [
+              {
+                "plotType": 3,
+                "targetAxis": 1,
+                "timeSeriesQuery": {
+                  "timeSeriesFilter": {
+                    "aggregation": {
+                      "perSeriesAligner": 2
+                    },
+                    "filter": "metric.type=\"agent.googleapis.com/nginx/connections/accepted_count\""
+                  },
+                  "unitOverride": "1"
+                }
+              }
+            ],
+            "yAxis": {
+              "label": "y1Axis",
+              "scale": 1
+            }
+          }
+        },
+        "width": 2,
+        "yPos": 3
+      },
+      {
+        "height": 1,
+        "widget": {
+          "logsPanel": {
+            "filter": "metric.type=\"agent.googleapis.com/nginx/connections/accepted_count\"",
+            "resourceNames": [
+              "projects/${projectId}"
+            ]
+          },
+          "title": "Widget 4"
+        },
+        "width": 2,
+        "yPos": 5
+      },
+      {
+        "height": 1,
+        "widget": {
+          "sectionHeader": {
+            "dividerBelow": true,
+            "subtitle": "Example SectionHeader"
+          },
+          "title": "SectionHeader Widget"
+        },
+        "width": 2,
+        "yPos": 6
+      },
+      {
+        "height": 1,
+        "widget": {
+          "collapsibleGroup": {
+            "collapsed": true
+          },
+          "title": "CollapsibleGroup Widget"
+        },
+        "width": 2,
+        "yPos": 7
+      },
+      {
+        "height": 1,
+        "widget": {
+          "alertChart": {
+            "name": "projects/${projectId}/alertPolicies/${alertPolicyID}"
+          },
+          "title": "AlertChart Widget"
+        },
+        "width": 2,
+        "yPos": 8
       }
     ]
   },
-  "displayName": "monitoringdashboard-full",
-  "etag": "abcdef0123A=",
   "name": "projects/${projectNumber}/dashboards/monitoringdashboard-${uniqueId}"
 }
 
@@ -242,8 +597,11 @@ X-Frame-Options: SAMEORIGIN
 X-Xss-Protection: 0
 
 {
-  "columnLayout": {
-    "columns": [
+  "displayName": "monitoringdashboard-full",
+  "etag": "abcdef0123A=",
+  "mosaicLayout": {
+    "columns": 2,
+    "tiles": [
       {
         "weight": "2",
         "widgets": [
@@ -261,8 +619,9 @@ X-Xss-Protection: 0
                       },
                       "filter": "metric.type=\"agent.googleapis.com/nginx/connections/accepted_count\""
                     },
-                    "unitOverride": "1"
-                  }
+                    "filter": "metric.type=\"agent.googleapis.com/nginx/connections/accepted_count\""
+                  },
+                  "unitOverride": "1"
                 }
               ],
               "timeshiftDuration": "600.500s",
@@ -270,6 +629,11 @@ X-Xss-Protection: 0
                 "label": "y1Axis",
                 "scale": 1
               }
+            ],
+            "timeshiftDuration": "600.500s",
+            "yAxis": {
+              "label": "y1Axis",
+              "scale": 1
             }
           },
           {
@@ -312,12 +676,108 @@ X-Xss-Protection: 0
             },
             "title": "Widget 4"
           }
-        ]
+        },
+        "width": 2
+      },
+      {
+        "height": 1,
+        "widget": {
+          "text": {
+            "content": "Widget 2",
+            "format": 1,
+            "style": {
+              "backgroundColor": "#000",
+              "fontSize": 4,
+              "horizontalAlignment": 2,
+              "padding": 3,
+              "pointerLocation": 5,
+              "textColor": "#fff",
+              "verticalAlignment": 2
+            }
+          }
+        },
+        "width": 2,
+        "yPos": 2
+      },
+      {
+        "height": 2,
+        "widget": {
+          "title": "Widget 3",
+          "xyChart": {
+            "dataSets": [
+              {
+                "plotType": 3,
+                "targetAxis": 1,
+                "timeSeriesQuery": {
+                  "timeSeriesFilter": {
+                    "aggregation": {
+                      "perSeriesAligner": 2
+                    },
+                    "filter": "metric.type=\"agent.googleapis.com/nginx/connections/accepted_count\""
+                  },
+                  "unitOverride": "1"
+                }
+              }
+            ],
+            "yAxis": {
+              "label": "y1Axis",
+              "scale": 1
+            }
+          }
+        },
+        "width": 2,
+        "yPos": 3
+      },
+      {
+        "height": 1,
+        "widget": {
+          "logsPanel": {
+            "filter": "metric.type=\"agent.googleapis.com/nginx/connections/accepted_count\"",
+            "resourceNames": [
+              "projects/${projectId}"
+            ]
+          },
+          "title": "Widget 4"
+        },
+        "width": 2,
+        "yPos": 5
+      },
+      {
+        "height": 1,
+        "widget": {
+          "sectionHeader": {
+            "dividerBelow": true,
+            "subtitle": "Example SectionHeader"
+          },
+          "title": "SectionHeader Widget"
+        },
+        "width": 2,
+        "yPos": 6
+      },
+      {
+        "height": 1,
+        "widget": {
+          "collapsibleGroup": {
+            "collapsed": true
+          },
+          "title": "CollapsibleGroup Widget"
+        },
+        "width": 2,
+        "yPos": 7
+      },
+      {
+        "height": 1,
+        "widget": {
+          "alertChart": {
+            "name": "projects/${projectId}/alertPolicies/${alertPolicyID}"
+          },
+          "title": "AlertChart Widget"
+        },
+        "width": 2,
+        "yPos": 8
       }
     ]
   },
-  "displayName": "monitoringdashboard-full",
-  "etag": "abcdef0123A=",
   "name": "projects/${projectNumber}/dashboards/monitoringdashboard-${uniqueId}"
 }
 

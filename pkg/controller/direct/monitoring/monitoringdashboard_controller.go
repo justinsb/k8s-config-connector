@@ -90,12 +90,12 @@ func (m *dashboardModel) AdapterForObject(ctx context.Context, kube client.Reade
 	if err != nil {
 		return nil, err
 	}
-	projectID := projectRef.ProjectID
-	if projectID == "" {
+	if projectRef == nil || projectRef.ProjectID == "" {
 		return nil, fmt.Errorf("cannot resolve project")
 	}
+	projectID := projectRef.ProjectID
 
-	if err := VisitFields(obj, &refNormalizer{ctx: ctx, src: obj, kube: kube}); err != nil {
+	if err := VisitFields(obj, &refNormalizer{ctx: ctx, src: obj, project: *projectRef, kube: kube}); err != nil {
 		return nil, err
 	}
 

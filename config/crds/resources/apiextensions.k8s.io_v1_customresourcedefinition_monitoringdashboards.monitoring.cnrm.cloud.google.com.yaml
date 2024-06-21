@@ -84,14 +84,39 @@ spec:
                               alertChart:
                                 description: A chart of alert policy data.
                                 properties:
-                                  name:
-                                    description: |-
-                                      Required. The resource name of the alert policy. The format is:
-
-                                           projects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID]
-                                    type: string
+                                  alertPolicyRef:
+                                    description: Required. A reference to the MonitoringAlertPolicy.
+                                    oneOf:
+                                    - not:
+                                        required:
+                                        - external
+                                      required:
+                                      - name
+                                    - not:
+                                        anyOf:
+                                        - required:
+                                          - name
+                                        - required:
+                                          - namespace
+                                      required:
+                                      - external
+                                    properties:
+                                      external:
+                                        description: The MonitoringAlertPolicy link
+                                          in the form "projects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID]",
+                                          when not managed by KCC.
+                                        type: string
+                                      name:
+                                        description: The `name` field of a `MonitoringAlertPolicy`
+                                          resource.
+                                        type: string
+                                      namespace:
+                                        description: The `namespace` field of a `MonitoringAlertPolicy`
+                                          resource.
+                                        type: string
+                                    type: object
                                 required:
-                                - name
+                                - alertPolicyRef
                                 type: object
                               blank:
                                 description: A blank space.
@@ -1549,14 +1574,39 @@ spec:
                         alertChart:
                           description: A chart of alert policy data.
                           properties:
-                            name:
-                              description: |-
-                                Required. The resource name of the alert policy. The format is:
-
-                                     projects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID]
-                              type: string
+                            alertPolicyRef:
+                              description: Required. A reference to the MonitoringAlertPolicy.
+                              oneOf:
+                              - not:
+                                  required:
+                                  - external
+                                required:
+                                - name
+                              - not:
+                                  anyOf:
+                                  - required:
+                                    - name
+                                  - required:
+                                    - namespace
+                                required:
+                                - external
+                              properties:
+                                external:
+                                  description: The MonitoringAlertPolicy link in the
+                                    form "projects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID]",
+                                    when not managed by KCC.
+                                  type: string
+                                name:
+                                  description: The `name` field of a `MonitoringAlertPolicy`
+                                    resource.
+                                  type: string
+                                namespace:
+                                  description: The `namespace` field of a `MonitoringAlertPolicy`
+                                    resource.
+                                  type: string
+                              type: object
                           required:
-                          - name
+                          - alertPolicyRef
                           type: object
                         blank:
                           description: A blank space.
@@ -2941,14 +2991,39 @@ spec:
                             alertChart:
                               description: A chart of alert policy data.
                               properties:
-                                name:
-                                  description: |-
-                                    Required. The resource name of the alert policy. The format is:
-
-                                         projects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID]
-                                  type: string
+                                alertPolicyRef:
+                                  description: Required. A reference to the MonitoringAlertPolicy.
+                                  oneOf:
+                                  - not:
+                                      required:
+                                      - external
+                                    required:
+                                    - name
+                                  - not:
+                                      anyOf:
+                                      - required:
+                                        - name
+                                      - required:
+                                        - namespace
+                                    required:
+                                    - external
+                                  properties:
+                                    external:
+                                      description: The MonitoringAlertPolicy link
+                                        in the form "projects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID]",
+                                        when not managed by KCC.
+                                      type: string
+                                    name:
+                                      description: The `name` field of a `MonitoringAlertPolicy`
+                                        resource.
+                                      type: string
+                                    namespace:
+                                      description: The `namespace` field of a `MonitoringAlertPolicy`
+                                        resource.
+                                      type: string
+                                  type: object
                               required:
-                              - name
+                              - alertPolicyRef
                               type: object
                             blank:
                               description: A blank space.
@@ -4436,14 +4511,39 @@ spec:
                               alertChart:
                                 description: A chart of alert policy data.
                                 properties:
-                                  name:
-                                    description: |-
-                                      Required. The resource name of the alert policy. The format is:
-
-                                           projects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID]
-                                    type: string
+                                  alertPolicyRef:
+                                    description: Required. A reference to the MonitoringAlertPolicy.
+                                    oneOf:
+                                    - not:
+                                        required:
+                                        - external
+                                      required:
+                                      - name
+                                    - not:
+                                        anyOf:
+                                        - required:
+                                          - name
+                                        - required:
+                                          - namespace
+                                      required:
+                                      - external
+                                    properties:
+                                      external:
+                                        description: The MonitoringAlertPolicy link
+                                          in the form "projects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID]",
+                                          when not managed by KCC.
+                                        type: string
+                                      name:
+                                        description: The `name` field of a `MonitoringAlertPolicy`
+                                          resource.
+                                        type: string
+                                      namespace:
+                                        description: The `namespace` field of a `MonitoringAlertPolicy`
+                                          resource.
+                                        type: string
+                                    type: object
                                 required:
-                                - name
+                                - alertPolicyRef
                                 type: object
                               blank:
                                 description: A blank space.

@@ -1,17 +1,3 @@
-// Copyright 2024 Google LLC
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 package monitoring
 
 import (
@@ -42,22 +28,24 @@ func Aggregation_ToProto(mapCtx *MapContext, in *krm.Aggregation) *pb.Aggregatio
 	out.GroupByFields = in.GroupByFields
 	return out
 }
-func AlertChart_FromProto(mapCtx *MapContext, in *pb.AlertChart) *krm.AlertChart {
-	if in == nil {
-		return nil
-	}
-	out := &krm.AlertChart{}
-	out.Name = LazyPtr(in.GetName())
-	return out
-}
-func AlertChart_ToProto(mapCtx *MapContext, in *krm.AlertChart) *pb.AlertChart {
-	if in == nil {
-		return nil
-	}
-	out := &pb.AlertChart{}
-	out.Name = ValueOf(in.Name)
-	return out
-}
+
+//	func AlertChart_FromProto(mapCtx *MapContext, in *pb.AlertChart) *krm.AlertChart {
+//		if in == nil {
+//			return nil
+//		}
+//		out := &krm.AlertChart{}
+//		out.Name = LazyPtr(in.GetName())
+//		return out
+//	}
+//
+//	func AlertChart_ToProto(mapCtx *MapContext, in *krm.AlertChart) *pb.AlertChart {
+//		if in == nil {
+//			return nil
+//		}
+//		out := &pb.AlertChart{}
+//		out.Name = ValueOf(in.Name)
+//		return out
+//	}
 func ChartOptions_FromProto(mapCtx *MapContext, in *pb.ChartOptions) *krm.ChartOptions {
 	if in == nil {
 		return nil
@@ -135,19 +123,20 @@ func DashboardFilter_FromProto(mapCtx *MapContext, in *pb.DashboardFilter) *krm.
 	out.FilterType = Enum_FromProto(mapCtx, in.FilterType)
 	return out
 }
-func DashboardFilter_ToProto(mapCtx *MapContext, in *krm.DashboardFilter) *pb.DashboardFilter {
-	if in == nil {
-		return nil
-	}
-	out := &pb.DashboardFilter{}
-	out.LabelKey = ValueOf(in.LabelKey)
-	out.TemplateVariable = ValueOf(in.TemplateVariable)
-	if oneof := DashboardFilter_StringValue_ToProto(mapCtx, in.StringValue); oneof != nil {
-		out.DefaultValue = oneof
-	}
-	out.FilterType = Enum_ToProto[pb.DashboardFilter_FilterType](mapCtx, in.FilterType)
-	return out
-}
+
+//	func DashboardFilter_ToProto(mapCtx *MapContext, in *krm.DashboardFilter) *pb.DashboardFilter {
+//		if in == nil {
+//			return nil
+//		}
+//		out := &pb.DashboardFilter{}
+//		out.LabelKey = ValueOf(in.LabelKey)
+//		out.TemplateVariable = ValueOf(in.TemplateVariable)
+//		if oneof := DashboardFilter_StringValue_ToProto(mapCtx, in.StringValue); oneof != nil {
+//			out.DefaultValue = oneof
+//		}
+//		out.FilterType = Enum_ToProto[pb.DashboardFilter_FilterType](mapCtx, in.FilterType)
+//		return out
+//	}
 func ErrorReportingPanel_FromProto(mapCtx *MapContext, in *pb.ErrorReportingPanel) *krm.ErrorReportingPanel {
 	if in == nil {
 		return nil
@@ -186,24 +175,26 @@ func GridLayout_ToProto(mapCtx *MapContext, in *krm.GridLayout) *pb.GridLayout {
 	out.Widgets = Slice_ToProto(mapCtx, in.Widgets, Widget_ToProto)
 	return out
 }
-func IncidentList_FromProto(mapCtx *MapContext, in *pb.IncidentList) *krm.IncidentList {
-	if in == nil {
-		return nil
-	}
-	out := &krm.IncidentList{}
-	out.MonitoredResources = Slice_FromProto(mapCtx, in.MonitoredResources, string_FromProto)
-	out.PolicyNames = in.PolicyNames
-	return out
-}
-func IncidentList_ToProto(mapCtx *MapContext, in *krm.IncidentList) *pb.IncidentList {
-	if in == nil {
-		return nil
-	}
-	out := &pb.IncidentList{}
-	out.MonitoredResources = Slice_ToProto(mapCtx, in.MonitoredResources, string_ToProto)
-	out.PolicyNames = in.PolicyNames
-	return out
-}
+
+//	func IncidentList_FromProto(mapCtx *MapContext, in *pb.IncidentList) *krm.IncidentList {
+//		if in == nil {
+//			return nil
+//		}
+//		out := &krm.IncidentList{}
+//		out.MonitoredResources = Slice_FromProto(mapCtx, in.MonitoredResources, string_FromProto)
+//		out.PolicyNames = in.PolicyNames
+//		return out
+//	}
+//
+//	func IncidentList_ToProto(mapCtx *MapContext, in *krm.IncidentList) *pb.IncidentList {
+//		if in == nil {
+//			return nil
+//		}
+//		out := &pb.IncidentList{}
+//		out.MonitoredResources = Slice_ToProto(mapCtx, in.MonitoredResources, string_ToProto)
+//		out.PolicyNames = in.PolicyNames
+//		return out
+//	}
 func LogsPanel_FromProto(mapCtx *MapContext, in *pb.LogsPanel) *krm.LogsPanel {
 	if in == nil {
 		return nil

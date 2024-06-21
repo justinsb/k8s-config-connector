@@ -3,11 +3,13 @@ kind: MonitoringDashboard
 metadata:
   name: monitoringdashboard-${uniqueId}
 spec:
-  columnLayout:
-    columns:
-    - weight: 2
-      widgets:
-      - title: Widget 1
+  displayName: monitoringdashboard-full
+  mosaicLayout:
+    columns: 2
+    tiles:
+    - height: 2
+      widget:
+        title: Widget 1
         xyChart:
           dataSets:
           - plotType: LINE
@@ -21,7 +23,10 @@ spec:
           yAxis:
             label: y1Axis
             scale: LINEAR
-      - text:
+      width: 2
+    - height: 1
+      widget:
+        text:
           content: Widget 2
           format: MARKDOWN
           style:
@@ -32,7 +37,11 @@ spec:
             pointerLocation: PL_TOP_LEFT
             textColor: '#fff'
             verticalAlignment: V_CENTER
-      - title: Widget 3
+      width: 2
+      yPos: 2
+    - height: 2
+      widget:
+        title: Widget 3
         xyChart:
           dataSets:
           - plotType: STACKED_BAR
@@ -45,22 +54,40 @@ spec:
           yAxis:
             label: y1Axis
             scale: LINEAR
-      - logsPanel:
+      width: 2
+      yPos: 3
+    - height: 1
+      widget:
+        logsPanel:
           filter: metric.type="agent.googleapis.com/nginx/connections/accepted_count"
           resourceNames:
           - external: projects/${projectId}
             kind: Project
         title: Widget 4
-      - sectionHeader:
+      width: 2
+      yPos: 5
+    - height: 1
+      widget:
+        sectionHeader:
           dividerBelow: true
           subtitle: Example SectionHeader
         title: SectionHeader Widget
-      - collapsibleGroup:
+      width: 2
+      yPos: 6
+    - height: 1
+      widget:
+        collapsibleGroup:
           collapsed: true
         title: CollapsibleGroup Widget
-      - alertChart:
-          name: Example Alert Chart
+      width: 2
+      yPos: 7
+    - height: 1
+      widget:
+        alertChart:
+          alertPolicyRef:
+            external: projects/${projectId}/alertPolicies/9064728516750276117
         title: AlertChart Widget
-  displayName: monitoringdashboard-full
+      width: 2
+      yPos: 8
   projectRef:
     external: ${projectId}

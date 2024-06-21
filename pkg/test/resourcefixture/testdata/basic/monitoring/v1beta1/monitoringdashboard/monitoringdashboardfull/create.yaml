@@ -18,11 +18,15 @@ metadata:
   name: monitoringdashboard-${uniqueId}
 spec:
   displayName: "monitoringdashboard-full"
-  columnLayout:
-    columns:
-    - weight: 2
-      widgets:
-      - title: "Widget 1"
+  mosaicLayout:
+    columns: 2
+    tiles:
+    - xPos: 0
+      yPos: 0
+      height: 2
+      width: 2
+      widget:
+        title: "Widget 1"
         xyChart:
           dataSets:
           - timeSeriesQuery:
@@ -36,7 +40,12 @@ spec:
           yAxis:
             label: y1Axis
             scale: LINEAR
-      - text:
+    - xPos: 0
+      yPos: 2
+      height: 1
+      width: 2
+      widget:
+        text:
           content: "Widget 2"
           format: "MARKDOWN"
           style:
@@ -47,7 +56,12 @@ spec:
             fontSize: FS_LARGE
             padding: P_MEDIUM
             pointerLocation: PL_TOP_LEFT
-      - title: "Widget 3"
+    - xPos: 0
+      yPos: 3
+      height: 2
+      width: 2
+      widget:
+        title: "Widget 3"
         xyChart:
           dataSets:
           - timeSeriesQuery:
@@ -60,18 +74,39 @@ spec:
           yAxis:
             label: y1Axis
             scale: LINEAR
-      - title: "Widget 4"
+    - xPos: 0
+      yPos: 5
+      height: 1
+      width: 2
+      widget:
+        title: "Widget 4"
         logsPanel:
           filter: metric.type="agent.googleapis.com/nginx/connections/accepted_count"
           resourceNames:
             - external: "projects/${projectId}"
-      - title: "SectionHeader Widget"
+    - xPos: 0
+      yPos: 6
+      height: 1
+      width: 2
+      widget:
+        title: "SectionHeader Widget"
         sectionHeader:
           dividerBelow: true
           subtitle: "Example SectionHeader"
-      - title: "CollapsibleGroup Widget"
+    - xPos: 0
+      yPos: 7
+      height: 1
+      width: 2
+      widget:
+        title: "CollapsibleGroup Widget"
         collapsibleGroup:
           collapsed: true
-      - title: "AlertChart Widget"
+    - xPos: 0
+      yPos: 8
+      height: 1
+      width: 2
+      widget:
+        title: "AlertChart Widget"
         alertChart:
-          name: "Example Alert Chart"
+          alertPolicyRef:
+            name: monitoringalertpolicy-${uniqueId}

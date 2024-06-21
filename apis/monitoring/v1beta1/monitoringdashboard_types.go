@@ -40,12 +40,9 @@ var (
 
 // +kcc:proto=google.monitoring.dashboard.v1.AlertChart
 type AlertChart struct {
-	// Required. The resource name of the alert policy. The format is:
-	//
-	//      projects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID]
-	//
+	// Required. A reference to the MonitoringAlertPolicy.
 	// +required
-	Name *string `json:"name,omitempty"`
+	AlertPolicyRef *MonitoringAlertPolicyRef `json:"alertPolicyRef"`
 }
 
 // +kcc:proto=google.monitoring.dashboard.v1.ChartOptions
