@@ -29,9 +29,11 @@ type Package struct {
 	GoPackage string
 	SourceDir string
 
-	Structs []*GoStruct
-
+	Files    []*GoFile
 	Comments []string
+
+	fileSet *token.FileSet
+	ast     *ast.Package
 }
 
 func (p *Package) GetAnnotation(key string) string {
@@ -54,6 +56,17 @@ type GoStruct struct {
 	Fields    []*StructField
 
 	Comments []string
+
+	parent *GoFile
+	ast    *ast.StructType
+}
+
+type GoFile struct {
+	Structs []*GoStruct
+
+	fileName string
+	parent   *Package
+	ast      *ast.File
 }
 
 type StructField struct {
@@ -75,8 +88,12 @@ func LoadPackage(goPackage string, path string) (*Package, error) {
 	if len(packages) != 1 {
 		return nil, fmt.Errorf("parsing directory %q: found %d packages; want 1", path, len(packages))
 	}
-	out := &Package{GoPackage: goPackage}
+	out := &Package{
+		GoPackage: goPackage,
+		fileSet:   fileSet,
+	}
 	for packageName, p := range packages {
+		out.ast = p
 		if err := out.inspect(packageName, p); err != nil {
 			return nil, fmt.Errorf("inspecting package %q: %w", packageName, err)
 		}
@@ -131,15 +148,27 @@ func (p *Package) inspect(packageName string, pkg *ast.Package) error {
 		p.Comments = append(p.Comments, comments...)
 	}
 
+	var goFile *GoFile
+
 	ast.Inspect(pkg, func(n ast.Node) bool {
 		if n == nil {
 			return true
 		}
 		switch n := n.(type) {
+		case *ast.File:
+			position := p.fileSet.Position(n.FileStart)
+
+			goFile = &GoFile{
+				parent:   p,
+				fileName: position.Filename,
+				ast:      n,
+			}
+			p.Files = append(p.Files, goFile)
+
 		case *ast.TypeSpec:
 			switch def := n.Type.(type) {
 			case *ast.StructType:
-				if err := p.addStruct(n.Name, def, comments); err != nil {
+				if err := goFile.addStruct(n.Name, def, comments); err != nil {
 					errs = append(errs, err)
 				}
 			default:
@@ -164,10 +193,12 @@ func (p *Package) inspect(packageName string, pkg *ast.Package) error {
 	return errors.Join(errs...)
 }
 
-func (p *Package) addStruct(name *ast.Ident, def *ast.StructType, comments []ast.Node) error {
+func (p *GoFile) addStruct(name *ast.Ident, def *ast.StructType, comments []ast.Node) error {
 	goStruct := &GoStruct{
-		GoPackage: p.GoPackage,
+		GoPackage: p.parent.GoPackage,
 		Name:      name.String(),
+		ast:       def,
+		parent:    p,
 	}
 
 	for _, field := range def.Fields.List {

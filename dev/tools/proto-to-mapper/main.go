@@ -189,17 +189,19 @@ func (v *visitor) findKRMStructsForProto(msg protoreflect.MessageDescriptor) map
 
 	// TODO: Precompute this!
 	for _, goPackage := range v.goPackages {
-		for _, s := range goPackage.Structs {
-			if len(s.Comments) != 0 {
-				for _, c := range s.Comments {
-					for _, line := range strings.Split(c, "\n") {
-						line = strings.TrimSpace(line)
-						if strings.HasPrefix(line, "+kcc:proto=") {
-							// if line == "+kcc:proto="+string(msg.Name()) {
-							// 	matches[s.Name] = s
-							// }
-							if line == "+kcc:proto="+string(msg.FullName()) {
-								matches[s.Name] = s
+		for _, goFile := range goPackage.Files {
+			for _, s := range goFile.Structs {
+				if len(s.Comments) != 0 {
+					for _, c := range s.Comments {
+						for _, line := range strings.Split(c, "\n") {
+							line = strings.TrimSpace(line)
+							if strings.HasPrefix(line, "+kcc:proto=") {
+								// if line == "+kcc:proto="+string(msg.Name()) {
+								// 	matches[s.Name] = s
+								// }
+								if line == "+kcc:proto="+string(msg.FullName()) {
+									matches[s.Name] = s
+								}
 							}
 						}
 					}
