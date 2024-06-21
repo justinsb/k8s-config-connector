@@ -81,6 +81,18 @@ spec:
                             this column.
                           items:
                             properties:
+                              alertChart:
+                                description: A chart of alert policy data.
+                                properties:
+                                  name:
+                                    description: |-
+                                      Required. The resource name of the alert policy. The format is:
+
+                                           projects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID]
+                                    type: string
+                                required:
+                                - name
+                                type: object
                               blank:
                                 description: A blank space.
                                 type: object
@@ -1534,6 +1546,18 @@ spec:
                       the columns row-first.
                     items:
                       properties:
+                        alertChart:
+                          description: A chart of alert policy data.
+                          properties:
+                            name:
+                              description: |-
+                                Required. The resource name of the alert policy. The format is:
+
+                                     projects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID]
+                              type: string
+                          required:
+                          - name
+                          type: object
                         blank:
                           description: A blank space.
                           type: object
@@ -2914,6 +2938,18 @@ spec:
                           description: The informational widget contained in the tile.
                             For example an `XyChart`.
                           properties:
+                            alertChart:
+                              description: A chart of alert policy data.
+                              properties:
+                                name:
+                                  description: |-
+                                    Required. The resource name of the alert policy. The format is:
+
+                                         projects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID]
+                                  type: string
+                              required:
+                              - name
+                              type: object
                             blank:
                               description: A blank space.
                               type: object
@@ -4397,6 +4433,18 @@ spec:
                             this row.
                           items:
                             properties:
+                              alertChart:
+                                description: A chart of alert policy data.
+                                properties:
+                                  name:
+                                    description: |-
+                                      Required. The resource name of the alert policy. The format is:
+
+                                           projects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID]
+                                    type: string
+                                required:
+                                - name
+                                type: object
                               blank:
                                 description: A blank space.
                                 type: object

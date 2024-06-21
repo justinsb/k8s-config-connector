@@ -58,6 +58,9 @@ spec:
       - collapsibleGroup:
           collapsed: true
         title: CollapsibleGroup Widget
+      - alertChart:
+          name: Example Alert Chart
+        title: AlertChart Widget
   displayName: monitoringdashboard-full
   projectRef:
     external: ${projectId}

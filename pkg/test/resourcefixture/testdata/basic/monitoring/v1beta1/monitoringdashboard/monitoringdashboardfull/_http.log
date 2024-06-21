@@ -109,6 +109,12 @@ x-goog-request-params: parent=projects%2F${projectId}
               "collapsed": true
             },
             "title": "CollapsibleGroup Widget"
+          },
+          {
+            "alertChart": {
+              "name": "Example Alert Chart"
+            },
+            "title": "AlertChart Widget"
           }
         ]
       }

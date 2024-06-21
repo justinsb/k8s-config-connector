@@ -72,3 +72,6 @@ spec:
       - title: "CollapsibleGroup Widget"
         collapsibleGroup:
           collapsed: true
+      - title: "AlertChart Widget"
+        alertChart:
+          name: "Example Alert Chart"

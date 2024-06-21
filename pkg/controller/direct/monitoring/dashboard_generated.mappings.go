@@ -806,7 +806,7 @@ func Widget_FromProto(mapCtx *MapContext, in *pb.Widget) *krm.Widget {
 	out.Scorecard = Scorecard_FromProto(mapCtx, in.GetScorecard())
 	out.Text = Text_FromProto(mapCtx, in.GetText())
 	out.Blank = Empty_FromProto(mapCtx, in.GetBlank())
-	// MISSING: AlertChart
+	out.AlertChart = AlertChart_FromProto(mapCtx, in.GetAlertChart())
 	// MISSING: TimeSeriesTable
 	out.CollapsibleGroup = CollapsibleGroup_FromProto(mapCtx, in.GetCollapsibleGroup())
 	out.LogsPanel = LogsPanel_FromProto(mapCtx, in.GetLogsPanel())
@@ -836,7 +836,9 @@ func Widget_ToProto(mapCtx *MapContext, in *krm.Widget) *pb.Widget {
 	if oneof := Empty_ToProto(mapCtx, in.Blank); oneof != nil {
 		out.Content = &pb.Widget_Blank{Blank: oneof}
 	}
-	// MISSING: AlertChart
+	if oneof := AlertChart_ToProto(mapCtx, in.AlertChart); oneof != nil {
+		out.Content = &pb.Widget_AlertChart{AlertChart: oneof}
+	}
 	// MISSING: TimeSeriesTable
 	if oneof := CollapsibleGroup_ToProto(mapCtx, in.CollapsibleGroup); oneof != nil {
 		out.Content = &pb.Widget_CollapsibleGroup{CollapsibleGroup: oneof}

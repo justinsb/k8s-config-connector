@@ -1256,6 +1256,11 @@ func (in *Widget) DeepCopyInto(out *Widget) {
 		*out = new(SectionHeader)
 		(*in).DeepCopyInto(*out)
 	}
+	if in.AlertChart != nil {
+		in, out := &in.AlertChart, &out.AlertChart
+		*out = new(AlertChart)
+		(*in).DeepCopyInto(*out)
+	}
 	return
 }
 
