@@ -15,4 +15,4 @@
 resources:
 - manager.yaml
 patchesStrategicMerge:
-- manager_image_patch.yaml
+- manager_image_patch_template.yaml
