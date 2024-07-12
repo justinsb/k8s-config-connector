@@ -141,7 +141,7 @@ func scaffoldDocFile(path string, cArgs *apis.APIArgs) error {
 	if err := WriteToFile(path, out.Bytes()); err != nil {
 		return err
 	}
-	color.HiGreen("New file added %s!\n", path)
+	color.HiGreen("New file added %s\n", path)
 	return nil
 }
 
@@ -157,6 +157,6 @@ func scaffoldGropuVersionFile(path string, cArgs *apis.APIArgs) error {
 	if err := WriteToFile(path, out.Bytes()); err != nil {
 		return err
 	}
-	color.HiGreen("New file added %s!\n", path)
+	color.HiGreen("New file added %s\n", path)
 	return nil
 }

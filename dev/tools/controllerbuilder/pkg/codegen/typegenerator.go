@@ -156,7 +156,8 @@ func (v *TypeGenerator) writeTypes(out io.Writer, msg protoreflect.MessageDescri
 				} else if keyKind == protoreflect.StringKind && valueKind == protoreflect.Int64Kind {
 					goType = "map[string]int64"
 				} else {
-					fmt.Fprintf(out, "// TODO: map type %v %v\n", keyKind, valueKind)
+					fmt.Fprintf(out, "// TODO: map type %v %v for field %v\n", keyKind, valueKind, goFieldName)
+					continue
 				}
 			} else {
 				switch field.Kind() {

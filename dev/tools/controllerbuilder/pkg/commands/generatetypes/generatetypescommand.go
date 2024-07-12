@@ -109,6 +109,9 @@ func RunGenerateCRD(ctx context.Context, o *GenerateCRDOptions) error {
 		if strings.HasSuffix(fullName, "Response") {
 			return "", false
 		}
+		if strings.HasSuffix(fullName, "Metadata") {
+			return "", false
+		}
 		if !strings.HasPrefix(fullName, o.ServiceName) {
 			return "", false
 		}
@@ -118,6 +121,8 @@ func RunGenerateCRD(ctx context.Context, o *GenerateCRDOptions) error {
 		protoPackagePath = strings.TrimPrefix(protoPackagePath, "cloud.")
 		protoPackagePath = strings.TrimSuffix(protoPackagePath, ".v1")
 		protoPackagePath = strings.TrimSuffix(protoPackagePath, ".v1beta1")
+		protoPackagePath = strings.TrimSuffix(protoPackagePath, ".v2")
+		protoPackagePath = strings.TrimSuffix(protoPackagePath, ".admin") // e.g. bigtable.admin.v2
 		protoPackagePath = strings.Join(strings.Split(protoPackagePath, "."), "/")
 		goPackage = "apis/" + protoPackagePath + "/" + gv.Version
 
