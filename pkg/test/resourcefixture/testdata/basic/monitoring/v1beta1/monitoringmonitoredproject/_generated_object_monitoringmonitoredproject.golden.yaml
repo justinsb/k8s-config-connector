@@ -13,7 +13,7 @@ metadata:
   name: mmp-${uniqueId}
   namespace: ${uniqueId}
 spec:
-  metricsScope: location/global/metricsScopes/${projectId}
+  metricsScope: locations/global/metricsScopes/${projectId}
   resourceID: mmp-${uniqueId}
 status:
   conditions:

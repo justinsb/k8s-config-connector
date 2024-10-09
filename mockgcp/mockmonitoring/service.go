@@ -24,9 +24,14 @@ import (
 	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/pkg/storage"
 	"google.golang.org/grpc"
 
-	dashboardpb "github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/generated/mockgcp/monitoring/dashboard/v1"
-	metricsscopepb "github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/generated/mockgcp/monitoring/metricsscope/v1"
-	monitoringpb "github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/generated/mockgcp/monitoring/v3"
+	dashboard_http "github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/generated/google/monitoring/dashboard/v1"
+	metricsscope_http "github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/generated/google/monitoring/metricsscope/v1"
+	monitoring_http "github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/generated/google/monitoring/v3"
+
+	// Note: we use the "real" proto (not mockgcp), because the client uses GRPC.
+	monitoringpb "cloud.google.com/go/monitoring/apiv3/v2/monitoringpb"
+	dashboardpb "cloud.google.com/go/monitoring/dashboard/apiv1/dashboardpb"
+	metricsscopepb "cloud.google.com/go/monitoring/metricsscope/apiv1/metricsscopepb"
 )
 
 // MockService represents a mocked apikeys service.
@@ -64,13 +69,13 @@ func (s *MockService) Register(grpcServer *grpc.Server) {
 
 func (s *MockService) NewHTTPMux(ctx context.Context, conn *grpc.ClientConn) (http.Handler, error) {
 	mux, err := httpmux.NewServeMux(ctx, conn, httpmux.Options{},
-		monitoringpb.RegisterAlertPolicyServiceHandler,
-		monitoringpb.RegisterGroupServiceHandler,
-		monitoringpb.RegisterNotificationChannelServiceHandler,
-		monitoringpb.RegisterServiceMonitoringServiceHandler,
-		monitoringpb.RegisterUptimeCheckServiceHandler,
-		dashboardpb.RegisterDashboardsServiceHandler,
-		metricsscopepb.RegisterMetricsScopesHandler,
+		monitoring_http.RegisterAlertPolicyServiceHandler,
+		monitoring_http.RegisterGroupServiceHandler,
+		monitoring_http.RegisterNotificationChannelServiceHandler,
+		monitoring_http.RegisterServiceMonitoringServiceHandler,
+		monitoring_http.RegisterUptimeCheckServiceHandler,
+		dashboard_http.RegisterDashboardsServiceHandler,
+		metricsscope_http.RegisterMetricsScopesHandler,
 	)
 	if err != nil {
 		return nil, err

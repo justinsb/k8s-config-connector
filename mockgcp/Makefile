@@ -99,9 +99,6 @@ gen-proto-no-fixup:
 		./third_party/googleapis/mockgcp/firestore/admin/v1/*.proto \
 		./third_party/googleapis/mockgcp/iam/admin/v1/*.proto \
 		./third_party/googleapis/mockgcp/logging/v2/*.proto \
-		./third_party/googleapis/mockgcp/monitoring/dashboard/v1/*.proto \
-		./third_party/googleapis/mockgcp/monitoring/metricsscope/v1/*.proto \
-		./third_party/googleapis/mockgcp/monitoring/v3/*.proto \
 		./third_party/googleapis/mockgcp/pubsub/v1/*.proto \
 		./third_party/googleapis/mockgcp/spanner/admin/database/v1/*.proto \
 		./third_party/googleapis/mockgcp/spanner/admin/instance/v1/*.proto \
@@ -123,8 +120,11 @@ generate-grpc-for-google-protos:
 		--grpc-gateway_opt logtostderr=true \
 		--grpc-gateway_opt paths=source_relative \
 		--grpc-gateway_opt standalone=true \
-		./third_party/googleapis/google/bigtable/admin/v2/*.proto
-
+		./third_party/googleapis/google/bigtable/admin/v2/*.proto \
+		./third_party/googleapis/google/monitoring/v3/*.proto \
+		./third_party/googleapis/google/monitoring/dashboard/v1/*.proto \
+	    ./third_party/googleapis/google/monitoring/metricsscope/v1/*.proto
+	
 .PHONY: generate-protos-from-openapi
 generate-protos-from-openapi:
 	mkdir -p temp/

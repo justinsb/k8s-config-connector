@@ -19,6 +19,7 @@ import (
 
 	"golang.org/x/oauth2"
 	"google.golang.org/api/option"
+	"google.golang.org/grpc"
 )
 
 type ControllerConfig struct {
@@ -36,6 +37,10 @@ type ControllerConfig struct {
 	// HTTPClient allows us to specify the HTTP client to use with DCL.
 	// This is particularly useful in mocks/tests.
 	HTTPClient *http.Client
+
+	// GRPCUnaryClientInterceptor intercepts GRPC requests
+	// This is particularly useful in mocks/tests.
+	GRPCUnaryClientInterceptor grpc.UnaryClientInterceptor
 
 	// GCPTokenSource mints OAuth2 tokens to be passed with GCP API calls,
 	// allowing use of a non-default OAuth2 identity
@@ -76,17 +81,23 @@ func (c *ControllerConfig) GRPCClientOptions() ([]option.ClientOption, error) {
 	if c.UserAgent != "" {
 		opts = append(opts, option.WithUserAgent(c.UserAgent))
 	}
-	if c.HTTPClient != nil {
-		// TODO: Set UserAgent in this scenario (error is: WithHTTPClient is incompatible with gRPC dial options)
+	
+	// if c.HTTPClient != nil {
+	// 	// TODO: Set UserAgent in this scenario (error is: WithHTTPClient is incompatible with gRPC dial options)
 
-		httpClient := &http.Client{}
-		*httpClient = *c.HTTPClient
-		httpClient.Transport = &optionsRoundTripper{
-			config: *c,
-			inner:  c.HTTPClient.Transport,
-		}
-		opts = append(opts, option.WithHTTPClient(httpClient))
+	// 	httpClient := &http.Client{}
+	// 	*httpClient = *c.HTTPClient
+	// 	httpClient.Transport = &optionsRoundTripper{
+	// 		config: *c,
+	// 		inner:  c.HTTPClient.Transport,
+	// 	}
+	// 	opts = append(opts, option.WithHTTPClient(httpClient))
+	// }
+
+	if c.GRPCUnaryClientInterceptor != nil {
+		opts = append(opts, option.WithGRPCDialOption(grpc.WithUnaryInterceptor(c.GRPCUnaryClientInterceptor)))
 	}
+
 	if c.UserProjectOverride && c.BillingProject != "" {
 		opts = append(opts, option.WithQuotaProject(c.BillingProject))
 	}

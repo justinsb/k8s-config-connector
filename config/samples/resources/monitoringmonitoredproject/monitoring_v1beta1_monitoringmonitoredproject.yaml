@@ -19,4 +19,4 @@ metadata:
   name: mmp-sample-dep
 spec:
   # Replace ${PROJECT_ID?} with your project ID
-  metricsScope: "location/global/metricsScopes/${PROJECT_ID?}"
+  metricsScope: "locations/global/metricsScopes/${PROJECT_ID?}"

@@ -19,4 +19,4 @@ metadata:
   annotations:
     alpha.cnrm.cloud.google.com/reconciler: direct
 spec:
-  metricsScope: "location/global/metricsScopes/${projectId}"
+  metricsScope: "locations/global/metricsScopes/${projectId}"

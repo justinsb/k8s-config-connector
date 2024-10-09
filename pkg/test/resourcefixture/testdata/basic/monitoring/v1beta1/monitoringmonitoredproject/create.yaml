@@ -17,4 +17,4 @@ kind: MonitoringMonitoredProject
 metadata:
   name: mmp-${uniqueId}
 spec:
-  metricsScope: "location/global/metricsScopes/${projectId}"
+  metricsScope: "locations/global/metricsScopes/${projectId}"

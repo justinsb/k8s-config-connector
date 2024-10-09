@@ -24,6 +24,7 @@ import (
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/types"
+	"k8s.io/klog/v2"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 )
 
@@ -42,7 +43,7 @@ type MonitoringMonitoredProjectRef struct {
 	// The namespace of a MonitoringMonitoredProject resource.
 	Namespace string `json:"namespace,omitempty"`
 
-	parent *MonitoringMonitoredProjectParent
+	// parent *MonitoringMonitoredProjectParent
 }
 
 // NormalizedExternal provision the "External" value for other resource that depends on MonitoringMonitoredProject.
@@ -54,7 +55,7 @@ func (r *MonitoringMonitoredProjectRef) NormalizedExternal(ctx context.Context, 
 	}
 	// From given External
 	if r.External != "" {
-		if _, _, err := parseMonitoringMonitoredProjectExternal(r.External); err != nil {
+		if _, err := r.parseExternalURL(); err != nil {
 			return "", err
 		}
 		return r.External, nil
@@ -79,10 +80,18 @@ func (r *MonitoringMonitoredProjectRef) NormalizedExternal(ctx context.Context, 
 		return "", fmt.Errorf("reading status.externalRef: %w", err)
 	}
 	if actualExternalRef == "" {
-		return "", fmt.Errorf("MonitoringMonitoredProject is not ready yet.")
+		return "", fmt.Errorf("MonitoringMonitoredProject is not ready yet")
 	}
 	r.External = actualExternalRef
 	return r.External, nil
+}
+
+func MonitoringMonitoredProjectRefFromExternal(external string) (*MonitoringMonitoredProjectRef, error) {
+	r := &MonitoringMonitoredProjectRef{External: external}
+	if _, err := r.parseExternalURL(); err != nil {
+		return nil, err
+	}
+	return r, nil
 }
 
 /* NOTYET
@@ -140,51 +149,102 @@ func NewMonitoringMonitoredProjectRef(ctx context.Context, reader client.Reader,
 }
 */
 
-func (r *MonitoringMonitoredProjectRef) Parent() (*MonitoringMonitoredProjectParent, error) {
-	if r.parent != nil {
-		return r.parent, nil
-	}
+func (r *MonitoringMonitoredProjectRef) Parent() (*MetricsScopeID, error) {
+	// if r.parent != nil {
+	// 	return r.parent, nil
+	// }
 	if r.External != "" {
-		parent, _, err := parseMonitoringMonitoredProjectExternal(r.External)
+		gcpURL, err := r.parseExternalURL()
 		if err != nil {
 			return nil, err
 		}
-		return parent, nil
+
+		scopeID := &MetricsScopeID{}
+		scopeID.ScopingProjectID, err = gcpURL.Get("metricsScopes")
+		if err != nil {
+			return nil, err
+		}
+		return scopeID, nil
 	}
 	return nil, fmt.Errorf("MonitoringMonitoredProjectRef not initialized from `NewMonitoringMonitoredProjectRef` or `NormalizedExternal`")
 }
 
-type MonitoringMonitoredProjectParent struct {
-	ProjectID string
-	Location  string
-}
-
-func (p *MonitoringMonitoredProjectParent) String() string {
-	return "projects/" + p.ProjectID + "/locations/" + p.Location
-}
-
-func asMonitoringMonitoredProjectExternal(parent *MonitoringMonitoredProjectParent, resourceID string) (external string) {
-	return parent.String() + "/monitoredprojects/" + resourceID
-}
-
-func parseMonitoringMonitoredProjectExternal(external string) (parent *MonitoringMonitoredProjectParent, resourceID string, err error) {
-	external = strings.TrimPrefix(external, "/")
-	tokens := strings.Split(external, "/")
-	if len(tokens) != 6 || tokens[0] != "projects" || tokens[2] != "locations" || tokens[4] != "monitoredproject" {
-		return nil, "", fmt.Errorf("format of MonitoringMonitoredProject external=%q was not known (use projects/<projectId>/locations/<location>/monitoredprojects/<monitoredprojectID>)", external)
+func (r *MonitoringMonitoredProjectRef) MonitoredProjectID() (string, error) {
+	if r.External == "" {
+		return "", fmt.Errorf("MonitoringMonitoredProjectRef not initialized")
 	}
-	parent = &MonitoringMonitoredProjectParent{
-		ProjectID: tokens[1],
-		Location:  tokens[3],
+
+	gcpURL, err := r.parseExternalURL()
+	if err != nil {
+		return "", err
 	}
-	resourceID = tokens[5]
-	return parent, resourceID, nil
+
+	projectID, err := gcpURL.Get("projects")
+	if err != nil {
+		return "", err
+	}
+	return projectID, nil
 }
 
-func valueOf[T any](t *T) T {
-	var zeroVal T
-	if t == nil {
-		return zeroVal
+type MetricsScopeID struct {
+	ScopingProjectID string
+}
+
+func (p *MetricsScopeID) String() string {
+	return "locations/global/metricsScopes/" + p.ScopingProjectID
+}
+
+// func asMonitoringMonitoredProjectExternal(parent *MonitoringMonitoredProjectParent, resourceID string) (external string) {
+// 	return parent.String() + "/monitoredprojects/" + resourceID
+// }
+
+func (r *MonitoringMonitoredProjectRef) parseExternalURL() (*gcpURL, error) {
+	external := r.External
+
+	gcpURL := MatchGCPURL(external, "locations/global/metricsScopes/{SCOPING_PROJECT_ID}/projects/{MONITORED_PROJECT_ID}")
+	if gcpURL != nil {
+		return gcpURL, nil
 	}
-	return *t
+
+	return nil, fmt.Errorf("format of MonitoringMonitoredProject external=%q was not known (use locations/global/metricsScopes/{SCOPING_PROJECT_ID_OR_NUMBER}/projects/{MONITORED_PROJECT_ID_OR_NUMBER})", external)
+}
+
+type gcpURL struct {
+	m           map[string]string
+	originalURL string
+}
+
+func (u *gcpURL) Get(k string) (string, error) {
+	v, found := u.m[k]
+	if !found {
+		return "", fmt.Errorf("key %q not found in url %q", k, u.originalURL)
+	}
+	return v, nil
+}
+
+func MatchGCPURL(s string, template string) *gcpURL {
+	m := make(map[string]string)
+
+	tokens := strings.Split(s, "/")
+	templateTokens := strings.Split(template, "/")
+	if len(tokens) != len(templateTokens) {
+		return nil
+	}
+	for i, templateToken := range templateTokens {
+		if strings.HasPrefix(templateToken, "{") {
+			// Wildcard
+			if i == 0 {
+				klog.Fatalf("invalid GCP URL template %q", template)
+			}
+			key := templateTokens[i-1]
+			v := tokens[i]
+			m[key] = v
+			continue
+		}
+		if templateToken != tokens[i] {
+			return nil
+		}
+	}
+
+	return &gcpURL{m: m, originalURL: s}
 }

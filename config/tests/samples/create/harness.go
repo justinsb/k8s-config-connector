@@ -499,6 +499,7 @@ func NewHarnessWithOptions(ctx context.Context, t *testing.T, opts *HarnessOptio
 		}
 
 		transport_tpg.GRPCUnaryClientInterceptor = grpcUnaryInterceptor
+		kccConfig.GRPCUnaryClientInterceptor = grpcUnaryInterceptor
 
 		// Intercept (and log) DCL and direct(non TF) requests
 		if len(eventSinks) != 0 {
