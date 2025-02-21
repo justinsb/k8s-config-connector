@@ -30,9 +30,18 @@ import (
 	"k8s.io/klog/v2"
 )
 
+type CodeBot struct {
+	ctx           context.Context
+	protoEnhancer *toolbot.EnhanceWithProtoDefinition
+	chatSession   *codebot.Chat
+}
+
 func main() {
 	ctx := context.Background()
-	if err := run(ctx); err != nil {
+	codebot := &CodeBot{
+		ctx: ctx,
+	}
+	if err := codebot.run(ctx); err != nil {
 		fmt.Fprintf(os.Stderr, "%v\n", err)
 		os.Exit(1)
 	}
@@ -43,43 +52,29 @@ type Options struct {
 	ProtoDir string
 	// BaseDir is the base directory for the project code
 	BaseDir string
-
-	UIType   string
-	Project  string
-	Location string
+	// Prompt is the prompt to be passed in non-interactive mode
+	Prompt string
 }
 
-func (o *Options) GetProject() string {
-	return o.Project
-}
-
-func (o *Options) GetLocation() string {
-	return o.Location
-}
-
-func run(ctx context.Context) error {
+func (cb *CodeBot) run(ctx context.Context) error {
 	var o Options
 
 	klog.InitFlags(nil)
 
 	flag.StringVar(&o.ProtoDir, "proto-dir", o.ProtoDir, "base directory for checkout of proto API definitions")
 	flag.StringVar(&o.BaseDir, "base-dir", o.BaseDir, "base directory for the project code")
-	flag.StringVar(&o.UIType, "ui-type", o.UIType, "available value is terminal, tview, or bash.")
-	flag.StringVar(&o.Project, "project", o.Project, "the GCP project that the LLM service files billing for, Default to gcloud config")
-	flag.StringVar(&o.Location, "location", o.Location, "the GCP location. Default to gcloud config")
-
+	flag.StringVar(&o.Prompt, "prompt", o.Prompt, "prompt to be passed in non-interactive mode")
 	flag.Parse()
 
 	if o.ProtoDir == "" {
 		klog.Warningf("proto-dir not set; protobuf assistance will be disabled")
 	}
-	var protoEnhancer *toolbot.EnhanceWithProtoDefinition
 	if o.ProtoDir != "" {
 		enhancer, err := toolbot.NewEnhanceWithProtoDefinition(o.ProtoDir)
 		if err != nil {
 			return fmt.Errorf("loading proto definitions: %w", err)
 		}
-		protoEnhancer = enhancer
+		cb.protoEnhancer = enhancer
 	}
 
 	if o.BaseDir == "" {
@@ -118,85 +113,97 @@ func run(ctx context.Context) error {
 
 	toolbox := codebot.NewToolbox(codebot.GetAllTools())
 
-	var chatSession *codebot.Chat
+	if o.Prompt == "" {
+		// ui := ui.NewTViewUI()
+		klog.Warningf("using new terminal ui")
+		ui := ui.NewTerminalUI()
 
-	var ui codebotui.UI
-	switch o.UIType {
-	case "terminal":
-		ui = codebotui.NewTerminalUI()
-	case "tview":
-		ui = codebotui.NewTViewUI()
-	case "bash":
-		ui = codebotui.NewBashUI()
-	default:
-		ui = codebotui.NewTerminalUI()
+		ui.SetCallback(cb.sendToLlm)
+
+		session, err := codebot.NewChat(ctx, llmClient, o.BaseDir, contextFiles, toolbox, ui)
+		if err != nil {
+			return err
+		}
+		cb.chatSession = session
+		defer cb.chatSession.Close()
+
+		if err := ui.Run(); err != nil {
+			return fmt.Errorf("running tview: %w", err)
+		}
+	} else {
+		klog.Warningf("using codebot newchat directly")
+
+		klog.Warningf("using new terminal ui")
+		ui := ui.NewNoInteractTerminal("prompt.txt")
+
+		ui.SetCallback(cb.sendToLlm)
+
+		session, err := codebot.NewChat(ctx, llmClient, o.BaseDir, contextFiles, toolbox, ui)
+		if err != nil {
+			return err
+		}
+		cb.chatSession = session
+		defer cb.chatSession.Close()
+
+		if err := ui.Run(); err != nil {
+			return fmt.Errorf("running tview: %w", err)
+		}
 	}
 
-	ui.SetCallback(func(text string) error {
-		var userParts []string
+	return nil
+}
 
-		var additionalContext strings.Builder
+func (cb *CodeBot) sendToLlm(text string) error {
+	var userParts []string
 
-		tokens := strings.Split(text, " ")
-		for i, token := range tokens {
-			if protoEnhancer != nil {
-				if strings.HasPrefix(token, "@proto.service:") {
-					tokens[i] = ""
-					v := strings.TrimPrefix(token, "@proto.service:")
-					dataPoint := &toolbot.DataPoint{}
-					dataPoint.SetInput("proto.service", v)
-					if err := protoEnhancer.EnhanceDataPoint(ctx, dataPoint); err != nil {
-						return fmt.Errorf("error getting proto service definition: %w", err)
-					}
-					def := dataPoint.Input["proto.service.definition"]
-					if def == "" {
-						return fmt.Errorf("proto service definition for %q was empty", v)
-					}
-					fmt.Fprintf(&additionalContext, "Protobuf service definition for %s:\n", v)
-					fmt.Fprintf(&additionalContext, "```proto")
-					fmt.Fprintf(&additionalContext, "%v", def)
-					fmt.Fprintf(&additionalContext, "```")
-					fmt.Fprintf(&additionalContext, "---\n")
+	var additionalContext strings.Builder
+
+	tokens := strings.Split(text, " ")
+	for i, token := range tokens {
+		if cb.protoEnhancer != nil {
+			if strings.HasPrefix(token, "@proto.service:") {
+				tokens[i] = ""
+				v := strings.TrimPrefix(token, "@proto.service:")
+				dataPoint := &toolbot.DataPoint{}
+				dataPoint.SetInput("proto.service", v)
+				if err := cb.protoEnhancer.EnhanceDataPoint(cb.ctx, dataPoint); err != nil {
+					return fmt.Errorf("error getting proto service definition: %w", err)
 				}
-				if strings.HasPrefix(token, "@proto.message:") {
-					tokens[i] = ""
-					v := strings.TrimPrefix(token, "@proto.message:")
-					dataPoint := &toolbot.DataPoint{}
-					dataPoint.SetInput("proto.message", v)
-					if err := protoEnhancer.EnhanceDataPoint(ctx, dataPoint); err != nil {
-						return fmt.Errorf("error getting proto message definition: %w", err)
-					}
-					def := dataPoint.Input["proto.message.definition"]
-					if def == "" {
-						return fmt.Errorf("proto message definition for %q was empty", v)
-					}
-					fmt.Fprintf(&additionalContext, "Protobuf message definition for %s:\n", v)
-					fmt.Fprintf(&additionalContext, "```proto")
-					fmt.Fprintf(&additionalContext, "%v", def)
-					fmt.Fprintf(&additionalContext, "```")
-					fmt.Fprintf(&additionalContext, "---\n")
+				def := dataPoint.Input["proto.service.definition"]
+				if def == "" {
+					return fmt.Errorf("proto service definition for %q was empty", v)
 				}
+				fmt.Fprintf(&additionalContext, "Protobuf service definition for %s:\n", v)
+				fmt.Fprintf(&additionalContext, "```proto")
+				fmt.Fprintf(&additionalContext, "%v", def)
+				fmt.Fprintf(&additionalContext, "```")
+				fmt.Fprintf(&additionalContext, "---\n")
+			}
+			if strings.HasPrefix(token, "@proto.message:") {
+				tokens[i] = ""
+				v := strings.TrimPrefix(token, "@proto.message:")
+				dataPoint := &toolbot.DataPoint{}
+				dataPoint.SetInput("proto.message", v)
+				if err := cb.protoEnhancer.EnhanceDataPoint(cb.ctx, dataPoint); err != nil {
+					return fmt.Errorf("error getting proto message definition: %w", err)
+				}
+				def := dataPoint.Input["proto.message.definition"]
+				if def == "" {
+					return fmt.Errorf("proto message definition for %q was empty", v)
+				}
+				fmt.Fprintf(&additionalContext, "Protobuf message definition for %s:\n", v)
+				fmt.Fprintf(&additionalContext, "```proto")
+				fmt.Fprintf(&additionalContext, "%v", def)
+				fmt.Fprintf(&additionalContext, "```")
+				fmt.Fprintf(&additionalContext, "---\n")
 			}
 		}
-		text = additionalContext.String() + strings.Join(tokens, " ")
-		userParts = append(userParts, text)
-
-		if err := chatSession.SendMessage(ctx, userParts...); err != nil {
-			return fmt.Errorf("generating content with gemini: %w", err)
-		}
-
-		return nil
-	})
-
-	session, err := codebot.NewChat(ctx, llmClient, o.BaseDir, contextFiles, toolbox, ui)
-	if err != nil {
-		return err
 	}
-	chatSession = session
-	defer chatSession.Close()
+	text = additionalContext.String() + strings.Join(tokens, " ")
+	userParts = append(userParts, text)
 
-	if err := ui.Run(); err != nil {
-		return fmt.Errorf("running tview: %w", err)
+	if err := cb.chatSession.SendMessage(cb.ctx, userParts...); err != nil {
+		return fmt.Errorf("generating content with gemini: %w", err)
 	}
 
 	return nil
