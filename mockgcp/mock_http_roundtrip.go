@@ -56,6 +56,7 @@ import (
 	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/mockcontaineranalysis"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/mockdataflow"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/mockdataform"
+	_ "github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/mockdataproc"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/mockdiscoveryengine"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/mockedgecontainer"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/mockedgenetwork"
@@ -77,7 +78,6 @@ import (
 	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/mockpubsublite"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/mockredis"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/mockresourcemanager"
-	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/mockdataproc"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/mocksecretmanager"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/mocksecuresourcemanager"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/mockservicedirectory"
@@ -225,7 +225,6 @@ func NewMockRoundTripper(ctx context.Context, k8sClient client.Client, storage s
 	services = append(services, mockapigee.New(env, storage))
 	services = append(services, mockbigqueryreservation.New(env, storage))
 	services = append(services, mockmanagedkafka.New(env, storage))
-	services = append(services, mockdataproc.New(env, storage))
 	services = append(services, mockworkflows.New(env, storage))
 
 	for _, service := range services {
@@ -522,7 +521,7 @@ func (m *mockRoundTripper) RoundTrip(req *http.Request) (*http.Response, error) 
 
 	response := &http.Response{
 		StatusCode: 403,
-		Status:     "mockRoundTripper injecting fake response",
+		Status:     "mockRoundTripper injecting fake response for unknown service " + req.Host,
 	}
 
 	if request == "GET https://openidconnect.googleapis.com/v1/userinfo?alt=json" {
