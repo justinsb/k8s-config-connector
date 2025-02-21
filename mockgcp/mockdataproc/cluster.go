@@ -21,6 +21,7 @@ package mockdataproc
 import (
 	"context"
 	"fmt"
+	"reflect"
 	"strings"
 	"time"
 
@@ -30,18 +31,14 @@ import (
 	"google.golang.org/protobuf/types/known/emptypb"
 	"google.golang.org/protobuf/types/known/timestamppb"
 
+	pb "cloud.google.com/go/dataproc/v2/apiv1/dataprocpb"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/common/projects"
-	pb "github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/generated/mockgcp/cloud/dataproc/v1"
+	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/pkg/storage"
 	longrunningpb "google.golang.org/genproto/googleapis/longrunning"
 )
 
-type dataprocClusterService struct {
-	*MockService
-	pb.UnimplementedClusterControllerServer
-}
-
-func (s *dataprocClusterService) GetCluster(ctx context.Context, req *pb.GetClusterRequest) (*pb.Cluster, error) {
-	name, err := s.parseClusterName(req.ProjectId, req.Region, req.ClusterName)
+func (s *clusterControllerServer) GetCluster(ctx context.Context, req *pb.GetClusterRequest) (*pb.Cluster, error) {
+	name, err := s.buildClusterName(req.ProjectId, req.Region, req.ClusterName)
 	if err != nil {
 		return nil, err
 	}
@@ -56,9 +53,33 @@ func (s *dataprocClusterService) GetCluster(ctx context.Context, req *pb.GetClus
 	return obj, nil
 }
 
-func (s *dataprocClusterService) CreateCluster(ctx context.Context, req *pb.CreateClusterRequest) (*longrunningpb.Operation, error) {
-	reqName := fmt.Sprintf("projects/%s/regions/%s/clusters/%s", req.GetProjectId(), req.GetRegion(), req.GetCluster().GetClusterName())
-	name, err := s.parseClusterName(req.ProjectId, req.Region, req.Cluster.ClusterName)
+func (s *clusterControllerServer) ListClusters(ctx context.Context, req *pb.ListClustersRequest) (*pb.ListClustersResponse, error) {
+	name, err := s.buildClusterName(req.ProjectId, req.Region, "")
+	if err != nil {
+		return nil, err
+	}
+
+	findPrefix := name.String()
+
+	var clusters []*pb.Cluster
+
+	findKind := (&pb.Cluster{}).ProtoReflect().Descriptor()
+	if err := s.storage.List(ctx, findKind, storage.ListOptions{Prefix: findPrefix}, func(obj proto.Message) error {
+		cluster := obj.(*pb.Cluster)
+		clusters = append(clusters, cluster)
+		return nil
+	}); err != nil {
+		return nil, err
+	}
+
+	return &pb.ListClustersResponse{
+		Clusters: clusters,
+	}, nil
+
+}
+
+func (s *clusterControllerServer) CreateCluster(ctx context.Context, req *pb.CreateClusterRequest) (*longrunningpb.Operation, error) {
+	name, err := s.buildClusterName(req.ProjectId, req.Region, req.Cluster.ClusterName)
 	if err != nil {
 		return nil, err
 	}
@@ -68,10 +89,10 @@ func (s *dataprocClusterService) CreateCluster(ctx context.Context, req *pb.Crea
 	now := time.Now()
 
 	obj := proto.Clone(req.GetCluster()).(*pb.Cluster)
-	obj.ProjectId = name.Project.ProjectID
+	obj.ProjectId = name.Project.ID
 	obj.ClusterName = name.ClusterName
 	obj.Status = &pb.ClusterStatus{
-		State:        pb.ClusterStatus_CREATING,
+		State:          pb.ClusterStatus_CREATING,
 		StateStartTime: timestamppb.New(now),
 	}
 
@@ -83,28 +104,46 @@ func (s *dataprocClusterService) CreateCluster(ctx context.Context, req *pb.Crea
 		return nil, err
 	}
 
-	lroPrefix := fmt.Sprintf("projects/%s/regions/%s", name.Project.ProjectID, name.Region)
+	lroPrefix := fmt.Sprintf("projects/%s/regions/%s", name.Project.ID, name.Region)
 	lroMetadata := &pb.ClusterOperationMetadata{
-		ProjectId:   name.Project.ProjectID,
-		ClusterName: name.ClusterName,
-		ClusterUuid: string(obj.ClusterUuid),
+		// ProjectId:   name.Project.ID,
+		ClusterName:   name.ClusterName,
+		ClusterUuid:   obj.ClusterUuid,
+		OperationType: "CREATE",
+		Description:   "Create cluster with 2 workers",
+		Status: &pb.ClusterOperationStatus{
+			InnerState:     "PENDING",
+			State:          pb.ClusterOperationStatus_PENDING,
+			StateStartTime: timestamppb.New(now),
+		},
+		Warnings: []string{
+			"The firewall rules for specified network or subnetwork would allow ingress traffic from 0.0.0.0/0, which could be a security risk.",
+			"The specified custom staging bucket 'dataproc-staging-us-central1-${projectNumber}-ch70stme' is not using uniform bucket level access IAM configuration. It is recommended to update bucket to enable the same. See https://cloud.google.com/storage/docs/uniform-bucket-level-access.",
+			"No image specified. Using the default image version. It is recommended to select a specific image version in production, as the default image version may change at any time.",
+		},
 	}
 	return s.operations.StartLRO(ctx, lroPrefix, lroMetadata, func() (proto.Message, error) {
-		lroMetadata.EndTime = timestamppb.Now()
+		// lroMetadata.EndTime = timestamppb.Now()
 
 		return mutateObject(ctx, s.storage, fqn, func(obj *pb.Cluster) error {
 			obj.Status.State = pb.ClusterStatus_RUNNING
+			obj.Config.ConfigBucket = "dataproc-staging-us-central1-${projectNumber}-ch70stme"
+			obj.Config.EndpointConfig = &pb.EndpointConfig{}
+			obj.Config.GceClusterConfig.InternalIpOnly = PtrTo(true)
+			obj.Config.GceClusterConfig.NetworkUri = "https://www.googleapis.com/compute/v1/projects/${projectId}/global/networks/default"
+			obj.Config.GceClusterConfig.ServiceAccountScopes = []string{"https://www.googleapis.com/auth/cloud-platform"}
+			obj.Config.MasterConfig.DiskConfig.BootDiskSizeGb = 1000
 			return nil
 		})
 	})
 }
 
-func (s *dataprocClusterService) populateDefaultsForCluster(obj *pb.Cluster) {
+func (s *clusterControllerServer) populateDefaultsForCluster(obj *pb.Cluster) {
 
 }
 
-func (s *dataprocClusterService) UpdateCluster(ctx context.Context, req *pb.UpdateClusterRequest) (*longrunningpb.Operation, error) {
-	name, err := s.parseClusterName(req.ProjectId, req.Region, req.ClusterName)
+func (s *clusterControllerServer) UpdateCluster(ctx context.Context, req *pb.UpdateClusterRequest) (*longrunningpb.Operation, error) {
+	name, err := s.buildClusterName(req.ProjectId, req.Region, req.ClusterName)
 	if err != nil {
 		return nil, err
 	}
@@ -119,16 +158,16 @@ func (s *dataprocClusterService) UpdateCluster(ctx context.Context, req *pb.Upda
 	}
 
 	obj.Status = &pb.ClusterStatus{
-		State:        pb.ClusterStatus_UPDATING,
+		State:          pb.ClusterStatus_UPDATING,
 		StateStartTime: timestamppb.New(now),
 	}
 
 	// TODO: Implement proper fieldmask support.
 	updated := proto.Clone(req.GetCluster()).(*pb.Cluster)
-	updated.ProjectId = name.Project.ProjectID
+	updated.ProjectId = name.Project.ID
 	updated.ClusterName = name.ClusterName
 	updated.Status = &pb.ClusterStatus{
-		State:        pb.ClusterStatus_UPDATING,
+		State:          pb.ClusterStatus_UPDATING,
 		StateStartTime: timestamppb.New(now),
 	}
 	updated.StatusHistory = append(updated.StatusHistory, updated.Status)
@@ -137,14 +176,14 @@ func (s *dataprocClusterService) UpdateCluster(ctx context.Context, req *pb.Upda
 		return nil, err
 	}
 
-	lroPrefix := fmt.Sprintf("projects/%s/regions/%s", name.Project.ProjectID, name.Region)
+	lroPrefix := fmt.Sprintf("projects/%s/regions/%s", name.Project.ID, name.Region)
 	lroMetadata := &pb.ClusterOperationMetadata{
-		ProjectId:   name.Project.ProjectID,
+		// ProjectId:   name.Project.ID,
 		ClusterName: name.ClusterName,
 		ClusterUuid: string(obj.ClusterUuid),
 	}
 	return s.operations.StartLRO(ctx, lroPrefix, lroMetadata, func() (proto.Message, error) {
-		lroMetadata.EndTime = timestamppb.Now()
+		// lroMetadata.EndTime = timestamppb.Now()
 		if err := s.storage.Get(ctx, fqn, obj); err != nil {
 			return nil, err
 		}
@@ -160,29 +199,29 @@ func (s *dataprocClusterService) UpdateCluster(ctx context.Context, req *pb.Upda
 	})
 }
 
-func (s *dataprocClusterService) DeleteCluster(ctx context.Context, req *pb.DeleteClusterRequest) (*longrunningpb.Operation, error) {
-	name, err := s.parseClusterName(req.ProjectId, req.Region, req.ClusterName)
+func (s *clusterControllerServer) DeleteCluster(ctx context.Context, req *pb.DeleteClusterRequest) (*longrunningpb.Operation, error) {
+	name, err := s.buildClusterName(req.ProjectId, req.Region, req.ClusterName)
 	if err != nil {
 		return nil, err
 	}
 
 	fqn := name.String()
 
-	now := time.Now()
+	// now := time.Now()
 
 	deleted := &pb.Cluster{}
 	if err := s.storage.Delete(ctx, fqn, deleted); err != nil {
 		return nil, err
 	}
 
-	lroPrefix := fmt.Sprintf("projects/%s/regions/%s", name.Project.ProjectID, name.Region)
+	lroPrefix := fmt.Sprintf("projects/%s/regions/%s", name.Project.ID, name.Region)
 	lroMetadata := &pb.ClusterOperationMetadata{
-		ProjectId:   name.Project.ProjectID,
+		// ProjectId:   name.Project.ID,
 		ClusterName: name.ClusterName,
 		ClusterUuid: string(deleted.ClusterUuid),
 	}
 	return s.operations.StartLRO(ctx, lroPrefix, lroMetadata, func() (proto.Message, error) {
-		lroMetadata.EndTime = timestamppb.Now()
+		// lroMetadata.EndTime = timestamppb.Now()
 		return &emptypb.Empty{}, nil
 	})
 }
@@ -199,19 +238,29 @@ func (n *clusterName) String() string {
 
 // parseClusterName parses a string into an clusterName.
 // The expected form is `projects/*/regions/*/clusters/*`.
-func (s *MockService) parseClusterName(projectID, region, clusterName string) (*clusterName, error) {
-	project, err := s.Projects.GetProjectByID(projectID)
+func (s *MockService) parseClusterName(name string) (*clusterName, error) {
+
+	tokens := strings.Split(name, "/")
+	if len(tokens) == 6 && tokens[0] == "projects" && tokens[2] == "regions" && tokens[4] == "clusters" {
+		return s.buildClusterName(tokens[1], tokens[3], tokens[5])
+	}
+
+	return nil, status.Errorf(codes.InvalidArgument, "invalid name %q", name)
+}
+
+// buildClusterName builds a clusterName from the components.
+func (s *MockService) buildClusterName(projectName, region, cluster string) (*clusterName, error) {
+
+	project, err := s.Projects.GetProjectByID(projectName)
 	if err != nil {
 		return nil, err
 	}
 
-	name := &clusterName{
+	return &clusterName{
 		Project:     project,
 		Region:      region,
-		ClusterName: clusterName,
-	}
-
-	return name, nil
+		ClusterName: cluster,
+	}, nil
 }
 
 // mutateObject updates the object; it gets the object by fqn, calls mutator, then updates the object
@@ -234,5 +283,3 @@ func mutateObject[T proto.Message](ctx context.Context, storage storage.Storage,
 
 	return obj, nil
 }
-
-

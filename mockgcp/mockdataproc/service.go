@@ -24,10 +24,11 @@ import (
 
 	"google.golang.org/grpc"
 
+	pb "cloud.google.com/go/dataproc/v2/apiv1/dataprocpb"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/common"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/common/httpmux"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/common/operations"
-	pb "github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/generated/mockgcp/cloud/dataproc/v1"
+	pbhttp "github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/generated/google/cloud/dataproc/v1"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/pkg/storage"
 )
 
@@ -37,11 +38,9 @@ type MockService struct {
 	storage storage.Storage
 
 	operations *operations.Operations
-
-	v1 *DataprocV1
 }
 
-type DataprocV1 struct {
+type clusterControllerServer struct {
 	*MockService
 	pb.UnimplementedClusterControllerServer
 }
@@ -53,7 +52,6 @@ func New(env *common.MockEnvironment, storage storage.Storage) *MockService {
 		storage:         storage,
 		operations:      operations.NewOperationsService(storage),
 	}
-	s.v1 = &DataprocV1{MockService: s}
 	return s
 }
 
@@ -62,12 +60,12 @@ func (s *MockService) ExpectedHosts() []string {
 }
 
 func (s *MockService) Register(grpcServer *grpc.Server) {
-	pb.RegisterClusterControllerServer(grpcServer, s.v1)
+	pb.RegisterClusterControllerServer(grpcServer, &clusterControllerServer{MockService: s})
 }
 
 func (s *MockService) NewHTTPMux(ctx context.Context, conn *grpc.ClientConn) (http.Handler, error) {
 	mux, err := httpmux.NewServeMux(ctx, conn, httpmux.Options{},
-		pb.RegisterClusterControllerHandler,
+		pbhttp.RegisterClusterControllerHandler,
 		s.operations.RegisterOperationsPath("/v1/{prefix=**}/operations/{name}"))
 
 	if err != nil {
@@ -76,5 +74,3 @@ func (s *MockService) NewHTTPMux(ctx context.Context, conn *grpc.ClientConn) (ht
 
 	return mux, nil
 }
-
-
