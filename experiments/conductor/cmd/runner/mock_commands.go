@@ -15,10 +15,14 @@
 package runner
 
 import (
+	"bytes"
+	"context"
 	"errors"
 	"fmt"
+	"io"
 	"log"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"strings"
 )
@@ -58,15 +62,15 @@ When you have completed, please output the name of the test script you have crea
 
 { "path_to_created_test": "mock<GROUP>/testdata/<RESOURCE>/crud/script.yaml" }`
 
-func createScriptYaml(opts *RunnerOptions, branch Branch) {
+func createScriptYaml(opts *RunnerOptions, branch Branch) error {
+	ctx := context.TODO()
 	if branch.Command == "" {
-		log.Printf("SKIPPING %s, no gcloud command\r\n", branch.Name)
-		return
+		return fmt.Errorf("no gcloud command")
 	}
 
 	stdin, stdout, err := startBash()
 	if err != nil {
-		log.Fatal(err)
+		return fmt.Errorf("starting bash: %w", err)
 	}
 	defer stdin.Close()
 
@@ -81,7 +85,7 @@ func createScriptYaml(opts *RunnerOptions, branch Branch) {
 	for !done {
 		length, err := stdout.Read(outBuffer)
 		if err != nil {
-			log.Fatal(err)
+			return fmt.Errorf("reading from stdout: %w", err)
 		}
 		msg += string(outBuffer[:length])
 		done = strings.HasSuffix(msg, "done\n")
@@ -93,7 +97,7 @@ func createScriptYaml(opts *RunnerOptions, branch Branch) {
 	scriptFullPath := filepath.Join(opts.branchRepoDir, "mockgcp", scriptFile)
 	if _, err := os.Stat(scriptFullPath); !errors.Is(err, os.ErrNotExist) {
 		log.Printf("SKIPPING %s, %s already exists\r\n", branch.Name, scriptFullPath)
-		return
+		return nil
 	}
 
 	tmp := strings.ReplaceAll(SCRIPT_YAML_PROMPT, "<TICK>", "`")
@@ -108,33 +112,35 @@ func createScriptYaml(opts *RunnerOptions, branch Branch) {
 		log.Println("COMMAND: cleaning up old prompt.txt")
 		err = os.Remove(promptPath)
 		if err != nil {
-			log.Printf("Attempt to clean up prompt.txt failed with %v", err)
+			return fmt.Errorf("removing old prompt: %w", err)
 		}
 	}
 	log.Println("COMMAND: writing new prompt.txt")
 	err = os.WriteFile(promptPath, []byte(prompt), 0644)
 	if err != nil {
-		log.Fatal(err)
+		return fmt.Errorf("writing new prompt: %w", err)
 	}
 
 	// Run the LLM to generate the file.
 	log.Println("COMMAND: codebot --prompt=prompt.txt and echo done")
-	stdin.Write([]byte("codebot --prompt=prompt.txt && echo done\n"))
-	done = false
-	for !done {
-		length, err := stdout.Read(outBuffer)
-		if err != nil {
-			log.Fatal(err)
-		}
-		msg += string(outBuffer[:length])
-		done = strings.HasSuffix(msg, "done\n")
+	if err := runCommand(ctx, "codebot", "--prompt="+promptPath); err != nil {
+		return fmt.Errorf("running codebot: %w", err)
 	}
+	// stdin.Write([]byte("codebot --prompt=prompt.txt && echo done\n"))
+	// done = false
+	// for !done {
+	// 	length, err := stdout.Read(outBuffer)
+	// 	if err != nil {
+	// 		log.Fatal(err)
+	// 	}
+	// 	msg += string(outBuffer[:length])
+	// 	done = strings.HasSuffix(msg, "done\n")
+	// }
 	log.Printf("CODEBOT GENERATE %s\r\n", msg)
 
 	// Check to see if the script file was created
 	if _, err := os.Stat(scriptFullPath); errors.Is(err, os.ErrNotExist) {
-		log.Printf("SKIPPING %s, %s was not created\r\n", branch.Name, scriptFullPath)
-		return
+		return fmt.Errorf("script file was not created")
 	}
 
 	// Add the new file to the current branch.
@@ -144,7 +150,7 @@ func createScriptYaml(opts *RunnerOptions, branch Branch) {
 	for !done {
 		length, err := stdout.Read(outBuffer)
 		if err != nil {
-			log.Fatal(err)
+			return fmt.Errorf("reading from stdout: %w", err)
 		}
 		msg += string(outBuffer[:length])
 		done = strings.HasSuffix(msg, "done\n")
@@ -158,10 +164,24 @@ func createScriptYaml(opts *RunnerOptions, branch Branch) {
 	for !done {
 		length, err := stdout.Read(outBuffer)
 		if err != nil {
-			log.Fatal(err)
+			return fmt.Errorf("reading from stdout: %w", err)
 		}
 		msg += string(outBuffer[:length])
 		done = strings.HasSuffix(msg, "done\n")
 	}
 	log.Printf("BRANCH COMMIT %s\r\n", msg)
+	return nil
+}
+
+func runCommand(ctx context.Context, args ...string) error {
+	cmd := exec.CommandContext(ctx, args[0], args[1:]...)
+	var stdout bytes.Buffer
+	cmd.Stdout = io.MultiWriter(os.Stdout, &stdout)
+	var stderr bytes.Buffer
+	cmd.Stderr = io.MultiWriter(os.Stdout, &stderr)
+
+	if err := cmd.Run(); err != nil {
+		return fmt.Errorf("error running command %v: %w", args, err)
+	}
+	return nil
 }

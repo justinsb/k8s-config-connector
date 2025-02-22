@@ -1,0 +1,5 @@
+
+workerConfig:
+  minInstances: 2
+  maxInstances: 10
+  weight: 1

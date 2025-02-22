@@ -22,9 +22,9 @@ import (
 	"path/filepath"
 	"strings"
 
-	codebotui "github.com/GoogleCloudPlatform/k8s-config-connector/dev/tools/controllerbuilder/pkg/codebot/ui"
-
 	"github.com/GoogleCloudPlatform/k8s-config-connector/dev/tools/controllerbuilder/pkg/codebot"
+	"github.com/GoogleCloudPlatform/k8s-config-connector/dev/tools/controllerbuilder/pkg/codebot/ui"
+	codebotui "github.com/GoogleCloudPlatform/k8s-config-connector/dev/tools/controllerbuilder/pkg/codebot/ui"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/dev/tools/controllerbuilder/pkg/llm"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/dev/tools/controllerbuilder/pkg/toolbot"
 	"k8s.io/klog/v2"
@@ -104,7 +104,7 @@ func (cb *CodeBot) run(ctx context.Context) error {
 		}
 	}
 
-	llmClient, err := llm.BuildVertexAIClient(ctx, &o)
+	llmClient, err := llm.BuildVertexAIClient(ctx)
 	if err != nil {
 		return fmt.Errorf("initializing LLM: %w", err)
 	}
@@ -116,7 +116,7 @@ func (cb *CodeBot) run(ctx context.Context) error {
 	if o.Prompt == "" {
 		// ui := ui.NewTViewUI()
 		klog.Warningf("using new terminal ui")
-		ui := ui.NewTerminalUI()
+		ui := codebotui.NewTerminalUI()
 
 		ui.SetCallback(cb.sendToLlm)
 
@@ -134,7 +134,7 @@ func (cb *CodeBot) run(ctx context.Context) error {
 		klog.Warningf("using codebot newchat directly")
 
 		klog.Warningf("using new terminal ui")
-		ui := ui.NewNoInteractTerminal("prompt.txt")
+		ui := ui.NewNoInteractTerminal(o.Prompt)
 
 		ui.SetCallback(cb.sendToLlm)
 

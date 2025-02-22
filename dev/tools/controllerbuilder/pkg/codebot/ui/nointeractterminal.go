@@ -37,7 +37,7 @@ func NewNoInteractTerminal(promptFile string) UI {
 func (u *NoInteractTerminal) Run() error {
 	file, err := os.Open(u.promptFile) // For read access.
 	if err != nil {
-		return fmt.Errorf("opening prompt file: %w", err)
+		return fmt.Errorf("opening prompt file %q: %w", u.promptFile, err)
 	}
 	defer file.Close()
 

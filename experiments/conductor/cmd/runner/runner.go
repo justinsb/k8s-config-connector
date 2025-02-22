@@ -23,6 +23,7 @@ import (
 
 	"github.com/spf13/cobra"
 	"gopkg.in/yaml.v3"
+	"k8s.io/klog/v2"
 )
 
 const (
@@ -155,7 +156,9 @@ func RunRunner(ctx context.Context, opts *RunnerOptions) error {
 	case 4:
 		for idx, branch := range branches.Branches {
 			log.Printf("%d name: %s, branch: %s\r\n", idx, branch.Name, branch.Local)
-			createScriptYaml(opts, branch)
+			if err := createScriptYaml(opts, branch); err != nil {
+				klog.Infof("ERROR for %v: %v", branch, err)
+			}
 		}
 	default:
 		log.Fatalf("unrecognixed command: %d", opts.command)

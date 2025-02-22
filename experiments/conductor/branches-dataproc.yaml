@@ -1,0 +1,87 @@
+branches:
+    - name: dataproc-clusters
+      local: resource-dataproc-clusters
+      remote: resource-dataproc-clusters
+      command: gcloud dataproc clusters
+      group: dataproc
+      resource: cluster
+      controller: Unknown
+      kind: DataprocCluster
+      package: google.cloud.dataproc.v1
+      proto: Cluster
+      proto-path: google.cloud.dataproc.v1.Cluster
+      notes: []
+    - name: dataproc-autoscalingpolicy
+      local: resource-dataproc-autoscalingpolicy
+      remote: resource-dataproc-autoscalingpolicy
+      command: gcloud dataproc autoscaling-policies
+      group: dataproc
+      resource: autoscalingpolicy
+      controller: Unknown
+      kind: DataprocAutoscalingPolicy
+      package: google.cloud.dataproc.v1
+      proto: AutoscalingPolicy
+      proto-path: google.cloud.dataproc.v1.AutoscalingPolicy
+      notes: []
+    - name: dataproc-batch
+      local: resource-dataproc-batch
+      remote: resource-dataproc-batch
+      command: gcloud dataproc batches
+      group: dataproc
+      resource: batch
+      controller: Unknown
+      kind: DataprocBatch
+      package: google.cloud.dataproc.v1
+      proto: Batch
+      proto-path: google.cloud.dataproc.v1.Batch
+      notes: []
+    - name: dataproc-nodegroup
+      local: resource-dataproc-nodegroup
+      remote: resource-dataproc-nodegroup
+      command: gcloud dataproc node-groups
+      group: dataproc
+      resource: nodegroup
+      controller: Unknown
+      kind: DataprocNodeGroup
+      package: google.cloud.dataproc.v1
+      proto: NodeGroup
+      proto-path: google.cloud.dataproc.v1.NodeGroup
+      notes: []
+    - name: dataproc-sessiontemplate
+      local: resource-dataproc-sessiontemplate
+      remote: resource-dataproc-sessiontemplate
+      command: ""
+      group: dataproc
+      resource: sessiontemplate
+      controller: Unknown
+      kind: DataprocSessionTemplate
+      package: google.cloud.dataproc.v1
+      proto: SessionTemplate
+      proto-path: google.cloud.dataproc.v1.SessionTemplate
+      notes:
+        - No gcloud command found
+    - name: dataproc-session
+      local: resource-dataproc-session
+      remote: resource-dataproc-session
+      command: ""
+      group: dataproc
+      resource: session
+      controller: Unknown
+      kind: DataprocSession
+      package: google.cloud.dataproc.v1
+      proto: Session
+      proto-path: google.cloud.dataproc.v1.Session
+      notes:
+        - No gcloud command found
+    - name: dataproc-workflowtemplate
+      local: resource-dataproc-workflowtemplate
+      remote: resource-dataproc-workflowtemplate
+      command: gcloud dataproc workflow-templates
+      group: dataproc
+      resource: workflowtemplate
+      controller: Unknown
+      kind: DataprocWorkflowTemplate
+      package: google.cloud.dataproc.v1
+      proto: WorkflowTemplate
+      proto-path: google.cloud.dataproc.v1.WorkflowTemplate
+      notes: []
