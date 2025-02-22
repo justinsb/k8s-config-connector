@@ -11,7 +11,6 @@ Content-Type: application/json
 }
 
 200 OK
-Cache-Control: private
 Content-Type: application/json; charset=UTF-8
 Server: ESF
 Vary: Origin
@@ -46,46 +45,6 @@ Content-Type: application/json
 }
 
 200 OK
-Cache-Control: private
-Content-Type: application/json; charset=UTF-8
-Server: ESF
-Vary: Origin
-Vary: X-Origin
-Vary: Referer
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-Xss-Protection: 0
-
-{
-  "etag": "abcdef0123A="
-}
-
----
-
-POST https://cloudresourcemanager.googleapis.com/v1/projects/${projectId}:setIamPolicy?alt=json
-Accept: application/json
-Authorization: (removed)
-Connection: keep-alive
-Content-Length: 205
-Content-Type: application/json
-
-{
-  "policy": {
-    "bindings": [
-      {
-        "members": [
-          "serviceAccount:dataproc-${uniqueId}@${projectId}.iam.gserviceaccount.com"
-        ],
-        "role": "roles/dataproc.worker"
-      }
-    ],
-    "etag": "1B2M2Y8AsgTpgAmY7PhCfg==",
-    "version": 3
-  }
-}
-
-200 OK
-Cache-Control: private
 Content-Type: application/json; charset=UTF-8
 Server: ESF
 Vary: Origin
@@ -99,9 +58,228 @@ X-Xss-Protection: 0
   "bindings": [
     {
       "members": [
-        "serviceAccount:dataproc-${uniqueId}@${projectId}.iam.gserviceaccount.com"
+        "serviceAccount:service-${projectNumber}@gcp-sa-aiplatform-cc.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.customCodeServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@gcp-sa-aiplatform.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@gcp-sa-alloydb.iam.gserviceaccount.com"
+      ],
+      "role": "roles/alloydb.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@gcp-sa-apigee.iam.gserviceaccount.com"
+      ],
+      "role": "roles/apigee.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@gcp-sa-artifactregistry.iam.gserviceaccount.com"
+      ],
+      "role": "roles/artifactregistry.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@gcp-sa-pubsub.iam.gserviceaccount.com"
+      ],
+      "role": "roles/bigquery.dataEditor"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@gcp-sa-pubsub.iam.gserviceaccount.com"
+      ],
+      "role": "roles/bigquery.metadataViewer"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@gcp-sa-cloudasset.iam.gserviceaccount.com"
+      ],
+      "role": "roles/cloudasset.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:${projectNumber}@cloudbuild.gserviceaccount.com"
+      ],
+      "role": "roles/cloudbuild.builds.builder"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@gcp-sa-cloudbuild.iam.gserviceaccount.com"
+      ],
+      "role": "roles/cloudbuild.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@gcf-admin-robot.iam.gserviceaccount.com"
+      ],
+      "role": "roles/cloudfunctions.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@compute-system.iam.gserviceaccount.com"
+      ],
+      "role": "roles/compute.serviceAgent"
+    },
+    {
+      "members": [
+        "deleted:serviceAccount:node-smoketest-k8s-local@${projectId}.iam.gserviceaccount.com?uid=100844976048329311433",
+        "deleted:serviceAccount:node-smoketest-k8s-local@${projectId}.iam.gserviceaccount.com?uid=115954429396858749830"
+      ],
+      "role": "roles/compute.viewer"
+    },
+    {
+      "members": [
+        "deleted:serviceAccount:control-plane-smoketest-af1h76@${projectId}.iam.gserviceaccount.com?uid=113654330338063455851",
+        "deleted:serviceAccount:control-plane-smoketest-af1h76@${projectId}.iam.gserviceaccount.com?uid=116587081905872309912",
+        "serviceAccount:service-${projectNumber}@container-engine-robot.iam.gserviceaccount.com"
+      ],
+      "role": "roles/container.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@containerregistry.iam.gserviceaccount.com"
+      ],
+      "role": "roles/containerregistry.ServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@dataflow-service-producer-prod.iam.gserviceaccount.com"
+      ],
+      "role": "roles/dataflow.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@dataproc-accounts.iam.gserviceaccount.com"
+      ],
+      "role": "roles/dataproc.serviceAgent"
+    },
+    {
+      "members": [
+        "deleted:serviceAccount:dataproc-ray3jfqlmflioaq@${projectId}.iam.gserviceaccount.com?uid=117173055556465499859",
+        "deleted:serviceAccount:dataproc-yab5fkxqcu6d6tq@${projectId}.iam.gserviceaccount.com?uid=100787475578268913456",
+        "serviceAccount:dataproc-18263f924dc2964a@${projectId}.iam.gserviceaccount.com",
+        "serviceAccount:dataproc-18263fb136bbe05c@${projectId}.iam.gserviceaccount.com",
+        "serviceAccount:dataproc-18263fcc690edae7@${projectId}.iam.gserviceaccount.com",
+        "serviceAccount:dataproc-18263fff74e1ab4c@${projectId}.iam.gserviceaccount.com",
+        "serviceAccount:dataproc-18264027ed0a9301@${projectId}.iam.gserviceaccount.com",
+        "serviceAccount:dataproc-182640ce8cd5b4ba@${projectId}.iam.gserviceaccount.com",
+        "serviceAccount:dataproc-1826416769078352@${projectId}.iam.gserviceaccount.com"
       ],
       "role": "roles/dataproc.worker"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@gcp-sa-discoveryengine.iam.gserviceaccount.com"
+      ],
+      "role": "roles/discoveryengine.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:${projectNumber}-compute@developer.gserviceaccount.com",
+        "serviceAccount:${projectNumber}@cloudservices.gserviceaccount.com",
+        "serviceAccount:capg-robot@${projectId}.iam.gserviceaccount.com",
+        "serviceAccount:gsa-2gmhdpkr7c3fv7m5z5zq@${projectId}.iam.gserviceaccount.com",
+        "serviceAccount:gsa-6vdy7febhal6dcblxxwq@${projectId}.iam.gserviceaccount.com",
+        "serviceAccount:gsa-cbqf42k029ldvpbloemg@${projectId}.iam.gserviceaccount.com",
+        "serviceAccount:gsa-gh4rcq2yma2c2p3smmgq@${projectId}.iam.gserviceaccount.com",
+        "serviceAccount:gsa-occz63xrb2cjc3bi5eqq@${projectId}.iam.gserviceaccount.com",
+        "serviceAccount:gsa-q26ohqg55anga4jynmqa@${projectId}.iam.gserviceaccount.com",
+        "serviceAccount:${projectId}@appspot.gserviceaccount.com"
+      ],
+      "role": "roles/editor"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@cloud-filer.iam.gserviceaccount.com"
+      ],
+      "role": "roles/file.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@gcp-sa-krmapihosting.iam.gserviceaccount.com"
+      ],
+      "role": "roles/krmapihosting.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@gcp-sa-networkconnectivity.iam.gserviceaccount.com"
+      ],
+      "role": "roles/networkconnectivity.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@gcp-sa-networkmanagement.iam.gserviceaccount.com"
+      ],
+      "role": "roles/networkmanagement.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@gcp-sa-yakima.iam.gserviceaccount.com",
+        "user:justinsb@google.com"
+      ],
+      "role": "roles/owner"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@gcp-sa-pubsub.iam.gserviceaccount.com"
+      ],
+      "role": "roles/pubsub.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@cloud-redis.iam.gserviceaccount.com"
+      ],
+      "role": "roles/redis.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@serverless-robot-prod.iam.gserviceaccount.com"
+      ],
+      "role": "roles/run.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@gcp-sa-sourcemanager.iam.gserviceaccount.com"
+      ],
+      "role": "roles/securesourcemanager.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@service-networking.iam.gserviceaccount.com"
+      ],
+      "role": "roles/servicenetworking.serviceAgent"
+    },
+    {
+      "members": [
+        "user:yuwenma@google.com"
+      ],
+      "role": "roles/viewer"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@gcp-sa-vpcaccess.iam.gserviceaccount.com"
+      ],
+      "role": "roles/vpcaccess.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@gcp-sa-workflows.iam.gserviceaccount.com"
+      ],
+      "role": "roles/workflows.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@gcp-sa-workstations.iam.gserviceaccount.com"
+      ],
+      "role": "roles/workstations.serviceAgent"
     }
   ],
   "etag": "abcdef0123A=",
@@ -110,7 +288,494 @@ X-Xss-Protection: 0
 
 ---
 
-POST https://dataproc.googleapis.com/v1/projects/${projectId}/regions/us-central1/clusters?alt=json&requestId=76d9568f7a6d4ab6910d187ab905a7d9
+POST https://cloudresourcemanager.googleapis.com/v1/projects/${projectId}:setIamPolicy?alt=json
+Accept: application/json
+Authorization: (removed)
+Connection: keep-alive
+Content-Length: 6715
+Content-Type: application/json
+
+{
+  "policy": {
+    "bindings": [
+      {
+        "members": [
+          "serviceAccount:service-${projectNumber}@gcp-sa-aiplatform-cc.iam.gserviceaccount.com"
+        ],
+        "role": "roles/aiplatform.customCodeServiceAgent"
+      },
+      {
+        "members": [
+          "serviceAccount:service-${projectNumber}@gcp-sa-aiplatform.iam.gserviceaccount.com"
+        ],
+        "role": "roles/aiplatform.serviceAgent"
+      },
+      {
+        "members": [
+          "serviceAccount:service-${projectNumber}@gcp-sa-alloydb.iam.gserviceaccount.com"
+        ],
+        "role": "roles/alloydb.serviceAgent"
+      },
+      {
+        "members": [
+          "serviceAccount:service-${projectNumber}@gcp-sa-apigee.iam.gserviceaccount.com"
+        ],
+        "role": "roles/apigee.serviceAgent"
+      },
+      {
+        "members": [
+          "serviceAccount:service-${projectNumber}@gcp-sa-artifactregistry.iam.gserviceaccount.com"
+        ],
+        "role": "roles/artifactregistry.serviceAgent"
+      },
+      {
+        "members": [
+          "serviceAccount:service-${projectNumber}@gcp-sa-pubsub.iam.gserviceaccount.com"
+        ],
+        "role": "roles/bigquery.dataEditor"
+      },
+      {
+        "members": [
+          "serviceAccount:service-${projectNumber}@gcp-sa-pubsub.iam.gserviceaccount.com"
+        ],
+        "role": "roles/bigquery.metadataViewer"
+      },
+      {
+        "members": [
+          "serviceAccount:service-${projectNumber}@gcp-sa-cloudasset.iam.gserviceaccount.com"
+        ],
+        "role": "roles/cloudasset.serviceAgent"
+      },
+      {
+        "members": [
+          "serviceAccount:${projectNumber}@cloudbuild.gserviceaccount.com"
+        ],
+        "role": "roles/cloudbuild.builds.builder"
+      },
+      {
+        "members": [
+          "serviceAccount:service-${projectNumber}@gcp-sa-cloudbuild.iam.gserviceaccount.com"
+        ],
+        "role": "roles/cloudbuild.serviceAgent"
+      },
+      {
+        "members": [
+          "serviceAccount:service-${projectNumber}@gcf-admin-robot.iam.gserviceaccount.com"
+        ],
+        "role": "roles/cloudfunctions.serviceAgent"
+      },
+      {
+        "members": [
+          "serviceAccount:service-${projectNumber}@compute-system.iam.gserviceaccount.com"
+        ],
+        "role": "roles/compute.serviceAgent"
+      },
+      {
+        "members": [
+          "deleted:serviceAccount:node-smoketest-k8s-local@${projectId}.iam.gserviceaccount.com?uid=100844976048329311433",
+          "deleted:serviceAccount:node-smoketest-k8s-local@${projectId}.iam.gserviceaccount.com?uid=115954429396858749830"
+        ],
+        "role": "roles/compute.viewer"
+      },
+      {
+        "members": [
+          "deleted:serviceAccount:control-plane-smoketest-af1h76@${projectId}.iam.gserviceaccount.com?uid=113654330338063455851",
+          "deleted:serviceAccount:control-plane-smoketest-af1h76@${projectId}.iam.gserviceaccount.com?uid=116587081905872309912",
+          "serviceAccount:service-${projectNumber}@container-engine-robot.iam.gserviceaccount.com"
+        ],
+        "role": "roles/container.serviceAgent"
+      },
+      {
+        "members": [
+          "serviceAccount:service-${projectNumber}@containerregistry.iam.gserviceaccount.com"
+        ],
+        "role": "roles/containerregistry.ServiceAgent"
+      },
+      {
+        "members": [
+          "serviceAccount:service-${projectNumber}@dataflow-service-producer-prod.iam.gserviceaccount.com"
+        ],
+        "role": "roles/dataflow.serviceAgent"
+      },
+      {
+        "members": [
+          "serviceAccount:service-${projectNumber}@dataproc-accounts.iam.gserviceaccount.com"
+        ],
+        "role": "roles/dataproc.serviceAgent"
+      },
+      {
+        "members": [
+          "deleted:serviceAccount:dataproc-ray3jfqlmflioaq@${projectId}.iam.gserviceaccount.com?uid=117173055556465499859",
+          "deleted:serviceAccount:dataproc-yab5fkxqcu6d6tq@${projectId}.iam.gserviceaccount.com?uid=100787475578268913456",
+          "serviceAccount:dataproc-18263f924dc2964a@${projectId}.iam.gserviceaccount.com",
+          "serviceAccount:dataproc-18263fb136bbe05c@${projectId}.iam.gserviceaccount.com",
+          "serviceAccount:dataproc-18263fcc690edae7@${projectId}.iam.gserviceaccount.com",
+          "serviceAccount:dataproc-18263fff74e1ab4c@${projectId}.iam.gserviceaccount.com",
+          "serviceAccount:dataproc-18264027ed0a9301@${projectId}.iam.gserviceaccount.com",
+          "serviceAccount:dataproc-182640ce8cd5b4ba@${projectId}.iam.gserviceaccount.com",
+          "serviceAccount:dataproc-1826416769078352@${projectId}.iam.gserviceaccount.com",
+          "serviceAccount:dataproc-${uniqueId}@${projectId}.iam.gserviceaccount.com"
+        ],
+        "role": "roles/dataproc.worker"
+      },
+      {
+        "members": [
+          "serviceAccount:service-${projectNumber}@gcp-sa-discoveryengine.iam.gserviceaccount.com"
+        ],
+        "role": "roles/discoveryengine.serviceAgent"
+      },
+      {
+        "members": [
+          "serviceAccount:${projectNumber}-compute@developer.gserviceaccount.com",
+          "serviceAccount:${projectNumber}@cloudservices.gserviceaccount.com",
+          "serviceAccount:capg-robot@${projectId}.iam.gserviceaccount.com",
+          "serviceAccount:gsa-2gmhdpkr7c3fv7m5z5zq@${projectId}.iam.gserviceaccount.com",
+          "serviceAccount:gsa-6vdy7febhal6dcblxxwq@${projectId}.iam.gserviceaccount.com",
+          "serviceAccount:gsa-cbqf42k029ldvpbloemg@${projectId}.iam.gserviceaccount.com",
+          "serviceAccount:gsa-gh4rcq2yma2c2p3smmgq@${projectId}.iam.gserviceaccount.com",
+          "serviceAccount:gsa-occz63xrb2cjc3bi5eqq@${projectId}.iam.gserviceaccount.com",
+          "serviceAccount:gsa-q26ohqg55anga4jynmqa@${projectId}.iam.gserviceaccount.com",
+          "serviceAccount:${projectId}@appspot.gserviceaccount.com"
+        ],
+        "role": "roles/editor"
+      },
+      {
+        "members": [
+          "serviceAccount:service-${projectNumber}@cloud-filer.iam.gserviceaccount.com"
+        ],
+        "role": "roles/file.serviceAgent"
+      },
+      {
+        "members": [
+          "serviceAccount:service-${projectNumber}@gcp-sa-krmapihosting.iam.gserviceaccount.com"
+        ],
+        "role": "roles/krmapihosting.serviceAgent"
+      },
+      {
+        "members": [
+          "serviceAccount:service-${projectNumber}@gcp-sa-networkconnectivity.iam.gserviceaccount.com"
+        ],
+        "role": "roles/networkconnectivity.serviceAgent"
+      },
+      {
+        "members": [
+          "serviceAccount:service-${projectNumber}@gcp-sa-networkmanagement.iam.gserviceaccount.com"
+        ],
+        "role": "roles/networkmanagement.serviceAgent"
+      },
+      {
+        "members": [
+          "serviceAccount:service-${projectNumber}@gcp-sa-yakima.iam.gserviceaccount.com",
+          "user:justinsb@google.com"
+        ],
+        "role": "roles/owner"
+      },
+      {
+        "members": [
+          "serviceAccount:service-${projectNumber}@gcp-sa-pubsub.iam.gserviceaccount.com"
+        ],
+        "role": "roles/pubsub.serviceAgent"
+      },
+      {
+        "members": [
+          "serviceAccount:service-${projectNumber}@cloud-redis.iam.gserviceaccount.com"
+        ],
+        "role": "roles/redis.serviceAgent"
+      },
+      {
+        "members": [
+          "serviceAccount:service-${projectNumber}@serverless-robot-prod.iam.gserviceaccount.com"
+        ],
+        "role": "roles/run.serviceAgent"
+      },
+      {
+        "members": [
+          "serviceAccount:service-${projectNumber}@gcp-sa-sourcemanager.iam.gserviceaccount.com"
+        ],
+        "role": "roles/securesourcemanager.serviceAgent"
+      },
+      {
+        "members": [
+          "serviceAccount:service-${projectNumber}@service-networking.iam.gserviceaccount.com"
+        ],
+        "role": "roles/servicenetworking.serviceAgent"
+      },
+      {
+        "members": [
+          "user:yuwenma@google.com"
+        ],
+        "role": "roles/viewer"
+      },
+      {
+        "members": [
+          "serviceAccount:service-${projectNumber}@gcp-sa-vpcaccess.iam.gserviceaccount.com"
+        ],
+        "role": "roles/vpcaccess.serviceAgent"
+      },
+      {
+        "members": [
+          "serviceAccount:service-${projectNumber}@gcp-sa-workflows.iam.gserviceaccount.com"
+        ],
+        "role": "roles/workflows.serviceAgent"
+      },
+      {
+        "members": [
+          "serviceAccount:service-${projectNumber}@gcp-sa-workstations.iam.gserviceaccount.com"
+        ],
+        "role": "roles/workstations.serviceAgent"
+      }
+    ],
+    "etag": "BwYuqEzS-4k=",
+    "version": 3
+  }
+}
+
+200 OK
+Content-Type: application/json; charset=UTF-8
+Server: ESF
+Vary: Origin
+Vary: X-Origin
+Vary: Referer
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 0
+
+{
+  "bindings": [
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@gcp-sa-aiplatform-cc.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.customCodeServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@gcp-sa-aiplatform.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@gcp-sa-alloydb.iam.gserviceaccount.com"
+      ],
+      "role": "roles/alloydb.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@gcp-sa-apigee.iam.gserviceaccount.com"
+      ],
+      "role": "roles/apigee.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@gcp-sa-artifactregistry.iam.gserviceaccount.com"
+      ],
+      "role": "roles/artifactregistry.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@gcp-sa-pubsub.iam.gserviceaccount.com"
+      ],
+      "role": "roles/bigquery.dataEditor"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@gcp-sa-pubsub.iam.gserviceaccount.com"
+      ],
+      "role": "roles/bigquery.metadataViewer"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@gcp-sa-cloudasset.iam.gserviceaccount.com"
+      ],
+      "role": "roles/cloudasset.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:${projectNumber}@cloudbuild.gserviceaccount.com"
+      ],
+      "role": "roles/cloudbuild.builds.builder"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@gcp-sa-cloudbuild.iam.gserviceaccount.com"
+      ],
+      "role": "roles/cloudbuild.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@gcf-admin-robot.iam.gserviceaccount.com"
+      ],
+      "role": "roles/cloudfunctions.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@compute-system.iam.gserviceaccount.com"
+      ],
+      "role": "roles/compute.serviceAgent"
+    },
+    {
+      "members": [
+        "deleted:serviceAccount:node-smoketest-k8s-local@${projectId}.iam.gserviceaccount.com?uid=100844976048329311433",
+        "deleted:serviceAccount:node-smoketest-k8s-local@${projectId}.iam.gserviceaccount.com?uid=115954429396858749830"
+      ],
+      "role": "roles/compute.viewer"
+    },
+    {
+      "members": [
+        "deleted:serviceAccount:control-plane-smoketest-af1h76@${projectId}.iam.gserviceaccount.com?uid=113654330338063455851",
+        "deleted:serviceAccount:control-plane-smoketest-af1h76@${projectId}.iam.gserviceaccount.com?uid=116587081905872309912",
+        "serviceAccount:service-${projectNumber}@container-engine-robot.iam.gserviceaccount.com"
+      ],
+      "role": "roles/container.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@containerregistry.iam.gserviceaccount.com"
+      ],
+      "role": "roles/containerregistry.ServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@dataflow-service-producer-prod.iam.gserviceaccount.com"
+      ],
+      "role": "roles/dataflow.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@dataproc-accounts.iam.gserviceaccount.com"
+      ],
+      "role": "roles/dataproc.serviceAgent"
+    },
+    {
+      "members": [
+        "deleted:serviceAccount:dataproc-ray3jfqlmflioaq@${projectId}.iam.gserviceaccount.com?uid=117173055556465499859",
+        "deleted:serviceAccount:dataproc-yab5fkxqcu6d6tq@${projectId}.iam.gserviceaccount.com?uid=100787475578268913456",
+        "serviceAccount:dataproc-18263f924dc2964a@${projectId}.iam.gserviceaccount.com",
+        "serviceAccount:dataproc-18263fb136bbe05c@${projectId}.iam.gserviceaccount.com",
+        "serviceAccount:dataproc-18263fcc690edae7@${projectId}.iam.gserviceaccount.com",
+        "serviceAccount:dataproc-18263fff74e1ab4c@${projectId}.iam.gserviceaccount.com",
+        "serviceAccount:dataproc-18264027ed0a9301@${projectId}.iam.gserviceaccount.com",
+        "serviceAccount:dataproc-182640ce8cd5b4ba@${projectId}.iam.gserviceaccount.com",
+        "serviceAccount:dataproc-1826416769078352@${projectId}.iam.gserviceaccount.com",
+        "serviceAccount:dataproc-${uniqueId}@${projectId}.iam.gserviceaccount.com"
+      ],
+      "role": "roles/dataproc.worker"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@gcp-sa-discoveryengine.iam.gserviceaccount.com"
+      ],
+      "role": "roles/discoveryengine.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:${projectNumber}-compute@developer.gserviceaccount.com",
+        "serviceAccount:${projectNumber}@cloudservices.gserviceaccount.com",
+        "serviceAccount:capg-robot@${projectId}.iam.gserviceaccount.com",
+        "serviceAccount:gsa-2gmhdpkr7c3fv7m5z5zq@${projectId}.iam.gserviceaccount.com",
+        "serviceAccount:gsa-6vdy7febhal6dcblxxwq@${projectId}.iam.gserviceaccount.com",
+        "serviceAccount:gsa-cbqf42k029ldvpbloemg@${projectId}.iam.gserviceaccount.com",
+        "serviceAccount:gsa-gh4rcq2yma2c2p3smmgq@${projectId}.iam.gserviceaccount.com",
+        "serviceAccount:gsa-occz63xrb2cjc3bi5eqq@${projectId}.iam.gserviceaccount.com",
+        "serviceAccount:gsa-q26ohqg55anga4jynmqa@${projectId}.iam.gserviceaccount.com",
+        "serviceAccount:${projectId}@appspot.gserviceaccount.com"
+      ],
+      "role": "roles/editor"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@cloud-filer.iam.gserviceaccount.com"
+      ],
+      "role": "roles/file.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@gcp-sa-krmapihosting.iam.gserviceaccount.com"
+      ],
+      "role": "roles/krmapihosting.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@gcp-sa-networkconnectivity.iam.gserviceaccount.com"
+      ],
+      "role": "roles/networkconnectivity.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@gcp-sa-networkmanagement.iam.gserviceaccount.com"
+      ],
+      "role": "roles/networkmanagement.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@gcp-sa-yakima.iam.gserviceaccount.com",
+        "user:justinsb@google.com"
+      ],
+      "role": "roles/owner"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@gcp-sa-pubsub.iam.gserviceaccount.com"
+      ],
+      "role": "roles/pubsub.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@cloud-redis.iam.gserviceaccount.com"
+      ],
+      "role": "roles/redis.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@serverless-robot-prod.iam.gserviceaccount.com"
+      ],
+      "role": "roles/run.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@gcp-sa-sourcemanager.iam.gserviceaccount.com"
+      ],
+      "role": "roles/securesourcemanager.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@service-networking.iam.gserviceaccount.com"
+      ],
+      "role": "roles/servicenetworking.serviceAgent"
+    },
+    {
+      "members": [
+        "user:yuwenma@google.com"
+      ],
+      "role": "roles/viewer"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@gcp-sa-vpcaccess.iam.gserviceaccount.com"
+      ],
+      "role": "roles/vpcaccess.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@gcp-sa-workflows.iam.gserviceaccount.com"
+      ],
+      "role": "roles/workflows.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-${projectNumber}@gcp-sa-workstations.iam.gserviceaccount.com"
+      ],
+      "role": "roles/workstations.serviceAgent"
+    }
+  ],
+  "etag": "abcdef0123A=",
+  "version": 1
+}
+
+---
+
+POST https://dataproc.googleapis.com/v1/projects/${projectId}/regions/us-central1/clusters?alt=json&requestId=6adc225cdaf648fa8d0b27821e3706b9
 Accept: application/json
 Authorization: (removed)
 Connection: keep-alive
@@ -150,13 +815,13 @@ X-Xss-Protection: 0
   "metadata": {
     "@type": "type.googleapis.com/google.cloud.dataproc.v1.ClusterOperationMetadata",
     "clusterName": "test-${uniqueId}",
-    "clusterUuid": "3eaf1340-e4f2-487e-88bd-f76e537256a7",
+    "clusterUuid": "00000000-1111-2222-3333-444444444444",
     "description": "Create cluster with 2 workers",
     "operationType": "CREATE",
     "status": {
       "innerState": "PENDING",
       "state": "PENDING",
-      "stateStartTime": "2025-02-21T15:06:01.972585Z"
+      "stateStartTime": "2024-04-01T12:34:56.123456Z"
     },
     "warnings": [
       "The firewall rules for specified network or subnetwork would allow ingress traffic from 0.0.0.0/0, which could be a security risk.",
@@ -190,22 +855,22 @@ X-Xss-Protection: 0
   "metadata": {
     "@type": "type.googleapis.com/google.cloud.dataproc.v1.ClusterOperationMetadata",
     "clusterName": "test-${uniqueId}",
-    "clusterUuid": "3eaf1340-e4f2-487e-88bd-f76e537256a7",
+    "clusterUuid": "00000000-1111-2222-3333-444444444444",
     "description": "Create cluster with 2 workers",
     "operationType": "CREATE",
     "status": {
       "innerState": "DONE",
       "state": "DONE",
-      "stateStartTime": "2025-02-21T15:08:23.647291Z"
+      "stateStartTime": "2024-04-01T12:34:56.123456Z"
     },
     "statusHistory": [
       {
         "state": "PENDING",
-        "stateStartTime": "2025-02-21T15:06:01.972585Z"
+        "stateStartTime": "2024-04-01T12:34:56.123456Z"
       },
       {
         "state": "RUNNING",
-        "stateStartTime": "2025-02-21T15:06:02.046359Z"
+        "stateStartTime": "2024-04-01T12:34:56.123456Z"
       }
     ],
     "warnings": [
@@ -218,7 +883,7 @@ X-Xss-Protection: 0
   "response": {
     "@type": "type.googleapis.com/google.cloud.dataproc.v1.Cluster",
     "clusterName": "test-${uniqueId}",
-    "clusterUuid": "3eaf1340-e4f2-487e-88bd-f76e537256a7",
+    "clusterUuid": "00000000-1111-2222-3333-444444444444",
     "config": {
       "configBucket": "dataproc-staging-us-central1-${projectNumber}-ch70stme",
       "endpointConfig": {},
@@ -328,9 +993,9 @@ X-Xss-Protection: 0
     "labels": {
       "goog-dataproc-autozone": "enabled",
       "goog-dataproc-cluster-name": "test-${uniqueId}",
-      "goog-dataproc-cluster-uuid": "3eaf1340-e4f2-487e-88bd-f76e537256a7",
+      "goog-dataproc-cluster-uuid": "00000000-1111-2222-3333-444444444444",
       "goog-dataproc-location": "us-central1",
-      "goog-drz-dataproc-uuid": "cluster-3eaf1340-e4f2-487e-88bd-f76e537256a7"
+      "goog-drz-dataproc-uuid": "00000000-1111-2222-3333-444444444444"
     },
     "projectId": "${projectId}"
   }
@@ -356,7 +1021,7 @@ X-Xss-Protection: 0
 
 {
   "clusterName": "test-${uniqueId}",
-  "clusterUuid": "3eaf1340-e4f2-487e-88bd-f76e537256a7",
+  "clusterUuid": "00000000-1111-2222-3333-444444444444",
   "config": {
     "configBucket": "dataproc-staging-us-central1-${projectNumber}-ch70stme",
     "endpointConfig": {},
@@ -473,19 +1138,19 @@ X-Xss-Protection: 0
   "labels": {
     "goog-dataproc-autozone": "enabled",
     "goog-dataproc-cluster-name": "test-${uniqueId}",
-    "goog-dataproc-cluster-uuid": "3eaf1340-e4f2-487e-88bd-f76e537256a7",
+    "goog-dataproc-cluster-uuid": "00000000-1111-2222-3333-444444444444",
     "goog-dataproc-location": "us-central1",
-    "goog-drz-dataproc-uuid": "cluster-3eaf1340-e4f2-487e-88bd-f76e537256a7"
+    "goog-drz-dataproc-uuid": "00000000-1111-2222-3333-444444444444"
   },
   "projectId": "${projectId}",
   "status": {
     "state": "RUNNING",
-    "stateStartTime": "2025-02-21T15:08:23.601388Z"
+    "stateStartTime": "2024-04-01T12:34:56.123456Z"
   },
   "statusHistory": [
     {
       "state": "CREATING",
-      "stateStartTime": "2025-02-21T15:06:01.970880Z"
+      "stateStartTime": "2024-04-01T12:34:56.123456Z"
     }
   ]
 }
@@ -510,7 +1175,7 @@ X-Xss-Protection: 0
 
 {
   "clusterName": "test-${uniqueId}",
-  "clusterUuid": "3eaf1340-e4f2-487e-88bd-f76e537256a7",
+  "clusterUuid": "00000000-1111-2222-3333-444444444444",
   "config": {
     "configBucket": "dataproc-staging-us-central1-${projectNumber}-ch70stme",
     "endpointConfig": {},
@@ -627,26 +1292,26 @@ X-Xss-Protection: 0
   "labels": {
     "goog-dataproc-autozone": "enabled",
     "goog-dataproc-cluster-name": "test-${uniqueId}",
-    "goog-dataproc-cluster-uuid": "3eaf1340-e4f2-487e-88bd-f76e537256a7",
+    "goog-dataproc-cluster-uuid": "00000000-1111-2222-3333-444444444444",
     "goog-dataproc-location": "us-central1",
-    "goog-drz-dataproc-uuid": "cluster-3eaf1340-e4f2-487e-88bd-f76e537256a7"
+    "goog-drz-dataproc-uuid": "00000000-1111-2222-3333-444444444444"
   },
   "projectId": "${projectId}",
   "status": {
     "state": "RUNNING",
-    "stateStartTime": "2025-02-21T15:08:23.601388Z"
+    "stateStartTime": "2024-04-01T12:34:56.123456Z"
   },
   "statusHistory": [
     {
       "state": "CREATING",
-      "stateStartTime": "2025-02-21T15:06:01.970880Z"
+      "stateStartTime": "2024-04-01T12:34:56.123456Z"
     }
   ]
 }
 
 ---
 
-PATCH https://dataproc.googleapis.com/v1/projects/${projectId}/regions/us-central1/clusters/test-${uniqueId}?alt=json&requestId=cdd55cd75ab24f0e8344cb0fc7fcdf21&updateMask=config.worker_config.num_instances
+PATCH https://dataproc.googleapis.com/v1/projects/${projectId}/regions/us-central1/clusters/test-${uniqueId}?alt=json&requestId=5c1a4cff3a934844b63196fb4ee73069&updateMask=config.worker_config.num_instances
 Accept: application/json
 Authorization: (removed)
 Connection: keep-alive
@@ -677,13 +1342,13 @@ X-Xss-Protection: 0
   "metadata": {
     "@type": "type.googleapis.com/google.cloud.dataproc.v1.ClusterOperationMetadata",
     "clusterName": "test-${uniqueId}",
-    "clusterUuid": "3eaf1340-e4f2-487e-88bd-f76e537256a7",
+    "clusterUuid": "00000000-1111-2222-3333-444444444444",
     "description": "Add 1 workers.",
     "operationType": "UPDATE",
     "status": {
       "innerState": "PENDING",
       "state": "PENDING",
-      "stateStartTime": "2025-02-21T15:08:27.682465Z"
+      "stateStartTime": "2024-04-01T12:34:56.123456Z"
     }
   },
   "name": "projects/${projectId}/regions/us-central1/operations/${operationID}"
@@ -712,22 +1377,22 @@ X-Xss-Protection: 0
   "metadata": {
     "@type": "type.googleapis.com/google.cloud.dataproc.v1.ClusterOperationMetadata",
     "clusterName": "test-${uniqueId}",
-    "clusterUuid": "3eaf1340-e4f2-487e-88bd-f76e537256a7",
+    "clusterUuid": "00000000-1111-2222-3333-444444444444",
     "description": "Add 1 workers.",
     "operationType": "UPDATE",
     "status": {
       "innerState": "DONE",
       "state": "DONE",
-      "stateStartTime": "2025-02-21T15:09:45.027155Z"
+      "stateStartTime": "2024-04-01T12:34:56.123456Z"
     },
     "statusHistory": [
       {
         "state": "PENDING",
-        "stateStartTime": "2025-02-21T15:08:27.682465Z"
+        "stateStartTime": "2024-04-01T12:34:56.123456Z"
       },
       {
         "state": "RUNNING",
-        "stateStartTime": "2025-02-21T15:08:28.149822Z"
+        "stateStartTime": "2024-04-01T12:34:56.123456Z"
       }
     ]
   },
@@ -735,7 +1400,7 @@ X-Xss-Protection: 0
   "response": {
     "@type": "type.googleapis.com/google.cloud.dataproc.v1.Cluster",
     "clusterName": "test-${uniqueId}",
-    "clusterUuid": "3eaf1340-e4f2-487e-88bd-f76e537256a7",
+    "clusterUuid": "00000000-1111-2222-3333-444444444444",
     "config": {
       "configBucket": "dataproc-staging-us-central1-${projectNumber}-ch70stme",
       "endpointConfig": {},
@@ -845,9 +1510,9 @@ X-Xss-Protection: 0
     "labels": {
       "goog-dataproc-autozone": "enabled",
       "goog-dataproc-cluster-name": "test-${uniqueId}",
-      "goog-dataproc-cluster-uuid": "3eaf1340-e4f2-487e-88bd-f76e537256a7",
+      "goog-dataproc-cluster-uuid": "00000000-1111-2222-3333-444444444444",
       "goog-dataproc-location": "us-central1",
-      "goog-drz-dataproc-uuid": "cluster-3eaf1340-e4f2-487e-88bd-f76e537256a7"
+      "goog-drz-dataproc-uuid": "00000000-1111-2222-3333-444444444444"
     },
     "projectId": "${projectId}"
   }
@@ -873,7 +1538,7 @@ X-Xss-Protection: 0
 
 {
   "clusterName": "test-${uniqueId}",
-  "clusterUuid": "3eaf1340-e4f2-487e-88bd-f76e537256a7",
+  "clusterUuid": "00000000-1111-2222-3333-444444444444",
   "config": {
     "configBucket": "dataproc-staging-us-central1-${projectNumber}-ch70stme",
     "endpointConfig": {},
@@ -991,9 +1656,9 @@ X-Xss-Protection: 0
   "labels": {
     "goog-dataproc-autozone": "enabled",
     "goog-dataproc-cluster-name": "test-${uniqueId}",
-    "goog-dataproc-cluster-uuid": "3eaf1340-e4f2-487e-88bd-f76e537256a7",
+    "goog-dataproc-cluster-uuid": "00000000-1111-2222-3333-444444444444",
     "goog-dataproc-location": "us-central1",
-    "goog-drz-dataproc-uuid": "cluster-3eaf1340-e4f2-487e-88bd-f76e537256a7"
+    "goog-drz-dataproc-uuid": "00000000-1111-2222-3333-444444444444"
   },
   "metrics": {
     "hdfsMetrics": {
@@ -1003,8 +1668,8 @@ X-Xss-Protection: 0
       "dfs-blocks-missing-repl-one": "0",
       "dfs-blocks-pending-deletion": "0",
       "dfs-blocks-under-replication": "0",
-      "dfs-capacity-present": "1995884572672",
-      "dfs-capacity-remaining": "1995884523520",
+      "dfs-capacity-present": "1995884040192",
+      "dfs-capacity-remaining": "1995883991040",
       "dfs-capacity-total": "2113237753856",
       "dfs-capacity-used": "49152",
       "dfs-nodes-decommissioned": "0",
@@ -1044,20 +1709,20 @@ X-Xss-Protection: 0
   "projectId": "${projectId}",
   "status": {
     "state": "RUNNING",
-    "stateStartTime": "2025-02-21T15:09:45.007505Z"
+    "stateStartTime": "2024-04-01T12:34:56.123456Z"
   },
   "statusHistory": [
     {
       "state": "CREATING",
-      "stateStartTime": "2025-02-21T15:06:01.970880Z"
+      "stateStartTime": "2024-04-01T12:34:56.123456Z"
     },
     {
       "state": "RUNNING",
-      "stateStartTime": "2025-02-21T15:08:23.601388Z"
+      "stateStartTime": "2024-04-01T12:34:56.123456Z"
     },
     {
       "state": "UPDATING",
-      "stateStartTime": "2025-02-21T15:08:27.543889Z"
+      "stateStartTime": "2024-04-01T12:34:56.123456Z"
     }
   ]
 }
@@ -1084,7 +1749,7 @@ X-Xss-Protection: 0
   "clusters": [
     {
       "clusterName": "test-${uniqueId}",
-      "clusterUuid": "3eaf1340-e4f2-487e-88bd-f76e537256a7",
+      "clusterUuid": "00000000-1111-2222-3333-444444444444",
       "config": {
         "configBucket": "dataproc-staging-us-central1-${projectNumber}-ch70stme",
         "endpointConfig": {},
@@ -1202,9 +1867,9 @@ X-Xss-Protection: 0
       "labels": {
         "goog-dataproc-autozone": "enabled",
         "goog-dataproc-cluster-name": "test-${uniqueId}",
-        "goog-dataproc-cluster-uuid": "3eaf1340-e4f2-487e-88bd-f76e537256a7",
+        "goog-dataproc-cluster-uuid": "00000000-1111-2222-3333-444444444444",
         "goog-dataproc-location": "us-central1",
-        "goog-drz-dataproc-uuid": "cluster-3eaf1340-e4f2-487e-88bd-f76e537256a7"
+        "goog-drz-dataproc-uuid": "00000000-1111-2222-3333-444444444444"
       },
       "metrics": {
         "hdfsMetrics": {
@@ -1214,8 +1879,8 @@ X-Xss-Protection: 0
           "dfs-blocks-missing-repl-one": "0",
           "dfs-blocks-pending-deletion": "0",
           "dfs-blocks-under-replication": "0",
-          "dfs-capacity-present": "1995884572672",
-          "dfs-capacity-remaining": "1995884523520",
+          "dfs-capacity-present": "1995884040192",
+          "dfs-capacity-remaining": "1995883991040",
           "dfs-capacity-total": "2113237753856",
           "dfs-capacity-used": "49152",
           "dfs-nodes-decommissioned": "0",
@@ -1255,20 +1920,20 @@ X-Xss-Protection: 0
       "projectId": "${projectId}",
       "status": {
         "state": "RUNNING",
-        "stateStartTime": "2025-02-21T15:09:45.007505Z"
+        "stateStartTime": "2024-04-01T12:34:56.123456Z"
       },
       "statusHistory": [
         {
           "state": "CREATING",
-          "stateStartTime": "2025-02-21T15:06:01.970880Z"
+          "stateStartTime": "2025-02-22T00:58:10.971927Z"
         },
         {
           "state": "RUNNING",
-          "stateStartTime": "2025-02-21T15:08:23.601388Z"
+          "stateStartTime": "2025-02-22T01:00:34.706718Z"
         },
         {
           "state": "UPDATING",
-          "stateStartTime": "2025-02-21T15:08:27.543889Z"
+          "stateStartTime": "2025-02-22T01:00:42.094322Z"
         }
       ]
     }
@@ -1277,7 +1942,7 @@ X-Xss-Protection: 0
 
 ---
 
-DELETE https://dataproc.googleapis.com/v1/projects/${projectId}/regions/us-central1/clusters/test-${uniqueId}?alt=json&requestId=bfd547486f964c4ebbae5e095d514851
+DELETE https://dataproc.googleapis.com/v1/projects/${projectId}/regions/us-central1/clusters/test-${uniqueId}?alt=json&requestId=ebe80c532e8f4ece9233a3b43e6db858
 Accept: application/json
 Authorization: (removed)
 Connection: keep-alive
@@ -1297,13 +1962,13 @@ X-Xss-Protection: 0
   "metadata": {
     "@type": "type.googleapis.com/google.cloud.dataproc.v1.ClusterOperationMetadata",
     "clusterName": "test-${uniqueId}",
-    "clusterUuid": "3eaf1340-e4f2-487e-88bd-f76e537256a7",
+    "clusterUuid": "00000000-1111-2222-3333-444444444444",
     "description": "Delete cluster",
     "operationType": "DELETE",
     "status": {
       "innerState": "PENDING",
       "state": "PENDING",
-      "stateStartTime": "2025-02-21T15:09:52.315208Z"
+      "stateStartTime": "2024-04-01T12:34:56.123456Z"
     }
   },
   "name": "projects/${projectId}/regions/us-central1/operations/${operationID}"
@@ -1332,22 +1997,22 @@ X-Xss-Protection: 0
   "metadata": {
     "@type": "type.googleapis.com/google.cloud.dataproc.v1.ClusterOperationMetadata",
     "clusterName": "test-${uniqueId}",
-    "clusterUuid": "3eaf1340-e4f2-487e-88bd-f76e537256a7",
+    "clusterUuid": "00000000-1111-2222-3333-444444444444",
     "description": "Delete cluster",
     "operationType": "DELETE",
     "status": {
       "innerState": "DONE",
       "state": "DONE",
-      "stateStartTime": "2025-02-21T15:11:00.326737Z"
+      "stateStartTime": "2024-04-01T12:34:56.123456Z"
     },
     "statusHistory": [
       {
         "state": "PENDING",
-        "stateStartTime": "2025-02-21T15:09:52.315208Z"
+        "stateStartTime": "2024-04-01T12:34:56.123456Z"
       },
       {
         "state": "RUNNING",
-        "stateStartTime": "2025-02-21T15:09:52.355731Z"
+        "stateStartTime": "2024-04-01T12:34:56.123456Z"
       }
     ]
   },
@@ -1356,3 +2021,23 @@ X-Xss-Protection: 0
     "@type": "type.googleapis.com/google.protobuf.Empty"
   }
 }
+
+---
+
+DELETE https://iam.googleapis.com/v1/projects/-/serviceAccounts/dataproc-${uniqueId}@${projectId}.iam.gserviceaccount.com?alt=json
+Accept: application/json
+Authorization: (removed)
+Connection: keep-alive
+Content-Length: 0
+
+200 OK
+Content-Type: application/json; charset=UTF-8
+Server: ESF
+Vary: Origin
+Vary: X-Origin
+Vary: Referer
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 0
+
+{}
