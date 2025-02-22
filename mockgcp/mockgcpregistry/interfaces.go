@@ -40,7 +40,11 @@ type SupportsNormalization interface {
 }
 
 type NormalizingVisitor interface {
+	// ReplacePath replaces values at the given path with newValue
 	ReplacePath(path string, newValue any)
+
+	// RemovePath removes values at the given path
+	RemovePath(path string)
 }
 
 type Normalizer interface {

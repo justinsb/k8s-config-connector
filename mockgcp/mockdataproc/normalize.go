@@ -34,11 +34,24 @@ func (s *MockService) ConfigureVisitor(url string, replacements mockgcpregistry.
 	replacements.ReplacePath(".response.labels.goog-dataproc-cluster-uuid", "00000000-1111-2222-3333-444444444444")
 	replacements.ReplacePath(".response.labels.goog-drz-dataproc-uuid", "00000000-1111-2222-3333-444444444444")
 
+	replacements.ReplacePath(".config.configBucket", "replaced-config-bucket")
+	replacements.ReplacePath(".response.config.configBucket", "replaced-config-bucket")
+
+	replacements.ReplacePath(".config.tempBucket", "replaced-temp-bucket")
+	replacements.ReplacePath(".response.config.tempBucket", "replaced-temp-bucket")
+
 	replacements.ReplacePath(".status.stateStartTime", "2024-04-01T12:34:56.123456Z")
+	replacements.ReplacePath(".response.status.stateStartTime", "2024-04-01T12:34:56.123456Z")
 	replacements.ReplacePath(".clusters[].status.stateStartTime", "2024-04-01T12:34:56.123456Z")
 	replacements.ReplacePath(".metadata.status.stateStartTime", "2024-04-01T12:34:56.123456Z")
 
 	replacements.ReplacePath(".statusHistory[].stateStartTime", "2024-04-01T12:34:56.123456Z")
-	replacements.ReplacePath(".cluster[].statusHistory[].stateStartTime", "2024-04-01T12:34:56.123456Z")
+	replacements.ReplacePath(".response.statusHistory[].stateStartTime", "2024-04-01T12:34:56.123456Z")
+	replacements.ReplacePath(".clusters[].statusHistory[].stateStartTime", "2024-04-01T12:34:56.123456Z")
 	replacements.ReplacePath(".metadata.statusHistory[].stateStartTime", "2024-04-01T12:34:56.123456Z")
+
+	// metrics are volatile and more "data plane"
+	replacements.RemovePath(".metrics")
+	replacements.RemovePath(".response.metrics")
+	replacements.RemovePath(".clusters[].metrics")
 }

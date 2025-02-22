@@ -415,6 +415,10 @@ func (o *objectWalker) ReplacePath(path string, v any) {
 	o.replacePaths[path] = v
 }
 
+func (o *objectWalker) RemovePath(path string) {
+	o.removePaths.Insert(path)
+}
+
 func (o *objectWalker) SortSlice(path string) {
 	o.sortSlices.Insert(path)
 }
@@ -652,6 +656,9 @@ func NormalizeHTTPLog(t *testing.T, events test.LogEntries, services mockgcpregi
 	for _, event := range events {
 		findLinksInEvent(t, normalizer.Replacements, event)
 	}
+
+	// Remove idempotency tokens
+	events.ReplaceRequestQueryParameter("requestId", "123456")
 
 	// Remove headers that just aren't very relevant to testing
 	// Remove headers in request.

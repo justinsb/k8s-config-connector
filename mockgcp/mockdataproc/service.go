@@ -23,6 +23,7 @@ import (
 	"net/http"
 
 	"google.golang.org/grpc"
+	"google.golang.org/protobuf/proto"
 
 	pb "cloud.google.com/go/dataproc/v2/apiv1/dataprocpb"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/common"
@@ -72,9 +73,12 @@ func (s *MockService) NewHTTPMux(ctx context.Context, conn *grpc.ClientConn) (ht
 	mux, err := httpmux.NewServeMux(ctx, conn, httpmux.Options{},
 		pbhttp.RegisterClusterControllerHandler,
 		s.operations.RegisterOperationsPath("/v1/{prefix=**}/operations/{name}"))
-
 	if err != nil {
 		return nil, err
+	}
+
+	mux.RewriteHeaders = func(ctx context.Context, response http.ResponseWriter, payload proto.Message) {
+		response.Header().Del("Cache-Control")
 	}
 
 	return mux, nil

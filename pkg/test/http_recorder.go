@@ -276,6 +276,22 @@ func (r *Request) RemoveHeader(key string) {
 	r.Header.Del(key)
 }
 
+func (s *Request) ReplaceQueryParameter(key string, value string) {
+	// Slightly hacky replacement to preserve order
+	url := s.URL
+	base, query, found := strings.Cut(url, "?")
+	if query == "" || !found {
+		return
+	}
+	parameters := strings.Split(query, "&")
+	for i, parameter := range parameters {
+		if strings.HasPrefix(parameter, key+"=") {
+			parameters[i] = key + "=" + value
+		}
+	}
+	s.URL = base + "?" + strings.Join(parameters, "&")
+}
+
 func (r *Response) ParseBody() map[string]any {
 	return parseBody(r.Body)
 }
