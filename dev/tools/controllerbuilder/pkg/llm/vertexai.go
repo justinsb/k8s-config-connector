@@ -156,6 +156,17 @@ func (c *VertexAIChat) SetFunctionDefinitions(functionDefinitions []*FunctionDef
 	return nil
 }
 
+func (c *VertexAIChat) SetResponseSchema(responseSchema *Schema) error {
+	vertexAISchema, err := toVertexAISchema(responseSchema)
+	if err != nil {
+		return err
+	}
+
+	c.model.ResponseSchema = vertexAISchema
+	c.model.ResponseMIMEType = "application/json"
+	return nil
+}
+
 // Converts our generic Schema to a genai.Schema
 func toVertexAISchema(schema *Schema) (*genai.Schema, error) {
 	ret := &genai.Schema{
@@ -168,6 +179,8 @@ func toVertexAISchema(schema *Schema) (*genai.Schema, error) {
 		ret.Type = genai.TypeObject
 	case TypeString:
 		ret.Type = genai.TypeString
+	case TypeArray:
+		ret.Type = genai.TypeArray
 	default:
 		return nil, fmt.Errorf("type %q not handled by genai.Schema", schema.Type)
 	}
@@ -180,6 +193,13 @@ func toVertexAISchema(schema *Schema) (*genai.Schema, error) {
 			}
 			ret.Properties[k] = vertexaiValue
 		}
+	}
+	if schema.Items != nil {
+		vertexaiValue, err := toVertexAISchema(schema.Items)
+		if err != nil {
+			return nil, err
+		}
+		ret.Items = vertexaiValue
 	}
 	return ret, nil
 }
@@ -249,11 +269,29 @@ func (c *VertexAIChat) sendMessageWithRetries(ctx context.Context, geminiParts .
 	return resp, err
 }
 
-func (c *VertexAIChat) SendMessage(ctx context.Context, parts ...string) (Response, error) {
+func asVertexAIPart(part any) (genai.Part, error) {
+	switch part := part.(type) {
+	case string:
+		return genai.Text(part), nil
+	case *filePart:
+		s := part.path + "\n"
+		s += "```go\n"
+		s += part.contents + "\n"
+		s += "```\n"
+		return genai.Text(s), nil
+	default:
+		return nil, fmt.Errorf("unhandled part type %T", part)
+	}
+}
+func (c *VertexAIChat) SendMessage(ctx context.Context, parts ...any) (Response, error) {
 	log := klog.FromContext(ctx)
 	var vertexaiParts []genai.Part
 	for _, part := range parts {
-		vertexaiParts = append(vertexaiParts, genai.Text(part))
+		vertexaiPart, err := asVertexAIPart(part)
+		if err != nil {
+			return nil, err
+		}
+		vertexaiParts = append(vertexaiParts, vertexaiPart)
 	}
 	log.Info("sending LLM request", "user", parts)
 	vertexaiResponse, err := c.sendMessageWithRetries(ctx, vertexaiParts...)

@@ -117,6 +117,10 @@ func (c *GeminiChat) SetFunctionDefinitions(functionDefinitions []*FunctionDefin
 	return nil
 }
 
+func (c *GeminiChat) SetResponseSchema(responseSchema *Schema) error {
+	return fmt.Errorf("SetResponseSchema not implemented")
+}
+
 // Converts our generic Schema to a genai.Schema
 func toGenaiSchema(schema *Schema) (*genai.Schema, error) {
 	ret := &genai.Schema{
@@ -170,11 +174,24 @@ func (c *GeminiChat) sendMessageWithRetries(ctx context.Context, geminiParts ...
 	return resp, err
 }
 
-func (c *GeminiChat) SendMessage(ctx context.Context, parts ...string) (Response, error) {
+func asGeminiPart(part any) (genai.Part, error) {
+	switch part := part.(type) {
+	case string:
+		return genai.Text(part), nil
+	default:
+		return nil, fmt.Errorf("unhandled part type %T", part)
+	}
+}
+
+func (c *GeminiChat) SendMessage(ctx context.Context, parts ...any) (Response, error) {
 	log := klog.FromContext(ctx)
 	var geminiParts []genai.Part
 	for _, part := range parts {
-		geminiParts = append(geminiParts, genai.Text(part))
+		geminiPart, err := asGeminiPart(part)
+		if err != nil {
+			return nil, err
+		}
+		geminiParts = append(geminiParts, geminiPart)
 	}
 	log.Info("sending LLM request", "user", parts)
 

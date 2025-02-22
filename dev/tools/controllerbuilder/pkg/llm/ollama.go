@@ -196,15 +196,20 @@ type FunctionDefinition struct {
 	Parameters  *Schema `json:"parameters,omitempty"`
 }
 
+type SchemaType string
 type Schema struct {
-	Type        string             `json:"type,omitempty"`
+	Type        SchemaType         `json:"type,omitempty"`
 	Properties  map[string]*Schema `json:"properties,omitempty"`
+	Items       *Schema            `json:"items,omitempty"`
 	Description string             `json:"description,omitempty"`
 	Required    []string           `json:"required,omitempty"`
 }
 
-const TypeObject = "object"
-const TypeString = "string"
+const (
+	TypeObject SchemaType = "object"
+	TypeString SchemaType = "string"
+	TypeArray  SchemaType = "array"
+)
 
 type FunctionCallResult struct {
 	Name   string         `json:"name,omitempty"`
@@ -231,6 +236,10 @@ func (c *OllamaChat) SetFunctionDefinitions(functionDefinitions []*FunctionDefin
 	return nil
 }
 
+func (c *OllamaChat) SetResponseSchema(responseSchema *Schema) error {
+	return fmt.Errorf("SetResponseSchema not implemented")
+}
+
 // func (c *OllamaChat) AdditionalUserInput(s string) {
 // 	c.session.Messages = append(c.session.Messages, chatMessage{
 // 		Role:    "user",
@@ -238,11 +247,24 @@ func (c *OllamaChat) SetFunctionDefinitions(functionDefinitions []*FunctionDefin
 // 	})
 // }
 
-func (c *OllamaChat) SendMessage(ctx context.Context, parts ...string) (Response, error) {
+func asOllamaPart(part any) (string, error) {
+	switch part := part.(type) {
+	case string:
+		return part, nil
+	default:
+		return "", fmt.Errorf("unhandled part type %T", part)
+	}
+}
+
+func (c *OllamaChat) SendMessage(ctx context.Context, parts ...any) (Response, error) {
 	for _, part := range parts {
+		ollamaPart, err := asOllamaPart(part)
+		if err != nil {
+			return nil, err
+		}
 		c.session.Messages = append(c.session.Messages, chatMessage{
 			Role:    "user",
-			Content: part,
+			Content: ollamaPart,
 		})
 		klog.Infof("sending user:\n%v", part)
 	}

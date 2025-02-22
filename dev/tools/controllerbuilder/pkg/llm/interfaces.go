@@ -27,10 +27,12 @@ type Client interface {
 }
 
 type Chat interface {
-	SendMessage(ctx context.Context, userParts ...string) (Response, error)
+	SendMessage(ctx context.Context, userParts ...any) (Response, error)
 	SetFunctionDefinitions(functionDefinitions []*FunctionDefinition) error
 	SendFunctionResults(ctx context.Context, functionResults []FunctionCallResult) (Response, error)
 	// AdditionalUserInput(s string)
+
+	SetResponseSchema(schema *Schema) error
 }
 
 type Response interface {
