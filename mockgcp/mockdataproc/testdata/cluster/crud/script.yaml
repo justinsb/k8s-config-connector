@@ -9,4 +9,4 @@
 - exec: gcloud dataproc clusters update test-${uniqueId} --region=us-central1 --num-workers=3
 - exec: gcloud dataproc clusters list --region=us-central1
 - exec: gcloud dataproc clusters delete test-${uniqueId} --region=us-central1 --quiet
-- exec: gcloud iam service-accounts delete dataproc-${uniqueId} --quiet
+- exec: gcloud iam service-accounts delete dataproc-${uniqueId}@${projectId}.iam.gserviceaccount.com --quiet
