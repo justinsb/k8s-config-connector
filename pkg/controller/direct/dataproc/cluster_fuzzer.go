@@ -1,4 +1,4 @@
-// Copyright 2024 Google LLC
+// Copyright 2025 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@
 package dataproc
 
 import (
-	pb "cloud.google.com/go/dataproc/apiv1/dataprocpb"
+	pb "cloud.google.com/go/dataproc/v2/apiv1/dataprocpb"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/pkg/fuzztesting"
 )
 
@@ -44,6 +44,9 @@ func DataprocClusterFuzzer() fuzztesting.KRMFuzzer {
 	f.UnimplementedFields.Insert(".project_id")   // Immutable
 	f.UnimplementedFields.Insert(".cluster_name") // Immutable
 	f.UnimplementedFields.Insert(".status.details")
+
+	// Ignore volatile / non-config fields
+	f.UnimplementedFields.Insert(".config.lifecycle_config.idle_start_time")
 
 	return f
 }

@@ -41,7 +41,7 @@ type DataprocClusterSpec struct {
 
 	// Immutable. The region of this cluster.
 	// +required
-	Region string `json:"region,omitempty"`
+	Location string `json:"location,omitempty"`
 
 	// Optional. The cluster config for a cluster of Compute Engine Instances.
 	//  Note that Dataproc may set default values, and values may change
@@ -50,7 +50,6 @@ type DataprocClusterSpec struct {
 	//  Exactly one of ClusterConfig or VirtualClusterConfig must be specified.
 	Config *ClusterConfig `json:"config,omitempty"`
 
-	/* NOTYET
 	// Optional. The virtual cluster config is used when creating a Dataproc
 	//  cluster that does not directly control the underlying compute resources,
 	//  for example, when creating a [Dataproc-on-GKE
@@ -61,7 +60,6 @@ type DataprocClusterSpec struct {
 	//  [virtual_cluster_config][google.cloud.dataproc.v1.Cluster.virtual_cluster_config]
 	//  must be specified.
 	VirtualClusterConfig *VirtualClusterConfig `json:"virtualClusterConfig,omitempty"`
-	*/
 
 	/* NOTYET
 	// Optional. The labels to associate with this cluster.
@@ -90,6 +88,8 @@ type DataprocClusterStatus struct {
 
 	// ObservedState is the state of the resource as most recently observed in GCP.
 	ObservedState *DataprocClusterObservedState `json:"observedState,omitempty"`
+
+	Config *ConfigStatus `json:"config,omitempty"`
 }
 
 // DataprocClusterObservedState is the state of the DataprocCluster resource as most recently observed in GCP.

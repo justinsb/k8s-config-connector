@@ -64,7 +64,7 @@ func NewClusterIdentity(ctx context.Context, reader client.Reader, obj *Dataproc
 	if projectID == "" {
 		return nil, fmt.Errorf("cannot resolve project")
 	}
-	location := obj.Spec.Location
+	location := obj.Spec.Region
 
 	// Get desired ID
 	resourceID := common.ValueOf(obj.Spec.ResourceID)
