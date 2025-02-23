@@ -17,6 +17,8 @@ package v1beta1
 import (
 	"github.com/GoogleCloudPlatform/k8s-config-connector/pkg/apis/k8s/v1alpha1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+
+	refs "github.com/GoogleCloudPlatform/k8s-config-connector/apis/refs/v1beta1"
 )
 
 var DataprocClusterGVK = GroupVersion.WithKind("DataprocCluster")
@@ -26,6 +28,47 @@ var DataprocClusterGVK = GroupVersion.WithKind("DataprocCluster")
 type DataprocClusterSpec struct {
 	// The DataprocCluster name. If not given, the metadata.name will be used.
 	ResourceID *string `json:"resourceID,omitempty"`
+
+	// Immutable. The cluster name, which must be unique within a project.
+	// The name must start with a lowercase letter, and can contain
+	// up to 51 lowercase letters, numbers, and hyphens. It cannot end
+	// with a hyphen. The name of a deleted cluster can be reused.
+	Name *string `json:"name,omitempty"`
+
+	// Immutable. The Project that this resource belongs to.
+	// +required
+	ProjectRef *refs.ProjectRef `json:"projectRef,omitempty"`
+
+	// Immutable. The region of this cluster.
+	// +required
+	Region string `json:"region,omitempty"`
+
+	// Optional. The cluster config for a cluster of Compute Engine Instances.
+	//  Note that Dataproc may set default values, and values may change
+	//  when clusters are updated.
+	//
+	//  Exactly one of ClusterConfig or VirtualClusterConfig must be specified.
+	Config *ClusterConfig `json:"config,omitempty"`
+
+	// // Optional. The virtual cluster config is used when creating a Dataproc
+	// //  cluster that does not directly control the underlying compute resources,
+	// //  for example, when creating a [Dataproc-on-GKE
+	// //  cluster](https://cloud.google.com/dataproc/docs/guides/dpgke/dataproc-gke-overview).
+	// //  Dataproc may set default values, and values may change when
+	// //  clusters are updated. Exactly one of
+	// //  [config][google.cloud.dataproc.v1.Cluster.config] or
+	// //  [virtual_cluster_config][google.cloud.dataproc.v1.Cluster.virtual_cluster_config]
+	// //  must be specified.
+	// VirtualClusterConfig *VirtualClusterConfig `json:"virtualClusterConfig,omitempty"`
+
+	// Optional. The labels to associate with this cluster.
+	//  Label **keys** must contain 1 to 63 characters, and must conform to
+	//  [RFC 1035](https://www.ietf.org/rfc/rfc1035.txt).
+	//  Label **values** may be empty, but, if present, must contain 1 to 63
+	//  characters, and must conform to [RFC
+	//  1035](https://www.ietf.org/rfc/rfc1035.txt). No more than 32 labels can be
+	//  associated with a cluster.
+	Labels map[string]string `json:"labels,omitempty"`
 }
 
 // DataprocClusterStatus defines the config connector machine state of DataprocCluster
