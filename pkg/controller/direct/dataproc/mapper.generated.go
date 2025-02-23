@@ -43,7 +43,7 @@ func AutoscalingConfig_FromProto(mapCtx *direct.MapContext, in *pb.AutoscalingCo
 		return nil
 	}
 	out := &krm.AutoscalingConfig{}
-	out.PolicyURI = direct.LazyPtr(in.GetPolicyUri())
+	// MISSING: PolicyURI
 	return out
 }
 func AutoscalingConfig_ToProto(mapCtx *direct.MapContext, in *krm.AutoscalingConfig) *pb.AutoscalingConfig {
@@ -51,7 +51,7 @@ func AutoscalingConfig_ToProto(mapCtx *direct.MapContext, in *krm.AutoscalingCon
 		return nil
 	}
 	out := &pb.AutoscalingConfig{}
-	out.PolicyUri = direct.ValueOf(in.PolicyURI)
+	// MISSING: PolicyURI
 	return out
 }
 func AuxiliaryNodeGroup_FromProto(mapCtx *direct.MapContext, in *pb.AuxiliaryNodeGroup) *krm.AuxiliaryNodeGroup {
@@ -90,38 +90,6 @@ func AuxiliaryServicesConfig_ToProto(mapCtx *direct.MapContext, in *krm.Auxiliar
 	out.SparkHistoryServerConfig = SparkHistoryServerConfig_ToProto(mapCtx, in.SparkHistoryServerConfig)
 	return out
 }
-func Cluster_FromProto(mapCtx *direct.MapContext, in *pb.Cluster) *krm.Cluster {
-	if in == nil {
-		return nil
-	}
-	out := &krm.Cluster{}
-	out.ProjectID = direct.LazyPtr(in.GetProjectId())
-	out.ClusterName = direct.LazyPtr(in.GetClusterName())
-	out.Config = ClusterConfig_FromProto(mapCtx, in.GetConfig())
-	out.VirtualClusterConfig = VirtualClusterConfig_FromProto(mapCtx, in.GetVirtualClusterConfig())
-	out.Labels = in.Labels
-	// MISSING: Status
-	// MISSING: StatusHistory
-	// MISSING: ClusterUuid
-	// MISSING: Metrics
-	return out
-}
-func Cluster_ToProto(mapCtx *direct.MapContext, in *krm.Cluster) *pb.Cluster {
-	if in == nil {
-		return nil
-	}
-	out := &pb.Cluster{}
-	out.ProjectId = direct.ValueOf(in.ProjectID)
-	out.ClusterName = direct.ValueOf(in.ClusterName)
-	out.Config = ClusterConfig_ToProto(mapCtx, in.Config)
-	out.VirtualClusterConfig = VirtualClusterConfig_ToProto(mapCtx, in.VirtualClusterConfig)
-	out.Labels = in.Labels
-	// MISSING: Status
-	// MISSING: StatusHistory
-	// MISSING: ClusterUuid
-	// MISSING: Metrics
-	return out
-}
 func ClusterConfig_FromProto(mapCtx *direct.MapContext, in *pb.ClusterConfig) *krm.ClusterConfig {
 	if in == nil {
 		return nil
@@ -142,7 +110,7 @@ func ClusterConfig_FromProto(mapCtx *direct.MapContext, in *pb.ClusterConfig) *k
 	out.EndpointConfig = EndpointConfig_FromProto(mapCtx, in.GetEndpointConfig())
 	out.MetastoreConfig = MetastoreConfig_FromProto(mapCtx, in.GetMetastoreConfig())
 	out.DataprocMetricConfig = DataprocMetricConfig_FromProto(mapCtx, in.GetDataprocMetricConfig())
-	out.AuxiliaryNodeGroups = direct.Slice_FromProto(mapCtx, in.AuxiliaryNodeGroups, AuxiliaryNodeGroup_FromProto)
+	// MISSING: AuxiliaryNodeGroups
 	return out
 }
 func ClusterConfig_ToProto(mapCtx *direct.MapContext, in *krm.ClusterConfig) *pb.ClusterConfig {
@@ -150,8 +118,8 @@ func ClusterConfig_ToProto(mapCtx *direct.MapContext, in *krm.ClusterConfig) *pb
 		return nil
 	}
 	out := &pb.ClusterConfig{}
-	out.ConfigBucket = direct.ValueOf(in.ConfigBucket)
-	out.TempBucket = direct.ValueOf(in.TempBucket)
+	out.ConfigBucket = ClusterConfig_ConfigBucket_ToProto(mapCtx, in.ConfigBucket)
+	out.TempBucket = ClusterConfig_TempBucket_ToProto(mapCtx, in.TempBucket)
 	out.GceClusterConfig = GCEClusterConfig_ToProto(mapCtx, in.GCEClusterConfig)
 	out.MasterConfig = InstanceGroupConfig_ToProto(mapCtx, in.MasterConfig)
 	out.WorkerConfig = InstanceGroupConfig_ToProto(mapCtx, in.WorkerConfig)
@@ -165,52 +133,6 @@ func ClusterConfig_ToProto(mapCtx *direct.MapContext, in *krm.ClusterConfig) *pb
 	out.EndpointConfig = EndpointConfig_ToProto(mapCtx, in.EndpointConfig)
 	out.MetastoreConfig = MetastoreConfig_ToProto(mapCtx, in.MetastoreConfig)
 	out.DataprocMetricConfig = DataprocMetricConfig_ToProto(mapCtx, in.DataprocMetricConfig)
-	out.AuxiliaryNodeGroups = direct.Slice_ToProto(mapCtx, in.AuxiliaryNodeGroups, AuxiliaryNodeGroup_ToProto)
-	return out
-}
-func ClusterConfigObservedState_FromProto(mapCtx *direct.MapContext, in *pb.ClusterConfig) *krm.ClusterConfigObservedState {
-	if in == nil {
-		return nil
-	}
-	out := &krm.ClusterConfigObservedState{}
-	// MISSING: ConfigBucket
-	// MISSING: TempBucket
-	// MISSING: GCEClusterConfig
-	out.MasterConfig = InstanceGroupConfigObservedState_FromProto(mapCtx, in.GetMasterConfig())
-	// MISSING: WorkerConfig
-	// MISSING: SecondaryWorkerConfig
-	// MISSING: SoftwareConfig
-	// MISSING: InitializationActions
-	// MISSING: EncryptionConfig
-	// MISSING: AutoscalingConfig
-	// MISSING: SecurityConfig
-	out.LifecycleConfig = LifecycleConfigObservedState_FromProto(mapCtx, in.GetLifecycleConfig())
-	out.EndpointConfig = EndpointConfigObservedState_FromProto(mapCtx, in.GetEndpointConfig())
-	// MISSING: MetastoreConfig
-	// MISSING: DataprocMetricConfig
-	// MISSING: AuxiliaryNodeGroups
-	return out
-}
-func ClusterConfigObservedState_ToProto(mapCtx *direct.MapContext, in *krm.ClusterConfigObservedState) *pb.ClusterConfig {
-	if in == nil {
-		return nil
-	}
-	out := &pb.ClusterConfig{}
-	// MISSING: ConfigBucket
-	// MISSING: TempBucket
-	// MISSING: GCEClusterConfig
-	out.MasterConfig = InstanceGroupConfigObservedState_ToProto(mapCtx, in.MasterConfig)
-	// MISSING: WorkerConfig
-	// MISSING: SecondaryWorkerConfig
-	// MISSING: SoftwareConfig
-	// MISSING: InitializationActions
-	// MISSING: EncryptionConfig
-	// MISSING: AutoscalingConfig
-	// MISSING: SecurityConfig
-	out.LifecycleConfig = LifecycleConfigObservedState_ToProto(mapCtx, in.LifecycleConfig)
-	out.EndpointConfig = EndpointConfigObservedState_ToProto(mapCtx, in.EndpointConfig)
-	// MISSING: MetastoreConfig
-	// MISSING: DataprocMetricConfig
 	// MISSING: AuxiliaryNodeGroups
 	return out
 }
@@ -230,38 +152,6 @@ func ClusterMetrics_ToProto(mapCtx *direct.MapContext, in *krm.ClusterMetrics) *
 	out := &pb.ClusterMetrics{}
 	out.HdfsMetrics = in.HdfsMetrics
 	out.YarnMetrics = in.YarnMetrics
-	return out
-}
-func ClusterObservedState_FromProto(mapCtx *direct.MapContext, in *pb.Cluster) *krm.ClusterObservedState {
-	if in == nil {
-		return nil
-	}
-	out := &krm.ClusterObservedState{}
-	// MISSING: ProjectID
-	// MISSING: ClusterName
-	out.Config = ClusterConfigObservedState_FromProto(mapCtx, in.GetConfig())
-	// MISSING: VirtualClusterConfig
-	// MISSING: Labels
-	out.Status = ClusterStatus_FromProto(mapCtx, in.GetStatus())
-	out.StatusHistory = direct.Slice_FromProto(mapCtx, in.StatusHistory, ClusterStatus_FromProto)
-	out.ClusterUuid = direct.LazyPtr(in.GetClusterUuid())
-	out.Metrics = ClusterMetrics_FromProto(mapCtx, in.GetMetrics())
-	return out
-}
-func ClusterObservedState_ToProto(mapCtx *direct.MapContext, in *krm.ClusterObservedState) *pb.Cluster {
-	if in == nil {
-		return nil
-	}
-	out := &pb.Cluster{}
-	// MISSING: ProjectID
-	// MISSING: ClusterName
-	out.Config = ClusterConfigObservedState_ToProto(mapCtx, in.Config)
-	// MISSING: VirtualClusterConfig
-	// MISSING: Labels
-	out.Status = ClusterStatus_ToProto(mapCtx, in.Status)
-	out.StatusHistory = direct.Slice_ToProto(mapCtx, in.StatusHistory, ClusterStatus_ToProto)
-	out.ClusterUuid = direct.ValueOf(in.ClusterUuid)
-	out.Metrics = ClusterMetrics_ToProto(mapCtx, in.Metrics)
 	return out
 }
 func ClusterStatus_FromProto(mapCtx *direct.MapContext, in *pb.ClusterStatus) *krm.ClusterStatus {
@@ -331,8 +221,6 @@ func DataprocClusterObservedState_FromProto(mapCtx *direct.MapContext, in *pb.Cl
 	out := &krm.DataprocClusterObservedState{}
 	// MISSING: ProjectID
 	// MISSING: ClusterName
-	// MISSING: Config
-	// MISSING: VirtualClusterConfig
 	// MISSING: Labels
 	// MISSING: Status
 	// MISSING: StatusHistory
@@ -347,8 +235,6 @@ func DataprocClusterObservedState_ToProto(mapCtx *direct.MapContext, in *krm.Dat
 	out := &pb.Cluster{}
 	// MISSING: ProjectID
 	// MISSING: ClusterName
-	// MISSING: Config
-	// MISSING: VirtualClusterConfig
 	// MISSING: Labels
 	// MISSING: Status
 	// MISSING: StatusHistory
@@ -363,8 +249,8 @@ func DataprocClusterSpec_FromProto(mapCtx *direct.MapContext, in *pb.Cluster) *k
 	out := &krm.DataprocClusterSpec{}
 	// MISSING: ProjectID
 	// MISSING: ClusterName
-	// MISSING: Config
-	// MISSING: VirtualClusterConfig
+	out.Config = ClusterConfig_FromProto(mapCtx, in.GetConfig())
+	out.VirtualClusterConfig = VirtualClusterConfig_FromProto(mapCtx, in.GetVirtualClusterConfig())
 	// MISSING: Labels
 	// MISSING: Status
 	// MISSING: StatusHistory
@@ -379,8 +265,8 @@ func DataprocClusterSpec_ToProto(mapCtx *direct.MapContext, in *krm.DataprocClus
 	out := &pb.Cluster{}
 	// MISSING: ProjectID
 	// MISSING: ClusterName
-	// MISSING: Config
-	// MISSING: VirtualClusterConfig
+	out.Config = ClusterConfig_ToProto(mapCtx, in.Config)
+	out.VirtualClusterConfig = VirtualClusterConfig_ToProto(mapCtx, in.VirtualClusterConfig)
 	// MISSING: Labels
 	// MISSING: Status
 	// MISSING: StatusHistory
@@ -431,8 +317,8 @@ func DiskConfig_FromProto(mapCtx *direct.MapContext, in *pb.DiskConfig) *krm.Dis
 	out.BootDiskSizeGB = direct.LazyPtr(in.GetBootDiskSizeGb())
 	out.NumLocalSsds = direct.LazyPtr(in.GetNumLocalSsds())
 	out.LocalSsdInterface = direct.LazyPtr(in.GetLocalSsdInterface())
-	out.BootDiskProvisionedIops = in.BootDiskProvisionedIops
-	out.BootDiskProvisionedThroughput = in.BootDiskProvisionedThroughput
+	// MISSING: BootDiskProvisionedIops
+	// MISSING: BootDiskProvisionedThroughput
 	return out
 }
 func DiskConfig_ToProto(mapCtx *direct.MapContext, in *krm.DiskConfig) *pb.DiskConfig {
@@ -444,8 +330,8 @@ func DiskConfig_ToProto(mapCtx *direct.MapContext, in *krm.DiskConfig) *pb.DiskC
 	out.BootDiskSizeGb = direct.ValueOf(in.BootDiskSizeGB)
 	out.NumLocalSsds = direct.ValueOf(in.NumLocalSsds)
 	out.LocalSsdInterface = direct.ValueOf(in.LocalSsdInterface)
-	out.BootDiskProvisionedIops = in.BootDiskProvisionedIops
-	out.BootDiskProvisionedThroughput = in.BootDiskProvisionedThroughput
+	// MISSING: BootDiskProvisionedIops
+	// MISSING: BootDiskProvisionedThroughput
 	return out
 }
 func EncryptionConfig_FromProto(mapCtx *direct.MapContext, in *pb.EncryptionConfig) *krm.EncryptionConfig {
@@ -453,8 +339,8 @@ func EncryptionConfig_FromProto(mapCtx *direct.MapContext, in *pb.EncryptionConf
 		return nil
 	}
 	out := &krm.EncryptionConfig{}
-	out.GCEPDKMSKeyName = direct.LazyPtr(in.GetGcePdKmsKeyName())
-	out.KMSKey = direct.LazyPtr(in.GetKmsKey())
+	// MISSING: GCEPDKMSKeyName
+	// MISSING: KMSKey
 	return out
 }
 func EncryptionConfig_ToProto(mapCtx *direct.MapContext, in *krm.EncryptionConfig) *pb.EncryptionConfig {
@@ -462,8 +348,8 @@ func EncryptionConfig_ToProto(mapCtx *direct.MapContext, in *krm.EncryptionConfi
 		return nil
 	}
 	out := &pb.EncryptionConfig{}
-	out.GcePdKmsKeyName = direct.ValueOf(in.GCEPDKMSKeyName)
-	out.KmsKey = direct.ValueOf(in.KMSKey)
+	// MISSING: GCEPDKMSKeyName
+	// MISSING: KMSKey
 	return out
 }
 func EndpointConfig_FromProto(mapCtx *direct.MapContext, in *pb.EndpointConfig) *krm.EndpointConfig {
@@ -484,35 +370,19 @@ func EndpointConfig_ToProto(mapCtx *direct.MapContext, in *krm.EndpointConfig) *
 	out.EnableHttpPortAccess = direct.ValueOf(in.EnableHTTPPortAccess)
 	return out
 }
-func EndpointConfigObservedState_FromProto(mapCtx *direct.MapContext, in *pb.EndpointConfig) *krm.EndpointConfigObservedState {
-	if in == nil {
-		return nil
-	}
-	out := &krm.EndpointConfigObservedState{}
-	out.HTTPPorts = in.HttpPorts
-	// MISSING: EnableHTTPPortAccess
-	return out
-}
-func EndpointConfigObservedState_ToProto(mapCtx *direct.MapContext, in *krm.EndpointConfigObservedState) *pb.EndpointConfig {
-	if in == nil {
-		return nil
-	}
-	out := &pb.EndpointConfig{}
-	out.HttpPorts = in.HTTPPorts
-	// MISSING: EnableHTTPPortAccess
-	return out
-}
 func GCEClusterConfig_FromProto(mapCtx *direct.MapContext, in *pb.GceClusterConfig) *krm.GCEClusterConfig {
 	if in == nil {
 		return nil
 	}
 	out := &krm.GCEClusterConfig{}
 	out.ZoneURI = direct.LazyPtr(in.GetZoneUri())
-	out.NetworkURI = direct.LazyPtr(in.GetNetworkUri())
-	out.SubnetworkURI = direct.LazyPtr(in.GetSubnetworkUri())
+	// MISSING: NetworkURI
+	// MISSING: SubnetworkURI
 	out.InternalIPOnly = in.InternalIpOnly
 	out.PrivateIPV6GoogleAccess = direct.Enum_FromProto(mapCtx, in.GetPrivateIpv6GoogleAccess())
-	out.ServiceAccount = direct.LazyPtr(in.GetServiceAccount())
+	if in.GetServiceAccount() != "" {
+		out.ServiceAccountRef = &refs.IAMServiceAccountRef{External: in.GetServiceAccount()}
+	}
 	out.ServiceAccountScopes = in.ServiceAccountScopes
 	out.Tags = in.Tags
 	out.Metadata = in.Metadata
@@ -528,11 +398,13 @@ func GCEClusterConfig_ToProto(mapCtx *direct.MapContext, in *krm.GCEClusterConfi
 	}
 	out := &pb.GceClusterConfig{}
 	out.ZoneUri = direct.ValueOf(in.ZoneURI)
-	out.NetworkUri = direct.ValueOf(in.NetworkURI)
-	out.SubnetworkUri = direct.ValueOf(in.SubnetworkURI)
+	// MISSING: NetworkURI
+	// MISSING: SubnetworkURI
 	out.InternalIpOnly = in.InternalIPOnly
 	out.PrivateIpv6GoogleAccess = direct.Enum_ToProto[pb.GceClusterConfig_PrivateIpv6GoogleAccess](mapCtx, in.PrivateIPV6GoogleAccess)
-	out.ServiceAccount = direct.ValueOf(in.ServiceAccount)
+	if in.ServiceAccountRef != nil {
+		out.ServiceAccount = in.ServiceAccountRef.External
+	}
 	out.ServiceAccountScopes = in.ServiceAccountScopes
 	out.Tags = in.Tags
 	out.Metadata = in.Metadata
@@ -556,7 +428,7 @@ func GkeClusterConfig_ToProto(mapCtx *direct.MapContext, in *krm.GkeClusterConfi
 		return nil
 	}
 	out := &pb.GkeClusterConfig{}
-	out.GkeClusterTarget = direct.ValueOf(in.GkeClusterTarget)
+	out.GkeClusterTarget = GkeClusterConfig_GkeClusterTarget_ToProto(mapCtx, in.GkeClusterTarget)
 	out.NodePoolTarget = direct.Slice_ToProto(mapCtx, in.NodePoolTarget, GkeNodePoolTarget_ToProto)
 	return out
 }
@@ -810,9 +682,9 @@ func InstanceGroupConfig_FromProto(mapCtx *direct.MapContext, in *pb.InstanceGro
 	// MISSING: ManagedGroupConfig
 	out.Accelerators = direct.Slice_FromProto(mapCtx, in.Accelerators, AcceleratorConfig_FromProto)
 	out.MinCPUPlatform = direct.LazyPtr(in.GetMinCpuPlatform())
-	out.MinNumInstances = direct.LazyPtr(in.GetMinNumInstances())
-	out.InstanceFlexibilityPolicy = InstanceFlexibilityPolicy_FromProto(mapCtx, in.GetInstanceFlexibilityPolicy())
-	out.StartupConfig = StartupConfig_FromProto(mapCtx, in.GetStartupConfig())
+	// MISSING: MinNumInstances
+	// MISSING: InstanceFlexibilityPolicy
+	// MISSING: StartupConfig
 	return out
 }
 func InstanceGroupConfig_ToProto(mapCtx *direct.MapContext, in *krm.InstanceGroupConfig) *pb.InstanceGroupConfig {
@@ -823,7 +695,7 @@ func InstanceGroupConfig_ToProto(mapCtx *direct.MapContext, in *krm.InstanceGrou
 	out.NumInstances = direct.ValueOf(in.NumInstances)
 	// MISSING: InstanceNames
 	// MISSING: InstanceReferences
-	out.ImageUri = direct.ValueOf(in.ImageURI)
+	out.ImageURI = InstanceGroupConfig_ImageUri_ToProto(mapCtx, in.ImageURI)
 	out.MachineTypeUri = direct.ValueOf(in.MachineTypeURI)
 	out.DiskConfig = DiskConfig_ToProto(mapCtx, in.DiskConfig)
 	// MISSING: IsPreemptible
@@ -831,50 +703,8 @@ func InstanceGroupConfig_ToProto(mapCtx *direct.MapContext, in *krm.InstanceGrou
 	// MISSING: ManagedGroupConfig
 	out.Accelerators = direct.Slice_ToProto(mapCtx, in.Accelerators, AcceleratorConfig_ToProto)
 	out.MinCpuPlatform = direct.ValueOf(in.MinCPUPlatform)
-	out.MinNumInstances = direct.ValueOf(in.MinNumInstances)
-	out.InstanceFlexibilityPolicy = InstanceFlexibilityPolicy_ToProto(mapCtx, in.InstanceFlexibilityPolicy)
-	out.StartupConfig = StartupConfig_ToProto(mapCtx, in.StartupConfig)
-	return out
-}
-func InstanceGroupConfigObservedState_FromProto(mapCtx *direct.MapContext, in *pb.InstanceGroupConfig) *krm.InstanceGroupConfigObservedState {
-	if in == nil {
-		return nil
-	}
-	out := &krm.InstanceGroupConfigObservedState{}
-	// MISSING: NumInstances
-	out.InstanceNames = in.InstanceNames
-	out.InstanceReferences = direct.Slice_FromProto(mapCtx, in.InstanceReferences, InstanceReference_FromProto)
-	// MISSING: ImageURI
-	// MISSING: MachineTypeURI
-	// MISSING: DiskConfig
-	out.IsPreemptible = direct.LazyPtr(in.GetIsPreemptible())
-	// MISSING: Preemptibility
-	out.ManagedGroupConfig = ManagedGroupConfig_FromProto(mapCtx, in.GetManagedGroupConfig())
-	// MISSING: Accelerators
-	// MISSING: MinCPUPlatform
 	// MISSING: MinNumInstances
-	out.InstanceFlexibilityPolicy = InstanceFlexibilityPolicyObservedState_FromProto(mapCtx, in.GetInstanceFlexibilityPolicy())
-	// MISSING: StartupConfig
-	return out
-}
-func InstanceGroupConfigObservedState_ToProto(mapCtx *direct.MapContext, in *krm.InstanceGroupConfigObservedState) *pb.InstanceGroupConfig {
-	if in == nil {
-		return nil
-	}
-	out := &pb.InstanceGroupConfig{}
-	// MISSING: NumInstances
-	out.InstanceNames = in.InstanceNames
-	out.InstanceReferences = direct.Slice_ToProto(mapCtx, in.InstanceReferences, InstanceReference_ToProto)
-	// MISSING: ImageURI
-	// MISSING: MachineTypeURI
-	// MISSING: DiskConfig
-	out.IsPreemptible = direct.ValueOf(in.IsPreemptible)
-	// MISSING: Preemptibility
-	out.ManagedGroupConfig = ManagedGroupConfig_ToProto(mapCtx, in.ManagedGroupConfig)
-	// MISSING: Accelerators
-	// MISSING: MinCPUPlatform
-	// MISSING: MinNumInstances
-	out.InstanceFlexibilityPolicy = InstanceFlexibilityPolicyObservedState_ToProto(mapCtx, in.InstanceFlexibilityPolicy)
+	// MISSING: InstanceFlexibilityPolicy
 	// MISSING: StartupConfig
 	return out
 }
@@ -929,7 +759,7 @@ func KerberosConfig_ToProto(mapCtx *direct.MapContext, in *krm.KerberosConfig) *
 	out := &pb.KerberosConfig{}
 	out.EnableKerberos = direct.ValueOf(in.EnableKerberos)
 	out.RootPrincipalPasswordUri = direct.ValueOf(in.RootPrincipalPasswordURI)
-	out.KmsKeyUri = direct.ValueOf(in.KMSKeyURI)
+	out.KMSKeyURI = KerberosConfig_KmsKeyUri_ToProto(mapCtx, in.KMSKeyURI)
 	out.KeystoreUri = direct.ValueOf(in.KeystoreURI)
 	out.TruststoreUri = direct.ValueOf(in.TruststoreURI)
 	out.KeystorePasswordUri = direct.ValueOf(in.KeystorePasswordURI)
@@ -1085,7 +915,7 @@ func MetastoreConfig_ToProto(mapCtx *direct.MapContext, in *krm.MetastoreConfig)
 		return nil
 	}
 	out := &pb.MetastoreConfig{}
-	out.DataprocMetastoreService = direct.ValueOf(in.DataprocMetastoreService)
+	out.DataprocMetastoreService = MetastoreConfig_DataprocMetastoreService_ToProto(mapCtx, in.DataprocMetastoreService)
 	return out
 }
 func NodeGroup_FromProto(mapCtx *direct.MapContext, in *pb.NodeGroup) *krm.NodeGroup {
@@ -1115,7 +945,7 @@ func NodeGroupAffinity_FromProto(mapCtx *direct.MapContext, in *pb.NodeGroupAffi
 		return nil
 	}
 	out := &krm.NodeGroupAffinity{}
-	out.NodeGroupURI = direct.LazyPtr(in.GetNodeGroupUri())
+	// MISSING: NodeGroupURI
 	return out
 }
 func NodeGroupAffinity_ToProto(mapCtx *direct.MapContext, in *krm.NodeGroupAffinity) *pb.NodeGroupAffinity {
@@ -1123,7 +953,7 @@ func NodeGroupAffinity_ToProto(mapCtx *direct.MapContext, in *krm.NodeGroupAffin
 		return nil
 	}
 	out := &pb.NodeGroupAffinity{}
-	out.NodeGroupUri = direct.ValueOf(in.NodeGroupURI)
+	// MISSING: NodeGroupURI
 	return out
 }
 func NodeInitializationAction_FromProto(mapCtx *direct.MapContext, in *pb.NodeInitializationAction) *krm.NodeInitializationAction {
@@ -1235,7 +1065,7 @@ func SparkHistoryServerConfig_ToProto(mapCtx *direct.MapContext, in *krm.SparkHi
 		return nil
 	}
 	out := &pb.SparkHistoryServerConfig{}
-	out.DataprocCluster = direct.ValueOf(in.DataprocCluster)
+	out.DataprocCluster = SparkHistoryServerConfig_DataprocCluster_ToProto(mapCtx, in.DataprocCluster)
 	return out
 }
 func StartupConfig_FromProto(mapCtx *direct.MapContext, in *pb.StartupConfig) *krm.StartupConfig {
