@@ -50,17 +50,20 @@ type DataprocClusterSpec struct {
 	//  Exactly one of ClusterConfig or VirtualClusterConfig must be specified.
 	Config *ClusterConfig `json:"config,omitempty"`
 
-	// // Optional. The virtual cluster config is used when creating a Dataproc
-	// //  cluster that does not directly control the underlying compute resources,
-	// //  for example, when creating a [Dataproc-on-GKE
-	// //  cluster](https://cloud.google.com/dataproc/docs/guides/dpgke/dataproc-gke-overview).
-	// //  Dataproc may set default values, and values may change when
-	// //  clusters are updated. Exactly one of
-	// //  [config][google.cloud.dataproc.v1.Cluster.config] or
-	// //  [virtual_cluster_config][google.cloud.dataproc.v1.Cluster.virtual_cluster_config]
-	// //  must be specified.
-	// VirtualClusterConfig *VirtualClusterConfig `json:"virtualClusterConfig,omitempty"`
+	/* NOTYET
+	// Optional. The virtual cluster config is used when creating a Dataproc
+	//  cluster that does not directly control the underlying compute resources,
+	//  for example, when creating a [Dataproc-on-GKE
+	//  cluster](https://cloud.google.com/dataproc/docs/guides/dpgke/dataproc-gke-overview).
+	//  Dataproc may set default values, and values may change when
+	//  clusters are updated. Exactly one of
+	//  [config][google.cloud.dataproc.v1.Cluster.config] or
+	//  [virtual_cluster_config][google.cloud.dataproc.v1.Cluster.virtual_cluster_config]
+	//  must be specified.
+	VirtualClusterConfig *VirtualClusterConfig `json:"virtualClusterConfig,omitempty"`
+	*/
 
+	/* NOTYET
 	// Optional. The labels to associate with this cluster.
 	//  Label **keys** must contain 1 to 63 characters, and must conform to
 	//  [RFC 1035](https://www.ietf.org/rfc/rfc1035.txt).
@@ -69,6 +72,8 @@ type DataprocClusterSpec struct {
 	//  1035](https://www.ietf.org/rfc/rfc1035.txt). No more than 32 labels can be
 	//  associated with a cluster.
 	Labels map[string]string `json:"labels,omitempty"`
+	*/
+
 }
 
 // DataprocClusterStatus defines the config connector machine state of DataprocCluster
