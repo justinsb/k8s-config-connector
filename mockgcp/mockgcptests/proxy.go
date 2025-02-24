@@ -283,7 +283,6 @@ func (p *Proxy) BuildGcloudConfig(proxyEndpoint *net.TCPAddr, mockgcp mockgcp.In
 		"auditmanager",
 		"baremetalsolution",
 		"bigtableadmin",
-		"billingbudgets",
 		"certificatemanager",
 		"cloudasset",
 		"cloudbilling",
