@@ -19,17 +19,41 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-var BillingBudgetGVK = GroupVersion.WithKind("BillingBudget")
+var BillingBudgetsBudgetGVK = GroupVersion.WithKind("BillingBudgetsBudget")
 
-// BillingBudgetSpec defines the desired state of BillingBudget
+// BillingBudgetsBudgetSpec defines the desired state of BillingBudgetsBudget
 // +kcc:proto=google.cloud.billing.budgets.v1.Budget
-type BillingBudgetSpec struct {
-	// The BillingBudget name. If not given, the metadata.name will be used.
+type BillingBudgetsBudgetSpec struct {
+	// The BillingBudgetsBudget name. If not given, the metadata.name will be used.
 	ResourceID *string `json:"resourceID,omitempty"`
+
+	// User data for display name in UI. The name must be less than or equal to
+	//  60 characters.
+	DisplayName *string `json:"displayName,omitempty"`
+
+	// Optional. Filters that define which resources are used to compute the
+	//  actual spend against the budget.
+	BudgetFilter *Filter `json:"budgetFilter,omitempty"`
+
+	// Required. Budgeted amount.
+	Amount *BudgetAmount `json:"amount,omitempty"`
+
+	// Optional. Rules that trigger alerts (notifications of thresholds being
+	//  crossed) when spend exceeds the specified percentages of the budget.
+	//
+	//  Optional for `pubsubTopic` notifications.
+	//
+	//  Required if using email notifications.
+	ThresholdRules []ThresholdRule `json:"thresholdRules,omitempty"`
+
+	// Optional. Rules to apply to notifications sent based on budget spend and
+	//  thresholds.
+	// +kcc:proto:field=google.cloud.billing.budgets.v1.Budget.notifications_rule
+	NotificationsRule *NotificationsRule `json:"notificationsRule,omitempty"`
 }
 
-// BillingBudgetStatus defines the config connector machine state of BillingBudget
-type BillingBudgetStatus struct {
+// BillingBudgetsBudgetStatus defines the config connector machine state of BillingBudgetsBudget
+type BillingBudgetsBudgetStatus struct {
 	/* Conditions represent the latest available observations of the
 	   object's current state. */
 	Conditions []v1alpha1.Condition `json:"conditions,omitempty"`
@@ -37,22 +61,28 @@ type BillingBudgetStatus struct {
 	// ObservedGeneration is the generation of the resource that was most recently observed by the Config Connector controller. If this is equal to metadata.generation, then that means that the current reported status reflects the most recent desired state of the resource.
 	ObservedGeneration *int64 `json:"observedGeneration,omitempty"`
 
-	// A unique specifier for the BillingBudget resource in GCP.
+	// A unique specifier for the BillingBudgetsBudget resource in GCP.
 	ExternalRef *string `json:"externalRef,omitempty"`
 
 	// ObservedState is the state of the resource as most recently observed in GCP.
-	ObservedState *BillingBudgetObservedState `json:"observedState,omitempty"`
+	ObservedState *BillingBudgetsBudgetObservedState `json:"observedState,omitempty"`
 }
 
-// BillingBudgetObservedState is the state of the BillingBudget resource as most recently observed in GCP.
+// BillingBudgetsBudgetObservedState is the state of the BillingBudgetsBudget resource as most recently observed in GCP.
 // +kcc:proto=google.cloud.billing.budgets.v1.Budget
-type BillingBudgetObservedState struct {
+type BillingBudgetsBudgetObservedState struct {
+	// 	// Optional. Etag to validate that the object is unchanged for a
+	// //  read-modify-write operation.
+	// //  An empty etag causes an update to overwrite the current budget.
+	// //  The last etag of the resource data is returned by GetBudget,
+	// //  and is subsequently required in the UpdateBudget request.
+	// Etag *string `json:"etag,omitempty"`
+
 }
 
 // +genclient
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
-// TODO(user): make sure the pluralizaiton below is correct
-// +kubebuilder:resource:categories=gcp,shortName=gcpbillingbudget;gcpbillingbudgets
+// +kubebuilder:resource:categories=gcp,shortName=gcpbillingbudgetsbudget;gcpbillingbudgetsbudgets
 // +kubebuilder:subresource:status
 // +kubebuilder:metadata:labels="cnrm.cloud.google.com/managed-by-kcc=true";"cnrm.cloud.google.com/system=true"
 // +kubebuilder:printcolumn:name="Age",JSONPath=".metadata.creationTimestamp",type="date"
@@ -60,25 +90,25 @@ type BillingBudgetObservedState struct {
 // +kubebuilder:printcolumn:name="Status",JSONPath=".status.conditions[?(@.type=='Ready')].reason",type="string",description="The reason for the value in 'Ready'"
 // +kubebuilder:printcolumn:name="Status Age",JSONPath=".status.conditions[?(@.type=='Ready')].lastTransitionTime",type="date",description="The last transition time for the value in 'Status'"
 
-// BillingBudget is the Schema for the BillingBudget API
+// BillingBudgetsBudget is the Schema for the BillingBudgetsBudget API
 // +k8s:openapi-gen=true
-type BillingBudget struct {
+type BillingBudgetsBudget struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
 	// +required
-	Spec   BillingBudgetSpec   `json:"spec,omitempty"`
-	Status BillingBudgetStatus `json:"status,omitempty"`
+	Spec   BillingBudgetsBudgetSpec   `json:"spec,omitempty"`
+	Status BillingBudgetsBudgetStatus `json:"status,omitempty"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
-// BillingBudgetList contains a list of BillingBudget
-type BillingBudgetList struct {
+// BillingBudgetsBudgetList contains a list of BillingBudgetsBudget
+type BillingBudgetsBudgetList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []BillingBudget `json:"items"`
+	Items           []BillingBudgetsBudget `json:"items"`
 }
 
 func init() {
-	SchemeBuilder.Register(&BillingBudget{}, &BillingBudgetList{})
+	SchemeBuilder.Register(&BillingBudgetsBudget{}, &BillingBudgetsBudgetList{})
 }
