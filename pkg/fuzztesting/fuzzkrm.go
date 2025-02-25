@@ -60,6 +60,9 @@ type KRMTypedFuzzer[ProtoT proto.Message, SpecType any, StatusType any] struct {
 	UnimplementedFields sets.Set[string]
 	SpecFields          sets.Set[string]
 	StatusFields        sets.Set[string]
+
+	// Transforms are used to filter out particular values in the proto that are invalid / cannot round trip
+	transforms []func(obj ProtoT)
 }
 
 type KRMFuzzer interface {
@@ -88,6 +91,7 @@ func (f *KRMTypedFuzzer[ProtoT, SpecType, StatusType]) FuzzSpec(t *testing.T, se
 	fuzzer := NewFuzzTest(f.ProtoType, f.SpecFromProto, f.SpecToProto)
 	fuzzer.IgnoreFields = f.StatusFields
 	fuzzer.UnimplementedFields = f.UnimplementedFields
+	fuzzer.Transforms = f.transforms
 	fuzzer.Fuzz(t, seed)
 }
 
@@ -95,7 +99,14 @@ func (f *KRMTypedFuzzer[ProtoT, SpecType, StatusType]) FuzzStatus(t *testing.T, 
 	fuzzer := NewFuzzTest(f.ProtoType, f.StatusFromProto, f.StatusToProto)
 	fuzzer.IgnoreFields = f.SpecFields
 	fuzzer.UnimplementedFields = f.UnimplementedFields
+	fuzzer.Transforms = f.transforms
 	fuzzer.Fuzz(t, seed)
+}
+
+// AddTransform adds a transformation function that will be called after the initial proto is generated.
+// Transforms are used to filter out particular values in the proto that are invalid / cannot round trip
+func (f *KRMTypedFuzzer[ProtoT, SpecType, StatusType]) AddTransform(transform func(obj ProtoT)) {
+	f.transforms = append(f.transforms, transform)
 }
 
 type NoStatus struct{}
@@ -127,6 +138,9 @@ type FuzzTest[ProtoT proto.Message, KRMType any] struct {
 
 	UnimplementedFields sets.Set[string]
 	IgnoreFields        sets.Set[string]
+
+	// Transforms are used to filter out particular values in the proto that are invalid / cannot round trip
+	Transforms []func(obj ProtoT)
 }
 
 func NewFuzzTest[ProtoT proto.Message, KRMType any](protoType ProtoT, fromProto func(ctx *direct.MapContext, in ProtoT) *KRMType, toProto func(ctx *direct.MapContext, in *KRMType) ProtoT) *FuzzTest[ProtoT, KRMType] {
@@ -154,6 +168,10 @@ func (f *FuzzTest[ProtoT, KRMType]) Fuzz(t *testing.T, seed int64) {
 		Paths: ignoreFields,
 	}
 	fuzz.Visit("", p1.ProtoReflect(), nil, clearFields)
+
+	for _, transform := range f.Transforms {
+		transform(p1)
+	}
 
 	ctx := &direct.MapContext{}
 	krm := f.FromProto(ctx, p1)
