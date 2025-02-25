@@ -7,19 +7,19 @@ metadata:
   labels:
     cnrm.cloud.google.com/managed-by-kcc: "true"
     cnrm.cloud.google.com/system: "true"
-  name: billingbudgetsbudgets.billingbudgets.cnrm.cloud.google.com
+  name: billingbudgets.billingbudgets.cnrm.cloud.google.com
 spec:
   group: billingbudgets.cnrm.cloud.google.com
   names:
     categories:
     - gcp
-    kind: BillingBudgetsBudget
-    listKind: BillingBudgetsBudgetList
-    plural: billingbudgetsbudgets
+    kind: BillingBudget
+    listKind: BillingBudgetList
+    plural: billingbudgets
     shortNames:
-    - gcpbillingbudgetsbudget
-    - gcpbillingbudgetsbudgets
-    singular: billingbudgetsbudget
+    - gcpbillingbudget
+    - gcpbillingbudgets
+    singular: billingbudget
   preserveUnknownFields: false
   scope: Namespaced
   versions:
@@ -42,8 +42,7 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: BillingBudgetsBudget is the Schema for the BillingBudgetsBudget
-          API
+        description: BillingBudget is the Schema for the BillingBudget API
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -58,7 +57,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: BillingBudgetsBudgetSpec defines the desired state of BillingBudgetsBudget
+            description: BillingBudgetSpec defines the desired state of BillingBudget
             properties:
               amount:
                 description: Required. Budgeted amount.
@@ -250,7 +249,7 @@ spec:
                     type: string
                 type: object
               resourceID:
-                description: The BillingBudgetsBudget name. If not given, the metadata.name
+                description: The BillingBudget name. If not given, the metadata.name
                   will be used.
                 type: string
               thresholdRules:
@@ -277,8 +276,8 @@ spec:
                 type: array
             type: object
           status:
-            description: BillingBudgetsBudgetStatus defines the config connector machine
-              state of BillingBudgetsBudget
+            description: BillingBudgetStatus defines the config connector machine
+              state of BillingBudget
             properties:
               conditions:
                 description: Conditions represent the latest available observations
@@ -307,8 +306,8 @@ spec:
                   type: object
                 type: array
               externalRef:
-                description: A unique specifier for the BillingBudgetsBudget resource
-                  in GCP.
+                description: A unique specifier for the BillingBudget resource in
+                  GCP.
                 type: string
               observedGeneration:
                 description: ObservedGeneration is the generation of the resource
