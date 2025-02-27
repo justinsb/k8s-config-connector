@@ -37,10 +37,12 @@ type TPUNodeSpec struct {
 
 	// Required. The type of hardware accelerators associated with this node.
 	// +kcc:proto:field=google.cloud.tpu.v1.Node.accelerator_type
+	// +required
 	AcceleratorType *string `json:"acceleratorType,omitempty"`
 
 	// Required. The version of Tensorflow running in the Node.
 	// +kcc:proto:field=google.cloud.tpu.v1.Node.tensorflow_version
+	// +required
 	TensorflowVersion *string `json:"tensorflowVersion,omitempty"`
 
 	// The name of a network they wish to peer the TPU node to. It must be a
@@ -64,10 +66,6 @@ type TPUNodeSpec struct {
 	// +kcc:proto:field=google.cloud.tpu.v1.Node.scheduling_config
 	SchedulingConfig *SchedulingConfig `json:"schedulingConfig,omitempty"`
 
-	// The health status of the TPU node.
-	// +kcc:proto:field=google.cloud.tpu.v1.Node.health
-	Health *string `json:"health,omitempty"`
-
 	/* NOTYET-LABELS
 	// Resource labels to represent user-provided metadata.
 	// +kcc:proto:field=google.cloud.tpu.v1.Node.labels
@@ -81,6 +79,9 @@ type TPUNodeSpec struct {
 	//  the node must be created with this this field enabled.
 	// +kcc:proto:field=google.cloud.tpu.v1.Node.use_service_networking
 	UseServiceNetworking *bool `json:"useServiceNetworking,omitempty"`
+
+	//  Immutable. The GCP location for the TPU.
+	Zone *string `json:"zone,omitempty"`
 }
 
 // TPUNodeStatus defines the config connector machine state of TPUNode
@@ -121,6 +122,10 @@ type TPUNodeObservedState struct {
 	// Output only. The current state for the TPU Node.
 	State *string `json:"state,omitempty"`
 
+	// The health status of the TPU node.
+	// +kcc:proto:field=google.cloud.tpu.v1.Node.health
+	Health *string `json:"health,omitempty"`
+
 	// Output only. If this field is populated, it contains a description of why
 	// the TPU Node is unhealthy.
 	HealthDescription *string `json:"healthDescription,omitempty"`
@@ -140,9 +145,6 @@ type TPUNodeObservedState struct {
 	// sent work. It is recommended that Tensorflow clients of the node reach out
 	// to the 0th entry in this map first.
 	NetworkEndpoints []NetworkEndpoint `json:"networkEndpoints"`
-
-	// The health status of the TPU node.
-	Health *string `json:"health"`
 
 	// Output only. The API version that created this Node.
 	APIVersion *string `json:"apiVersion"`
