@@ -77,15 +77,44 @@ spec:
                 description: The user-supplied description of the TPU. Maximum of
                   512 characters.
                 type: string
-              health:
-                description: The health status of the TPU node.
-                type: string
               network:
                 description: The name of a network they wish to peer the TPU node
                   to. It must be a preexisting Compute Engine network inside of the
                   project on which this API has been activated. If none is provided,
                   "default" will be used.
                 type: string
+              projectRef:
+                description: Immutable. The Project that this resource belongs to.
+                oneOf:
+                - not:
+                    required:
+                    - external
+                  required:
+                  - name
+                - not:
+                    anyOf:
+                    - required:
+                      - name
+                    - required:
+                      - namespace
+                  required:
+                  - external
+                properties:
+                  external:
+                    description: The `projectID` field of a project, when not managed
+                      by Config Connector.
+                    type: string
+                  kind:
+                    description: The kind of the Project resource; optional but must
+                      be `Project` if provided.
+                    type: string
+                  name:
+                    description: The `name` field of a `Project` resource.
+                    type: string
+                  namespace:
+                    description: The `namespace` field of a `Project` resource.
+                    type: string
+                type: object
               resourceID:
                 description: The TPUNode name. If not given, the metadata.name will
                   be used.
@@ -111,6 +140,13 @@ spec:
                   Node to, is Shared VPC networks, the node must be created with this
                   this field enabled.
                 type: boolean
+              zone:
+                description: ' Immutable. The GCP location for the TPU.'
+                type: string
+            required:
+            - acceleratorType
+            - projectRef
+            - tensorflowVersion
             type: object
           status:
             description: TPUNodeStatus defines the config connector machine state
