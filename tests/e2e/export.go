@@ -79,6 +79,8 @@ func exportResource(h *create.Harness, obj *unstructured.Unstructured, expectati
 	case schema.GroupKind{Group: "secretmanager.cnrm.cloud.google.com", Kind: "SecretManagerSecret"}:
 		exportURI = "//secretmanager.googleapis.com/projects/" + projectID + "/secrets/" + resourceID
 
+	case schema.GroupKind{Group: "tpu.cnrm.cloud.google.com", Kind: "TPUNode"}:
+		exportURI = "//tpu.googleapis.com/projects/{projectID}/locations/{.spec.location}/nodes/{resourceID}"
 	}
 
 	if exportURI == "" {

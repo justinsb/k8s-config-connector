@@ -14,104 +14,101 @@
 
 package v1alpha1
 
-// import (
-// 	"context"
-// 	"fmt"
-// 	"strings"
+// +tool:krm-identity
+// proto.service: google.cloud.tpu.v1.Tpu
+// proto.message: google.cloud.tpu.v1.Node
+// crd.type: TPUNode
+// crd.version: v1alpha1
 
-// 	"github.com/GoogleCloudPlatform/k8s-config-connector/apis/common"
-// 	refsv1beta1 "github.com/GoogleCloudPlatform/k8s-config-connector/apis/refs/v1beta1"
-// 	"sigs.k8s.io/controller-runtime/pkg/client"
-// )
+import (
+	"context"
+	"fmt"
+	"strings"
 
-// // NodeIdentity defines the resource reference to TPUNode, which "External" field
-// // holds the GCP identifier for the KRM object.
-// type NodeIdentity struct {
-// 	parent *NodeParent
-// 	id     string
-// }
+	"github.com/GoogleCloudPlatform/k8s-config-connector/apis/common"
+	"github.com/GoogleCloudPlatform/k8s-config-connector/apis/common/identity"
+	"github.com/GoogleCloudPlatform/k8s-config-connector/apis/common/parent"
+	"sigs.k8s.io/controller-runtime/pkg/client"
+)
 
-// func (i *NodeIdentity) String() string {
-// 	return i.parent.String() + "/nodes/" + i.id
-// }
+var _ identity.Identity = &TPUNodeIdentity{}
 
-// func (i *NodeIdentity) ID() string {
-// 	return i.id
-// }
+type TPUNodeIdentity struct {
+	ParentID *parent.ProjectAndLocationParent
+	Node     string
+}
 
-// func (i *NodeIdentity) Parent() *NodeParent {
-// 	return i.parent
-// }
+func (i *TPUNodeIdentity) String() string {
+	return i.ParentID.String() + "/nodes/" + i.Node
+}
 
-// type NodeParent struct {
-// 	ProjectID string
-// 	Location  string
-// }
+func (i *TPUNodeIdentity) FromExternal(external string) error {
+	tokens := strings.Split(external, "/")
+	if len(tokens) == 6 && tokens[0] == "projects" && tokens[2] == "locations" && tokens[4] == "nodes" {
+		i.ParentID = &parent.ProjectAndLocationParent{
+			ProjectID: tokens[1],
+			Location:  tokens[3],
+		}
+		i.Node = tokens[5]
+		return nil
+	}
+	return fmt.Errorf("format of TPUNode external=%q was not known (use projects/{{projectID}}/locations/{{location}}/nodes/{{nodeID}})", external)
+}
 
-// func (p *NodeParent) String() string {
-// 	return "projects/" + p.ProjectID + "/locations/" + p.Location
-// }
+var _ identity.Resource = &TPUNode{}
 
-// // New builds a NodeIdentity from the Config Connector Node object.
-// func NewNodeIdentity(ctx context.Context, reader client.Reader, obj *TPUNode) (*NodeIdentity, error) {
+func (obj *TPUNode) GetIdentity(ctx context.Context, reader client.Reader) (identity.Identity, error) {
+	// Get parent ID
+	parentID, err := obj.GetParentIdentity(ctx, reader)
+	if err != nil {
+		return nil, err
+	}
 
-// 	// Get Parent
-// 	projectRef, err := refsv1beta1.ResolveProject(ctx, reader, obj.GetNamespace(), obj.Spec.ProjectRef)
-// 	if err != nil {
-// 		return nil, err
-// 	}
-// 	projectID := projectRef.ProjectID
-// 	if projectID == "" {
-// 		return nil, fmt.Errorf("cannot resolve project")
-// 	}
-// 	location := obj.Spec.Location
+	// Get desired ID
+	resourceID := common.ValueOf(obj.Spec.ResourceID)
+	if resourceID == "" {
+		resourceID = obj.GetName()
+	}
+	if resourceID == "" {
+		return nil, fmt.Errorf("cannot resolve resource ID")
+	}
 
-// 	// Get desired ID
-// 	resourceID := common.ValueOf(obj.Spec.ResourceID)
-// 	if resourceID == "" {
-// 		resourceID = obj.GetName()
-// 	}
-// 	if resourceID == "" {
-// 		return nil, fmt.Errorf("cannot resolve resource ID")
-// 	}
+	id := &TPUNodeIdentity{
+		ParentID: parentID.(*parent.ProjectAndLocationParent),
+		Node:     resourceID,
+	}
 
-// 	// Use approved External
-// 	externalRef := common.ValueOf(obj.Status.ExternalRef)
-// 	if externalRef != "" {
-// 		// Validate desired with actual
-// 		actualParent, actualResourceID, err := ParseNodeExternal(externalRef)
-// 		if err != nil {
-// 			return nil, err
-// 		}
-// 		if actualParent.ProjectID != projectID {
-// 			return nil, fmt.Errorf("spec.projectRef changed, expect %s, got %s", actualParent.ProjectID, projectID)
-// 		}
-// 		if actualParent.Location != location {
-// 			return nil, fmt.Errorf("spec.location changed, expect %s, got %s", actualParent.Location, location)
-// 		}
-// 		if actualResourceID != resourceID {
-// 			return nil, fmt.Errorf("cannot reset `metadata.name` or `spec.resourceID` to %s, since it has already assigned to %s",
-// 				resourceID, actualResourceID)
-// 		}
-// 	}
-// 	return &NodeIdentity{
-// 		parent: &NodeParent{
-// 			ProjectID: projectID,
-// 			Location:  location,
-// 		},
-// 		id: resourceID,
-// 	}, nil
-// }
+	// Attempt to ensure ID is immutable, by verifying against previously-set `status.externalRef`.
+	externalRef := common.ValueOf(obj.Status.ExternalRef)
+	if externalRef != "" {
+		previousID := &TPUNodeIdentity{}
+		if err := previousID.FromExternal(externalRef); err != nil {
+			return nil, err
+		}
+		if id.String() != previousID.String() {
+			return nil, fmt.Errorf("cannot update TPUNode identity (old=%q, new=%q): identity is immutable", previousID.String(), id.String())
+		}
+	}
 
-// func ParseNodeExternal(external string) (parent *NodeParent, resourceID string, err error) {
-// 	tokens := strings.Split(external, "/")
-// 	if len(tokens) != 6 || tokens[0] != "projects" || tokens[2] != "locations" || tokens[4] != "nodes" {
-// 		return nil, "", fmt.Errorf("format of TPUNode external=%q was not known (use projects/{{projectID}}/locations/{{location}}/nodes/{{nodeID}})", external)
-// 	}
-// 	parent = &NodeParent{
-// 		ProjectID: tokens[1],
-// 		Location:  tokens[3],
-// 	}
-// 	resourceID = tokens[5]
-// 	return parent, resourceID, nil
-// }
+	return id, nil
+}
+
+func (obj *TPUNode) GetParentIdentity(ctx context.Context, reader client.Reader) (identity.Identity, error) {
+	// TODO: Can we extract helper?
+
+	// Normalize projectRef
+	if err := obj.Spec.ProjectRef.Normalize(ctx, reader, obj.GetNamespace()); err != nil {
+		return nil, err
+	}
+
+	location := common.ValueOf(obj.Spec.Zone)
+
+	external := obj.Spec.ProjectRef.External + "/locations/" + location
+
+	// Get parent identity
+	parentID := &parent.ProjectAndLocationParent{}
+	if err := parentID.FromExternal(external); err != nil {
+		return nil, err
+	}
+	return parentID, nil
+}

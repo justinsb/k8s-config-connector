@@ -15,6 +15,7 @@
 package v1alpha1
 
 import (
+	refs "github.com/GoogleCloudPlatform/k8s-config-connector/apis/refs/v1beta1"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/pkg/apis/k8s/v1alpha1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
@@ -24,6 +25,9 @@ var TPUNodeGVK = GroupVersion.WithKind("TPUNode")
 // TPUNodeSpec defines the desired state of TPUNode
 // +kcc:proto=google.cloud.tpu.v1.Node
 type TPUNodeSpec struct {
+	/* Immutable. The Project that this resource belongs to. */
+	ProjectRef *refs.ProjectRef `json:"projectRef"`
+
 	// The TPUNode name. If not given, the metadata.name will be used.
 	ResourceID *string `json:"resourceID,omitempty"`
 
