@@ -42,3 +42,8 @@ make
 # Add boilerplate, fix formatting
 cd ${REPO_ROOT}
 make fmt
+
+
+# Update our copy in third_party
+git subtree add --prefix=third_party/github.com/googleapis/googleapis \
+  https://github.com/googleapis/googleapis 79d2e1371246e5d5453e0a4394c7b503413bdeea --squash
