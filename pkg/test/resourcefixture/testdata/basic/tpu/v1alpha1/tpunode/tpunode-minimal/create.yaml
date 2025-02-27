@@ -1,0 +1,12 @@
+apiVersion: tpu.cnrm.cloud.google.com/v1alpha1
+kind: TPUNode
+metadata:
+  name: tpunode-minimal-${uniqueId}
+spec:
+  projectRef:
+    external: ${projectId}
+  zone: us-central1-a
+  description: "Initial description"
+  tensorflowVersion: tpu-vm-cos-stable
+  acceleratorType: v5p-8
+  
