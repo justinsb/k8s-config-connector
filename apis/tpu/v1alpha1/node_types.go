@@ -40,10 +40,12 @@ type TPUNodeSpec struct {
 	// +required
 	AcceleratorType *string `json:"acceleratorType,omitempty"`
 
-	// Required. The version of Tensorflow running in the Node.
-	// +kcc:proto:field=google.cloud.tpu.v1.Node.tensorflow_version
-	// +required
-	TensorflowVersion *string `json:"tensorflowVersion,omitempty"`
+	// // Required. The version of Tensorflow running in the Node.
+	// // +kcc:proto:field=google.cloud.tpu.v1.Node.tensorflow_version
+	// // +required
+	// TensorflowVersion *string `json:"tensorflowVersion,omitempty"`
+
+	RuntimeVersion *string `json:"runtimeVersion,omitempty"`
 
 	// The name of a network they wish to peer the TPU node to. It must be a
 	//  preexisting Compute Engine network inside of the project on which this API

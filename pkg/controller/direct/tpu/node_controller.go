@@ -23,6 +23,7 @@ package tpu
 import (
 	"context"
 	"fmt"
+	"net/url"
 	"strings"
 
 	refs "github.com/GoogleCloudPlatform/k8s-config-connector/apis/refs/v1beta1"
@@ -33,6 +34,7 @@ import (
 	"github.com/GoogleCloudPlatform/k8s-config-connector/pkg/controller/direct/directbase"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/pkg/controller/direct/registry"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/pkg/gcpclients"
+	"github.com/googleapis/gax-go/v2"
 
 	pb "github.com/GoogleCloudPlatform/k8s-config-connector/pkg/gcpclients/generated/google/cloud/tpu/v2"
 	"google.golang.org/protobuf/types/known/fieldmaskpb"
@@ -145,6 +147,11 @@ func (a *TPUNodeAdapter) Find(ctx context.Context) (bool, error) {
 		Name: a.id.String(),
 	}
 	log.Info("GetNode", "req", req)
+
+	// hds = append(c.xGoogHeaders, hds...)
+	hds := []string{"x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName()))}
+	ctx = gax.InsertMetadataIntoOutgoingContext(ctx, hds...)
+
 	obj, err := a.tpuClient.GetNode(ctx, req)
 	if err != nil {
 		if direct.IsNotFound(err) {
@@ -170,15 +177,24 @@ func (a *TPUNodeAdapter) Create(ctx context.Context, createOp *directbase.Create
 		Node:   desired,
 		NodeId: a.id.Node,
 	}
-	op, err := a.tpuClient.CreateNode(ctx, req)
-	if err != nil {
-		return fmt.Errorf("creating tpu node %s: %w", a.id, err)
-	}
-	if !op.GetDone() {
-		if err := a.tpuClient.WaitForLRO(ctx, op); err != nil {
-			return fmt.Errorf("waiting for creating of tpu node %q: %w", a.id, err)
+
+	{
+		hds := []string{"x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent()))}
+		ctx = gax.InsertMetadataIntoOutgoingContext(ctx, hds...)
+
+		op, err := a.tpuClient.CreateNode(ctx, req)
+		if err != nil {
+			return fmt.Errorf("creating tpu node %s: %w", a.id, err)
+		}
+		if !op.GetDone() {
+			if err := a.tpuClient.WaitForLRO(ctx, op); err != nil {
+				return fmt.Errorf("waiting for creating of tpu node %q: %w", a.id, err)
+			}
 		}
 	}
+
+	hds := []string{"x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(a.id.String()))}
+	ctx = gax.InsertMetadataIntoOutgoingContext(ctx, hds...)
 
 	created, err := a.tpuClient.GetNode(ctx, &pb.GetNodeRequest{Name: a.id.String()})
 	if err != nil {
@@ -273,6 +289,9 @@ func (a *TPUNodeAdapter) Export(ctx context.Context) (*unstructured.Unstructured
 func (a *TPUNodeAdapter) Delete(ctx context.Context, deleteOp *directbase.DeleteOperation) (bool, error) {
 	log := klog.FromContext(ctx)
 	log.V(2).Info("deleting tpu node", "name", a.id)
+
+	hds := []string{"x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(a.id.String()))}
+	ctx = gax.InsertMetadataIntoOutgoingContext(ctx, hds...)
 
 	op, err := a.tpuClient.DeleteNode(ctx, &pb.DeleteNodeRequest{Name: a.id.String()})
 	if err != nil {

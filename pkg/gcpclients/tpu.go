@@ -19,7 +19,7 @@ type TPUV2Client struct {
 	lroClient *lroauto.OperationsClient
 }
 
-func NewTPUV2Client(ctx context.Context, opts ...option.ClientOption) (*TPUV2Client, error) {
+func NewTPUV2ClientGRPC(ctx context.Context, opts ...option.ClientOption) (*TPUV2Client, error) {
 	clientOpts := defaultGRPCClientOptions()
 	// if newClientHook != nil {
 	// 	hookOpts, err := newClientHook(ctx, clientHookParams{})
@@ -63,6 +63,40 @@ func NewTPUV2Client(ctx context.Context, opts ...option.ClientOption) (*TPUV2Cli
 	}, nil
 }
 
+// // NewRESTClient creates a new dataform rest client.
+// //
+// // Dataform is a service to develop, create, document, test, and update curated
+// // tables in BigQuery.
+// func NewTPUV2ClientREST(ctx context.Context, opts ...option.ClientOption) (*Client, error) {
+// 	clientOpts := append(defaultRESTClientOptions(), opts...)
+// 	httpClient, endpoint, err := httptransport.NewClient(ctx, clientOpts...)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+
+// 	// callOpts := defaultRESTCallOptions()
+// 	// c := &restClient{
+// 	// 	endpoint:    endpoint,
+// 	// 	httpClient:  httpClient,
+// 	// 	CallOptions: &callOpts,
+// 	// }
+// 	// c.setGoogleClientInfo()
+
+// 	return &TPUV2Client{internalClient: c, CallOptions: callOpts}, nil
+// }
+
+// func defaultRESTClientOptions() []option.ClientOption {
+// 	return []option.ClientOption{
+// 		internaloption.WithDefaultEndpoint("https://tpu.googleapis.com"),
+// 		internaloption.WithDefaultEndpointTemplate("https://tpu.UNIVERSE_DOMAIN"),
+// 		internaloption.WithDefaultMTLSEndpoint("https://tpu.mtls.googleapis.com"),
+// 		internaloption.WithDefaultUniverseDomain("googleapis.com"),
+// 		internaloption.WithDefaultAudience("https://tpu.googleapis.com/"),
+// 		internaloption.WithDefaultScopes(DefaultAuthScopes()...),
+// 		internaloption.EnableNewAuthLibrary(),
+// 	}
+// }
+
 func (c *TPUV2Client) WaitForLRO(ctx context.Context, op *longrunningpb.Operation) error {
 	lro := longrunning.InternalNewOperation(c.lroClient, op)
 	if err := lro.Wait(ctx, nil); err != nil {
@@ -73,6 +107,9 @@ func (c *TPUV2Client) WaitForLRO(ctx context.Context, op *longrunningpb.Operatio
 
 func defaultGRPCClientOptions() []option.ClientOption {
 	return []option.ClientOption{
+		// option.WithEndpoint("tpu.googleapis.com:443"),
+		// option.WithScopes(DefaultAuthScopes()...),
+
 		internaloption.WithDefaultEndpoint("tpu.googleapis.com:443"),
 		internaloption.WithDefaultEndpointTemplate("tpu.UNIVERSE_DOMAIN:443"),
 		internaloption.WithDefaultMTLSEndpoint("tpu.mtls.googleapis.com:443"),

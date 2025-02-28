@@ -466,8 +466,8 @@ func (in *TPUNodeSpec) DeepCopyInto(out *TPUNodeSpec) {
 		*out = new(string)
 		**out = **in
 	}
-	if in.TensorflowVersion != nil {
-		in, out := &in.TensorflowVersion, &out.TensorflowVersion
+	if in.RuntimeVersion != nil {
+		in, out := &in.RuntimeVersion, &out.RuntimeVersion
 		*out = new(string)
 		**out = **in
 	}

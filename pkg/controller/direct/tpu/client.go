@@ -41,7 +41,7 @@ func (m *gcpClient) newClient(ctx context.Context) (*gcpclients.TPUV2Client, err
 	if err != nil {
 		return nil, err
 	}
-	client, err := gcpclients.NewTPUV2Client(ctx, opts...)
+	client, err := gcpclients.NewTPUV2ClientGRPC(ctx, opts...)
 	if err != nil {
 		return nil, fmt.Errorf("building tpu client: %w", err)
 	}

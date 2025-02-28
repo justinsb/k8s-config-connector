@@ -119,6 +119,8 @@ spec:
                 description: The TPUNode name. If not given, the metadata.name will
                   be used.
                 type: string
+              runtimeVersion:
+                type: string
               schedulingConfig:
                 description: The scheduling options for this node.
                 properties:
@@ -132,9 +134,6 @@ spec:
                     description: Optional. Defines whether the node is Spot VM.
                     type: boolean
                 type: object
-              tensorflowVersion:
-                description: Required. The version of Tensorflow running in the Node.
-                type: string
               useServiceNetworking:
                 description: Whether the VPC peering for the node is set up through
                   Service Networking API. The VPC Peering should be set up before
@@ -149,7 +148,6 @@ spec:
             required:
             - acceleratorType
             - projectRef
-            - tensorflowVersion
             type: object
           status:
             description: TPUNodeStatus defines the config connector machine state

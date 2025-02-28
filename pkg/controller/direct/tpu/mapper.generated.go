@@ -15,9 +15,9 @@
 package tpu
 
 import (
+	pb "github.com/GoogleCloudPlatform/k8s-config-connector/pkg/gcpclients/generated/google/cloud/tpu/v2"
 	krm "github.com/GoogleCloudPlatform/k8s-config-connector/apis/tpu/v1alpha1"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/pkg/controller/direct"
-	pb "github.com/GoogleCloudPlatform/k8s-config-connector/pkg/gcpclients/generated/google/cloud/tpu/v2"
 )
 
 func AcceleratorConfig_FromProto(mapCtx *direct.MapContext, in *pb.AcceleratorConfig) *krm.AcceleratorConfig {
@@ -236,7 +236,6 @@ func TPUNodeObservedState_FromProto(mapCtx *direct.MapContext, in *pb.Node) *krm
 	// MISSING: Name
 	out.State = direct.Enum_FromProto(mapCtx, in.GetState())
 	out.HealthDescription = direct.LazyPtr(in.GetHealthDescription())
-	// MISSING: RuntimeVersion
 	// MISSING: NetworkConfig
 	// MISSING: NetworkConfigs
 	out.ServiceAccount = ServiceAccount_FromProto(mapCtx, in.GetServiceAccount())
@@ -264,7 +263,6 @@ func TPUNodeObservedState_ToProto(mapCtx *direct.MapContext, in *krm.TPUNodeObse
 	// MISSING: Name
 	out.State = direct.Enum_ToProto[pb.Node_State](mapCtx, in.State)
 	out.HealthDescription = direct.ValueOf(in.HealthDescription)
-	// MISSING: RuntimeVersion
 	// MISSING: NetworkConfig
 	// MISSING: NetworkConfigs
 	out.ServiceAccount = ServiceAccount_ToProto(mapCtx, in.ServiceAccount)
@@ -292,7 +290,7 @@ func TPUNodeSpec_FromProto(mapCtx *direct.MapContext, in *pb.Node) *krm.TPUNodeS
 	// MISSING: Name
 	out.Description = direct.LazyPtr(in.GetDescription())
 	out.AcceleratorType = direct.LazyPtr(in.GetAcceleratorType())
-	// MISSING: RuntimeVersion
+	out.RuntimeVersion = direct.LazyPtr(in.GetRuntimeVersion())
 	// MISSING: NetworkConfig
 	// MISSING: NetworkConfigs
 	out.CIDRBlock = direct.LazyPtr(in.GetCidrBlock())
@@ -317,7 +315,7 @@ func TPUNodeSpec_ToProto(mapCtx *direct.MapContext, in *krm.TPUNodeSpec) *pb.Nod
 	// MISSING: Name
 	out.Description = direct.ValueOf(in.Description)
 	out.AcceleratorType = direct.ValueOf(in.AcceleratorType)
-	// MISSING: RuntimeVersion
+	out.RuntimeVersion = direct.ValueOf(in.RuntimeVersion)
 	// MISSING: NetworkConfig
 	// MISSING: NetworkConfigs
 	out.CidrBlock = direct.ValueOf(in.CIDRBlock)
