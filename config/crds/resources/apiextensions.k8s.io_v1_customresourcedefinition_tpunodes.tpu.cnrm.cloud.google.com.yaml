@@ -128,6 +128,9 @@ spec:
                   reserved:
                     description: Whether the node is created under a reservation.
                     type: boolean
+                  spot:
+                    description: Optional. Defines whether the node is Spot VM.
+                    type: boolean
                 type: object
               tensorflowVersion:
                 description: Required. The version of Tensorflow running in the Node.
@@ -209,8 +212,11 @@ spec:
                       clients of the node reach out to the 0th entry in this map first.
                     items:
                       properties:
+                        accessConfig:
+                          description: The access config for the TPU worker.
+                          type: object
                         ipAddress:
-                          description: The IP address of this network endpoint.
+                          description: The internal IP address of this network endpoint.
                           type: string
                         port:
                           description: The port of this network endpoint.
@@ -223,7 +229,19 @@ spec:
                       tensor flow services within the node. To share resources, including
                       Google Cloud Storage data, with the Tensorflow job running in
                       the Node, this account must have permissions to that data.
-                    type: string
+                    properties:
+                      email:
+                        description: Email address of the service account. If empty,
+                          default Compute service account will be used.
+                        type: string
+                      scope:
+                        description: The list of scopes to be made available for this
+                          service account. If empty, access to all Cloud APIs will
+                          be allowed.
+                        items:
+                          type: string
+                        type: array
+                    type: object
                   state:
                     description: Output only. The current state for the TPU Node.
                     type: string
@@ -249,7 +267,6 @@ spec:
                     type: array
                 required:
                 - apiVersion
-                - health
                 - networkEndpoints
                 - symptoms
                 type: object

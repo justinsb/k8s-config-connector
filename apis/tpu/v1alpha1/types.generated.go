@@ -14,43 +14,145 @@
 
 package v1alpha1
 
-// +kcc:proto=google.cloud.tpu.v1.NetworkEndpoint
+// +kcc:proto=google.cloud.tpu.v2.AcceleratorConfig
+type AcceleratorConfig struct {
+	// Required. Type of TPU.
+	// +kcc:proto:field=google.cloud.tpu.v2.AcceleratorConfig.type
+	Type *string `json:"type,omitempty"`
+
+	// Required. Topology of TPU in chips.
+	// +kcc:proto:field=google.cloud.tpu.v2.AcceleratorConfig.topology
+	Topology *string `json:"topology,omitempty"`
+}
+
+// +kcc:proto=google.cloud.tpu.v2.AccessConfig
+type AccessConfig struct {
+}
+
+// +kcc:proto=google.cloud.tpu.v2.AttachedDisk
+type AttachedDisk struct {
+	// Specifies the full path to an existing disk.
+	//  For example: "projects/my-project/zones/us-central1-c/disks/my-disk".
+	// +kcc:proto:field=google.cloud.tpu.v2.AttachedDisk.source_disk
+	SourceDisk *string `json:"sourceDisk,omitempty"`
+
+	// The mode in which to attach this disk.
+	//  If not specified, the default is READ_WRITE mode.
+	//  Only applicable to data_disks.
+	// +kcc:proto:field=google.cloud.tpu.v2.AttachedDisk.mode
+	Mode *string `json:"mode,omitempty"`
+}
+
+// +kcc:proto=google.cloud.tpu.v2.NetworkConfig
+type NetworkConfig struct {
+	// The name of the network for the TPU node. It must be a preexisting Google
+	//  Compute Engine network. If none is provided, "default" will be used.
+	// +kcc:proto:field=google.cloud.tpu.v2.NetworkConfig.network
+	Network *string `json:"network,omitempty"`
+
+	// The name of the subnetwork for the TPU node. It must be a preexisting
+	//  Google Compute Engine subnetwork. If none is provided, "default" will be
+	//  used.
+	// +kcc:proto:field=google.cloud.tpu.v2.NetworkConfig.subnetwork
+	Subnetwork *string `json:"subnetwork,omitempty"`
+
+	// Indicates that external IP addresses would be associated with the TPU
+	//  workers. If set to false, the specified subnetwork or network should have
+	//  Private Google Access enabled.
+	// +kcc:proto:field=google.cloud.tpu.v2.NetworkConfig.enable_external_ips
+	EnableExternalIps *bool `json:"enableExternalIps,omitempty"`
+
+	// Allows the TPU node to send and receive packets with non-matching
+	//  destination or source IPs. This is required if you plan to use the TPU
+	//  workers to forward routes.
+	// +kcc:proto:field=google.cloud.tpu.v2.NetworkConfig.can_ip_forward
+	CanIPForward *bool `json:"canIPForward,omitempty"`
+
+	// Optional. Specifies networking queue count for TPU VM instance's network
+	//  interface.
+	// +kcc:proto:field=google.cloud.tpu.v2.NetworkConfig.queue_count
+	QueueCount *int32 `json:"queueCount,omitempty"`
+}
+
+// +kcc:proto=google.cloud.tpu.v2.NetworkEndpoint
 type NetworkEndpoint struct {
-	// The IP address of this network endpoint.
-	// +kcc:proto:field=google.cloud.tpu.v1.NetworkEndpoint.ip_address
+	// The internal IP address of this network endpoint.
+	// +kcc:proto:field=google.cloud.tpu.v2.NetworkEndpoint.ip_address
 	IPAddress *string `json:"ipAddress,omitempty"`
 
 	// The port of this network endpoint.
-	// +kcc:proto:field=google.cloud.tpu.v1.NetworkEndpoint.port
+	// +kcc:proto:field=google.cloud.tpu.v2.NetworkEndpoint.port
 	Port *int32 `json:"port,omitempty"`
+
+	// The access config for the TPU worker.
+	// +kcc:proto:field=google.cloud.tpu.v2.NetworkEndpoint.access_config
+	AccessConfig *AccessConfig `json:"accessConfig,omitempty"`
 }
 
-// +kcc:proto=google.cloud.tpu.v1.SchedulingConfig
+// +kcc:proto=google.cloud.tpu.v2.SchedulingConfig
 type SchedulingConfig struct {
 	// Defines whether the node is preemptible.
-	// +kcc:proto:field=google.cloud.tpu.v1.SchedulingConfig.preemptible
+	// +kcc:proto:field=google.cloud.tpu.v2.SchedulingConfig.preemptible
 	Preemptible *bool `json:"preemptible,omitempty"`
 
 	// Whether the node is created under a reservation.
-	// +kcc:proto:field=google.cloud.tpu.v1.SchedulingConfig.reserved
+	// +kcc:proto:field=google.cloud.tpu.v2.SchedulingConfig.reserved
 	Reserved *bool `json:"reserved,omitempty"`
+
+	// Optional. Defines whether the node is Spot VM.
+	// +kcc:proto:field=google.cloud.tpu.v2.SchedulingConfig.spot
+	Spot *bool `json:"spot,omitempty"`
 }
 
-// +kcc:proto=google.cloud.tpu.v1.Symptom
+// +kcc:proto=google.cloud.tpu.v2.ServiceAccount
+type ServiceAccount struct {
+	// Email address of the service account. If empty, default Compute service
+	//  account will be used.
+	// +kcc:proto:field=google.cloud.tpu.v2.ServiceAccount.email
+	Email *string `json:"email,omitempty"`
+
+	// The list of scopes to be made available for this service account. If empty,
+	//  access to all Cloud APIs will be allowed.
+	// +kcc:proto:field=google.cloud.tpu.v2.ServiceAccount.scope
+	Scope []string `json:"scope,omitempty"`
+}
+
+// +kcc:proto=google.cloud.tpu.v2.ShieldedInstanceConfig
+type ShieldedInstanceConfig struct {
+	// Defines whether the instance has Secure Boot enabled.
+	// +kcc:proto:field=google.cloud.tpu.v2.ShieldedInstanceConfig.enable_secure_boot
+	EnableSecureBoot *bool `json:"enableSecureBoot,omitempty"`
+}
+
+// +kcc:proto=google.cloud.tpu.v2.Symptom
 type Symptom struct {
 	// Timestamp when the Symptom is created.
-	// +kcc:proto:field=google.cloud.tpu.v1.Symptom.create_time
+	// +kcc:proto:field=google.cloud.tpu.v2.Symptom.create_time
 	CreateTime *string `json:"createTime,omitempty"`
 
 	// Type of the Symptom.
-	// +kcc:proto:field=google.cloud.tpu.v1.Symptom.symptom_type
+	// +kcc:proto:field=google.cloud.tpu.v2.Symptom.symptom_type
 	SymptomType *string `json:"symptomType,omitempty"`
 
 	// Detailed information of the current Symptom.
-	// +kcc:proto:field=google.cloud.tpu.v1.Symptom.details
+	// +kcc:proto:field=google.cloud.tpu.v2.Symptom.details
 	Details *string `json:"details,omitempty"`
 
 	// A string used to uniquely distinguish a worker within a TPU node.
-	// +kcc:proto:field=google.cloud.tpu.v1.Symptom.worker_id
+	// +kcc:proto:field=google.cloud.tpu.v2.Symptom.worker_id
 	WorkerID *string `json:"workerID,omitempty"`
+}
+
+// +kcc:proto=google.cloud.tpu.v2.AccessConfig
+type AccessConfigObservedState struct {
+	// Output only. An external IP address associated with the TPU worker.
+	// +kcc:proto:field=google.cloud.tpu.v2.AccessConfig.external_ip
+	ExternalIP *string `json:"externalIP,omitempty"`
+}
+
+// +kcc:proto=google.cloud.tpu.v2.NetworkEndpoint
+type NetworkEndpointObservedState struct {
+	// The access config for the TPU worker.
+	// +kcc:proto:field=google.cloud.tpu.v2.NetworkEndpoint.access_config
+	AccessConfig *AccessConfigObservedState `json:"accessConfig,omitempty"`
 }

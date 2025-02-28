@@ -21,8 +21,8 @@ import (
 	"context"
 	"fmt"
 
-	api "cloud.google.com/go/tpu/apiv1"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/pkg/config"
+	"github.com/GoogleCloudPlatform/k8s-config-connector/pkg/gcpclients"
 )
 
 type gcpClient struct {
@@ -36,12 +36,12 @@ func newGCPClient(ctx context.Context, config *config.ControllerConfig) (*gcpCli
 	return gcpClient, nil
 }
 
-func (m *gcpClient) newClient(ctx context.Context) (*api.Client, error) {
+func (m *gcpClient) newClient(ctx context.Context) (*gcpclients.TPUV2Client, error) {
 	opts, err := m.config.GRPCClientOptions()
 	if err != nil {
 		return nil, err
 	}
-	client, err := api.NewClient(ctx, opts...)
+	client, err := gcpclients.NewTPUV2Client(ctx, opts...)
 	if err != nil {
 		return nil, fmt.Errorf("building tpu client: %w", err)
 	}

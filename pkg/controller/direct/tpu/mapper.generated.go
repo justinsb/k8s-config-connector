@@ -15,11 +15,103 @@
 package tpu
 
 import (
-	pb "cloud.google.com/go/tpu/apiv1/tpupb"
 	krm "github.com/GoogleCloudPlatform/k8s-config-connector/apis/tpu/v1alpha1"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/pkg/controller/direct"
+	pb "github.com/GoogleCloudPlatform/k8s-config-connector/pkg/gcpclients/generated/google/cloud/tpu/v2"
 )
 
+func AcceleratorConfig_FromProto(mapCtx *direct.MapContext, in *pb.AcceleratorConfig) *krm.AcceleratorConfig {
+	if in == nil {
+		return nil
+	}
+	out := &krm.AcceleratorConfig{}
+	out.Type = direct.Enum_FromProto(mapCtx, in.GetType())
+	out.Topology = direct.LazyPtr(in.GetTopology())
+	return out
+}
+func AcceleratorConfig_ToProto(mapCtx *direct.MapContext, in *krm.AcceleratorConfig) *pb.AcceleratorConfig {
+	if in == nil {
+		return nil
+	}
+	out := &pb.AcceleratorConfig{}
+	out.Type = direct.Enum_ToProto[pb.AcceleratorConfig_Type](mapCtx, in.Type)
+	out.Topology = direct.ValueOf(in.Topology)
+	return out
+}
+func AccessConfig_FromProto(mapCtx *direct.MapContext, in *pb.AccessConfig) *krm.AccessConfig {
+	if in == nil {
+		return nil
+	}
+	out := &krm.AccessConfig{}
+	// MISSING: ExternalIP
+	return out
+}
+func AccessConfig_ToProto(mapCtx *direct.MapContext, in *krm.AccessConfig) *pb.AccessConfig {
+	if in == nil {
+		return nil
+	}
+	out := &pb.AccessConfig{}
+	// MISSING: ExternalIP
+	return out
+}
+func AccessConfigObservedState_FromProto(mapCtx *direct.MapContext, in *pb.AccessConfig) *krm.AccessConfigObservedState {
+	if in == nil {
+		return nil
+	}
+	out := &krm.AccessConfigObservedState{}
+	out.ExternalIP = direct.LazyPtr(in.GetExternalIp())
+	return out
+}
+func AccessConfigObservedState_ToProto(mapCtx *direct.MapContext, in *krm.AccessConfigObservedState) *pb.AccessConfig {
+	if in == nil {
+		return nil
+	}
+	out := &pb.AccessConfig{}
+	out.ExternalIp = direct.ValueOf(in.ExternalIP)
+	return out
+}
+func AttachedDisk_FromProto(mapCtx *direct.MapContext, in *pb.AttachedDisk) *krm.AttachedDisk {
+	if in == nil {
+		return nil
+	}
+	out := &krm.AttachedDisk{}
+	out.SourceDisk = direct.LazyPtr(in.GetSourceDisk())
+	out.Mode = direct.Enum_FromProto(mapCtx, in.GetMode())
+	return out
+}
+func AttachedDisk_ToProto(mapCtx *direct.MapContext, in *krm.AttachedDisk) *pb.AttachedDisk {
+	if in == nil {
+		return nil
+	}
+	out := &pb.AttachedDisk{}
+	out.SourceDisk = direct.ValueOf(in.SourceDisk)
+	out.Mode = direct.Enum_ToProto[pb.AttachedDisk_DiskMode](mapCtx, in.Mode)
+	return out
+}
+func NetworkConfig_FromProto(mapCtx *direct.MapContext, in *pb.NetworkConfig) *krm.NetworkConfig {
+	if in == nil {
+		return nil
+	}
+	out := &krm.NetworkConfig{}
+	out.Network = direct.LazyPtr(in.GetNetwork())
+	out.Subnetwork = direct.LazyPtr(in.GetSubnetwork())
+	out.EnableExternalIps = direct.LazyPtr(in.GetEnableExternalIps())
+	out.CanIPForward = direct.LazyPtr(in.GetCanIpForward())
+	out.QueueCount = direct.LazyPtr(in.GetQueueCount())
+	return out
+}
+func NetworkConfig_ToProto(mapCtx *direct.MapContext, in *krm.NetworkConfig) *pb.NetworkConfig {
+	if in == nil {
+		return nil
+	}
+	out := &pb.NetworkConfig{}
+	out.Network = direct.ValueOf(in.Network)
+	out.Subnetwork = direct.ValueOf(in.Subnetwork)
+	out.EnableExternalIps = direct.ValueOf(in.EnableExternalIps)
+	out.CanIpForward = direct.ValueOf(in.CanIPForward)
+	out.QueueCount = direct.ValueOf(in.QueueCount)
+	return out
+}
 func NetworkEndpoint_FromProto(mapCtx *direct.MapContext, in *pb.NetworkEndpoint) *krm.NetworkEndpoint {
 	if in == nil {
 		return nil
@@ -27,6 +119,7 @@ func NetworkEndpoint_FromProto(mapCtx *direct.MapContext, in *pb.NetworkEndpoint
 	out := &krm.NetworkEndpoint{}
 	out.IPAddress = direct.LazyPtr(in.GetIpAddress())
 	out.Port = direct.LazyPtr(in.GetPort())
+	out.AccessConfig = AccessConfig_FromProto(mapCtx, in.GetAccessConfig())
 	return out
 }
 func NetworkEndpoint_ToProto(mapCtx *direct.MapContext, in *krm.NetworkEndpoint) *pb.NetworkEndpoint {
@@ -36,6 +129,27 @@ func NetworkEndpoint_ToProto(mapCtx *direct.MapContext, in *krm.NetworkEndpoint)
 	out := &pb.NetworkEndpoint{}
 	out.IpAddress = direct.ValueOf(in.IPAddress)
 	out.Port = direct.ValueOf(in.Port)
+	out.AccessConfig = AccessConfig_ToProto(mapCtx, in.AccessConfig)
+	return out
+}
+func NetworkEndpointObservedState_FromProto(mapCtx *direct.MapContext, in *pb.NetworkEndpoint) *krm.NetworkEndpointObservedState {
+	if in == nil {
+		return nil
+	}
+	out := &krm.NetworkEndpointObservedState{}
+	// MISSING: IPAddress
+	// MISSING: Port
+	out.AccessConfig = AccessConfigObservedState_FromProto(mapCtx, in.GetAccessConfig())
+	return out
+}
+func NetworkEndpointObservedState_ToProto(mapCtx *direct.MapContext, in *krm.NetworkEndpointObservedState) *pb.NetworkEndpoint {
+	if in == nil {
+		return nil
+	}
+	out := &pb.NetworkEndpoint{}
+	// MISSING: IPAddress
+	// MISSING: Port
+	out.AccessConfig = AccessConfigObservedState_ToProto(mapCtx, in.AccessConfig)
 	return out
 }
 func SchedulingConfig_FromProto(mapCtx *direct.MapContext, in *pb.SchedulingConfig) *krm.SchedulingConfig {
@@ -45,6 +159,7 @@ func SchedulingConfig_FromProto(mapCtx *direct.MapContext, in *pb.SchedulingConf
 	out := &krm.SchedulingConfig{}
 	out.Preemptible = direct.LazyPtr(in.GetPreemptible())
 	out.Reserved = direct.LazyPtr(in.GetReserved())
+	out.Spot = direct.LazyPtr(in.GetSpot())
 	return out
 }
 func SchedulingConfig_ToProto(mapCtx *direct.MapContext, in *krm.SchedulingConfig) *pb.SchedulingConfig {
@@ -54,6 +169,41 @@ func SchedulingConfig_ToProto(mapCtx *direct.MapContext, in *krm.SchedulingConfi
 	out := &pb.SchedulingConfig{}
 	out.Preemptible = direct.ValueOf(in.Preemptible)
 	out.Reserved = direct.ValueOf(in.Reserved)
+	out.Spot = direct.ValueOf(in.Spot)
+	return out
+}
+func ServiceAccount_FromProto(mapCtx *direct.MapContext, in *pb.ServiceAccount) *krm.ServiceAccount {
+	if in == nil {
+		return nil
+	}
+	out := &krm.ServiceAccount{}
+	out.Email = direct.LazyPtr(in.GetEmail())
+	out.Scope = in.Scope
+	return out
+}
+func ServiceAccount_ToProto(mapCtx *direct.MapContext, in *krm.ServiceAccount) *pb.ServiceAccount {
+	if in == nil {
+		return nil
+	}
+	out := &pb.ServiceAccount{}
+	out.Email = direct.ValueOf(in.Email)
+	out.Scope = in.Scope
+	return out
+}
+func ShieldedInstanceConfig_FromProto(mapCtx *direct.MapContext, in *pb.ShieldedInstanceConfig) *krm.ShieldedInstanceConfig {
+	if in == nil {
+		return nil
+	}
+	out := &krm.ShieldedInstanceConfig{}
+	out.EnableSecureBoot = direct.LazyPtr(in.GetEnableSecureBoot())
+	return out
+}
+func ShieldedInstanceConfig_ToProto(mapCtx *direct.MapContext, in *krm.ShieldedInstanceConfig) *pb.ShieldedInstanceConfig {
+	if in == nil {
+		return nil
+	}
+	out := &pb.ShieldedInstanceConfig{}
+	out.EnableSecureBoot = direct.ValueOf(in.EnableSecureBoot)
 	return out
 }
 func Symptom_FromProto(mapCtx *direct.MapContext, in *pb.Symptom) *krm.Symptom {
@@ -84,17 +234,26 @@ func TPUNodeObservedState_FromProto(mapCtx *direct.MapContext, in *pb.Node) *krm
 	}
 	out := &krm.TPUNodeObservedState{}
 	// MISSING: Name
-	// MISSING: IPAddress
-	// MISSING: Port
 	out.State = direct.Enum_FromProto(mapCtx, in.GetState())
 	out.HealthDescription = direct.LazyPtr(in.GetHealthDescription())
-	out.ServiceAccount = direct.LazyPtr(in.GetServiceAccount())
+	// MISSING: RuntimeVersion
+	// MISSING: NetworkConfig
+	// MISSING: NetworkConfigs
+	out.ServiceAccount = ServiceAccount_FromProto(mapCtx, in.GetServiceAccount())
 	// MISSING: CreateTime
 	out.NetworkEndpoints = direct.Slice_FromProto(mapCtx, in.NetworkEndpoints, NetworkEndpoint_FromProto)
 	out.Health = direct.Enum_FromProto(mapCtx, in.GetHealth())
 	// MISSING: Labels
+	// MISSING: Metadata
+	// MISSING: Tags
+	// MISSING: ID
+	// MISSING: DataDisks
 	out.APIVersion = direct.Enum_FromProto(mapCtx, in.GetApiVersion())
 	out.Symptoms = direct.Slice_FromProto(mapCtx, in.Symptoms, Symptom_FromProto)
+	// MISSING: ShieldedInstanceConfig
+	// MISSING: AcceleratorConfig
+	// MISSING: QueuedResource
+	// MISSING: MultisliceNode
 	return out
 }
 func TPUNodeObservedState_ToProto(mapCtx *direct.MapContext, in *krm.TPUNodeObservedState) *pb.Node {
@@ -103,17 +262,26 @@ func TPUNodeObservedState_ToProto(mapCtx *direct.MapContext, in *krm.TPUNodeObse
 	}
 	out := &pb.Node{}
 	// MISSING: Name
-	// MISSING: IPAddress
-	// MISSING: Port
 	out.State = direct.Enum_ToProto[pb.Node_State](mapCtx, in.State)
 	out.HealthDescription = direct.ValueOf(in.HealthDescription)
-	out.ServiceAccount = direct.ValueOf(in.ServiceAccount)
+	// MISSING: RuntimeVersion
+	// MISSING: NetworkConfig
+	// MISSING: NetworkConfigs
+	out.ServiceAccount = ServiceAccount_ToProto(mapCtx, in.ServiceAccount)
 	// MISSING: CreateTime
 	out.NetworkEndpoints = direct.Slice_ToProto(mapCtx, in.NetworkEndpoints, NetworkEndpoint_ToProto)
 	out.Health = direct.Enum_ToProto[pb.Node_Health](mapCtx, in.Health)
 	// MISSING: Labels
+	// MISSING: Metadata
+	// MISSING: Tags
+	// MISSING: ID
+	// MISSING: DataDisks
 	out.ApiVersion = direct.Enum_ToProto[pb.Node_ApiVersion](mapCtx, in.APIVersion)
 	out.Symptoms = direct.Slice_ToProto(mapCtx, in.Symptoms, Symptom_ToProto)
+	// MISSING: ShieldedInstanceConfig
+	// MISSING: AcceleratorConfig
+	// MISSING: QueuedResource
+	// MISSING: MultisliceNode
 	return out
 }
 func TPUNodeSpec_FromProto(mapCtx *direct.MapContext, in *pb.Node) *krm.TPUNodeSpec {
@@ -124,15 +292,21 @@ func TPUNodeSpec_FromProto(mapCtx *direct.MapContext, in *pb.Node) *krm.TPUNodeS
 	// MISSING: Name
 	out.Description = direct.LazyPtr(in.GetDescription())
 	out.AcceleratorType = direct.LazyPtr(in.GetAcceleratorType())
-	// MISSING: IPAddress
-	// MISSING: Port
-	out.TensorflowVersion = direct.LazyPtr(in.GetTensorflowVersion())
-	out.Network = direct.LazyPtr(in.GetNetwork())
+	// MISSING: RuntimeVersion
+	// MISSING: NetworkConfig
+	// MISSING: NetworkConfigs
 	out.CIDRBlock = direct.LazyPtr(in.GetCidrBlock())
 	// MISSING: CreateTime
 	out.SchedulingConfig = SchedulingConfig_FromProto(mapCtx, in.GetSchedulingConfig())
 	// MISSING: Labels
-	out.UseServiceNetworking = direct.LazyPtr(in.GetUseServiceNetworking())
+	// MISSING: Metadata
+	// MISSING: Tags
+	// MISSING: ID
+	// MISSING: DataDisks
+	// MISSING: ShieldedInstanceConfig
+	// MISSING: AcceleratorConfig
+	// MISSING: QueuedResource
+	// MISSING: MultisliceNode
 	return out
 }
 func TPUNodeSpec_ToProto(mapCtx *direct.MapContext, in *krm.TPUNodeSpec) *pb.Node {
@@ -143,14 +317,20 @@ func TPUNodeSpec_ToProto(mapCtx *direct.MapContext, in *krm.TPUNodeSpec) *pb.Nod
 	// MISSING: Name
 	out.Description = direct.ValueOf(in.Description)
 	out.AcceleratorType = direct.ValueOf(in.AcceleratorType)
-	// MISSING: IPAddress
-	// MISSING: Port
-	out.TensorflowVersion = direct.ValueOf(in.TensorflowVersion)
-	out.Network = direct.ValueOf(in.Network)
+	// MISSING: RuntimeVersion
+	// MISSING: NetworkConfig
+	// MISSING: NetworkConfigs
 	out.CidrBlock = direct.ValueOf(in.CIDRBlock)
 	// MISSING: CreateTime
 	out.SchedulingConfig = SchedulingConfig_ToProto(mapCtx, in.SchedulingConfig)
 	// MISSING: Labels
-	out.UseServiceNetworking = direct.ValueOf(in.UseServiceNetworking)
+	// MISSING: Metadata
+	// MISSING: Tags
+	// MISSING: ID
+	// MISSING: DataDisks
+	// MISSING: ShieldedInstanceConfig
+	// MISSING: AcceleratorConfig
+	// MISSING: QueuedResource
+	// MISSING: MultisliceNode
 	return out
 }

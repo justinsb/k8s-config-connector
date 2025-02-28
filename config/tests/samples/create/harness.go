@@ -34,6 +34,7 @@ import (
 	cloudresourcemanagerv1 "google.golang.org/api/cloudresourcemanager/v1"
 	"google.golang.org/api/option"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/metadata"
 	"google.golang.org/protobuf/encoding/protojson"
 	"google.golang.org/protobuf/proto"
 	"gopkg.in/dnaeon/go-vcr.v3/recorder"
@@ -43,6 +44,7 @@ import (
 	"k8s.io/apimachinery/pkg/util/sets"
 	"k8s.io/apimachinery/pkg/util/wait"
 	"k8s.io/client-go/rest"
+	"k8s.io/klog/v2"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/envtest"
 	"sigs.k8s.io/controller-runtime/pkg/log"
@@ -546,6 +548,13 @@ func NewHarness(ctx context.Context, t *testing.T, opts ...HarnessOption) *Harne
 
 			entry.Request.URL = method
 			entry.Request.Method = "GRPC"
+
+			md, ok := metadata.FromOutgoingContext(ctx)
+			klog.Infof("MD is %v %v", md, ok)
+			klog.Infof("opts is %v", opts)
+			for _, opt := range opts {
+				klog.Infof("opt is %T %+v", opt, opt)
+			}
 
 			if req != nil {
 				requestBytes, _ := protojson.Marshal(req.(proto.Message))

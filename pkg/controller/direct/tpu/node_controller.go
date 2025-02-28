@@ -32,9 +32,9 @@ import (
 	"github.com/GoogleCloudPlatform/k8s-config-connector/pkg/controller/direct/common"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/pkg/controller/direct/directbase"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/pkg/controller/direct/registry"
+	"github.com/GoogleCloudPlatform/k8s-config-connector/pkg/gcpclients"
 
-	api "cloud.google.com/go/tpu/apiv1"
-	pb "cloud.google.com/go/tpu/apiv1/tpupb"
+	pb "github.com/GoogleCloudPlatform/k8s-config-connector/pkg/gcpclients/generated/google/cloud/tpu/v2"
 	"google.golang.org/protobuf/types/known/fieldmaskpb"
 
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
@@ -104,7 +104,6 @@ func (m *modelTPUNode) AdapterForURL(ctx context.Context, url string) (directbas
 	if external, ok := strings.CutPrefix(url, "//tpu.googleapis.com/"); ok {
 		id := &krm.TPUNodeIdentity{}
 		if err := id.FromExternal(external); err == nil {
-
 			gcpClient, err := newGCPClient(ctx, m.config)
 			if err != nil {
 				return nil, err
@@ -127,7 +126,7 @@ func (m *modelTPUNode) AdapterForURL(ctx context.Context, url string) (directbas
 type TPUNodeAdapter struct {
 	id *krm.TPUNodeIdentity
 	// k8sClient client.Reader
-	tpuClient *api.Client
+	tpuClient *gcpclients.TPUV2Client
 	desired   *pb.Node
 	actual    *pb.Node
 }
@@ -142,14 +141,16 @@ func (a *TPUNodeAdapter) Find(ctx context.Context) (bool, error) {
 	log := klog.FromContext(ctx)
 	log.V(2).Info("getting TPUNode", "name", a.id)
 
-	obj, err := a.tpuClient.GetNode(ctx, &pb.GetNodeRequest{
+	req := &pb.GetNodeRequest{
 		Name: a.id.String(),
-	})
+	}
+	log.Info("GetNode", "req", req)
+	obj, err := a.tpuClient.GetNode(ctx, req)
 	if err != nil {
 		if direct.IsNotFound(err) {
 			return false, nil
 		}
-		return false, fmt.Errorf("getting TPUNode %q: %w", a.id, err)
+		return false, fmt.Errorf("getting tpu node %q: %w", a.id, err)
 	}
 
 	a.actual = obj
@@ -173,8 +174,8 @@ func (a *TPUNodeAdapter) Create(ctx context.Context, createOp *directbase.Create
 	if err != nil {
 		return fmt.Errorf("creating tpu node %s: %w", a.id, err)
 	}
-	if !op.Done() {
-		if _, err := op.Wait(ctx); err != nil {
+	if !op.GetDone() {
+		if err := a.tpuClient.WaitForLRO(ctx, op); err != nil {
 			return fmt.Errorf("waiting for creating of tpu node %q: %w", a.id, err)
 		}
 	}
@@ -284,8 +285,8 @@ func (a *TPUNodeAdapter) Delete(ctx context.Context, deleteOp *directbase.Delete
 	}
 	log.V(2).Info("successfully deleted tpu node", "name", a.id)
 
-	if !op.Done() {
-		if _, err := op.Wait(ctx); err != nil {
+	if !op.GetDone() {
+		if err := a.tpuClient.WaitForLRO(ctx, op); err != nil {
 			return false, fmt.Errorf("waiting for deletion of tpu node %q: %w", a.id, err)
 		}
 	}

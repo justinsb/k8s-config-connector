@@ -19,8 +19,8 @@
 package tpu
 
 import (
-	pb "cloud.google.com/go/tpu/apiv1/tpupb"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/pkg/fuzztesting"
+	pb "github.com/GoogleCloudPlatform/k8s-config-connector/pkg/gcpclients/generated/google/cloud/tpu/v2"
 )
 
 func init() {

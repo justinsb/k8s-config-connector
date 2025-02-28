@@ -23,7 +23,7 @@ import (
 var TPUNodeGVK = GroupVersion.WithKind("TPUNode")
 
 // TPUNodeSpec defines the desired state of TPUNode
-// +kcc:proto=google.cloud.tpu.v1.Node
+// +kcc:proto=google.cloud.tpu.v2.Node
 type TPUNodeSpec struct {
 	/* Immutable. The Project that this resource belongs to. */
 	ProjectRef *refs.ProjectRef `json:"projectRef"`
@@ -101,7 +101,7 @@ type TPUNodeStatus struct {
 }
 
 // TPUNodeObservedState is the state of the TPUNode resource as most recently observed in GCP.
-// +kcc:proto=google.cloud.tpu.v1.Node
+// +kcc:proto=google.cloud.tpu.v2.Node
 type TPUNodeObservedState struct {
 
 	/* DEPRECATED
@@ -134,7 +134,7 @@ type TPUNodeObservedState struct {
 	// within the node. To share resources, including Google Cloud Storage data,
 	// with the Tensorflow job running in the Node, this account must have
 	// permissions to that data.
-	ServiceAccount *string `json:"serviceAccount,omitempty"`
+	ServiceAccount *ServiceAccount `json:"serviceAccount,omitempty"`
 
 	/* NOTYET-VOLATILE
 	// Output only. The time when the node was created.

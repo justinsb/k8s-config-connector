@@ -20,6 +20,7 @@ import (
 	"golang.org/x/oauth2"
 	"google.golang.org/api/option"
 	"google.golang.org/grpc"
+	"k8s.io/klog/v2"
 )
 
 type ControllerConfig struct {
@@ -100,6 +101,10 @@ func (c *ControllerConfig) GRPCClientOptions() ([]option.ClientOption, error) {
 		opts = append(opts, option.WithGRPCDialOption(grpc.WithUnaryInterceptor(c.GRPCUnaryClientInterceptor)))
 	}
 
+	klog.Infof("GRPCClientOptions: %+v", opts)
+	for _, opt := range opts {
+		klog.Infof("GRPCClientOptions %T %+v", opt, opt)
+	}
 	// TODO: support endpoints?
 	// if m.config.Endpoint != "" {
 	// 	opts = append(opts, option.WithEndpoint(m.config.Endpoint))
