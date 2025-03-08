@@ -118,7 +118,7 @@ func checkoutBranch(ctx context.Context, branch Branch, workDir string) {
 
 	results, err := execCommand(checkout)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("Error checking out branch %s: %v", branch.Local, err)
 	}
 	log.Printf("BRANCH CHECKOUT: %v\n", formatCommandOutput(results.Stdout))
 }
@@ -243,9 +243,12 @@ func setLoggingWriter(opts *RunnerOptions, branch Branch) closer {
 	if _, err := os.Stat(logDir); os.IsNotExist(err) {
 		err = os.MkdirAll(logDir, 0755)
 		if err != nil {
-			log.Printf("Error creating logging dir %s, :%v", logDir, err)
+			log.Printf("Error creating logging dir %s: %v", logDir, err)
 			return noOp
 		}
+	} else if err != nil {
+		log.Printf("Error checking for logging dir %s: %v", logDir, err)
+		return noOp
 	}
 
 	var out *os.File
