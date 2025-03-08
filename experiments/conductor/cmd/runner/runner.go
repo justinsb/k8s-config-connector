@@ -172,6 +172,12 @@ type BranchModifier func(opts *RunnerOptions, branch Branch, workDir string) Bra
 
 func RunRunner(ctx context.Context, opts *RunnerOptions) error {
 	log.Printf("Running conductor runner with branch config: %s", opts.branchConfFile)
+	if opts.forResources != "" {
+		log.Printf("Filtering branches by resources: %s", opts.forResources)
+	}
+	if opts.forResourcesRegex != "" {
+		log.Printf("Filtering branches by regex: %s", opts.forResourcesRegex)
+	}
 
 	if err := opts.validateFlags(); err != nil {
 		return err
@@ -212,6 +218,9 @@ func RunRunner(ctx context.Context, opts *RunnerOptions) error {
 			}
 		}
 		branches.Branches = resourceFilteredBranches
+		if len(branches.Branches) == 0 {
+			log.Fatalf("No branches found after resource filtering")
+		}
 	}
 	if opts.forResourcesRegex != "" {
 		resourceFilteredBranches := make([]Branch, 0)
@@ -225,6 +234,9 @@ func RunRunner(ctx context.Context, opts *RunnerOptions) error {
 			}
 		}
 		branches.Branches = resourceFilteredBranches
+		if len(branches.Branches) == 0 {
+			log.Fatalf("No branches found after regex filtering")
+		}
 	}
 
 	// Only filter skipped branches if not running metadata commands
