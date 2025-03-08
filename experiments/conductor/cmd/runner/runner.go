@@ -374,31 +374,19 @@ func printHelp() {
 }
 
 func checkRepoDir(opts *RunnerOptions, branches Branches) {
-	stdin, stdout, exit, err := startBash()
+	ctx := context.TODO()
+
+	bashCommand := "ls -alh && echo done"
+
+	cmd := exec.CommandContext(ctx, "bash", "-c", bashCommand)
+	cmd.Dir = opts.branchRepoDir
+
+	log.Println("COMMAND: ls -alh && echo done")
+	results, err := execCommand(cmd)
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer stdin.Close()
-	defer exit()
-
-	cdRepoBranchDirBash(opts, "", stdin, stdout)
-
-	log.Println("COMMAND: ls and echo")
-	if _, err = stdin.Write([]byte("ls -alh && echo done\n")); err != nil {
-		log.Fatal(err)
-	}
-	done := false
-	outBuffer := make([]byte, 1000)
-	var msg string
-	for !done {
-		length, err := stdout.Read(outBuffer)
-		if err != nil {
-			log.Fatal(err)
-		}
-		msg += string(outBuffer[:length])
-		done = strings.HasSuffix(msg, "done\n")
-	}
-	log.Printf("LS OUT %s\r\n", msg)
+	log.Printf("LS OUT %s\r\n", results.Stdout)
 
 	// Check for uniqueness constraints in the metadata.
 	gcloudMap := make(map[string]string)
