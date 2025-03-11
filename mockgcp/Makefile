@@ -136,7 +136,6 @@ gen-proto-no-fixup:
 		./third_party/googleapis/mockgcp/monitoring/dashboard/v1/*.proto \
 		./third_party/googleapis/mockgcp/monitoring/metricsscope/v1/*.proto \
 		./third_party/googleapis/mockgcp/monitoring/v3/*.proto \
-		./third_party/googleapis/mockgcp/pubsub/v1/*.proto \
 		./third_party/googleapis/mockgcp/spanner/admin/database/v1/*.proto \
 		./third_party/googleapis/mockgcp/spanner/admin/instance/v1/*.proto \
 		./third_party/googleapis/mockgrafeas/v1/*.proto \
@@ -167,7 +166,8 @@ generate-grpc-for-google-protos:
 		./third_party/googleapis/google/bigtable/admin/v2/*.proto \
 		./third_party/googleapis/google/cloud/dataproc/v1/*.proto \
 		./third_party/googleapis/google/cloud/aiplatform/v1/model_garden_service.proto \
-		./third_party/googleapis/google/storage/control/v2/*.proto
+		./third_party/googleapis/google/pubsub/v1/*.proto \
+		./third_party/googleapis/google/storage/control/v2/*.proto \
 		./third_party/googleapis/google/cloud/batch/v1/batch.proto
 
 .PHONY: generate-protos-from-openapi

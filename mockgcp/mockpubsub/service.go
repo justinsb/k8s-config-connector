@@ -20,10 +20,11 @@ import (
 
 	"google.golang.org/grpc"
 
+	pb "cloud.google.com/go/pubsub/apiv1/pubsubpb"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/common"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/common/httpmux"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/common/operations"
-	pb "github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/generated/mockgcp/pubsub/v1"
+	pb_http "github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/generated/google/pubsub/v1"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/pkg/storage"
 )
 
@@ -56,9 +57,9 @@ func (s *MockService) Register(grpcServer *grpc.Server) {
 
 func (s *MockService) NewHTTPMux(ctx context.Context, conn *grpc.ClientConn) (http.Handler, error) {
 	mux, err := httpmux.NewServeMux(ctx, conn, httpmux.Options{},
-		pb.RegisterPublisherHandler,
-		pb.RegisterSubscriberHandler,
-		pb.RegisterSchemaServiceHandler,
+		pb_http.RegisterPublisherHandler,
+		pb_http.RegisterSubscriberHandler,
+		pb_http.RegisterSchemaServiceHandler,
 	)
 	if err != nil {
 		return nil, err
