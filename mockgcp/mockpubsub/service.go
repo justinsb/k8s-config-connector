@@ -16,15 +16,14 @@ package mockpubsub
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 
 	"google.golang.org/grpc"
 
 	pb "cloud.google.com/go/pubsub/apiv1/pubsubpb"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/common"
-	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/common/httpmux"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/common/operations"
-	pb_http "github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/generated/google/pubsub/v1"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/pkg/storage"
 )
 
@@ -56,21 +55,33 @@ func (s *MockService) Register(grpcServer *grpc.Server) {
 }
 
 func (s *MockService) NewHTTPMux(ctx context.Context, conn *grpc.ClientConn) (http.Handler, error) {
-	mux, err := httpmux.NewServeMux(ctx, conn, httpmux.Options{},
-		pb_http.RegisterPublisherHandler,
-		pb_http.RegisterSubscriberHandler,
-		pb_http.RegisterSchemaServiceHandler,
-	)
+
+	grpcMux, err := NewGRPCMux(conn)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("error building grpc service: %w", err)
 	}
 
-	// Returns slightly non-standard errors
-	mux.RewriteError = func(ctx context.Context, error *httpmux.ErrorResponse) {
-		if error.Code == 404 {
-			error.Errors = nil
-		}
-	}
+	grpcMux.AddService(pb.NewSubscriberClient(conn))
+	grpcMux.AddService(pb.NewPublisherClient(conn))
+	grpcMux.AddService(pb.NewSchemaServiceClient(conn))
+
+	mux := grpcMux
+
+	// mux, err := httpmux.NewServeMux(ctx, conn, httpmux.Options{},
+	// 	pb_http.RegisterPublisherHandler,
+	// 	pb_http.RegisterSubscriberHandler,
+	// 	pb_http.RegisterSchemaServiceHandler,
+	// )
+	// if err != nil {
+	// 	return nil, err
+	// }
+
+	// // Returns slightly non-standard errors
+	// mux.RewriteError = func(ctx context.Context, error *httpmux.ErrorResponse) {
+	// 	if error.Code == 404 {
+	// 		error.Errors = nil
+	// 	}
+	// }
 
 	return mux, nil
 }
