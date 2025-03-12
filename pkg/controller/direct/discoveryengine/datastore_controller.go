@@ -88,10 +88,11 @@ func (m *dataStoreModel) AdapterForObject(ctx context.Context, reader client.Rea
 		return nil, fmt.Errorf("error converting to %T: %w", obj, err)
 	}
 
-	id, err := krm.NewDiscoveryEngineDataStoreIDFromObject(ctx, reader, obj)
+	i, err := obj.GetIdentity(ctx, reader)
 	if err != nil {
 		return nil, err
 	}
+	id := i.(*krm.DataStoreIdentity)
 
 	mapCtx := &direct.MapContext{}
 	desired := DiscoveryEngineDataStoreSpec_ToProto(mapCtx, &obj.Spec)
@@ -114,8 +115,8 @@ func (m *dataStoreModel) AdapterForObject(ctx context.Context, reader client.Rea
 func (m *dataStoreModel) AdapterForURL(ctx context.Context, url string) (directbase.Adapter, error) {
 	log := klog.FromContext(ctx)
 	if strings.HasPrefix(url, "//discoveryengine.googleapis.com/") {
-		id, err := krm.ParseDiscoveryEngineDataStoreExternal(url)
-		if err != nil {
+		var id krm.DataStoreIdentity
+		if err := id.FromExternal(url); err != nil {
 			log.V(2).Error(err, "url did not match DiscoveryEngineDataStore format", "url", url)
 		} else {
 			gcpClient, err := m.client(ctx, id.ProjectID)
@@ -124,7 +125,7 @@ func (m *dataStoreModel) AdapterForURL(ctx context.Context, url string) (directb
 			}
 			return &dataStoreAdapter{
 				gcpClient: gcpClient,
-				id:        id,
+				id:        &id,
 			}, nil
 		}
 	}
@@ -133,7 +134,7 @@ func (m *dataStoreModel) AdapterForURL(ctx context.Context, url string) (directb
 
 type dataStoreAdapter struct {
 	gcpClient *gcp.DataStoreClient
-	id        *krm.DiscoveryEngineDataStoreID
+	id        *krm.DataStoreIdentity
 	desired   *pb.DataStore
 	actual    *pb.DataStore
 }
@@ -165,7 +166,7 @@ func (a *dataStoreAdapter) Create(ctx context.Context, createOp *directbase.Crea
 	desired.Name = a.id.String()
 
 	req := &pb.CreateDataStoreRequest{
-		Parent:      a.id.CollectionLink.String(),
+		Parent:      a.id.CollectionIdentity.String(),
 		DataStore:   desired,
 		DataStoreId: a.id.DataStore,
 	}

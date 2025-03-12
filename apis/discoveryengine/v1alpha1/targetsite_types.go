@@ -27,7 +27,9 @@ type DiscoveryEngineDataStoreTargetSiteSpec struct {
 	// The DataStore this target site should be part of.
 	DataStoreRef *DiscoveryEngineDataStoreRef `json:"dataStoreRef,omitempty"`
 
-	// The resource ID is server-generated, so no ResourceID field
+	// Immutable.
+	// The server-generated ID of the target site.
+	ResourceID *string `json:"resourceID,omitempty"`
 
 	// Required. Input only. The user provided URI pattern from which the
 	// `generated_uri_pattern` is generated.

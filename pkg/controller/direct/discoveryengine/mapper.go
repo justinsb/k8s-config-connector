@@ -66,7 +66,7 @@ func DiscoveryEngineEngineSpec_FromProto(mapCtx *direct.MapContext, in *pb.Engin
 	out.DisableAnalytics = direct.LazyPtr(in.GetDisableAnalytics())
 
 	for _, dataStoreID := range in.DataStoreIds {
-		out.DataStoreRefs = append(out.DataStoreRefs, &krm.DiscoveryEngineDataStoreRef{External: dataStoreID})
+		out.DataStoreRefs = append(out.DataStoreRefs, &krm.DataStoreRef{External: dataStoreID})
 	}
 
 	return out

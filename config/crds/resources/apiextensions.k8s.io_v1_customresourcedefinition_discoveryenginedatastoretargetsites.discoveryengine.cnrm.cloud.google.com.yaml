@@ -102,6 +102,9 @@ spec:
                 description: Required. Input only. The user provided URI pattern from
                   which the `generated_uri_pattern` is generated.
                 type: string
+              resourceID:
+                description: Immutable. The server-generated ID of the target site.
+                type: string
               type:
                 description: The type of the target site, e.g., whether the site is
                   to be included or excluded.
