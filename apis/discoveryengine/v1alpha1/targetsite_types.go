@@ -25,7 +25,7 @@ var DiscoveryEngineDataStoreTargetSiteGVK = GroupVersion.WithKind("DiscoveryEngi
 // +kcc:proto=google.cloud.discoveryengine.v1.TargetSite
 type DiscoveryEngineDataStoreTargetSiteSpec struct {
 	// The DataStore this target site should be part of.
-	DataStoreRef *DiscoveryEngineDataStoreRef `json:"dataStoreRef,omitempty"`
+	DataStoreRef *DataStoreRef `json:"dataStoreRef,omitempty"`
 
 	// Immutable.
 	// The server-generated ID of the target site.

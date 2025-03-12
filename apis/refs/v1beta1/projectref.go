@@ -40,6 +40,20 @@ type ProjectRef struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+func (ref *ProjectRef) Normalize(ctx context.Context, reader client.Reader, defaultNamespace string) error {
+	if ref == nil {
+		return nil
+	}
+
+	resolved, err := ResolveProject(ctx, reader, defaultNamespace, ref)
+	if err != nil {
+		return err
+	}
+
+	*ref = ProjectRef{External: "projects/" + resolved.ProjectID}
+	return nil
+}
+
 // AsProjectRef converts a generic ResourceRef into a ProjectRef
 func AsProjectRef(in *v1alpha1.ResourceRef) *ProjectRef {
 	if in == nil {

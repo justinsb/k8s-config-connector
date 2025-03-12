@@ -66,6 +66,10 @@ type Ref interface {
 // Normalize is a general-purpose reference resolver that can be used to
 // implement the "Normalize" interface method for most Ref types.
 func Normalize(ctx context.Context, reader client.Reader, ref Ref, defaultNamespace string) error {
+	if ref == nil {
+		return fmt.Errorf("ref not set")
+	}
+
 	if ref.GetExternal() == "" {
 		key := ref.GetNamespacedName()
 		if key.Namespace == "" {
