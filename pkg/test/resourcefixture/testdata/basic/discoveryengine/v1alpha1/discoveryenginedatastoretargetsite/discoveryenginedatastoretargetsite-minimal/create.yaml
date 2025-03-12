@@ -1,0 +1,8 @@
+apiVersion: discoveryengine.cnrm.cloud.google.com/v1alpha1
+kind: DiscoveryEngineDataStoreTargetSite
+metadata:
+  name: discoveryenginedatastoretargetsite-minimal-${uniqueId}
+spec:
+  dataStoreRef:
+    name: datastore-${uniqueId}
+  providedURIPattern: 'kubernetes.io/blog/*'
