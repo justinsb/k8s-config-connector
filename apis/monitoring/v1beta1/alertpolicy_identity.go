@@ -15,13 +15,8 @@
 package v1beta1
 
 import (
-	"context"
 	"fmt"
 	"strings"
-
-	"github.com/GoogleCloudPlatform/k8s-config-connector/apis/common"
-	refsv1beta1 "github.com/GoogleCloudPlatform/k8s-config-connector/apis/refs/v1beta1"
-	"sigs.k8s.io/controller-runtime/pkg/client"
 )
 
 // AlertPolicyIdentity defines the resource reference to MonitoringAlertPolicy, which "External" field
@@ -52,56 +47,56 @@ func (p *AlertPolicyParent) String() string {
 	return "projects/" + p.ProjectID + "/locations/" + p.Location
 }
 
-// New builds a AlertPolicyIdentity from the Config Connector AlertPolicy object.
-func NewAlertPolicyIdentity(ctx context.Context, reader client.Reader, obj *MonitoringAlertPolicy) (*AlertPolicyIdentity, error) {
+// // New builds a AlertPolicyIdentity from the Config Connector AlertPolicy object.
+// func NewAlertPolicyIdentity(ctx context.Context, reader client.Reader, obj *MonitoringAlertPolicy) (*AlertPolicyIdentity, error) {
 
-	// Get Parent
-	projectRef, err := refsv1beta1.ResolveProject(ctx, reader, obj.GetNamespace(), obj.Spec.ProjectRef)
-	if err != nil {
-		return nil, err
-	}
-	projectID := projectRef.ProjectID
-	if projectID == "" {
-		return nil, fmt.Errorf("cannot resolve project")
-	}
-	location := obj.Spec.Location
+// 	// Get Parent
+// 	projectRef, err := refsv1beta1.ResolveProject(ctx, reader, obj.GetNamespace(), obj.Spec.ProjectRef)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+// 	projectID := projectRef.ProjectID
+// 	if projectID == "" {
+// 		return nil, fmt.Errorf("cannot resolve project")
+// 	}
+// 	location := obj.Spec.Location
 
-	// Get desired ID
-	resourceID := common.ValueOf(obj.Spec.ResourceID)
-	if resourceID == "" {
-		resourceID = obj.GetName()
-	}
-	if resourceID == "" {
-		return nil, fmt.Errorf("cannot resolve resource ID")
-	}
+// 	// Get desired ID
+// 	resourceID := common.ValueOf(obj.Spec.ResourceID)
+// 	if resourceID == "" {
+// 		resourceID = obj.GetName()
+// 	}
+// 	if resourceID == "" {
+// 		return nil, fmt.Errorf("cannot resolve resource ID")
+// 	}
 
-	// Use approved External
-	externalRef := common.ValueOf(obj.Status.ExternalRef)
-	if externalRef != "" {
-		// Validate desired with actual
-		actualParent, actualResourceID, err := ParseAlertPolicyExternal(externalRef)
-		if err != nil {
-			return nil, err
-		}
-		if actualParent.ProjectID != projectID {
-			return nil, fmt.Errorf("spec.projectRef changed, expect %s, got %s", actualParent.ProjectID, projectID)
-		}
-		if actualParent.Location != location {
-			return nil, fmt.Errorf("spec.location changed, expect %s, got %s", actualParent.Location, location)
-		}
-		if actualResourceID != resourceID {
-			return nil, fmt.Errorf("cannot reset `metadata.name` or `spec.resourceID` to %s, since it has already assigned to %s",
-				resourceID, actualResourceID)
-		}
-	}
-	return &AlertPolicyIdentity{
-		parent: &AlertPolicyParent{
-			ProjectID: projectID,
-			Location:  location,
-		},
-		id: resourceID,
-	}, nil
-}
+// 	// Use approved External
+// 	externalRef := common.ValueOf(obj.Status.ExternalRef)
+// 	if externalRef != "" {
+// 		// Validate desired with actual
+// 		actualParent, actualResourceID, err := ParseAlertPolicyExternal(externalRef)
+// 		if err != nil {
+// 			return nil, err
+// 		}
+// 		if actualParent.ProjectID != projectID {
+// 			return nil, fmt.Errorf("spec.projectRef changed, expect %s, got %s", actualParent.ProjectID, projectID)
+// 		}
+// 		if actualParent.Location != location {
+// 			return nil, fmt.Errorf("spec.location changed, expect %s, got %s", actualParent.Location, location)
+// 		}
+// 		if actualResourceID != resourceID {
+// 			return nil, fmt.Errorf("cannot reset `metadata.name` or `spec.resourceID` to %s, since it has already assigned to %s",
+// 				resourceID, actualResourceID)
+// 		}
+// 	}
+// 	return &AlertPolicyIdentity{
+// 		parent: &AlertPolicyParent{
+// 			ProjectID: projectID,
+// 			Location:  location,
+// 		},
+// 		id: resourceID,
+// 	}, nil
+// }
 
 func ParseAlertPolicyExternal(external string) (parent *AlertPolicyParent, resourceID string, err error) {
 	tokens := strings.Split(external, "/")
