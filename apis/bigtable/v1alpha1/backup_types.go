@@ -33,7 +33,7 @@ type BigtableBackupParent struct {
 }
 
 // BigtableBackupSpec defines the desired state of BigtableBackup
-// +kcc:proto=google.bigtable.admin.v2.Backup
+// +kcc:spec:proto=google.bigtable.admin.v2.Backup
 type BigtableBackupSpec struct {
 	BigtableBackupParent `json:",inline"`
 
@@ -89,7 +89,7 @@ type BigtableBackupStatus struct {
 }
 
 // BigtableBackupObservedState is the state of the BigtableBackup resource as most recently observed in GCP.
-// +kcc:proto=google.bigtable.admin.v2.Backup
+// +kcc:observedstate:proto=google.bigtable.admin.v2.Backup
 type BigtableBackupObservedState struct {
 	// Output only. Name of the backup from which this backup was copied. If a
 	//  backup is not created by copying a backup, this field will be empty. Values
