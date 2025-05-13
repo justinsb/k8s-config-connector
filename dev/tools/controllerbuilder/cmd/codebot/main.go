@@ -122,7 +122,7 @@ func (cb *CodeBot) run(ctx context.Context) error {
 		}
 	}
 
-	llmClient, err := llm.BuildVertexAIClient(ctx, &o)
+	llmClient, err := llm.BuildGeminiClient(ctx) //, &o)
 	if err != nil {
 		return fmt.Errorf("initializing LLM: %w", err)
 	}

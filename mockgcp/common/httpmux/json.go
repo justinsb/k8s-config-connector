@@ -34,31 +34,57 @@ type protoResolver struct {
 var _ protoregistry.ExtensionTypeResolver = &protoResolver{}
 
 func (r *protoResolver) FindExtensionByName(message protoreflect.FullName) (protoreflect.ExtensionType, error) {
-	return protoregistry.GlobalTypes.FindExtensionByName(r.remapName(message))
+	v, err := protoregistry.GlobalTypes.FindExtensionByName(r.remapName(message))
+	if err != nil {
+		klog.Warningf("error resolving FindExtensionByName(%v): %v", message, err)
+	}
+	return v, err
 }
 
 func (r *protoResolver) FindExtensionByNumber(message protoreflect.FullName, field protoreflect.FieldNumber) (protoreflect.ExtensionType, error) {
-	return protoregistry.GlobalTypes.FindExtensionByNumber(r.remapName(message), field)
+	v, err := protoregistry.GlobalTypes.FindExtensionByNumber(r.remapName(message), field)
+	if err != nil {
+		klog.Warningf("error resolving FindExtensionByNumber(%v, %v): %v", message, field, err)
+	}
+	return v, err
 }
 
 var _ protoregistry.MessageTypeResolver = &protoResolver{}
 
 func (r *protoResolver) FindMessageByName(message protoreflect.FullName) (protoreflect.MessageType, error) {
-	return protoregistry.GlobalTypes.FindMessageByName(r.remapName(message))
+	v, err := protoregistry.GlobalTypes.FindMessageByName(r.remapName(message))
+	if err != nil {
+		klog.Warningf("error resolving FindMessageByName(%v): %v", message, err)
+	}
+	return v, err
 }
 
 func (r *protoResolver) FindMessageByURL(url string) (protoreflect.MessageType, error) {
+	var aliases []string
+
 	if strings.HasPrefix(url, "type.googleapis.com/google.") {
-		s := "type.googleapis.com/mockgcp." + strings.TrimPrefix(url, "type.googleapis.com/google.")
-		mt, err := protoregistry.GlobalTypes.FindMessageByURL(s)
+		aliases = append(aliases, "type.googleapis.com/mockgcp."+strings.TrimPrefix(url, "type.googleapis.com/google."))
+	}
+
+	switch url {
+	case "type.googleapis.com/google.cloud.apigee.v1.OperationMetadata":
+		aliases = append(aliases, "type.googleapis.com/mockgcp.cloud.apigee.v1.GoogleCloudApigeeV1OperationMetadata")
+	}
+
+	for _, alias := range aliases {
+		mt, err := protoregistry.GlobalTypes.FindMessageByURL(alias)
 		if err != nil {
-			klog.Warningf("FindMessageByURL(%q) failed: %v", s, err)
+			klog.Warningf("alias lookup for FindMessageByURL(%q) failed: %v", alias, err)
 		} else {
 			return mt, nil
 		}
 	}
 
-	return protoregistry.GlobalTypes.FindMessageByURL(url)
+	v, err := protoregistry.GlobalTypes.FindMessageByURL(url)
+	if err != nil {
+		klog.Warningf("error resolving FindMessageByName(%v): %v", url, err)
+	}
+	return v, err
 }
 
 func (r *protoResolver) remapName(name protoreflect.FullName) protoreflect.FullName {
@@ -69,5 +95,11 @@ func (r *protoResolver) remapName(name protoreflect.FullName) protoreflect.FullN
 		s = "mockgcp." + strings.TrimPrefix(s, "google.")
 		return protoreflect.FullName(s)
 	}
+
+	switch s {
+	case "google.cloud.apigee.v1.OperationMetadata":
+		return protoreflect.FullName("mockgcp.cloud.apigee.v1.GoogleCloudApigeeV1OperationMetadata")
+	}
+
 	return name
 }

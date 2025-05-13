@@ -196,15 +196,20 @@ func (s *Operations) DoneLRO(ctx context.Context, prefix string, metadata proto.
 	return op, nil
 }
 
-func rewriteTypes(any *anypb.Any) {
+func rewriteTypes(anyObj *anypb.Any) {
 	// Fix our mockgcp hack:
 	// The protobuf libraries get upset if we have two proto message types
 	// with the same proto path, but different go paths.
 	// The go client SDK for GCP uses the protos for some services,
 	// so we need to "get out of the way" to avoid conflicts.
 	// We rename our protos from google. => mockgcp.
-	if strings.HasPrefix(any.TypeUrl, "type.googleapis.com/mockgcp.") {
-		any.TypeUrl = "type.googleapis.com/google." + strings.TrimPrefix(any.TypeUrl, "type.googleapis.com/mockgcp.")
+	if strings.HasPrefix(anyObj.TypeUrl, "type.googleapis.com/mockgcp.") {
+		anyObj.TypeUrl = "type.googleapis.com/google." + strings.TrimPrefix(anyObj.TypeUrl, "type.googleapis.com/mockgcp.")
+	}
+
+	// Fix a similar hack with the name of the apigee OperationMetadata
+	if anyObj.TypeUrl == "type.googleapis.com/google.cloud.apigee.v1.GoogleCloudApigeeV1OperationMetadata" {
+		anyObj.TypeUrl = "type.googleapis.com/google.cloud.apigee.v1.OperationMetadata"
 	}
 }
 

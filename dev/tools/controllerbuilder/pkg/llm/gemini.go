@@ -42,7 +42,7 @@ func BuildGeminiClient(ctx context.Context) (Client, error) {
 
 	return &GeminiClient{
 		client: client,
-		model:  "gemini-2.5-pro-exp-03-25",
+		model:  "gemini-2.5-pro-preview-05-06",
 	}, nil
 }
 
