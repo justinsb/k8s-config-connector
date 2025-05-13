@@ -59,7 +59,7 @@ X-Xss-Protection: 0
     "vulnerabilityScanningConfig": {
       "enablementState": "SCANNING_DISABLED",
       "enablementStateReason": "API containerscanning.googleapis.com is not enabled.",
-      "lastEnableTime": "2025-05-13T22:55:49.637209257Z"
+      "lastEnableTime": "2025-05-13T23:08:46.373493980Z"
     }
   }
 }
@@ -86,13 +86,12 @@ X-Xss-Protection: 0
   "format": "DOCKER",
   "mode": "STANDARD_REPOSITORY",
   "name": "projects/${projectId}/locations/us-central1/repositories/test-${uniqueId}",
-  "registryUri": "us-central1-docker.pkg.dev/${projectId}/test-${uniqueId}",
   "satisfiesPzi": true,
   "updateTime": "2024-04-01T12:34:56.123456Z",
   "vulnerabilityScanningConfig": {
     "enablementState": "SCANNING_DISABLED",
     "enablementStateReason": "API containerscanning.googleapis.com is not enabled.",
-    "lastEnableTime": "2025-05-13T22:55:49.637209257Z"
+    "lastEnableTime": "2024-04-01T12:34:56.123456Z"
   }
 }
 
@@ -118,13 +117,12 @@ X-Xss-Protection: 0
   "format": "DOCKER",
   "mode": "STANDARD_REPOSITORY",
   "name": "projects/${projectId}/locations/us-central1/repositories/test-${uniqueId}",
-  "registryUri": "us-central1-docker.pkg.dev/${projectId}/test-${uniqueId}",
   "satisfiesPzi": true,
   "updateTime": "2024-04-01T12:34:56.123456Z",
   "vulnerabilityScanningConfig": {
     "enablementState": "SCANNING_DISABLED",
     "enablementStateReason": "API containerscanning.googleapis.com is not enabled.",
-    "lastEnableTime": "2025-05-13T22:55:49.637209257Z"
+    "lastEnableTime": "2024-04-01T12:34:56.123456Z"
   }
 }
 
@@ -150,13 +148,12 @@ X-Xss-Protection: 0
   "format": "DOCKER",
   "mode": "STANDARD_REPOSITORY",
   "name": "projects/${projectId}/locations/us-central1/repositories/test-${uniqueId}",
-  "registryUri": "us-central1-docker.pkg.dev/${projectId}/test-${uniqueId}",
   "satisfiesPzi": true,
   "updateTime": "2024-04-01T12:34:56.123456Z",
   "vulnerabilityScanningConfig": {
     "enablementState": "SCANNING_DISABLED",
     "enablementStateReason": "API containerscanning.googleapis.com is not enabled.",
-    "lastEnableTime": "2025-05-13T22:55:49.637209257Z"
+    "lastEnableTime": "2024-04-01T12:34:56.123456Z"
   }
 }
 
@@ -174,13 +171,12 @@ Content-Type: application/json
   "format": "DOCKER",
   "mode": "STANDARD_REPOSITORY",
   "name": "projects/${projectId}/locations/us-central1/repositories/test-${uniqueId}",
-  "registryUri": "us-central1-docker.pkg.dev/${projectId}/test-${uniqueId}",
   "satisfiesPzi": true,
   "updateTime": "2024-04-01T12:34:56.123456Z",
   "vulnerabilityScanningConfig": {
     "enablementState": "SCANNING_DISABLED",
     "enablementStateReason": "API containerscanning.googleapis.com is not enabled.",
-    "lastEnableTime": "2025-05-13T22:55:49.637209257Z"
+    "lastEnableTime": "2024-04-01T12:34:56.123456Z"
   }
 }
 
@@ -205,7 +201,7 @@ X-Xss-Protection: 0
   "vulnerabilityScanningConfig": {
     "enablementState": "SCANNING_DISABLED",
     "enablementStateReason": "API containerscanning.googleapis.com is not enabled.",
-    "lastEnableTime": "2025-05-13T22:55:49.637209257Z"
+    "lastEnableTime": "2024-04-01T12:34:56.123456Z"
   }
 }
 
@@ -232,13 +228,12 @@ X-Xss-Protection: 0
   "format": "DOCKER",
   "mode": "STANDARD_REPOSITORY",
   "name": "projects/${projectId}/locations/us-central1/repositories/test-${uniqueId}",
-  "registryUri": "us-central1-docker.pkg.dev/${projectId}/test-${uniqueId}",
   "satisfiesPzi": true,
   "updateTime": "2024-04-01T12:34:56.123456Z",
   "vulnerabilityScanningConfig": {
     "enablementState": "SCANNING_DISABLED",
     "enablementStateReason": "API containerscanning.googleapis.com is not enabled.",
-    "lastEnableTime": "2025-05-13T22:55:49.637209257Z"
+    "lastEnableTime": "2024-04-01T12:34:56.123456Z"
   }
 }
 
