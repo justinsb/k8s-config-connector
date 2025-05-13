@@ -8,6 +8,6 @@
 - exec: gcloud alpha apigee organizations list --project=${projectId}
 - exec: gcloud alpha apigee organizations delete ${projectId} --project=${projectId}
 
-- exec: gcloud services vpc-peerings delete --service=servicenetworking.googleapis.com --network=apigee-${uniqueId} --ranges=apigee-range-${uniqueId}  --project=${projectId}
+- exec: gcloud services vpc-peerings delete --service=servicenetworking.googleapis.com --network=apigee-${uniqueId} --project=${projectId}
 - exec: gcloud compute addresses delete apigee-range-${uniqueId}  --global --quiet --project=${projectId}
 - exec: gcloud compute networks delete apigee-${uniqueId} --quiet --project=${projectId}
