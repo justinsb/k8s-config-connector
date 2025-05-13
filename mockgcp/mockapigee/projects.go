@@ -23,6 +23,7 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/proto"
+	"google.golang.org/protobuf/types/known/emptypb"
 
 	pb "github.com/GoogleCloudPlatform/k8s-config-connector/mockgcp/generated/mockgcp/cloud/apigee/v1"
 )
@@ -92,6 +93,10 @@ func (s *projectsServer) ProvisionOrganizationProject(ctx context.Context, req *
 	}
 	return s.operations.StartLRO(ctx, prefix, opMetadata, func() (proto.Message, error) {
 		opMetadata.State = "FINISHED"
-		return obj, nil
+		opMetadata.Progress = &pb.GoogleCloudApigeeV1OperationMetadataProgress{
+			Description: "Succeeded",
+			PercentDone: 100,
+		}
+		return &emptypb.Empty{}, nil
 	})
 }
