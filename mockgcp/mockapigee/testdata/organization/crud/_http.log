@@ -117,7 +117,6 @@ X-Xss-Protection: 0
     "https://www.googleapis.com/compute/v1/projects/${projectId}/regions/australia-southeast2/subnetworks/${networkID}",
     "https://www.googleapis.com/compute/v1/projects/${projectId}/regions/europe-central2/subnetworks/${networkID}",
     "https://www.googleapis.com/compute/v1/projects/${projectId}/regions/europe-north1/subnetworks/${networkID}",
-    "https://www.googleapis.com/compute/v1/projects/${projectId}/regions/europe-north2/subnetworks/${networkID}",
     "https://www.googleapis.com/compute/v1/projects/${projectId}/regions/europe-southwest1/subnetworks/${networkID}",
     "https://www.googleapis.com/compute/v1/projects/${projectId}/regions/europe-west1/subnetworks/${networkID}",
     "https://www.googleapis.com/compute/v1/projects/${projectId}/regions/europe-west10/subnetworks/${networkID}",
@@ -246,15 +245,14 @@ X-Xss-Protection: 0
   "creationTimestamp": "2024-04-01T12:34:56.123456Z",
   "description": "peering range for an Apigee trial",
   "id": "000000000000000000000",
+  "ipVersion": "IPV4",
   "kind": "compute#address",
   "labelFingerprint": "abcdef0123A=",
   "name": "${addressID}",
-  "network": "https://www.googleapis.com/compute/v1/projects/${projectId}/global/networks/${networkID}",
-  "networkTier": "PREMIUM",
+  "network": "https://compute.googleapis.com/compute/v1/projects/${projectId}/global/networks/${networkID}",
   "prefixLength": 16,
   "purpose": "VPC_PEERING",
-  "selfLink": "https://www.googleapis.com/compute/v1/projects/${projectId}/global/addresses/${addressID}",
-  "status": "RESERVED"
+  "selfLink": "https://www.googleapis.com/compute/v1/projects/${projectId}/global/addresses/${addressID}"
 }
 
 ---
@@ -276,16 +274,7 @@ X-Xss-Protection: 0
 
 {
   "createTime": "2024-04-01T12:34:56.123456Z",
-  "labels": {
-    "cnrm-test": "true",
-    "managed-by-cnrm": "true"
-  },
   "lifecycleState": "ACTIVE",
-  "name": "Dependent Project",
-  "parent": {
-    "id": "650586513145",
-    "type": "folder"
-  },
   "projectId": "${projectId}",
   "projectNumber": "${projectNumber}"
 }
@@ -345,7 +334,8 @@ X-Xss-Protection: 0
     "peering": "servicenetworking-googleapis-com",
     "reservedPeeringRanges": [
       "${addressID}"
-    ]
+    ],
+    "service": "services/servicenetworking.googleapis.com"
   }
 }
 
@@ -438,101 +428,10 @@ X-Xss-Protection: 0
 {
   "organizations": [
     {
-      "organization": "apigee-hub-demo",
-      "projectId": "apigee-hub-demo",
-      "projectIds": [
-        "apigee-hub-demo"
-      ]
-    },
-    {
-      "organization": "camilabustos-cs-dev-374300",
-      "projectId": "camilabustos-cs-dev-374300",
-      "projectIds": [
-        "camilabustos-cs-dev-374300"
-      ]
-    },
-    {
-      "organization": "camilabustos-cs-dev-new",
-      "projectId": "camilabustos-cs-dev-new",
-      "projectIds": [
-        "camilabustos-cs-dev-new"
-      ]
-    },
-    {
-      "organization": "camilabustos-cs-dev1",
-      "projectId": "camilabustos-cs-dev1",
-      "projectIds": [
-        "camilabustos-cs-dev1"
-      ]
-    },
-    {
-      "organization": "cymbal-ai",
-      "projectId": "cymbal-ai",
-      "projectIds": [
-        "cymbal-ai"
-      ]
-    },
-    {
-      "organization": "cnrm-anhdle",
-      "projectId": "cnrm-anhdle",
-      "projectIds": [
-        "cnrm-anhdle"
-      ]
-    },
-    {
-      "organization": "cnrm-camilabustos2",
-      "projectId": "cnrm-camilabustos2",
-      "projectIds": [
-        "cnrm-camilabustos2"
-      ]
-    },
-    {
-      "organization": "looker-private-demo",
-      "projectId": "looker-private-demo",
-      "projectIds": [
-        "looker-private-demo"
-      ]
-    },
-    {
       "organization": "${projectId}",
       "projectId": "${projectId}",
       "projectIds": [
         "${projectId}"
-      ]
-    },
-    {
-      "organization": "nevero-test-connectivity",
-      "projectId": "nevero-test-connectivity",
-      "projectIds": [
-        "nevero-test-connectivity"
-      ]
-    },
-    {
-      "organization": "ivyliuhui-adhoc-testing",
-      "projectId": "ivyliuhui-adhoc-testing",
-      "projectIds": [
-        "ivyliuhui-adhoc-testing"
-      ]
-    },
-    {
-      "organization": "krpate-gke-dev",
-      "projectId": "krpate-gke-dev",
-      "projectIds": [
-        "krpate-gke-dev"
-      ]
-    },
-    {
-      "organization": "test-xpn-svc",
-      "projectId": "test-xpn-svc",
-      "projectIds": [
-        "test-xpn-svc"
-      ]
-    },
-    {
-      "organization": "testing-axt-axt-proj",
-      "projectId": "testing-axt-axt-proj",
-      "projectIds": [
-        "testing-axt-axt-proj"
       ]
     }
   ]
@@ -563,6 +462,81 @@ X-Xss-Protection: 0
     "targetResourceName": "organizations/${organizationID}${projectId}"
   },
   "name": "organizations/${organizationID}${projectId}/operations/${operationID}"
+}
+
+---
+
+GET https://cloudresourcemanager.googleapis.com/v1/projects/${projectId}?alt=json
+Accept: application/json
+Authorization: (removed)
+Connection: keep-alive
+
+200 OK
+Content-Type: application/json; charset=UTF-8
+Server: ESF
+Vary: Origin
+Vary: X-Origin
+Vary: Referer
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 0
+
+{
+  "createTime": "2024-04-01T12:34:56.123456Z",
+  "lifecycleState": "ACTIVE",
+  "projectId": "${projectId}",
+  "projectNumber": "${projectNumber}"
+}
+
+---
+
+POST https://servicenetworking.googleapis.com/v1/services/servicenetworking.googleapis.com/connections/-?alt=json
+Accept: application/json
+Authorization: (removed)
+Connection: keep-alive
+Content-Type: application/json
+
+{
+  "consumerNetwork": "projects/${projectNumber}/global/networks/${networkID}"
+}
+
+200 OK
+Content-Type: application/json; charset=UTF-8
+Server: ESF
+Vary: Origin
+Vary: X-Origin
+Vary: Referer
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 0
+
+{
+  "name": "operations/${operationID}"
+}
+
+---
+
+GET https://servicenetworking.googleapis.com/v1/operations/${operationID}?alt=json
+Accept: application/json
+Authorization: (removed)
+Connection: keep-alive
+
+200 OK
+Content-Type: application/json; charset=UTF-8
+Server: ESF
+Vary: Origin
+Vary: X-Origin
+Vary: Referer
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 0
+
+{
+  "done": true,
+  "name": "operations/${operationID}",
+  "response": {
+    "@type": "type.googleapis.com/google.protobuf.Empty"
+  }
 }
 
 ---
