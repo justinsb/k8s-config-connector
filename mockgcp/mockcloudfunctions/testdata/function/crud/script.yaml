@@ -1,0 +1,11 @@
+# cloud run needs an Artifact Registry
+- exec: gcloud artifacts repositories create cloud-run-source-deploy --location us-central1 --repository-format=docker --project=${projectId}
+
+- exec: gcloud run deploy test-function-${uniqueId} --base-image go123 --source src/ --function HelloWorld --allow-unauthenticated --region us-central1 --project=${projectId}
+- exec: gcloud run services list --region us-central1 --project=${projectId}
+
+- exec: gcloud run services update test-function-${uniqueId}  --concurrency=2 --region us-central1 --project=${projectId}
+- exec: gcloud run services list --region us-central1 --project=${projectId}
+
+- exec: gcloud run services delete test-function-${uniqueId} --region us-central1 --quiet --project=${projectId}
+- exec: gcloud artifacts repositories delete cloud-run-source-deploy --location us-central1 --quiet -project=${projectId}
