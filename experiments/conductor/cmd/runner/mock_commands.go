@@ -296,42 +296,6 @@ If you have problems, please output a JSON result like this:
 
 { "status": "failure", "reason": "Fill in any information on why you could not complete the task" }`
 
-func captureHttpLog(ctx context.Context, opts *RunnerOptions, branch Branch, execResults *ExecResults) ([]string, *ExecResults, error) {
-	var affectedPaths []string
-
-	// Check to see if the script file exists
-	scriptFullPath := filepath.Join(opts.branchRepoDir, "mockgcp", fmt.Sprintf("mock%s", branch.Group), "testdata", branch.Resource, "crud", "script.yaml")
-	if _, err := os.Stat(scriptFullPath); errors.Is(err, os.ErrNotExist) {
-		return affectedPaths, nil, fmt.Errorf("missing script %s", scriptFullPath)
-	}
-
-	// Check to see if the http log file already exists
-	logFileRelativePath := filepath.Join("mockgcp", fmt.Sprintf("mock%s", branch.Group), "testdata", branch.Resource, "crud", "_http.log")
-	logFilePath := filepath.Join(opts.branchRepoDir, logFileRelativePath)
-	if _, err := os.Stat(logFilePath); !errors.Is(err, os.ErrNotExist) && !opts.force {
-		return affectedPaths, nil, fmt.Errorf("http log %s already exists", logFilePath)
-	}
-
-	// Current HTTP Log generation is determenistic not ML generated.
-
-	// Run the test to generate the log.
-	cfg := CommandConfig{
-		Name: "Generate HTTP log",
-		Cmd:  "go",
-		Args: []string{
-			"test", "./mockgcptests",
-			"-run", fmt.Sprintf("TestScripts/mock%s/testdata/%s/crud", branch.Group, branch.Resource),
-			"-timeout", fmt.Sprintf("%s", opts.timeout),
-		},
-		WorkDir:     filepath.Join(opts.branchRepoDir, "mockgcp"),
-		Env:         map[string]string{"WRITE_GOLDEN_OUTPUT": "1", "E2E_GCP_TARGET": "real"},
-		MaxAttempts: 1,
-	}
-	results, err := executeCommand(opts, cfg)
-	affectedPaths = append(affectedPaths, logFileRelativePath)
-	return affectedPaths, &results, err
-}
-
 func readHttpLog(opts *RunnerOptions, branch Branch) {
 	ctx := context.TODO()
 

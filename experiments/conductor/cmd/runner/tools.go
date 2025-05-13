@@ -41,6 +41,7 @@ func BuildToolsCommand() *cobra.Command {
 	cmd.PersistentFlags().StringVar(&opts.RepoRoot, "repo-root", opts.RepoRoot, "Directory in which to do the work.")
 
 	cmd.AddCommand(BuildMockgcpGcloudScriptCommand(&opts))
+	cmd.AddCommand(BuildRunMockgcpTestCommand(&opts))
 
 	return cmd
 }
