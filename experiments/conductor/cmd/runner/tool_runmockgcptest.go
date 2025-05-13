@@ -101,7 +101,8 @@ func RunMockgcpTest(ctx context.Context, opts RunMockgcpTestOptions) (*RunMockgc
 		Name: "Generate HTTP log",
 		Cmd:  "go",
 		Args: []string{
-			"test", "./mockgcptests",}
+			"test", "./mockgcptests",
+			"-v",
 			"-run", fmt.Sprintf("TestScripts/mock%s/testdata/%s/crud", opts.Group, opts.Resource),
 			"-timeout", timeout.String(),
 		},

@@ -557,6 +557,7 @@ func runMockgcpTests(ctx context.Context, opts *RunnerOptions, branch Branch, ex
 		Cmd:  "go",
 		Args: []string{
 			"test", "./mockgcptests",
+			"-v",
 			"-run", fmt.Sprintf("TestScripts/mock%s/testdata/%s/crud", branch.Group, branch.Resource),
 			"-timeout", fmt.Sprintf("%s", opts.timeout),
 		},
