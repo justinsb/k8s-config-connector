@@ -1,0 +1,290 @@
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata:
+  annotations:
+    cnrm.cloud.google.com/project-id: HOST_PROJECT_ID
+    # use the deletion policy of abandon to ensure that the pubsub service remains enabled when this resource is deleted.
+    cnrm.cloud.google.com/deletion-policy: "abandon"
+    # this is unnecessary with the deletion-policy of 'abandon', but useful if the abandon policy is removed.
+    cnrm.cloud.google.com/disable-dependent-services: "false"
+  name: compute-hostproject
+spec:
+  resourceID: compute.googleapis.com
+
+---
+# apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+# kind: Service
+# metadata:
+#   annotations:
+#     cnrm.cloud.google.com/project-id: HOST_PROJECT_ID
+#     cnrm.cloud.google.com/deletion-policy: "abandon"
+#     cnrm.cloud.google.com/disable-dependent-services: "false"
+#   name: cloudresourcemanager-hostproject
+# spec:
+#   resourceID: cloudresourcemanager.googleapis.com
+
+# ---
+
+
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeNetwork
+metadata:
+  name: shared-net
+  annotations:
+    cnrm.cloud.google.com/project-id: HOST_PROJECT_ID
+spec:
+  autoCreateSubnetworks: false
+---
+
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeSubnetwork
+metadata:
+  name: tier-1
+  annotations:
+    cnrm.cloud.google.com/project-id: HOST_PROJECT_ID
+spec:
+  networkRef:
+    name: shared-net
+  region: COMPUTE_REGION
+  ipCidrRange: 10.0.4.0/22
+  stackType: IPV4_ONLY
+  secondaryIpRange:
+    - rangeName: tier-1-pods
+      ipCidrRange: 10.4.0.0/14
+    - rangeName: tier-1-services
+      ipCidrRange: 10.0.32.0/20
+---
+
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeSubnetwork
+metadata:
+  name: tier-2
+  annotations:
+    cnrm.cloud.google.com/project-id: HOST_PROJECT_ID
+spec:
+  networkRef:
+    name: shared-net
+  region: COMPUTE_REGION
+  ipCidrRange: 172.16.4.0/22
+  secondaryIpRange:
+    - rangeName: tier-2-pods
+      ipCidrRange: 172.20.0.0/14
+    - rangeName: tier-2-services
+      ipCidrRange: 172.16.16.0/20
+---
+
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeSharedVPCHostProject
+metadata:
+  annotations:
+    cnrm.cloud.google.com/project-id: HOST_PROJECT_ID
+  name: host-project
+
+
+---
+
+
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeSharedVPCServiceProject
+metadata:
+  name: service-project-1
+  annotations:
+    cnrm.cloud.google.com/project-id: HOST_PROJECT_ID
+spec:
+  projectRef:
+    external: SERVICE_PROJECT_1_ID
+---
+
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata:
+  name: container-service-project-1
+  annotations:
+    cnrm.cloud.google.com/project-id: SERVICE_PROJECT_1_ID
+    cnrm.cloud.google.com/deletion-policy: "abandon"
+    cnrm.cloud.google.com/disable-dependent-services: "false"
+spec:
+  resourceID: container.googleapis.com
+
+---
+
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: ServiceIdentity
+metadata:
+  name: container-service-project-1
+spec:
+  projectRef:
+    external: SERVICE_PROJECT_1_ID
+  resourceID: container.googleapis.com
+
+---
+
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: ServiceIdentity
+metadata:
+  name: cloudservices-service-project-1
+spec:
+  projectRef:
+    external: SERVICE_PROJECT_1_ID
+  resourceID: cloudservices.gserviceaccount.com
+
+#TODO: #   - serviceAccount:SERVICE_PROJECT_1_NUM@cloudservices.gserviceaccount.com
+---
+
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPartialPolicy
+metadata:
+  name: subnet-tier-1-allow-project-1
+spec:
+  resourceRef:
+    kind: ComputeSubnetwork
+    name: tier-1
+  bindings:
+    - role: roles/compute.networkUser
+      members:
+        - memberFrom:
+            serviceIdentityRef:
+              name: container-service-project-1
+        # - memberFrom:
+        #     serviceIdentityRef:
+        #       name: cloudservices-service-project-1
+
+---
+
+
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeSharedVPCServiceProject
+metadata:
+  name: service-project-2
+  annotations:
+    cnrm.cloud.google.com/project-id: HOST_PROJECT_ID
+spec:
+  projectRef:
+    external: SERVICE_PROJECT_2_ID
+
+---
+
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata:
+  name: container-service-hostproject
+  annotations:
+    cnrm.cloud.google.com/project-id: HOST_PROJECT_ID
+    cnrm.cloud.google.com/deletion-policy: "abandon"
+    cnrm.cloud.google.com/disable-dependent-services: "false"
+spec:
+  resourceID: container.googleapis.com
+
+---
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata:
+  name: container-service-project-2
+  annotations:
+    cnrm.cloud.google.com/project-id: SERVICE_PROJECT_2_ID
+    cnrm.cloud.google.com/deletion-policy: "abandon"
+    cnrm.cloud.google.com/disable-dependent-services: "false"
+spec:
+  resourceID: container.googleapis.com
+
+---
+
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: ServiceIdentity
+metadata:
+  name: container-service-project-2
+spec:
+  projectRef:
+    external: SERVICE_PROJECT_2_ID
+  resourceID: container.googleapis.com
+---
+
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPartialPolicy
+metadata:
+  name: subnet-tier-2-allow-project-2
+spec:
+  resourceRef:
+    kind: ComputeSubnetwork
+    name: tier-2
+  bindings:
+    - role: roles/compute.networkUser
+      members:
+        - memberFrom:
+            serviceIdentityRef:
+              name: container-service-project-2
+
+#TODO: #   - serviceAccount:SERVICE_PROJECT_1_NUM@cloudservices.gserviceaccount.com
+---
+
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPartialPolicy
+metadata:
+  name: project-hostproject-gke
+  annotations:
+    cnrm.cloud.google.com/project-id: HOST_PROJECT_ID
+spec:
+  resourceRef:
+    kind: Project
+    external: HOST_PROJECT_ID
+  bindings:
+    - role: roles/compute.securityAdmin
+      members:
+        - memberFrom:
+            serviceIdentityRef:
+              name: container-service-project-1
+        - memberFrom:
+            serviceIdentityRef:
+              name: container-service-project-2
+    - role: roles/container.hostServiceAgentUser
+      members:
+        - memberFrom:
+            serviceIdentityRef:
+              name: container-service-project-1
+        - memberFrom:
+            serviceIdentityRef:
+              name: container-service-project-2
+---
+
+
+apiVersion: container.cnrm.cloud.google.com/v1beta1
+kind: ContainerCluster
+metadata:
+  name: cluster-tier-1
+  annotations:
+    cnrm.cloud.google.com/project-id: SERVICE_PROJECT_1_ID
+spec:
+  location: COMPUTE_REGION
+  networkRef:
+    name: shared-net
+  subnetworkRef:
+    name: tier-1
+  ipAllocationPolicy:
+    clusterSecondaryRangeName: tier-1-pods
+    servicesSecondaryRangeName: tier-1-services
+  nodeConfig:
+    machineType: e2-medium
+  initialNodeCount: 1
+
+---
+
+
+apiVersion: container.cnrm.cloud.google.com/v1beta1
+kind: ContainerCluster
+metadata:
+  name: cluster-tier-2
+  annotations:
+    cnrm.cloud.google.com/project-id: SERVICE_PROJECT_2_ID
+spec:
+  location: COMPUTE_REGION
+  networkRef:
+    name: shared-net
+  subnetworkRef:
+    name: tier-2
+  ipAllocationPolicy:
+    clusterSecondaryRangeName: tier-2-pods
+    servicesSecondaryRangeName: tier-2-services
+  nodeConfig:
+    machineType: e2-medium
+  initialNodeCount: 1
+
