@@ -379,6 +379,14 @@ func runScenario(ctx context.Context, t *testing.T, testPause bool, fixture reso
 				if ShouldTestRereconiliation(t, primaryResource) {
 					eventsBefore := h.Events.HTTPEvents
 
+					// latest := primaryResource
+					// if len(opt.Updates) != 0 {
+					// 	if len(opt.Updates) != 1 {
+					// 		t.Errorf("expected exactly one update, got %d", len(opt.Updates))
+					// 	}
+					// 	latest = opt.Updates[0]
+					// }
+
 					touchObject(h, primaryResource)
 					// Pause to allow re-reconciliation
 					// (annotations don't change the generation, so we can't wait for observedGeneration)
@@ -396,6 +404,7 @@ func runScenario(ctx context.Context, t *testing.T, testPause bool, fixture reso
 							isReadOnly = true
 						}
 						if !isReadOnly {
+							h.Events.HTTPEvents = eventsAfter
 							t.Errorf("FAIL: unexpected event during rereconciliation: %v", event)
 						}
 					}

@@ -51,19 +51,19 @@ import (
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/apimachinery/pkg/types"
+	"k8s.io/klog/v2"
 	"sigs.k8s.io/controller-runtime/pkg/builder"
 	"sigs.k8s.io/controller-runtime/pkg/controller"
 	"sigs.k8s.io/controller-runtime/pkg/event"
 	"sigs.k8s.io/controller-runtime/pkg/handler"
 	"sigs.k8s.io/controller-runtime/pkg/log"
-	klog "sigs.k8s.io/controller-runtime/pkg/log"
 	"sigs.k8s.io/controller-runtime/pkg/manager"
 	"sigs.k8s.io/controller-runtime/pkg/predicate"
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 	"sigs.k8s.io/controller-runtime/pkg/source"
 )
 
-var logger = klog.Log
+var logger = log.Log
 
 type Reconciler struct {
 	lifecyclehandler.LifecycleHandler
@@ -393,6 +393,7 @@ func (r *Reconciler) sync(ctx context.Context, krmResource *krmtotf.Resource) (r
 			}
 		}
 		report.IsNewObject = liveState.Empty()
+		klog.Infof("diff report is fields:%+v", report.Fields)
 		structuredreporting.ReportDiff(ctx, report)
 	}
 
