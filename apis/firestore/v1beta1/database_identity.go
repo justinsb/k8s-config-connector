@@ -17,6 +17,7 @@ package v1beta1
 import (
 	"context"
 	"fmt"
+	"reflect"
 	"strings"
 
 	"github.com/GoogleCloudPlatform/k8s-config-connector/apis/common"
@@ -44,22 +45,68 @@ func (i *FirestoreDatabaseIdentity) String() string {
 	return i.Parent.String() + "/databases/" + i.Database
 }
 
-func (i *FirestoreDatabaseIdentity) FromExternal(ref string) error {
-	ref = strings.TrimPrefix(ref, "//firestore.googleapis.com/")
+var FirestoreDatabaseIdentityURL = URLTemplate{
+	Parent:  &parent.ProjectParent{},
+	Service: ServiceDomain,
+	Key:     "databases",
+}
 
-	tokens := strings.Split(ref, "/databases/")
-	if len(tokens) != 2 {
-		return fmt.Errorf("format of FirestoreDatabase external=%q was not known (use %s)", ref, DatabaseIDURL)
-	}
-	i.Parent = &parent.ProjectParent{}
-	if err := i.Parent.FromExternal(tokens[0]); err != nil {
+func (i *FirestoreDatabaseIdentity) FromExternal(ref string) error {
+	parentID, value, err := FirestoreDatabaseIdentityURL.Parse(ref)
+	if err != nil {
 		return err
 	}
-	i.Database = tokens[1]
-	if i.Database == "" {
-		return fmt.Errorf("database was empty in external=%q", ref)
-	}
+	i.Parent = parentID.(*parent.ProjectParent)
+	i.Database = value
 	return nil
+}
+
+type URLTemplate struct {
+	Parent  identity.Identity
+	Service string
+	Key     string
+}
+
+func (u *URLTemplate) Template() string {
+	s := ""
+	if u.Parent != nil {
+		s += u.Parent.Template() + "/"
+	}
+}
+
+func (u *URLTemplate) Parse(ref string) (identity.Identity, string, error) {
+	if strings.HasPrefix(ref, "//") {
+		if u.Service == "" {
+			return nil, "", fmt.Errorf("unexpected service-qualified reference %q", ref)
+		}
+		if !strings.HasPrefix(ref, "//"+u.Service+"/") {
+			return nil, "", fmt.Errorf("expected service-qualified reference to start with //%s/: %q", u.Service, ref)
+		}
+		ref = strings.TrimPrefix(ref, "//"+u.Service+"/")
+	}
+
+	tokens := strings.Split(ref, "/")
+	if len(tokens) < 2 {
+		return nil, "", fmt.Errorf("expected at least two tokens in reference %q", ref)
+	}
+	n := len(tokens)
+	if tokens[n-2] != u.Key {
+		return nil, "", fmt.Errorf("expected %q in reference %q", u.Key, ref)
+	}
+	value := tokens[n-1]
+
+	if u.Parent == nil {
+		if len(tokens) != 2 {
+			return nil, "", fmt.Errorf("found extra tokens in reference %q, expected %q", ref, u.Key+"/{value}")
+		}
+		return nil, value, nil
+	}
+
+	parent := reflect.New(reflect.TypeOf(u.Parent).Elem()).Interface().(identity.Identity)
+	if err := parent.FromExternal(strings.Join(tokens[:n-2], "/")); err != nil {
+		return nil, "", fmt.Errorf("parsing ref %q: %w", ref, err)
+	}
+	return parent, value, nil
 }
 
 var _ identity.Resource = &FirestoreDatabase{}
