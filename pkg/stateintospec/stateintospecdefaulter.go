@@ -57,17 +57,17 @@ func NewStateIntoSpecDefaulter(client client.Client) k8s.Defaulter {
 func (v *StateIntoSpecDefaulter) ApplyDefaults(ctx context.Context, reconcilerType k8s.ReconcilerType, resource client.Object) (changed bool, err error) {
 	gvk := resource.GetObjectKind().GroupVersionKind()
 
+	// Don't write the annotation for direct controllers
+	switch reconcilerType {
+	case k8s.ReconcilerTypeDirect:
+		return false, nil
+	}
+
 	val, found := resource.GetAnnotations()[k8s.StateIntoSpecAnnotation]
 	if found {
 		if !isAcceptedStateIntoSpecValue(val, gvk) {
 			return false, fmt.Errorf("invalid value %q for %q annotation in kind %v", val, StateIntoSpecAnnotation, resource.GetObjectKind().GroupVersionKind().Kind)
 		}
-		return false, nil
-	}
-
-	// Don't write the annotation for direct controllers
-	switch reconcilerType {
-	case k8s.ReconcilerTypeDirect:
 		return false, nil
 	}
 

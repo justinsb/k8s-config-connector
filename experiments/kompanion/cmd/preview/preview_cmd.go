@@ -17,6 +17,11 @@ package preview
 import (
 	"context"
 	"fmt"
+	"io"
+	"net/http"
+	"os"
+	"path/filepath"
+	"strings"
 	"time"
 
 	"github.com/GoogleCloudPlatform/k8s-config-connector/pkg/cli/preview"
@@ -31,8 +36,8 @@ import (
 )
 
 const (
-	kubeconfigFlag     = "kubeconfig"
-	timeoutFlag        = "timeout"
+	kubeconfigFlag = "kubeconfig"
+	timeoutFlag    = "timeout"
 
 	reportNamePrefixFlag = "report-prefix"
 	defaultScope         = "https://www.googleapis.com/auth/cloud-platform"
@@ -112,10 +117,14 @@ func RunPreview(ctx context.Context, opts *PreviewOptions) error {
 	if err != nil {
 		return fmt.Errorf("error building GCP authorization: %w", err)
 	}
+	var upstreamGCPHTTPClient *http.Client
+	if true /* HACK */ {
+		upstreamGCPHTTPClient = buildSnapshotHTTPClient()
+	}
 	preview, err := preview.NewPreviewInstance(recorder, preview.PreviewInstanceOptions{
 		UpstreamRESTConfig:       upstreamRESTConfig,
 		UpstreamGCPAuthorization: authorization,
-		UpstreamGCPHTTPClient:    nil,
+		UpstreamGCPHTTPClient:    upstreamGCPHTTPClient,
 	})
 	if err != nil {
 		return fmt.Errorf("building preview instance: %v", err)
@@ -158,4 +167,61 @@ func printCapturedObjects(recorder *preview.Recorder, prefix string, full bool) 
 
 	}
 	return nil
+}
+
+func buildSnapshotHTTPClient() *http.Client {
+	roundTripper := &snapshotRoundTripper{}
+
+	return &http.Client{
+		Transport: roundTripper,
+		Timeout:   30 * time.Second,
+	}
+}
+
+type snapshotRoundTripper struct {
+}
+
+var _ http.RoundTripper = &snapshotRoundTripper{}
+
+func (s *snapshotRoundTripper) RoundTrip(req *http.Request) (*http.Response, error) {
+	ctx := req.Context()
+	log := klog.FromContext(ctx)
+	log.Info("snapshotRoundTripper", "req.method", req.Method, "req.url", req.URL.String())
+
+	baseDir := "/usr/local/google/home/justinsb/b451536623/k8s-config-connector/gcpsnapshot"
+
+	reqPath := req.URL.Path
+	p := filepath.Join(baseDir, req.Host, reqPath+"."+strings.ToLower(req.Method))
+	log.Info("looking for snapshot file", "path", p, "request.path", reqPath)
+
+	// TODO: Sanitize to be a valid filename
+	b, err := os.ReadFile(p)
+	if err != nil {
+		// TODO
+		log.Error(err, "error reading snapshot file", "path", p)
+	}
+
+	response := &http.Response{
+		Status:     "200 OK",
+		StatusCode: 200,
+		Proto:      "HTTP/1.1",
+		ProtoMajor: 1,
+		ProtoMinor: 1,
+		Request:    req,
+		Header:     make(http.Header),
+	}
+
+	if b != nil {
+		log.Info("snapshot found", "path", p)
+
+		response.Body = io.NopCloser(strings.NewReader(string(b)))
+		response.Header.Set("Content-Type", "application/json; charset=UTF-8")
+		return response, nil
+	}
+
+	log.Info("snapshot NOT found, returning 401", "path", p)
+	response.Status = "401 Unauthorized (FAKE)"
+	response.StatusCode = 401
+
+	return response, nil
 }

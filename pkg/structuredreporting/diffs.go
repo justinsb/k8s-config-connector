@@ -18,6 +18,7 @@ import (
 	"context"
 
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
+	"k8s.io/klog/v2"
 )
 
 // Diff allows reporting of a detected difference
@@ -51,6 +52,16 @@ func (d *Diff) HasDiff() bool {
 
 // ReportDiff should be called by a controller when it detects diffs
 func ReportDiff(ctx context.Context, diff *Diff) {
+	klog.Infof("REPORTDIFF %v", diff)
+	for _, field := range diff.Fields {
+		// if field.Old == nil && field.New == nil {
+		// 	continue
+		// }
+		// if field.Old != nil && field.New != nil && reflect.DeepEqual(field.Old, field.New) {
+		// 	continue
+		// }
+		klog.Infof("  Field %q: %v -> %v", field.ID, field.Old, field.New)
+	}
 	if listener, ok := GetListenerFromContext(ctx); ok {
 		listener.OnDiff(ctx, diff)
 	}
