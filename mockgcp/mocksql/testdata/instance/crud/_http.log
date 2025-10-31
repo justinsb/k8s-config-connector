@@ -102,9 +102,10 @@ X-Xss-Protection: 0
   "geminiConfig": {
     "activeQueryEnabled": false,
     "entitled": false,
-    "flagRecommenderEnabled": false,
+    "flagRecommenderEnabled": true,
     "indexAdvisorEnabled": false
   },
+  "includeReplicasForMajorVersionUpgrade": false,
   "instanceType": "CLOUD_SQL_INSTANCE",
   "ipAddresses": [
     {
@@ -117,6 +118,7 @@ X-Xss-Protection: 0
   "name": "mysql-${uniqueId}",
   "project": "${projectId}",
   "region": "us-central1",
+  "satisfiesPzi": false,
   "selfLink": "https://sqladmin.googleapis.com/sql/v1beta4/projects/${projectId}/instances/mysql-${uniqueId}",
   "serverCaCert": {
     "cert": "-----BEGIN CERTIFICATE-----\n-----END CERTIFICATE-----\n",
@@ -130,11 +132,15 @@ X-Xss-Protection: 0
   },
   "serviceAccountEmailAddress": "p${projectNumber}-abcdef@gcp-sa-cloud-sql.iam.gserviceaccount.com",
   "settings": {
+    "activationPolicy": "ALWAYS",
+    "authorizedGaeApplications": [],
+    "availabilityType": "ZONAL",
     "backupConfiguration": {
       "backupRetentionSettings": {
         "retainedBackups": 7,
         "retentionUnit": "COUNT"
       },
+      "backupTier": "STANDARD",
       "enabled": false,
       "kind": "sql#backupConfiguration",
       "startTime": "12:00",
@@ -146,8 +152,10 @@ X-Xss-Protection: 0
     "dataDiskType": "PD_SSD",
     "deletionProtectionEnabled": false,
     "ipConfiguration": {
+      "authorizedNetworks": [],
       "ipv4Enabled": true,
       "requireSsl": false,
+      "serverCaMode": "GOOGLE_MANAGED_INTERNAL_CA",
       "sslMode": "ALLOW_UNENCRYPTED_AND_ENCRYPTED"
     },
     "kind": "sql#settings",
@@ -156,9 +164,10 @@ X-Xss-Protection: 0
       "zone": "us-central1-a"
     },
     "pricingPlan": "PER_USE",
+    "replicationLagMaxSeconds": 31536000,
     "replicationType": "SYNCHRONOUS",
     "settingsVersion": "123",
-    "storageAutoResize": false,
+    "storageAutoResize": true,
     "storageAutoResizeLimit": "0",
     "tier": "db-custom-2-4096"
   },
@@ -359,9 +368,10 @@ X-Xss-Protection: 0
   "geminiConfig": {
     "activeQueryEnabled": false,
     "entitled": false,
-    "flagRecommenderEnabled": false,
+    "flagRecommenderEnabled": true,
     "indexAdvisorEnabled": false
   },
+  "includeReplicasForMajorVersionUpgrade": false,
   "instanceType": "CLOUD_SQL_INSTANCE",
   "ipAddresses": [
     {
@@ -374,6 +384,7 @@ X-Xss-Protection: 0
   "name": "mysql-${uniqueId}",
   "project": "${projectId}",
   "region": "us-central1",
+  "satisfiesPzi": false,
   "selfLink": "https://sqladmin.googleapis.com/sql/v1beta4/projects/${projectId}/instances/mysql-${uniqueId}",
   "serverCaCert": {
     "cert": "-----BEGIN CERTIFICATE-----\n-----END CERTIFICATE-----\n",
@@ -387,11 +398,15 @@ X-Xss-Protection: 0
   },
   "serviceAccountEmailAddress": "p${projectNumber}-abcdef@gcp-sa-cloud-sql.iam.gserviceaccount.com",
   "settings": {
+    "activationPolicy": "ALWAYS",
+    "authorizedGaeApplications": [],
+    "availabilityType": "ZONAL",
     "backupConfiguration": {
       "backupRetentionSettings": {
         "retainedBackups": 7,
         "retentionUnit": "COUNT"
       },
+      "backupTier": "STANDARD",
       "enabled": false,
       "kind": "sql#backupConfiguration",
       "startTime": "12:00",
@@ -403,8 +418,10 @@ X-Xss-Protection: 0
     "dataDiskType": "PD_SSD",
     "deletionProtectionEnabled": false,
     "ipConfiguration": {
+      "authorizedNetworks": [],
       "ipv4Enabled": true,
       "requireSsl": false,
+      "serverCaMode": "GOOGLE_MANAGED_INTERNAL_CA",
       "sslMode": "ALLOW_UNENCRYPTED_AND_ENCRYPTED"
     },
     "kind": "sql#settings",
@@ -413,9 +430,10 @@ X-Xss-Protection: 0
       "zone": "us-central1-a"
     },
     "pricingPlan": "PER_USE",
+    "replicationLagMaxSeconds": 31536000,
     "replicationType": "SYNCHRONOUS",
     "settingsVersion": "123",
-    "storageAutoResize": false,
+    "storageAutoResize": true,
     "storageAutoResizeLimit": "0",
     "tier": "db-custom-2-4096"
   },
@@ -524,9 +542,10 @@ X-Xss-Protection: 0
   "geminiConfig": {
     "activeQueryEnabled": false,
     "entitled": false,
-    "flagRecommenderEnabled": false,
+    "flagRecommenderEnabled": true,
     "indexAdvisorEnabled": false
   },
+  "includeReplicasForMajorVersionUpgrade": false,
   "instanceType": "CLOUD_SQL_INSTANCE",
   "ipAddresses": [
     {
@@ -539,6 +558,7 @@ X-Xss-Protection: 0
   "name": "mysql-${uniqueId}",
   "project": "${projectId}",
   "region": "us-central1",
+  "satisfiesPzi": false,
   "selfLink": "https://sqladmin.googleapis.com/sql/v1beta4/projects/${projectId}/instances/mysql-${uniqueId}",
   "serverCaCert": {
     "cert": "-----BEGIN CERTIFICATE-----\n-----END CERTIFICATE-----\n",
@@ -552,11 +572,15 @@ X-Xss-Protection: 0
   },
   "serviceAccountEmailAddress": "p${projectNumber}-abcdef@gcp-sa-cloud-sql.iam.gserviceaccount.com",
   "settings": {
+    "activationPolicy": "ALWAYS",
+    "authorizedGaeApplications": [],
+    "availabilityType": "ZONAL",
     "backupConfiguration": {
       "backupRetentionSettings": {
         "retainedBackups": 7,
         "retentionUnit": "COUNT"
       },
+      "backupTier": "STANDARD",
       "enabled": false,
       "kind": "sql#backupConfiguration",
       "startTime": "12:00",
@@ -568,8 +592,10 @@ X-Xss-Protection: 0
     "dataDiskType": "PD_SSD",
     "deletionProtectionEnabled": false,
     "ipConfiguration": {
+      "authorizedNetworks": [],
       "ipv4Enabled": true,
       "requireSsl": false,
+      "serverCaMode": "GOOGLE_MANAGED_INTERNAL_CA",
       "sslMode": "ALLOW_UNENCRYPTED_AND_ENCRYPTED"
     },
     "kind": "sql#settings",
@@ -578,9 +604,10 @@ X-Xss-Protection: 0
       "zone": "us-central1-a"
     },
     "pricingPlan": "PER_USE",
+    "replicationLagMaxSeconds": 31536000,
     "replicationType": "SYNCHRONOUS",
     "settingsVersion": "123",
-    "storageAutoResize": false,
+    "storageAutoResize": true,
     "storageAutoResizeLimit": "0",
     "tier": "db-custom-4-4096"
   },

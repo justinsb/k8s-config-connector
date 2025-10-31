@@ -924,3 +924,28 @@ func validateUpdateMaintenanceVersion(existing *pb.DatabaseInstance, newMaintena
 	}
 	return nil
 }
+
+type availableDatabaseVersion struct {
+	Version string
+}
+
+var availableDatabaseVersions = []availableDatabaseVersion{
+	{Version: "8.0.18"},
+	{Version: "8.0.26"},
+	{Version: "8.0.27"},
+	{Version: "8.0.28"},
+	{Version: "8.0.29"},
+	{Version: "8.0.30"},
+	{Version: "8.0.31"},
+	{Version: "8.0.32"},
+	{Version: "8.0.33"},
+	{Version: "8.0.34"},
+	{Version: "8.0.35"},
+	{Version: "8.0.36"},
+	{Version: "8.0.37"},
+	{Version: "8.0.39"},
+	{Version: "8.0.40"},
+	{Version: "8.0.41"},
+	{Version: "8.0.42"},
+	{Version: "8.0.43"},
+}
