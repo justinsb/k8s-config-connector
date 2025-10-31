@@ -29,6 +29,7 @@ import (
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/known/timestamppb"
 	"google.golang.org/protobuf/types/known/wrapperspb"
+	"k8s.io/klog/v2"
 )
 
 type sqlInstancesService struct {
@@ -694,6 +695,12 @@ func (s *sqlInstancesService) Patch(ctx context.Context, req *pb.SqlInstancesPat
 		return nil, err
 	}
 
+	if req.GetBody() == nil || proto.Equal(req.GetBody(), &pb.DatabaseInstance{}) {
+		// real GCP seems to return an invalid precondition error if no body is provided.
+		// regardless, we shouldn't be making pointless calls.
+		return nil, status.Errorf(codes.FailedPrecondition, "Invalid request: body must be provided.")
+	}
+
 	if settings := req.GetBody().GetSettings(); settings != nil {
 		if settings.Edition != pb.Settings_EDITION_UNSPECIFIED {
 			obj.Settings.Edition = settings.Edition
@@ -710,15 +717,15 @@ func (s *sqlInstancesService) Patch(ctx context.Context, req *pb.SqlInstancesPat
 			}
 		}
 		if body.MaintenanceVersion != "" {
+			if err := validateUpdateMaintenanceVersion(obj, body.MaintenanceVersion); err != nil {
+				return nil, err
+			}
 			obj.MaintenanceVersion = body.MaintenanceVersion
 		}
+
 		// todo kcc team: refactor this all so we can pass in specific values for database settings
-		specifiedMaintenanceVersion := body.MaintenanceVersion
 		if err := setDatabaseVersionDefaults(obj); err != nil {
 			return nil, err
-		}
-		if specifiedMaintenanceVersion != "" {
-			obj.MaintenanceVersion = specifiedMaintenanceVersion
 		}
 	}
 
@@ -767,6 +774,10 @@ func (s *sqlInstancesService) Update(ctx context.Context, req *pb.SqlInstancesUp
 		// A simple check for the test case is to see if settings are changing.
 		if !proto.Equal(req.GetBody().GetSettings(), existing.GetSettings()) {
 			return nil, status.Errorf(codes.InvalidArgument, "Invalid request: Upgrading maintenance version and changing other fields at the same time is not allowed.")
+		}
+
+		if err := validateUpdateMaintenanceVersion(existing, req.GetBody().GetMaintenanceVersion()); err != nil {
+			return nil, err
 		}
 	}
 
@@ -898,4 +909,18 @@ var availableDatabaseVersions = []availableDatabaseVersion{
 	{Version: "8.0.41"},
 	{Version: "8.0.42"},
 	{Version: "8.0.43"},
+}
+
+// validateUpdateMaintenanceVersion returns an error if we are trying to downgrade maintenance versions.
+func validateUpdateMaintenanceVersion(existing *pb.DatabaseInstance, newMaintenanceVersion string) error {
+	oldVersion := existing.GetMaintenanceVersion()
+	if oldVersion == "" {
+		klog.Fatalf("existing maintenance version is empty in validateUpdateMaintenanceVersion")
+	}
+	// For now we just do a simple string comparison
+	// This is slightly brittle but should work as well as much more complicated algorithms for current values.
+	if newMaintenanceVersion < oldVersion {
+		return status.Errorf(codes.InvalidArgument, "Invalid request: Downgrading maintenance version from %s to %s is not allowed.", oldVersion, newMaintenanceVersion)
+	}
+	return nil
 }
