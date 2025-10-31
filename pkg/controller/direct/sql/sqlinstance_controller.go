@@ -159,7 +159,7 @@ func (a *sqlInstanceAdapter) Create(ctx context.Context, createOp *directbase.Cr
 	if a.desired.Spec.CloneSource != nil {
 		return a.cloneInstance(ctx, u, log)
 	} else {
-		// if the maitenance version is provided on CREATE, we need to break up the operation between
+		// if the maintenance version is provided on CREATE, we need to break up the operation between
 		// a create and a patch with the maintenance version
 		maintenanceVersion := ""
 		if a.desired.Spec.MaintenanceVersion != nil {
@@ -172,7 +172,7 @@ func (a *sqlInstanceAdapter) Create(ctx context.Context, createOp *directbase.Cr
 		}
 		if maintenanceVersion != "" {
 			newMaintDb := &api.DatabaseInstance{
-				MaintenanceVersion: direct.ValueOf(a.desired.Spec.MaintenanceVersion),
+				MaintenanceVersion: maintenanceVersion,
 			}
 
 			op, err := a.sqlInstancesClient.Patch(a.projectID, a.resourceID, newMaintDb).Context(ctx).Do()
@@ -360,9 +360,9 @@ func (a *sqlInstanceAdapter) Update(ctx context.Context, updateOp *directbase.Up
 	}
 
 	// we also need to handle maintenanceVersion updates separately ...
-	if a.desired.Spec.MaintenanceVersion != nil && *a.desired.Spec.MaintenanceVersion != a.actual.MaintenanceVersion {
+	if maintenanceVersion := direct.ValueOf(a.desired.Spec.MaintenanceVersion); maintenanceVersion != "" && maintenanceVersion != a.actual.MaintenanceVersion {
 		newMaintDb := &api.DatabaseInstance{
-			MaintenanceVersion: direct.ValueOf(a.desired.Spec.MaintenanceVersion),
+			MaintenanceVersion: maintenanceVersion,
 		}
 
 		{
