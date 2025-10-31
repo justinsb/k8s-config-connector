@@ -393,6 +393,11 @@ func (a *sqlInstanceAdapter) Update(ctx context.Context, updateOp *directbase.Up
 		return err
 	}
 
+	// Ignore the fields handled above
+	desiredGCP.MaintenanceVersion = a.actual.MaintenanceVersion
+	desiredGCP.DatabaseVersion = a.actual.DatabaseVersion
+	desiredGCP.Settings.Edition = a.actual.Settings.Edition
+
 	instanceForStatus := a.actual
 	instanceDiff := &structuredreporting.Diff{}
 	if !InstancesMatch(desiredGCP, a.actual, instanceDiff) {
