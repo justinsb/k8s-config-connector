@@ -1,0 +1,49 @@
+apiVersion: sql.cnrm.cloud.google.com/v1beta1
+kind: SQLInstance
+metadata:
+  annotations:
+    cnrm.cloud.google.com/project-id: ${projectId}
+  finalizers:
+  - cnrm.cloud.google.com/finalizer
+  - cnrm.cloud.google.com/deletion-defender
+  generation: 2
+  name: sqlinstance-${uniqueId}
+  namespace: ${projectId}
+spec:
+  databaseVersion: MYSQL_8_0
+  maintenanceVersion: MYSQL_8_0_40.R20250304.00_03
+  region: us-central1
+  settings:
+    tier: db-n1-standard-1
+status:
+  conditions:
+  - lastTransitionTime: "1970-01-01T00:00:00Z"
+    message: |-
+      Update call failed: error updating: patching SQLInstance sqlinstance-${uniqueId} maintenanceVersion failed: googleapi: Error 400: Invalid request: The maintenance version [MYSQL_8_0_40.R20250304.00_03] provided is not a valid available maintenance version. Please refer to the availableMaintenanceVersions field on the instance resource to see the list of available maintenance versions..
+      Details:
+      [
+        {
+          "@type": "type.googleapis.com/google.rpc.DebugInfo",
+          "detail": "[ORIGINAL ERROR] boss::8: The maintenance version [MYSQL_8_0_40.R20250304.00_03] provided is not a valid available maintenance version. Please refer to the availableMaintenanceVersions field on the instance resource to see the list of available maintenance versions. [gdata.Errors] { error { domain: \"gdata.CoreErrorDomain\" code: \"INVALID_VALUE\" argument: \"The maintenance version [MYSQL_8_0_40.R20250304.00_03] provided is not a valid available maintenance version. Please refer to the availableMaintenanceVersions field on the instance resource to see the list of available maintenance versions.\" location_type: PATH location: \"\" debug_info: \"BossException (INVALID_REQUEST): The maintenance version [MYSQL_8_0_40.R20250304.00_03] provided is not a valid available maintenance version. Please refer to the availableMaintenanceVersions field on the instance resource to see the list of available maintenance versions.. {domain: gdata.CoreErrorDomain, code: INVALID_VALUE, arguments, [The maintenance version [MYSQL_8_0_40.R20250304.00_03] provided is not a valid available maintenance version. Please refer to the availableMaintenanceVersions field on the instance resource to see the list of available maintenance versions.]}\\n\\tat com.google.storage.speckle.boss.util.exception.BossException.invalidExternalApiRequest(BossException.java:811)\\n\\tat com.google.storage.speckle.boss.admin.actions.InstancesServiceHelper.verifyMaintenanceVersionMatchesDefaultMinorVersion(InstancesServiceHelper.java:490)\\n\\tat com.google.storage.speckle.boss.admin.actions.InstancesServiceHelper.validateAndApplyMaintenanceVersion(InstancesServiceHelper.java:533)\\n\\tat com.google.storage.speckle.boss.admin.actions.InstancePatchAction.lambda$makeInstanceUpdateTransform$0(InstancePatchAction.java:641)\\n\\tat com.google.storage.speckle.boss.internal.InstanceCrudRequestHandler.updateInstance(InstanceCrudRequestHandler.java:2150)\\n\\tat com.google.storage.speckle.boss.internal.InstanceCrudRequestHandler.updateInstance(InstanceCrudRequestHandler.java:2091)\\n\\tat com.google.storage.speckle.boss.internal.InstanceResourceHandlerImpl.updateInstance(InstanceResourceHandlerImpl.java:163)\\n\\tat com.google.storage.speckle.boss.admin.actions.InstancePatchAction.execute(InstancePatchAction.java:440)\\n\\tat java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(Unknown Source)\\n\\tat java.base/java.lang.reflect.Method.invoke(Unknown Source)\\n\\tat com.google.storage.speckle.boss.admin.logging.interceptors.ActionLogInterceptor.intercept(ActionLogInterceptor.java:53)\\n\\tat com.google.common.bytecode.ProxyMaker$Callback.intercept(ProxyMaker.java:263)\\n\\tat com.google.storage.speckle.boss.admin.actions.InstancePatchAction$ByteBuddy$o15LtmQt.execute(Unknown Source)\\n\\tat com.google.storage.speckle.boss.admin.actions.InstancePatchAction$ByteBuddy$o15LtmQt.execute(Unknown Source)\\n\\tat com.google.storage.speckle.boss.admin.framework.impl.RpcImpl.execute(RpcImpl.java:100)\\n\\tat com.google.storage.speckle.boss.admin.V1beta4InstancesServiceImpl.patch(V1beta4InstancesServiceImpl.java:517)\\n\\tat com.google.cloud.sql.v1beta4.SqlInstancesService$ServiceParameters$67.handleBlockingRequest(SqlInstancesService.java:4848)\\n\\tat com.google.cloud.sql.v1beta4.SqlInstancesService$ServiceParameters$67.handleBlockingRequest(SqlInstancesService.java:4846)\\n\\tat com.google.net.rpc3.impl.server.RpcBlockingApplicationHandler.handleRequest(RpcBlockingApplicationHandler.java:28)\\n\\tat com.google.net.rpc3.impl.server.RpcServerInterceptor2Util$RpcApplicationHandlerAdaptor.handleRequest(RpcServerInterceptor2Util.java:82)\\n\\tat com.google.net.rpc3.impl.server.AggregatedRpcServerInterceptors.interceptRpc(AggregatedRpcServerInterceptors.java:100)\\n\\tat com.google.net.rpc3.impl.server.RpcServerInterceptor2Util$InterceptedApplicationHandlerImpl.handleRequest(RpcServerInterceptor2Util.java:67)\\n\\tat com.google.prod.fireaxe.filters.FireaxeRpcServerInterceptorImpl.interceptRpc(FireaxeRpcServerInterceptorImpl.java:68)\\n\\tat com.google.net.rpc3.impl.server.RpcServerInterceptor2Util$InterceptedApplicationHandlerImpl.handleRequest(RpcServerInterceptor2Util.java:67)\\n\\tat com.google.net.rpc.contrib.rpcinjectz2.RpcInjectz2ServerFaultInterceptor.interceptRpc(RpcInjectz2ServerFaultInterceptor.java:53)\\n\\tat com.google.net.rpc3.impl.server.RpcServerInterceptor2Util$InterceptedApplicationHandlerImpl.handleRequest(RpcServerInterceptor2Util.java:67)\\n\\tat com.google.net.rpc3.impl.server.RpcServerInternalContext.runRpcInApplicationWithCancellation(RpcServerInternalContext.java:675)\\n\\tat com.google.net.rpc3.impl.server.RpcServerInternalContext.lambda$runRpcInApplication$0(RpcServerInternalContext.java:640)\\n\\tat io.grpc.Context.run(Context.java:536)\\n\\tat com.google.net.rpc3.impl.server.RpcServerInternalContext.runRpcInApplication(RpcServerInternalContext.java:640)\\n\\tat com.google.net.rpc3.impl.server.RpcServerChannel$4.apply(RpcServerChannel.java:1084)\\n\\tat com.google.net.rpc3.impl.server.RpcServerChannel$4.apply(RpcServerChannel.java:1042)\\n\\tat com.google.common.util.concurrent.AbstractTransformFuture$TransformFuture.doTransform(AbstractTransformFuture.java:255)\\n\\tat com.google.common.util.concurrent.AbstractTransformFuture$TransformFuture.doTransform(AbstractTransformFuture.java:245)\\n\\tat com.google.common.util.concurrent.AbstractTransformFuture.run(AbstractTransformFuture.java:126)\\n\\tat com.google.common.context.ContextRunnable.runInContext(ContextRunnable.java:83)\\n\\tat io.grpc.Context.run(Context.java:536)\\n\\tat com.google.common.context.ContextCallback.runInInheritedContext(ContextCallback.java:56)\\n\\tat com.google.common.context.ContextRunnable.run(ContextRunnable.java:74)\\n\\tat java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)\\n\\tat java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)\\n\\tat java.base/java.lang.Thread.run(Unknown Source)\\n\\n\" } }"
+        }
+      ]
+      , invalid
+    reason: UpdateFailed
+    status: "False"
+    type: Ready
+  connectionName: ${projectId}:us-central1:sqlinstance-${uniqueId}
+  firstIpAddress: 10.1.2.3
+  instanceType: CLOUD_SQL_INSTANCE
+  ipAddress: 10.1.2.3
+  observedGeneration: 2
+  publicIpAddress: 10.1.2.3
+  selfLink: https://sqladmin.googleapis.com/sql/v1beta4/projects/${projectId}/instances/sqlinstance-${uniqueId}
+  serverCaCert:
+    cert: |
+      -----BEGIN CERTIFICATE-----
+      -----END CERTIFICATE-----
+    commonName: common-name
+    createTime: "1970-01-01T00:00:00Z"
+    expirationTime: "1970-01-01T00:00:00Z"
+    sha1Fingerprint: "12345678"
+  serviceAccountEmailAddress: p${projectNumber}-abcdef@gcp-sa-cloud-sql.iam.gserviceaccount.com
