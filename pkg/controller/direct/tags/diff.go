@@ -20,19 +20,18 @@ import (
 	"strings"
 
 	"github.com/GoogleCloudPlatform/k8s-config-connector/pkg/structuredreporting"
-	"google.golang.org/protobuf/encoding/prototext"
 	"google.golang.org/protobuf/reflect/protoreflect"
 	"google.golang.org/protobuf/types/known/fieldmaskpb"
 	"k8s.io/klog/v2"
 )
 
-type FieldChange struct {
+type fieldChange struct {
 	FieldPath    string
 	ActualValue  protoreflect.Value
 	DesiredValue protoreflect.Value
 }
 
-func buildDiff(ctx context.Context, desired protoreflect.Message, actual protoreflect.Message) (*structuredreporting.Diff, *fieldmaskpb.FieldMask, error) {
+func BuildDiff(ctx context.Context, desired protoreflect.Message, actual protoreflect.Message) (*structuredreporting.Diff, *fieldmaskpb.FieldMask, error) {
 	diff := &structuredreporting.Diff{}
 
 	var paths []string
@@ -55,10 +54,10 @@ func buildDiff(ctx context.Context, desired protoreflect.Message, actual protore
 // If there is an error retrieving the field, it returns the FieldChange with whatever
 // values could be retrieved; the error is logged.
 // If we can't prove that the field is unchanged, we assume it has changed.
-func fieldHasChanged(ctx context.Context, fieldPath string, desired protoreflect.Message, actual protoreflect.Message) *FieldChange {
+func fieldHasChanged(ctx context.Context, fieldPath string, desired protoreflect.Message, actual protoreflect.Message) *fieldChange {
 	log := klog.FromContext(ctx)
 
-	change := &FieldChange{FieldPath: fieldPath}
+	change := &fieldChange{FieldPath: fieldPath}
 
 	actualValue, foundActual, err := commonGetFieldByPath(actual, fieldPath)
 	if err != nil {
@@ -108,12 +107,4 @@ func commonGetFieldByPath(msg protoreflect.Message, fieldPath string) (protorefl
 	default:
 		return protoreflect.Value{}, false, fmt.Errorf("field %q in %T is not a message", fieldName, msg)
 	}
-}
-
-func format(v protoreflect.Value) string {
-	o := v.Interface()
-	if msg, ok := o.(protoreflect.Message); ok {
-		return prototext.Format(msg.Interface())
-	}
-	return fmt.Sprintf("[%T]:%v", o, o)
 }

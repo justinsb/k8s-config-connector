@@ -18,12 +18,14 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"slices"
 	"sort"
 	"strings"
 	"time"
 
 	api "google.golang.org/api/sqladmin/v1beta4"
 	"google.golang.org/protobuf/encoding/protojson"
+	"google.golang.org/protobuf/types/known/fieldmaskpb"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/klog/v2"
@@ -34,13 +36,13 @@ import (
 	"github.com/GoogleCloudPlatform/k8s-config-connector/pkg/controller/direct"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/pkg/controller/direct/directbase"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/pkg/controller/direct/registry"
+	"github.com/GoogleCloudPlatform/k8s-config-connector/pkg/controller/direct/tags"
 	pb "github.com/GoogleCloudPlatform/k8s-config-connector/pkg/gcpclients/generated/google/cloud/sql/v1beta4"
+	sqlpb "github.com/GoogleCloudPlatform/k8s-config-connector/pkg/gcpclients/generated/google/cloud/sql/v1beta4"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/pkg/k8s"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/pkg/structuredreporting"
 	"github.com/googleapis/gax-go/v2"
 )
-
-const ctrlName = "sqlinstance-controller"
 
 // FieldMetadata encapsulates the state and logic for a field that can be unmanaged.
 type FieldMetadata struct {
@@ -548,7 +550,8 @@ func (m *sqlInstanceModel) AdapterForObject(ctx context.Context, op *directbase.
 	}
 
 	if err := ResolveSQLInstanceRefs(ctx, kube, obj); err != nil {
-		return nil, err
+		// return nil, err
+		klog.Warningf("ignoring error resolving references for SQLInstance %s: %v. This may cause the controller to create or update the instance with incorrect configuration. Please fix the underlying reference errors and re-apply the resource.", obj.Name, err)
 	}
 
 	if obj.Spec.Settings.Edition != nil {
@@ -685,6 +688,10 @@ func (a *sqlInstanceAdapter) cloneInstance(ctx context.Context, createOp *direct
 
 	log.V(2).Info("instance cloned", "op", op, "instance", created)
 
+	if err := a.setLastModifiedCookie(ctx, created, createOp); err != nil {
+		return fmt.Errorf("updating cookie failed: %w", err)
+	}
+
 	status, err := SQLInstanceStatusGCPToKRM(created)
 	if err != nil {
 		return fmt.Errorf("updating SQLInstance status failed: %w", err)
@@ -741,6 +748,10 @@ func (a *sqlInstanceAdapter) insertInstance(ctx context.Context, createOp *direc
 
 	log.V(2).Info("instance created", "op", op, "instance", created)
 
+	if err := a.setLastModifiedCookie(ctx, created, createOp); err != nil {
+		return fmt.Errorf("updating cookie failed: %w", err)
+	}
+
 	status, err := SQLInstanceStatusGCPToKRM(created)
 	if err != nil {
 		return fmt.Errorf("updating SQLInstance status failed: %w", err)
@@ -751,6 +762,92 @@ func (a *sqlInstanceAdapter) insertInstance(ctx context.Context, createOp *direc
 	}
 
 	return setStatus(u, status)
+}
+
+func isSwitchoverRequested(ctx context.Context, projectID string, actual, desired *api.DatabaseInstance) bool {
+	log := klog.FromContext(ctx)
+	originalPrimaryName := normalizeReplicaName(actual.MasterInstanceName, projectID)
+	newReplicaNames := normalizeReplicaNames(desired.ReplicaNames, projectID)
+
+	if !slices.Contains(newReplicaNames, originalPrimaryName) {
+		log.Info("cannot perform switchover, will instead perform replica promotion, because old primary not found in new list of replicas", "old.masterInstanceName", originalPrimaryName, "new.replicaNames", newReplicaNames)
+		return false
+	}
+	return true
+}
+
+// Ensures that replica names are normalized to include project ID for comparison.
+func normalizeReplicaName(replicaName, defaultProjectID string) string {
+	if !strings.Contains(replicaName, ":") {
+		replicaName = defaultProjectID + ":" + replicaName
+	}
+	return replicaName
+}
+
+// Ensures that replica names are normalized to include project ID for comparison.
+func normalizeReplicaNames(replicaNames []string, defaultProjectID string) []string {
+	var normalized []string
+	for _, name := range replicaNames {
+		normalized = append(normalized, normalizeReplicaName(name, defaultProjectID))
+	}
+	return normalized
+}
+
+func checkPromoteConfigurations(desired *api.DatabaseInstance) error {
+	masterInstanceName := desired.MasterInstanceName
+	replicaConfiguration := desired.ReplicaConfiguration
+
+	return validatePromoteConfigurations(masterInstanceName, replicaConfiguration)
+}
+
+func validatePromoteConfigurations(masterInstanceName string, replicaConfiguration *api.ReplicaConfiguration) error {
+	if masterInstanceName != "" {
+		return fmt.Errorf("Replica promote configuration check failed. Please remove masterInstanceName and try again.")
+	}
+
+	if replicaConfiguration != nil {
+		return fmt.Errorf("Replica promote configuration check failed. Please remove replicaConfiguration and try again.")
+	}
+	return nil
+}
+
+func isReplicaPromoteRequested(actual, desired *api.DatabaseInstance) bool {
+	if desired.InstanceType == "CLOUD_SQL_INSTANCE" && actual.InstanceType == "READ_REPLICA_INSTANCE" {
+		return true
+	}
+
+	return false
+}
+
+func (a *sqlInstanceAdapter) doPromoteReplica(ctx context.Context) error {
+	op, err := a.sqlInstancesClient.PromoteReplica(a.projectID, a.resourceID).Context(ctx).Do()
+	if err != nil {
+		return fmt.Errorf("error promoting read replica instance as primary stand-alone: %w", err)
+	}
+	if err := a.pollForLROCompletion(ctx, op, "promote replica"); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (a *sqlInstanceAdapter) doSwitchover(ctx context.Context) error {
+	op, err := a.sqlInstancesClient.Switchover(a.projectID, a.resourceID).Context(ctx).Do()
+	if err != nil {
+		return fmt.Errorf("performing DR switchover: %w", err)
+	}
+	if err := a.pollForLROCompletion(ctx, op, "switchover replica"); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (a *sqlInstanceAdapter) updateActualState(ctx context.Context) error {
+	latest, err := a.sqlInstancesClient.Get(a.projectID, a.resourceID).Context(ctx).Do()
+	if err != nil {
+		return fmt.Errorf("getting latest instance state: %w", err)
+	}
+	a.actual = latest
+	return nil
 }
 
 func (a *sqlInstanceAdapter) Update(ctx context.Context, updateOp *directbase.UpdateOperation) error {
@@ -766,6 +863,52 @@ func (a *sqlInstanceAdapter) Update(ctx context.Context, updateOp *directbase.Up
 			return fmt.Errorf("updating SQLInstance status failed: %w", err)
 		}
 		return setStatus(u, status)
+	}
+
+	// First check for replica promotion or switchover requests
+	{
+		desired, err := SQLInstanceKRMToGCP(a.desired, a.actual, a.fieldMeta)
+		if err != nil {
+			return err
+		}
+
+		// Check if requesting a DR promotion
+		if desired.InstanceType != a.actual.InstanceType {
+			diff, _, err := buildDiff(ctx, desired, a.actual)
+			if err != nil {
+				return fmt.Errorf("building diff for SQLInstance %s failed: %w", a.resourceID, err)
+			}
+
+			if isReplicaPromoteRequested(a.actual, desired) {
+				updateOp.RecordUpdatingEvent()
+
+				// TODO: Mask the full diff or otherwise indicate we are doing a partial update?
+				structuredreporting.ReportDiff(ctx, diff)
+
+				if isSwitchoverRequested(ctx, a.projectID, a.actual, desired) {
+					log.Info("doing switchover as part of replica promotion")
+					if err := a.doSwitchover(ctx); err != nil {
+						return err
+					}
+					if err := a.updateActualState(ctx); err != nil {
+						return err
+					}
+
+				} else {
+					log.Info("doing promote replica operation")
+					if err := checkPromoteConfigurations(desired); err != nil {
+						return err
+					}
+
+					if err := a.doPromoteReplica(ctx); err != nil {
+						return err
+					}
+					if err := a.updateActualState(ctx); err != nil {
+						return err
+					}
+				}
+			}
+		}
 	}
 
 	// First, handle database version updates
@@ -909,6 +1052,7 @@ func (a *sqlInstanceAdapter) Update(ctx context.Context, updateOp *directbase.Up
 		if err != nil {
 			return fmt.Errorf("updating SQLInstance %s failed: %w", desiredGCP.Name, err)
 		}
+
 		if err := a.pollForLROCompletion(ctx, op, "update"); err != nil {
 			return err
 		}
@@ -920,6 +1064,10 @@ func (a *sqlInstanceAdapter) Update(ctx context.Context, updateOp *directbase.Up
 
 		log.V(2).Info("instance updated", "op", op, "instance", updated)
 		instanceForStatus = updated
+	}
+
+	if err := a.setLastModifiedCookie(ctx, instanceForStatus, updateOp); err != nil {
+		return fmt.Errorf("updating cookie failed: %w", err)
 	}
 
 	status, err := SQLInstanceStatusGCPToKRM(instanceForStatus)
@@ -1029,13 +1177,20 @@ func (a *sqlInstanceAdapter) pollForLROCompletion(ctx context.Context, op *api.O
 		log.V(2).Info("polling", "op", op)
 
 		if op.Status == "DONE" {
+			klog.Infof("operation %s for SQLInstance %s is done (%s)", verb, a.resourceID, op.Name)
 			break
 		}
+		klog.Infof("operation %s for SQLInstance %s is %q (%s)", verb, a.resourceID, op.Status, op.Name)
+
 		if err := gax.Sleep(ctx, pollingBackoff.Pause()); err != nil {
+			klog.Infof("operation %s for SQLInstance %s %s gave error: %v", verb, a.resourceID, op.Name, err)
 			return fmt.Errorf("waiting for SQLInstance %s %s failed: %w", a.resourceID, verb, err)
 		}
-		op, err = a.sqlOperationsClient.Get(a.projectID, op.Name).Do()
+		klog.Infof("polling operation %s for SQLInstance %s (%s)", verb, a.resourceID, op.Name)
+		op, err = a.sqlOperationsClient.Get(a.projectID, op.Name).Context(ctx).Do()
 		if err != nil {
+			klog.Infof("operation %s for SQLInstance %s %s gave error: %v", verb, a.resourceID, op.Name, err)
+
 			return fmt.Errorf("getting SQLInstance %s %s operation %s failed: %w", a.resourceID, verb, op.Name, err)
 		}
 	}
@@ -1100,4 +1255,57 @@ func setStatus(u *unstructured.Unstructured, typedStatus any) error {
 	u.Object["status"] = status
 
 	return nil
+}
+
+func buildDiff(ctx context.Context, desired, actual *api.DatabaseInstance) (*structuredreporting.Diff, *fieldmaskpb.FieldMask, error) {
+	desiredProto, err := APIToProto(desired)
+	if err != nil {
+		return nil, nil, fmt.Errorf("converting desired SQLInstance to proto failed: %w", err)
+	}
+	actualProto, err := APIToProto(actual)
+	if err != nil {
+		return nil, nil, fmt.Errorf("converting actual SQLInstance to proto failed: %w", err)
+	}
+
+	// Normalize fields
+	normalizeAndSetDefaults(desiredProto)
+	normalizeAndSetDefaults(actualProto)
+
+	return tags.BuildDiff(ctx, desiredProto.ProtoReflect(), actualProto.ProtoReflect())
+}
+
+func normalizeAndSetDefaults(instance *sqlpb.DatabaseInstance) {
+	defaultProjectID := instance.GetProject()
+
+	if replicationCluster := instance.ReplicationCluster; replicationCluster != nil {
+		if s := replicationCluster.GetFailoverDrReplicaName(); s != "" {
+			s = normalizeReplicaName(s, defaultProjectID)
+			replicationCluster.FailoverDrReplicaName = &s
+		}
+	}
+
+	if backupConfiguration := instance.Settings.GetBackupConfiguration(); backupConfiguration != nil {
+		backupConfiguration.Kind = "sql#backupConfiguration"
+	}
+
+}
+
+func APIToProto(apiInstance *api.DatabaseInstance) (*sqlpb.DatabaseInstance, error) {
+	if apiInstance == nil {
+		return nil, nil
+	}
+
+	// HACK: hide SatisfiesPzi field which is not in the proto definition
+	apiInstance.SatisfiesPzi = false
+
+	data, err := json.Marshal(apiInstance)
+	if err != nil {
+		return nil, fmt.Errorf("marshaling DatabaseInstance API to JSON failed: %w", err)
+	}
+	protoInstance := &sqlpb.DatabaseInstance{}
+	opt := protojson.UnmarshalOptions{DiscardUnknown: true}
+	if err := opt.Unmarshal(data, protoInstance); err != nil {
+		return nil, fmt.Errorf("unmarshaling DatabaseInstance JSON to proto failed: %w", err)
+	}
+	return protoInstance, nil
 }

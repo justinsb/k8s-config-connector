@@ -15,6 +15,7 @@
 package sql
 
 import (
+	"encoding/json"
 	"fmt"
 
 	computev1beta1 "github.com/GoogleCloudPlatform/k8s-config-connector/apis/compute/v1beta1"
@@ -31,6 +32,8 @@ import (
 	"github.com/GoogleCloudPlatform/k8s-config-connector/pkg/controller/direct/common"
 	pb "github.com/GoogleCloudPlatform/k8s-config-connector/pkg/gcpclients/generated/google/cloud/sql/v1beta4"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/pkg/label"
+
+	"k8s.io/klog/v2"
 )
 
 func SQLInstanceKRMToGCP(in *krm.SQLInstance, actual *api.DatabaseInstance, fieldMetadata map[string]*FieldMetadata) (*api.DatabaseInstance, error) {
@@ -50,6 +53,7 @@ func SQLInstanceKRMToGCP(in *krm.SQLInstance, actual *api.DatabaseInstance, fiel
 		// OnPremisesConfiguration is not supported in KRM API.
 		Region:               direct.ValueOf(in.Spec.Region),
 		ReplicaConfiguration: InstanceReplicaConfigurationKRMToGCP(in.Spec.ReplicaConfiguration),
+		ReplicaNames:         in.Spec.ReplicaNames,
 		ReplicationCluster:   InstanceReplicationClusterKRMToGCP(in.Spec.ReplicationCluster),
 		RootPassword:         InstanceRootPasswordKRMToGCP(in.Spec.RootPassword),
 		Settings:             InstanceSettingsKRMToGCP(in.Spec.Settings, in.Labels),
@@ -96,7 +100,16 @@ func InstanceReplicationClusterKRMToGCP(in *krm.ReplicationCluster) *api.Replica
 	if err := common.ProtoToAPI(proto, out); err != nil {
 		panic(fmt.Errorf("converting ReplicationCluster to API: %w", err))
 	}
+	klog.Infof("InstanceReplicationClusterKRMToGCP(%v) => %v", FormatJSON(in), FormatJSON(out))
 	return out
+}
+
+func FormatJSON(in any) string {
+	j, err := json.Marshal(in)
+	if err != nil {
+		return fmt.Sprintf("<error converting to json: %v>", err)
+	}
+	return string(j)
 }
 
 func ReplicationCluster_ToProto(mapCtx *direct.MapContext, in *krm.ReplicationCluster) *pb.ReplicationCluster {
@@ -660,6 +673,7 @@ func SQLInstanceGCPToKRM(in *api.DatabaseInstance) (*krm.SQLInstance, error) {
 			Region:               direct.LazyPtr(in.Region),
 			ReplicaConfiguration: InstanceReplicaConfigurationGCPToKRM(in.ReplicaConfiguration),
 			ReplicationCluster:   InstanceReplicationClusterGCPToKRM(in.ReplicationCluster),
+			ReplicaNames:         in.ReplicaNames,
 			// RootPassword is not exported.
 			Settings: InstanceSettingsGCPToKRM(in.Settings),
 			// SqlNetworkArchitecture is not supported in KRM API.

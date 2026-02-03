@@ -16,9 +16,16 @@ package structuredreporting
 
 import (
 	"context"
+	"encoding/json"
+	"fmt"
+	"strings"
 
 	"github.com/GoogleCloudPlatform/k8s-config-connector/pkg/k8s"
+	"google.golang.org/protobuf/encoding/protojson"
+	"google.golang.org/protobuf/proto"
+	"google.golang.org/protobuf/reflect/protoreflect"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
+	"k8s.io/klog/v2"
 	"sigs.k8s.io/controller-runtime/pkg/log"
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 )
@@ -39,8 +46,35 @@ func (l *DebugLogListener) OnError(ctx context.Context, err error, args ...any) 
 // OnDiff is called when a controller calls ReportDiffs
 func (l *DebugLogListener) OnDiff(ctx context.Context, diffs *Diff) {
 	log := log.FromContext(ctx)
+
+	jsonFormat := func(v any) string {
+		if protoMsg, ok := v.(protoreflect.Message); ok {
+			j, err := protojson.Marshal(protoMsg.Interface())
+			if err == nil {
+				return string(j)
+			}
+		}
+		if protoMsg, ok := v.(proto.Message); ok {
+			j, err := protojson.Marshal(protoMsg)
+			if err == nil {
+				return string(j)
+			}
+		}
+		j, err := json.Marshal(v)
+		if err != nil {
+			// Fallback
+			return fmt.Sprintf("%+v", v)
+		}
+		return string(j)
+	}
+	var diffFields []string
+	for _, fieldID := range diffs.Fields {
+		klog.Infof("OnDiff field %q changed from %T to %T", fieldID.ID, fieldID.Old, fieldID.New)
+		klog.Infof("OnDiff field %q changed from %v to %v", fieldID.ID, jsonFormat(fieldID.Old), jsonFormat(fieldID.New))
+		diffFields = append(diffFields, fmt.Sprintf("%v[%v => %v]", fieldID.ID, jsonFormat(fieldID.Old), jsonFormat(fieldID.New)))
+	}
 	log.Info("structuredreporting OnDiff",
-		"diff.fields", diffs.Fields,
+		"diff.fields", strings.Join(diffFields, ", "),
 		"diff.isNewObject", diffs.IsNewObject,
 	)
 }

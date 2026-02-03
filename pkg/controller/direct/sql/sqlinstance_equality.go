@@ -20,6 +20,8 @@ import (
 
 	"github.com/GoogleCloudPlatform/k8s-config-connector/pkg/structuredreporting"
 	api "google.golang.org/api/sqladmin/v1beta4"
+	"k8s.io/apimachinery/pkg/util/sets"
+	"k8s.io/klog/v2"
 )
 
 func DiffInstances(desired *api.DatabaseInstance, actual *api.DatabaseInstance) *structuredreporting.Diff {
@@ -37,6 +39,9 @@ func DiffInstances(desired *api.DatabaseInstance, actual *api.DatabaseInstance) 
 	// Ignore GeminiConfig. It is not supported in KRM API.
 	if desired.InstanceType != actual.InstanceType {
 		diff.AddField(".instanceType", actual.InstanceType, desired.InstanceType)
+	}
+	if replicaNamesDifferent(desired.ReplicaNames, actual.ReplicaNames) {
+		diff.AddField(".replicaNames", actual.ReplicaNames, desired.ReplicaNames)
 	}
 	// Ignore Kind. It is sometimes not set in API responses.
 	if desired.MaintenanceVersion != actual.MaintenanceVersion {
@@ -56,7 +61,7 @@ func DiffInstances(desired *api.DatabaseInstance, actual *api.DatabaseInstance) 
 	if !ReplicaConfigurationsMatch(desired.ReplicaConfiguration, actual.ReplicaConfiguration) {
 		diff.AddField(".replicaConfiguration", actual.ReplicaConfiguration, desired.ReplicaConfiguration)
 	}
-	if !ReplicationClustersMatch(desired.ReplicationCluster, actual.ReplicationCluster) {
+	if !ReplicationClustersMatch(desired.ReplicationCluster, actual.ReplicationCluster, actual.Project) {
 		diff.AddField(".replicationCluster", actual.ReplicationCluster, desired.ReplicationCluster)
 	}
 	// Ignore RootPassword. It is not exported.
@@ -209,6 +214,12 @@ func DiffSettings(desired *api.Settings, actual *api.Settings) *structuredreport
 	// Ignore ForceSendFields. Assume it is set correctly in desired.
 	// Ignore NullFields. Assume it is set correctly in desired.
 	return diff
+}
+
+func replicaNamesDifferent(desired []string, actual []string) bool {
+	l := sets.New(desired...)
+	r := sets.New(actual...)
+	return !l.Equal(r)
 }
 
 // slicesMatch checks if two slices are equal, matching with reflect.DeepEqual.
@@ -676,14 +687,15 @@ func PointersMatch[T any](desired *T, actual *T) bool {
 	return true
 }
 
-func ReplicationClustersMatch(desired *api.ReplicationCluster, actual *api.ReplicationCluster) bool {
+func ReplicationClustersMatch(desired *api.ReplicationCluster, actual *api.ReplicationCluster, defaultProjectID string) bool {
 	if desired == nil && actual == nil {
 		return true
 	}
-	if !PointersMatch(desired, actual) {
+	if (desired == nil) != (actual == nil) {
 		return false
 	}
-	if desired.FailoverDrReplicaName != actual.FailoverDrReplicaName {
+	if normalizeReplicaName(desired.FailoverDrReplicaName, defaultProjectID) != normalizeReplicaName(actual.FailoverDrReplicaName, defaultProjectID) {
+		klog.Infof("FailoverDrReplicaName differs: desired %q, actual %q", normalizeReplicaName(desired.FailoverDrReplicaName, defaultProjectID), normalizeReplicaName(actual.FailoverDrReplicaName, defaultProjectID))
 		return false
 	}
 	// Ignore PsaWriteEndpoint. It is output only.

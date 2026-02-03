@@ -683,6 +683,10 @@ func runScenario(ctx context.Context, t *testing.T, options ScenarioOptions, fix
 					// Note that this does introduce a dependency that objects are ordered correctly for deletion.
 					opt.DeleteInOrder = true
 				}
+				// for i := 0; i < 100; i++ {
+				// 	klog.Infof("WAIT FOR DELETE: iteration %d", i)
+				// 	time.Sleep(5 * time.Second)
+				// }
 				create.DeleteResources(h, opt)
 
 				// Verify kube events

@@ -781,6 +781,10 @@ func validateDatabaseInstance(obj *pb.DatabaseInstance) error {
 		}
 	}
 
+	if obj.GetMasterInstanceName() != "" && obj.GetInstanceType() != pb.SqlInstanceType_READ_REPLICA_INSTANCE {
+		return status.Errorf(codes.InvalidArgument, "A Cloud SQL instance that is not a replica can't have an associated master instance name.")
+	}
+
 	return nil
 }
 

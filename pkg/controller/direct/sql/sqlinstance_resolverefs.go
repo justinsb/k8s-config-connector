@@ -40,6 +40,9 @@ func ResolveSQLInstanceRefs(ctx context.Context, kube client.Reader, obj *krm.SQ
 	if err := resolveMasterInstanceRef(ctx, kube, obj); err != nil {
 		return err
 	}
+	if err := resolveReplicationCluster(ctx, kube, obj); err != nil {
+		return err
+	}
 	if err := resolveReplicaPasswordRef(ctx, kube, obj); err != nil {
 		return err
 	}
@@ -151,6 +154,59 @@ func resolveMasterInstanceRef(ctx context.Context, kube client.Reader, obj *krm.
 		return nil
 	} else {
 		return fmt.Errorf("must specify either spec.masterInstanceRef.external or spec.masterInstanceRef.name")
+	}
+}
+
+func resolveReplicationCluster(ctx context.Context, kube client.Reader, obj *krm.SQLInstance) error {
+	if obj.Spec.ReplicationCluster == nil {
+		return nil
+	}
+	if obj.Spec.ReplicationCluster.FailoverDrReplicaRef == nil {
+		return nil
+	}
+
+	ref := *obj.Spec.ReplicationCluster.FailoverDrReplicaRef
+	if ref.External != "" && ref.Name != "" {
+		return fmt.Errorf("cannot specify both spec.replicationCluster.failoverDrReplicaRef.external and spec.replicationCluster.failoverDrReplicaRef.name")
+	}
+
+	if ref.External != "" {
+		return nil
+	} else if ref.Name != "" {
+
+		key := types.NamespacedName{
+			Namespace: ref.Namespace,
+			Name:      ref.Name,
+		}
+
+		if key.Namespace == "" {
+			key.Namespace = obj.Namespace
+		}
+
+		refInstance := &unstructured.Unstructured{}
+		refInstance.SetGroupVersionKind(krm.SQLInstanceGVK)
+		if err := kube.Get(ctx, key, refInstance); err != nil {
+			if apierrors.IsNotFound(err) {
+				return k8s.NewReferenceNotFoundError(krm.SQLInstanceGVK, key)
+			}
+			return fmt.Errorf("error reading referenced replicationCluster.failoverDrReplicaRef instance %v: %w", key, err)
+		}
+
+		masterInstanceName, err := refs.GetResourceID(refInstance)
+		if err != nil {
+			return err
+		}
+
+		// masterInstanceProject, ok := refInstance.GetAnnotations()[k8s.ProjectIDAnnotation]
+		// if !ok {
+		// 	masterInstanceProject = refInstance.GetNamespace()
+		// }
+
+		obj.Spec.ReplicationCluster.FailoverDrReplicaRef.External = masterInstanceName //fmt.Sprintf("%s:%s", masterInstanceProject, masterInstanceName)
+
+		return nil
+	} else {
+		return fmt.Errorf("must specify either spec.replicationCluster.failoverDrReplicaRef.external or spec.replicationCluster.failoverDrReplicaRef.name")
 	}
 }
 

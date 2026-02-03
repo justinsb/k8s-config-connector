@@ -23,7 +23,9 @@ import (
 	"github.com/GoogleCloudPlatform/k8s-config-connector/pkg/changecookies"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/pkg/controller/lifecyclehandler"
 	"github.com/GoogleCloudPlatform/k8s-config-connector/pkg/k8s"
+	"github.com/google/go-cmp/cmp"
 	"google.golang.org/protobuf/proto"
+	"google.golang.org/protobuf/testing/protocmp"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
@@ -154,6 +156,86 @@ func (o *AdapterForObjectOperation) GetUnstructured() *unstructured.Unstructured
 
 func (o *AdapterForObjectOperation) IsDeleting() bool {
 	return !o.Object.GetDeletionTimestamp().IsZero()
+}
+
+// SetLastModifiedCookie sets the last modified cookie for the resource, which is used to avoid having to exactly match the server-side defaulting logic.
+func (o *operationBase) SetLastModifiedCookie(ctx context.Context, cookie *changecookies.Cookie) error {
+	log := klog.FromContext(ctx)
+
+	// Store the cookie in an annotation
+	annotations := o.object.GetAnnotations()
+	if annotations == nil {
+		annotations = make(map[string]string)
+	}
+	if annotations[k8s.LastChangedCookieAnnotation] == cookie.String() {
+		// This seems unlikely but ... worth checking to avoid an unnecessary update.
+		log.Info("cookie is unchanged from annotation, skipping update")
+		return nil
+	}
+
+	log.Info("setting last modified cookie", "cookie", cookie)
+
+	annotations[k8s.LastChangedCookieAnnotation] = cookie.String()
+	o.object.SetAnnotations(annotations)
+
+	if err := o.client.Update(ctx, o.object); err != nil {
+		return fmt.Errorf("updating object with last-modified cookie annotation: %w", err)
+	}
+
+	return nil
+}
+
+// LastModifiedCookieResult is the result from CompareLastModifiedCookie, which allows us to check if we can skip update based on the last modified cookie.
+type LastModifiedCookieResult string
+
+const (
+	LastModifiedCookieUnchanged           LastModifiedCookieResult = "Unchanged"
+	LastModifiedCookieDesiredStateChanged LastModifiedCookieResult = "DesiredStateChanged"
+	LastModifiedCookieActualStateChanged  LastModifiedCookieResult = "ActualStateChanged"
+	LastModifiedCookieNotFound            LastModifiedCookieResult = "NoCookieFound"
+)
+
+// CompareLastModifiedCookie allows us to check if we can skip update based on the last modified cookie.
+// If our Desired state is unchanged from last time, and the Actual state is also unchanged from what it was after we last applied that state,
+// there's no reason to reapply the state.
+func (o *operationBase) CompareLastModifiedCookie(ctx context.Context, cookie *changecookies.Cookie) LastModifiedCookieResult {
+	log := klog.FromContext(ctx)
+
+	cookieFromAnnotation := o.object.GetAnnotations()[k8s.LastChangedCookieAnnotation]
+	if cookieFromAnnotation == "" {
+		return LastModifiedCookieNotFound
+	}
+
+	parsedCookie, err := changecookies.ParseCookie(cookieFromAnnotation)
+	if err != nil {
+		log.Error(err, "error parsing cookie from annotation", "annotationValue", cookieFromAnnotation)
+		return LastModifiedCookieNotFound
+	}
+
+	log.Info("comparing cookies", "cookieFromAnnotation", cookieFromAnnotation, "cookieFromCurrentState", cookie.String())
+	if parsedCookie.DesiredStateHash != cookie.DesiredStateHash {
+		newState := changecookies.FullObject(cookie.DesiredStateHash)
+		oldState := changecookies.FullObject(parsedCookie.DesiredStateHash)
+		if newState != nil && oldState != nil {
+			diff := cmp.Diff(oldState, newState, protocmp.Transform())
+			klog.Infof("cookiediff between old and new desired state: %s", diff)
+		}
+
+		return LastModifiedCookieDesiredStateChanged
+	}
+
+	if parsedCookie.ActualStateHash != cookie.ActualStateHash {
+		newState := changecookies.FullObject(cookie.ActualStateHash)
+		oldState := changecookies.FullObject(parsedCookie.ActualStateHash)
+		if newState != nil && oldState != nil {
+			diff := cmp.Diff(oldState, newState, protocmp.Transform())
+			klog.Infof("cookiediff between old and new actual state: %s", diff)
+		}
+
+		return LastModifiedCookieActualStateChanged
+	}
+
+	return LastModifiedCookieUnchanged
 }
 
 // UpdateStatus writes the status and ready condition to the object's status subresource.

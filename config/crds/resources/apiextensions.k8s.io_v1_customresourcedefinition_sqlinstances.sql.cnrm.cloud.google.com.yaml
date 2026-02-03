@@ -270,6 +270,10 @@ spec:
                       is checked during the SSL handshake.
                     type: boolean
                 type: object
+              replicaNames:
+                items:
+                  type: string
+                type: array
               replicationCluster:
                 description: The configuration for the replication cluster.
                 properties:

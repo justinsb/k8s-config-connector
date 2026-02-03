@@ -119,6 +119,9 @@ var (
 	// Internal Annotation to force reconciliation
 	InternalForceReconcileAnnotation = CNRMTestGroup + "/reconcile-cookie"
 
+	// LastChangedCookieAnnotation allows change detection without needing to recreate the desired server-side state
+	LastChangedCookieAnnotation = CNRMTestGroup + "/last-changed-cookie"
+
 	KCCComponentLabel    = FormatAnnotation("component")
 	KCCSystemLabel       = FormatAnnotation("system")
 	KCCVersionLabel      = FormatAnnotation("version")

@@ -2210,6 +2210,11 @@ func (in *SQLInstanceSpec) DeepCopyInto(out *SQLInstanceSpec) {
 		*out = new(ReplicationCluster)
 		(*in).DeepCopyInto(*out)
 	}
+	if in.ReplicaNames != nil {
+		in, out := &in.ReplicaNames, &out.ReplicaNames
+		*out = make([]string, len(*in))
+		copy(*out, *in)
+	}
 	if in.ResourceID != nil {
 		in, out := &in.ResourceID, &out.ResourceID
 		*out = new(string)
