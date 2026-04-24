@@ -432,14 +432,6 @@ func ResolveComputeTargetVPNGateway(ctx context.Context, reader client.Reader, s
 }
 
 func ResolveMemorystoreInstanceServiceAttachment(ctx context.Context, reader client.Reader, src client.Object, ref *krm.MemorystoreInstanceServiceAttachment) (*refs.ComputeServiceAttachmentRef, error) {
-	if ref.MemorystoreInstanceRef == nil || ref.MemorystoreInstanceRef.Name == "" {
-		return nil, fmt.Errorf("must provide memorystoreInstanceRef.Name")
-	}
-
-	key := types.NamespacedName{
-		Namespace: ref.MemorystoreInstanceRef.Namespace,
-		Name:      ref.MemorystoreInstanceRef.Name,
-	}
 	if key.Namespace == "" {
 		key.Namespace = src.GetNamespace()
 	}
@@ -455,7 +447,6 @@ func ResolveMemorystoreInstanceServiceAttachment(ctx context.Context, reader cli
 
 	// Read status.observedState.pscAttachmentDetails[MemorystoreInstanceServiceAttachmentIndex]
 	// to retrieve the service attachment external.
-
 	desiredConnectionType := ""
 	if ref.ConnectionType != nil {
 		desiredConnectionType = *ref.ConnectionType
@@ -534,6 +525,7 @@ func resolveForwardingRuleRefs(ctx context.Context, reader client.Reader, obj *k
 				return err
 
 			}
+			// Note we set serviceAttachmentRef - it is a serviceAttachment, we just sourced it from the memorystoreInstance
 			obj.Spec.Target.MemorystoreInstanceServiceAttachment = nil
 			obj.Spec.Target.ServiceAttachmentRef = serviceAttachmentRef
 		}

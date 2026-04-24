@@ -83,10 +83,11 @@ func (m *modelEndpoint) AdapterForObject(ctx context.Context, op *directbase.Ada
 	if obj.Spec.InstanceRef == nil {
 		return nil, fmt.Errorf("spec.instanceRef is required")
 	}
-	err := obj.Spec.InstanceRef.Normalize(ctx, reader, obj.GetNamespace())
-	if err != nil {
+	if err := obj.Spec.InstanceRef.Normalize(ctx, reader, obj.GetNamespace()); err != nil {
 		return nil, err
 	}
+
+	id := obj.Spec.InstanceRef.External
 
 	// Get memorystore and compute GCP client
 	gcpClient, cmpClient, err := m.client(ctx)
@@ -94,7 +95,7 @@ func (m *modelEndpoint) AdapterForObject(ctx context.Context, op *directbase.Ada
 		return nil, err
 	}
 	return &EndpointAdapter{
-		id:        obj.Spec.InstanceRef.GetExternal(),
+		id:        id,
 		gcpClient: gcpClient,
 		cmpClient: cmpClient,
 		reader:    reader,
@@ -209,7 +210,7 @@ func (a *EndpointAdapter) Update(ctx context.Context, updateOp *directbase.Updat
 // Export maps the GCP object to a Config Connector resource `spec`.
 func (a *EndpointAdapter) Export(ctx context.Context) (*unstructured.Unstructured, error) {
 	// no support for export - MemorystoreInstanceEndpoint is only a proxy object to MemorystoreInstance.
-	return nil, nil
+	return nil, fmt.Errorf("export is not supported by %T", a)
 }
 
 // Delete the resource from GCP service when the corresponding Config Connector resource is deleted.
