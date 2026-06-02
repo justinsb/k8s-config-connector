@@ -85,3 +85,22 @@ The resource kind must have an identity and reference type that follow our canon
 
     If you find any shortcomings in the skill (that likely apply to other resources), you may update SKILL.md. Also keep a journal of any less general observations etc. To avoid git merge conflicts, use a file under .gemini/skills/kcc-identity-reference/journal/, named after the kind or a similarly unique name. You may grep journal entries to identify learnings from other resources; if you find an important pattern by doing that you may also update the SKILL.md itself.
     ```
+
+### Step 3: Create a Round-Trip KRM Fuzzer
+
+For existing resources transitioning to a direct controller, a round-trip KRM fuzzer must be created to verify that all field mapping conversions between KRM and GCP proto representations are lossless and fully correct.
+
+1. Open a GitHub issue assigned to `codebot-robot` to implement the round-trip KRM fuzzer at the expected path `pkg/controller/direct/{service}/{kind}_fuzzer.go`.
+
+**GitHub Issue Details:**
+*   **Title:** `Implement round-trip KRM fuzzer for {kind}`
+*   **Assignee:** `codebot-robot`
+*   **Body:**
+    ```
+    Please follow the skill .gemini/skills/create-fuzzer/skill.md to implement a round-trip KRM fuzzer for {kind}.
+
+    The expected path for the fuzzer is `pkg/controller/direct/{service}/{kind}_fuzzer.go`. Ensure the direct controller package is imported/registered in `pkg/controller/direct/register/register.go` so the fuzzer executes under the central fuzz test suite.
+
+    If you find any shortcomings in the skill (that likely apply to other resources), you may update skill.md. Also keep a journal of any less general observations etc. To avoid git merge conflicts, use a file under .gemini/skills/create-fuzzer/journal/, named after the kind or a similarly unique name. You may grep journal entries to identify learnings from other resources; if you find an important pattern by doing that you may also update the skill.md itself.
+    ```
+
