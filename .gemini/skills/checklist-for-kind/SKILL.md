@@ -11,7 +11,9 @@ Instead of doing the coding yourself under this skill, you will coordinate and o
 1. Planning the migration steps.
 2. Opening GitHub issues for each step and assigning them to `codebot-robot`.
 3. Monitoring progress of the Pull Requests.
+   * **Requesting PR changes**: If you need `codebot-robot` to make changes to an open PR (such as rebasing it on master after dependent changes are merged, or addressing review feedback), you can comment directly on the PR outlining the required changes and reassign it back to `codebot-robot` by adding `/assign codebot-robot` in your comment.
 4. Opening subsequent issues once the prior steps are successfully completed.
+
 
 ## Journaling and Progress Tracking
 
