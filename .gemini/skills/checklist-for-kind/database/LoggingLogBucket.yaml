@@ -18,7 +18,7 @@ steps:
   3:
     name: "Round-Trip KRM Fuzzer"
     issue: 9074
-    pr: 0
-    status: "Open"
+    pr: 9076
+    status: "PR Created"
     started: "2026-06-03"
     completed: ""

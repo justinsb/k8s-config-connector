@@ -348,7 +348,7 @@
                         Sync Status
                     </button>
                 </div>
-                <div class="last-updated">Last Sync: 2026-06-03 21:14:36 UTC</div>
+                <div class="last-updated">Last Sync: 2026-06-03 21:59:59 UTC</div>
             </div>
         </header>
 
@@ -356,15 +356,15 @@
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="stat-label">Active Resources</div>
-                <div class="stat-value">5</div>
+                <div class="stat-value">7</div>
             </div>
             <div class="stat-card">
                 <div class="stat-label">Total Steps Completed</div>
-                <div class="stat-value">9 / 16</div>
+                <div class="stat-value">9 / 22</div>
             </div>
             <div class="stat-card">
                 <div class="stat-label">PRs Staged / Open</div>
-                <div class="stat-value">1</div>
+                <div class="stat-value">4</div>
             </div>
             <div class="stat-card">
                 <div class="stat-label">Fully Reconciled</div>
@@ -373,12 +373,62 @@
         </div>
 
         
+        <!-- BillingAccount -->
+        <div class="kind-card">
+            <div class="kind-header">
+                <div class="kind-title">
+                    <span class="kind-name">BillingAccount</span>
+                    <span class="kind-badge" style="background: var(--status-open-bg); color: var(--status-open);">Step 1 Open</span>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" style="width: 0.0%;"></div>
+                    </div>
+                    <span class="progress-text">0 / 3 Steps</span>
+                </div>
+            </div>
+            <div class="steps-container">
+                
+                <div class="step-node state-open">
+                    <div class="step-header">
+                        <span class="step-number">STEP 1</span>
+                        <div class="step-status-indicator"></div>
+                    </div>
+                    <span class="step-name">Direct API Types & generate.sh</span>
+                    <div class="step-links">
+                        <a href="https://github.com/GoogleCloudPlatform/k8s-config-connector/issues/9079" class="link-badge" target="_blank">#9079</a>
+                    </div>
+                </div>
+                <div class="step-node state-pending">
+                    <div class="step-header">
+                        <span class="step-number">STEP 2</span>
+                        <div class="step-status-indicator"></div>
+                    </div>
+                    <span class="step-name">Identity & Reference Pattern</span>
+                    <div class="step-links">
+                        <span class="link-badge" style="background: transparent; border: 1px dashed rgba(255,255,255,0.1); color: var(--text-secondary);">Planned</span>
+                    </div>
+                </div>
+                <div class="step-node state-pending">
+                    <div class="step-header">
+                        <span class="step-number">STEP 3</span>
+                        <div class="step-status-indicator"></div>
+                    </div>
+                    <span class="step-name">Round-Trip KRM Fuzzer</span>
+                    <div class="step-links">
+                        <span class="link-badge" style="background: transparent; border: 1px dashed rgba(255,255,255,0.1); color: var(--text-secondary);">Planned</span>
+                    </div>
+                </div>
+                <div class="step-node state-pending" style="visibility: hidden;"></div>
+            </div>
+        </div>
+
         <!-- BillingBudgetsBudget -->
         <div class="kind-card">
             <div class="kind-header">
                 <div class="kind-title">
                     <span class="kind-name">BillingBudgetsBudget</span>
-                    <span class="kind-badge" style="background: var(--status-open-bg); color: var(--status-open);">Step 2 Open</span>
+                    <span class="kind-badge" style="background: var(--status-active-bg); color: var(--status-active);">Step 2 PR</span>
                 </div>
                 <div class="progress-container">
                     <div class="progress-bar-bg">
@@ -400,7 +450,7 @@
 <a href="https://github.com/GoogleCloudPlatform/k8s-config-connector/pull/9025" class="link-badge" target="_blank">#9025</a>
                     </div>
                 </div>
-                <div class="step-node state-open">
+                <div class="step-node state-active">
                     <div class="step-header">
                         <span class="step-number">STEP 2</span>
                         <div class="step-status-indicator"></div>
@@ -408,6 +458,7 @@
                     <span class="step-name">Identity & Reference Pattern</span>
                     <div class="step-links">
                         <a href="https://github.com/GoogleCloudPlatform/k8s-config-connector/issues/9073" class="link-badge" target="_blank">#9073</a>
+<a href="https://github.com/GoogleCloudPlatform/k8s-config-connector/pull/9075" class="link-badge" target="_blank">#9075</a>
                     </div>
                 </div>
                 <div class="step-node state-pending">
@@ -429,7 +480,7 @@
             <div class="kind-header">
                 <div class="kind-title">
                     <span class="kind-name">LoggingLogBucket</span>
-                    <span class="kind-badge" style="background: var(--status-open-bg); color: var(--status-open);">Step 3 Open</span>
+                    <span class="kind-badge" style="background: var(--status-active-bg); color: var(--status-active);">Step 3 PR</span>
                 </div>
                 <div class="progress-container">
                     <div class="progress-bar-bg">
@@ -462,7 +513,7 @@
 <a href="https://github.com/GoogleCloudPlatform/k8s-config-connector/pull/9003" class="link-badge" target="_blank">#9003</a>
                     </div>
                 </div>
-                <div class="step-node state-open">
+                <div class="step-node state-active">
                     <div class="step-header">
                         <span class="step-number">STEP 3</span>
                         <div class="step-status-indicator"></div>
@@ -470,6 +521,7 @@
                     <span class="step-name">Round-Trip KRM Fuzzer</span>
                     <div class="step-links">
                         <a href="https://github.com/GoogleCloudPlatform/k8s-config-connector/issues/9074" class="link-badge" target="_blank">#9074</a>
+<a href="https://github.com/GoogleCloudPlatform/k8s-config-connector/pull/9076" class="link-badge" target="_blank">#9076</a>
                     </div>
                 </div>
                 <div class="step-node state-pending" style="visibility: hidden;"></div>
@@ -596,7 +648,7 @@
             <div class="kind-header">
                 <div class="kind-title">
                     <span class="kind-name">PubSubSchema</span>
-                    <span class="kind-badge" style="background: var(--status-open-bg); color: var(--status-open);">Step 2 Open</span>
+                    <span class="kind-badge" style="background: var(--status-active-bg); color: var(--status-active);">Step 2 PR</span>
                 </div>
                 <div class="progress-container">
                     <div class="progress-bar-bg">
@@ -618,7 +670,7 @@
 <a href="https://github.com/GoogleCloudPlatform/k8s-config-connector/pull/9060" class="link-badge" target="_blank">#9060</a>
                     </div>
                 </div>
-                <div class="step-node state-open">
+                <div class="step-node state-active">
                     <div class="step-header">
                         <span class="step-number">STEP 2</span>
                         <div class="step-status-indicator"></div>
@@ -626,6 +678,57 @@
                     <span class="step-name">Identity & Reference Pattern</span>
                     <div class="step-links">
                         <a href="https://github.com/GoogleCloudPlatform/k8s-config-connector/issues/9072" class="link-badge" target="_blank">#9072</a>
+<a href="https://github.com/GoogleCloudPlatform/k8s-config-connector/pull/9077" class="link-badge" target="_blank">#9077</a>
+                    </div>
+                </div>
+                <div class="step-node state-pending">
+                    <div class="step-header">
+                        <span class="step-number">STEP 3</span>
+                        <div class="step-status-indicator"></div>
+                    </div>
+                    <span class="step-name">Round-Trip KRM Fuzzer</span>
+                    <div class="step-links">
+                        <span class="link-badge" style="background: transparent; border: 1px dashed rgba(255,255,255,0.1); color: var(--text-secondary);">Planned</span>
+                    </div>
+                </div>
+                <div class="step-node state-pending" style="visibility: hidden;"></div>
+            </div>
+        </div>
+
+        <!-- PubSubTopic -->
+        <div class="kind-card">
+            <div class="kind-header">
+                <div class="kind-title">
+                    <span class="kind-name">PubSubTopic</span>
+                    <span class="kind-badge" style="background: var(--status-open-bg); color: var(--status-open);">Step 1 Open</span>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" style="width: 0.0%;"></div>
+                    </div>
+                    <span class="progress-text">0 / 3 Steps</span>
+                </div>
+            </div>
+            <div class="steps-container">
+                
+                <div class="step-node state-open">
+                    <div class="step-header">
+                        <span class="step-number">STEP 1</span>
+                        <div class="step-status-indicator"></div>
+                    </div>
+                    <span class="step-name">Direct API Types & generate.sh</span>
+                    <div class="step-links">
+                        <a href="https://github.com/GoogleCloudPlatform/k8s-config-connector/issues/9078" class="link-badge" target="_blank">#9078</a>
+                    </div>
+                </div>
+                <div class="step-node state-pending">
+                    <div class="step-header">
+                        <span class="step-number">STEP 2</span>
+                        <div class="step-status-indicator"></div>
+                    </div>
+                    <span class="step-name">Identity & Reference Pattern</span>
+                    <div class="step-links">
+                        <span class="link-badge" style="background: transparent; border: 1px dashed rgba(255,255,255,0.1); color: var(--text-secondary);">Planned</span>
                     </div>
                 </div>
                 <div class="step-node state-pending">

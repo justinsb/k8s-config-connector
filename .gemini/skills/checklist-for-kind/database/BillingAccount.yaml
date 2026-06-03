@@ -1,19 +1,19 @@
-kind: BillingBudgetsBudget
-current_step: 2
+kind: BillingAccount
+current_step: 1
 steps:
   1:
     name: "Direct API Types & generate.sh"
-    issue: 9013
-    pr: 9025
-    status: "Completed"
-    started: "2026-06-02"
-    completed: "2026-06-03"
+    issue: 9079
+    pr: 0
+    status: "Open"
+    started: "2026-06-03"
+    completed: ""
   2:
     name: "Identity & Reference Pattern"
-    issue: 9073
-    pr: 9075
-    status: "PR Created"
-    started: "2026-06-03"
+    issue: 0
+    pr: 0
+    status: "Not Started"
+    started: ""
     completed: ""
   3:
     name: "Round-Trip KRM Fuzzer"
