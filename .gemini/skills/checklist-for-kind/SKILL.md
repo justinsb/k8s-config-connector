@@ -104,3 +104,23 @@ For existing resources transitioning to a direct controller, a round-trip KRM fu
     If you find any shortcomings in the skill (that likely apply to other resources), you may update skill.md. Also keep a journal of any less general observations etc. To avoid git merge conflicts, use a file under .gemini/skills/create-fuzzer/journal/, named after the kind or a similarly unique name. You may grep journal entries to identify learnings from other resources; if you find an important pattern by doing that you may also update the skill.md itself.
     ```
 
+### Step 4: Implement Direct Controller & E2E Fixtures
+
+The direct controller must be implemented to manage reconciliation logic (Adapter: Find, Create, Update, Delete) and E2E fixtures must be created and recorded against mockgcp/real GCP to verify functionality.
+
+1. Open a GitHub issue assigned to `codebot-robot` to implement the direct controller and E2E fixtures.
+
+**GitHub Issue Details:**
+*   **Title:** `Implement direct controller and E2E fixtures for {kind}`
+*   **Assignee:** `codebot-robot`
+*   **Body:**
+    ```
+    Please follow the skills:
+    - .gemini/skills/kcc-direct-controller-implementer/SKILL.md
+    - .gemini/skills/kcc-direct-controller-logic-implementer/SKILL.md
+    to implement the direct controller and record/verify E2E fixtures for {kind}.
+
+    If you find any shortcomings in these skills (that likely apply to other resources), you may update them. Also keep a journal of any less general observations etc. To avoid git merge conflicts, use a file under their respective journal/ folders, named after the kind or a similarly unique name.
+    ```
+
+
