@@ -1,11 +1,11 @@
-kind: PubSubTopic
+kind: DNSManagedZone
 current_step: 1
 steps:
   1:
     name: "Direct API Types & generate.sh"
-    issue: 9078
-    pr: 9083
-    status: "PR Created"
+    issue: 9086
+    pr: 0
+    status: "Open"
     started: "2026-06-03"
     completed: ""
   2:

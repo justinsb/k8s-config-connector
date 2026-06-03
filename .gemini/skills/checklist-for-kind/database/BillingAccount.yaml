@@ -4,8 +4,8 @@ steps:
   1:
     name: "Direct API Types & generate.sh"
     issue: 9079
-    pr: 0
-    status: "Open"
+    pr: 9081
+    status: "PR Created"
     started: "2026-06-03"
     completed: ""
   2:
