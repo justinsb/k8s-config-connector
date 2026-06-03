@@ -1,0 +1,5 @@
+Please follow the skill .gemini/skills/create-fuzzer/skill.md to implement a round-trip KRM fuzzer for LoggingLogBucket.
+
+The expected path for the fuzzer is `pkg/controller/direct/logging/logginglogbucket_fuzzer.go`. Ensure the direct controller package is imported/registered in `pkg/controller/direct/register/register.go` so the fuzzer executes under the central fuzz test suite.
+
+If you find any shortcomings in the skill (that likely apply to other resources), you may update skill.md. Also keep a journal of any less general observations etc. To avoid git merge conflicts, use a file under .gemini/skills/create-fuzzer/journal/, named after the kind or a similarly unique name. You may grep journal entries to identify learnings from other resources; if you find an important pattern by doing that you may also update the skill.md itself.
