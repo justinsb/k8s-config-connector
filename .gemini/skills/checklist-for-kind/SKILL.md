@@ -30,7 +30,16 @@ The journal should contain:
 
 Only proceed to the next step once the PR for the current step is merged successfully.
 
+### Visual Dashboard
+
+To compile and update the visual HTML dashboard of all tracked resource migration pipelines, run the Python generator script:
+```bash
+python3 .gemini/skills/checklist-for-kind/scripts/generate_dashboard.py
+```
+This generates the dashboard at `.gemini/skills/checklist-for-kind/journal/migration_dashboard.html` and copies it to the App Data directory so it is viewable as an HTML artifact.
+
 ## Steps
+
 
 ### Step 1: Direct API Types
 

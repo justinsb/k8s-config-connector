@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KCC Direct Migration Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f1319;
+            --panel-bg: rgba(22, 28, 38, 0.6);
+            --panel-border: rgba(255, 255, 255, 0.08);
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            
+            --status-completed: #10b981;
+            --status-completed-bg: rgba(16, 185, 129, 0.15);
+            --status-active: #0ea5e9;
+            --status-active-bg: rgba(14, 165, 233, 0.15);
+            --status-open: #f59e0b;
+            --status-open-bg: rgba(245, 158, 11, 0.15);
+            --status-pending: #6b7280;
+            --status-pending-bg: rgba(107, 114, 128, 0.1);
+            
+            --font-main: 'Outfit', sans-serif;
+            --font-code: 'JetBrains Mono', monospace;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            padding: 2.5rem;
+            min-height: 100vh;
+            line-height: 1.5;
+            background-image: radial-gradient(circle at 10% 20%, rgba(14, 165, 233, 0.05) 0%, transparent 40%),
+                              radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.03) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--panel-border);
+            padding-bottom: 1.5rem;
+        }
+
+        h1 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .last-updated {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            font-family: var(--font-code);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            backdrop-filter: blur(12px);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 20px -10px rgba(0, 0, 0, 0.5);
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        /* Kind Section Card */
+        .kind-card {
+            background: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(12px);
+            transition: var(--transition);
+        }
+
+        .kind-card:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 12px 30px -15px rgba(0, 0, 0, 0.6);
+        }
+
+        .kind-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .kind-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .kind-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .kind-badge {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            width: 300px;
+        }
+
+        .progress-bar-bg {
+            flex-grow: 1;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--status-active) 0%, var(--status-completed) 100%);
+            border-radius: 4px;
+            transition: width 1s ease-in-out;
+        }
+
+        .progress-text {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            font-family: var(--font-code);
+            white-space: nowrap;
+        }
+
+        /* Steps Timeline */
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            position: relative;
+            margin-top: 1.5rem;
+        }
+
+        .step-node {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--panel-border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .step-node:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.12);
+        }
+
+        .step-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .step-number {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            font-family: var(--font-code);
+        }
+
+        .step-status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .step-name {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #ffffff;
+        }
+
+        .step-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: auto;
+        }
+
+        .link-badge {
+            font-size: 0.75rem;
+            font-family: var(--font-code);
+            text-decoration: none;
+            padding: 0.15rem 0.5rem;
+            border-radius: 6px;
+            transition: var(--transition);
+        }
+
+        /* Custom Status Colors */
+        .state-completed {
+            border-color: rgba(16, 185, 129, 0.3);
+            background: rgba(16, 185, 129, 0.03);
+        }
+        .state-completed .step-status-indicator {
+            background-color: var(--status-completed);
+            box-shadow: 0 0 8px var(--status-completed);
+        }
+        .state-completed .link-badge {
+            background: var(--status-completed-bg);
+            color: var(--status-completed);
+        }
+        .state-completed .link-badge:hover {
+            background: rgba(16, 185, 129, 0.25);
+        }
+
+        .state-active {
+            border-color: rgba(14, 165, 233, 0.4);
+            background: rgba(14, 165, 233, 0.03);
+        }
+        .state-active .step-status-indicator {
+            background-color: var(--status-active);
+            box-shadow: 0 0 8px var(--status-active);
+        }
+        .state-active .link-badge {
+            background: var(--status-active-bg);
+            color: var(--status-active);
+        }
+        .state-active .link-badge:hover {
+            background: rgba(14, 165, 233, 0.25);
+        }
+
+        .state-open {
+            border-color: rgba(245, 158, 11, 0.4);
+            background: rgba(245, 158, 11, 0.03);
+        }
+        .state-open .step-status-indicator {
+            background-color: var(--status-open);
+            box-shadow: 0 0 8px var(--status-open);
+        }
+        .state-open .link-badge {
+            background: var(--status-open-bg);
+            color: var(--status-open);
+        }
+        .state-open .link-badge:hover {
+            background: rgba(245, 158, 11, 0.25);
+        }
+
+        .state-pending {
+            opacity: 0.6;
+        }
+        .state-pending .step-status-indicator {
+            background-color: var(--status-pending);
+        }
+
+        @media (max-width: 900px) {
+            .steps-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        @media (max-width: 600px) {
+            .steps-container {
+                grid-template-columns: 1fr;
+            }
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+        }
+        #sync-btn:hover {
+            background: rgba(14, 165, 233, 0.25);
+            border-color: rgba(14, 165, 233, 0.6);
+            box-shadow: 0 0 10px rgba(14, 165, 233, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div>
+                <h1>KCC Direct Migration Pipeline</h1>
+            </div>
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <div id="sync-btn-container" style="display: none;">
+                    <button onclick="triggerSync()" id="sync-btn" style="background: var(--status-active-bg); color: var(--status-active); border: 1px solid rgba(14, 165, 233, 0.3); padding: 0.35rem 1rem; border-radius: 8px; font-family: var(--font-main); font-weight: 500; cursor: pointer; transition: var(--transition);">
+                        Sync Status
+                    </button>
+                </div>
+                <div class="last-updated">Last Sync: 2026-06-03 20:35:23 UTC</div>
+            </div>
+        </header>
+
+        <!-- General Status -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">Active Resources</div>
+                <div class="stat-value">5</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Total Steps Completed</div>
+                <div class="stat-value">9 / 16</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">PRs Staged / Open</div>
+                <div class="stat-value">1</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Fully Reconciled</div>
+                <div class="stat-value">0</div>
+            </div>
+        </div>
+
+        
+        <!-- BillingBudgetsBudget -->
+        <div class="kind-card">
+            <div class="kind-header">
+                <div class="kind-title">
+                    <span class="kind-name">BillingBudgetsBudget</span>
+                    <span class="kind-badge" style="background: rgba(255, 255, 255, 0.05); color: var(--text-secondary);">Step 2 Pending</span>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" style="width: 33.33333333333333%;"></div>
+                    </div>
+                    <span class="progress-text">1 / 3 Steps</span>
+                </div>
+            </div>
+            <div class="steps-container">
+                
+                <div class="step-node state-completed">
+                    <div class="step-header">
+                        <span class="step-number">STEP 1</span>
+                        <div class="step-status-indicator"></div>
+                    </div>
+                    <span class="step-name">Direct API Types & generate.sh</span>
+                    <div class="step-links">
+                        <a href="https://github.com/GoogleCloudPlatform/k8s-config-connector/issues/9013" class="link-badge" target="_blank">#9013</a>
+<a href="https://github.com/GoogleCloudPlatform/k8s-config-connector/pull/9025" class="link-badge" target="_blank">#9025</a>
+                    </div>
+                </div>
+                <div class="step-node state-pending">
+                    <div class="step-header">
+                        <span class="step-number">STEP 2</span>
+                        <div class="step-status-indicator"></div>
+                    </div>
+                    <span class="step-name">Identity & Reference Pattern</span>
+                    <div class="step-links">
+                        <span class="link-badge" style="background: transparent; border: 1px dashed rgba(255,255,255,0.1); color: var(--text-secondary);">Planned</span>
+                    </div>
+                </div>
+                <div class="step-node state-pending">
+                    <div class="step-header">
+                        <span class="step-number">STEP 3</span>
+                        <div class="step-status-indicator"></div>
+                    </div>
+                    <span class="step-name">Round-Trip KRM Fuzzer</span>
+                    <div class="step-links">
+                        <span class="link-badge" style="background: transparent; border: 1px dashed rgba(255,255,255,0.1); color: var(--text-secondary);">Planned</span>
+                    </div>
+                </div>
+                <div class="step-node state-pending" style="visibility: hidden;"></div>
+            </div>
+        </div>
+
+        <!-- LoggingLogBucket -->
+        <div class="kind-card">
+            <div class="kind-header">
+                <div class="kind-title">
+                    <span class="kind-name">LoggingLogBucket</span>
+                    <span class="kind-badge" style="background: rgba(255, 255, 255, 0.05); color: var(--text-secondary);">Step 3 Pending</span>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" style="width: 66.66666666666666%;"></div>
+                    </div>
+                    <span class="progress-text">2 / 3 Steps</span>
+                </div>
+            </div>
+            <div class="steps-container">
+                
+                <div class="step-node state-completed">
+                    <div class="step-header">
+                        <span class="step-number">STEP 1</span>
+                        <div class="step-status-indicator"></div>
+                    </div>
+                    <span class="step-name">Direct API Types & generate.sh</span>
+                    <div class="step-links">
+                        <a href="https://github.com/GoogleCloudPlatform/k8s-config-connector/issues/8995" class="link-badge" target="_blank">#8995</a>
+<a href="https://github.com/GoogleCloudPlatform/k8s-config-connector/pull/8996" class="link-badge" target="_blank">#8996</a>
+                    </div>
+                </div>
+                <div class="step-node state-completed">
+                    <div class="step-header">
+                        <span class="step-number">STEP 2</span>
+                        <div class="step-status-indicator"></div>
+                    </div>
+                    <span class="step-name">Identity & Reference Pattern</span>
+                    <div class="step-links">
+                        <a href="https://github.com/GoogleCloudPlatform/k8s-config-connector/issues/9001" class="link-badge" target="_blank">#9001</a>
+<a href="https://github.com/GoogleCloudPlatform/k8s-config-connector/pull/9003" class="link-badge" target="_blank">#9003</a>
+                    </div>
+                </div>
+                <div class="step-node state-pending">
+                    <div class="step-header">
+                        <span class="step-number">STEP 3</span>
+                        <div class="step-status-indicator"></div>
+                    </div>
+                    <span class="step-name">Round-Trip KRM Fuzzer</span>
+                    <div class="step-links">
+                        <span class="link-badge" style="background: transparent; border: 1px dashed rgba(255,255,255,0.1); color: var(--text-secondary);">Planned</span>
+                    </div>
+                </div>
+                <div class="step-node state-pending" style="visibility: hidden;"></div>
+            </div>
+        </div>
+
+        <!-- LoggingLogExclusion -->
+        <div class="kind-card">
+            <div class="kind-header">
+                <div class="kind-title">
+                    <span class="kind-name">LoggingLogExclusion</span>
+                    <span class="kind-badge" style="background: rgba(255, 255, 255, 0.05); color: var(--text-secondary);">Step 3 Pending</span>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" style="width: 66.66666666666666%;"></div>
+                    </div>
+                    <span class="progress-text">2 / 3 Steps</span>
+                </div>
+            </div>
+            <div class="steps-container">
+                
+                <div class="step-node state-completed">
+                    <div class="step-header">
+                        <span class="step-number">STEP 1</span>
+                        <div class="step-status-indicator"></div>
+                    </div>
+                    <span class="step-name">Direct API Types & generate.sh</span>
+                    <div class="step-links">
+                        <a href="https://github.com/GoogleCloudPlatform/k8s-config-connector/issues/9012" class="link-badge" target="_blank">#9012</a>
+<a href="https://github.com/GoogleCloudPlatform/k8s-config-connector/pull/9014" class="link-badge" target="_blank">#9014</a>
+                    </div>
+                </div>
+                <div class="step-node state-completed">
+                    <div class="step-header">
+                        <span class="step-number">STEP 2</span>
+                        <div class="step-status-indicator"></div>
+                    </div>
+                    <span class="step-name">Identity & Reference Pattern</span>
+                    <div class="step-links">
+                        <a href="https://github.com/GoogleCloudPlatform/k8s-config-connector/issues/9063" class="link-badge" target="_blank">#9063</a>
+<a href="https://github.com/GoogleCloudPlatform/k8s-config-connector/pull/9064" class="link-badge" target="_blank">#9064</a>
+                    </div>
+                </div>
+                <div class="step-node state-pending">
+                    <div class="step-header">
+                        <span class="step-number">STEP 3</span>
+                        <div class="step-status-indicator"></div>
+                    </div>
+                    <span class="step-name">Round-Trip KRM Fuzzer</span>
+                    <div class="step-links">
+                        <span class="link-badge" style="background: transparent; border: 1px dashed rgba(255,255,255,0.1); color: var(--text-secondary);">Planned</span>
+                    </div>
+                </div>
+                <div class="step-node state-pending" style="visibility: hidden;"></div>
+            </div>
+        </div>
+
+        <!-- LoggingLogView -->
+        <div class="kind-card">
+            <div class="kind-header">
+                <div class="kind-title">
+                    <span class="kind-name">LoggingLogView</span>
+                    <span class="kind-badge" style="background: var(--status-active-bg); color: var(--status-active);">Step 4 PR</span>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" style="width: 75.0%;"></div>
+                    </div>
+                    <span class="progress-text">3 / 4 Steps</span>
+                </div>
+            </div>
+            <div class="steps-container">
+                
+                <div class="step-node state-completed">
+                    <div class="step-header">
+                        <span class="step-number">STEP 1</span>
+                        <div class="step-status-indicator"></div>
+                    </div>
+                    <span class="step-name">Direct API Types & generate.sh</span>
+                    <div class="step-links">
+                        <a href="https://github.com/GoogleCloudPlatform/k8s-config-connector/issues/8971" class="link-badge" target="_blank">#8971</a>
+<a href="https://github.com/GoogleCloudPlatform/k8s-config-connector/pull/8973" class="link-badge" target="_blank">#8973</a>
+                    </div>
+                </div>
+                <div class="step-node state-completed">
+                    <div class="step-header">
+                        <span class="step-number">STEP 2</span>
+                        <div class="step-status-indicator"></div>
+                    </div>
+                    <span class="step-name">Identity & Reference Pattern</span>
+                    <div class="step-links">
+                        <a href="https://github.com/GoogleCloudPlatform/k8s-config-connector/issues/8970" class="link-badge" target="_blank">#8970</a>
+<a href="https://github.com/GoogleCloudPlatform/k8s-config-connector/pull/8972" class="link-badge" target="_blank">#8972</a>
+                    </div>
+                </div>
+                <div class="step-node state-completed">
+                    <div class="step-header">
+                        <span class="step-number">STEP 3</span>
+                        <div class="step-status-indicator"></div>
+                    </div>
+                    <span class="step-name">Round-Trip KRM Fuzzer</span>
+                    <div class="step-links">
+                        <a href="https://github.com/GoogleCloudPlatform/k8s-config-connector/issues/8997" class="link-badge" target="_blank">#8997</a>
+<a href="https://github.com/GoogleCloudPlatform/k8s-config-connector/pull/8998" class="link-badge" target="_blank">#8998</a>
+                    </div>
+                </div>
+                <div class="step-node state-active">
+                    <div class="step-header">
+                        <span class="step-number">STEP 4</span>
+                        <div class="step-status-indicator"></div>
+                    </div>
+                    <span class="step-name">Direct Controller & E2E</span>
+                    <div class="step-links">
+                        <a href="https://github.com/GoogleCloudPlatform/k8s-config-connector/issues/9061" class="link-badge" target="_blank">#9061</a>
+<a href="https://github.com/GoogleCloudPlatform/k8s-config-connector/pull/9062" class="link-badge" target="_blank">#9062</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PubSubSchema -->
+        <div class="kind-card">
+            <div class="kind-header">
+                <div class="kind-title">
+                    <span class="kind-name">PubSubSchema</span>
+                    <span class="kind-badge" style="background: rgba(255, 255, 255, 0.05); color: var(--text-secondary);">Step 2 Pending</span>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" style="width: 33.33333333333333%;"></div>
+                    </div>
+                    <span class="progress-text">1 / 3 Steps</span>
+                </div>
+            </div>
+            <div class="steps-container">
+                
+                <div class="step-node state-completed">
+                    <div class="step-header">
+                        <span class="step-number">STEP 1</span>
+                        <div class="step-status-indicator"></div>
+                    </div>
+                    <span class="step-name">Direct API Types & generate.sh</span>
+                    <div class="step-links">
+                        <a href="https://github.com/GoogleCloudPlatform/k8s-config-connector/issues/9059" class="link-badge" target="_blank">#9059</a>
+<a href="https://github.com/GoogleCloudPlatform/k8s-config-connector/pull/9060" class="link-badge" target="_blank">#9060</a>
+                    </div>
+                </div>
+                <div class="step-node state-pending">
+                    <div class="step-header">
+                        <span class="step-number">STEP 2</span>
+                        <div class="step-status-indicator"></div>
+                    </div>
+                    <span class="step-name">Identity & Reference Pattern</span>
+                    <div class="step-links">
+                        <span class="link-badge" style="background: transparent; border: 1px dashed rgba(255,255,255,0.1); color: var(--text-secondary);">Planned</span>
+                    </div>
+                </div>
+                <div class="step-node state-pending">
+                    <div class="step-header">
+                        <span class="step-number">STEP 3</span>
+                        <div class="step-status-indicator"></div>
+                    </div>
+                    <span class="step-name">Round-Trip KRM Fuzzer</span>
+                    <div class="step-links">
+                        <span class="link-badge" style="background: transparent; border: 1px dashed rgba(255,255,255,0.1); color: var(--text-secondary);">Planned</span>
+                    </div>
+                </div>
+                <div class="step-node state-pending" style="visibility: hidden;"></div>
+            </div>
+        </div>
+
+    </div>
+    <script>
+        if (window.location.protocol.startsWith('http')) {
+            document.getElementById('sync-btn-container').style.display = 'block';
+        }
+        function triggerSync() {
+            const btn = document.getElementById('sync-btn');
+            btn.disabled = true;
+            btn.innerText = 'Syncing...';
+            btn.style.opacity = '0.7';
+            fetch('/sync', { method: 'POST' })
+                .then(response => {
+                    if (response.ok) {
+                        window.location.reload();
+                    } else {
+                        alert('Sync failed!');
+                        btn.disabled = false;
+                        btn.innerText = 'Sync Status';
+                        btn.style.opacity = '1';
+                    }
+                })
+                .catch(err => {
+                    alert('Error: ' + err);
+                    btn.disabled = false;
+                    btn.innerText = 'Sync Status';
+                    btn.style.opacity = '1';
+                });
+        }
+    </script>
+</body>
+</html>
